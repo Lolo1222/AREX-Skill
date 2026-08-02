@@ -22,6 +22,7 @@ REQUIRED_MODULE_FIELDS = [
     "evidence",
 ]
 SNAKE_RE = re.compile(r"^[a-z][a-z0-9_]*$")
+SKILL_NAME_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
 
 
 def require(condition: bool, message: str, errors: list[str]) -> None:
@@ -58,7 +59,11 @@ def main() -> int:
         module_id = str(module.get("id", ""))
         skill_name = str(module.get("skill_name", ""))
         require(bool(SNAKE_RE.match(module_id)), f"{prefix}.id must be snake_case", errors)
-        require(bool(SNAKE_RE.match(skill_name)), f"{prefix}.skill_name must be snake_case", errors)
+        require(
+            bool(SKILL_NAME_RE.fullmatch(skill_name)) and len(skill_name) <= 64,
+            f"{prefix}.skill_name must be a canonical lowercase-hyphen skill id of at most 64 characters",
+            errors,
+        )
         require(module_id not in seen_ids, f"duplicate module id: {module_id}", errors)
         require(skill_name not in seen_skills, f"duplicate skill name: {skill_name}", errors)
         seen_ids.add(module_id)

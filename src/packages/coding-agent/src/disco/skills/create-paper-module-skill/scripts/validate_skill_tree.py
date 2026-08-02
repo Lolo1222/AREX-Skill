@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate a generated Codex skill tree."""
+"""Validate a generated DisCo operating skill tree."""
 
 from __future__ import annotations
 
@@ -15,8 +15,7 @@ from pathlib import Path
 
 
 FRONTMATTER_RE = re.compile(r"^---\n(.*?)\n---\n", re.DOTALL)
-SNAKE_NAME_RE = re.compile(r"^[a-z][a-z0-9_]*$")
-SKILL_NAME_RE = re.compile(r"^[a-z][a-z0-9_-]*$")
+SKILL_NAME_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
 
 
 def parse_frontmatter(text: str) -> dict[str, str]:
@@ -118,11 +117,6 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("skill_dir", help="Skill directory.")
     parser.add_argument("--run-tests", action="store_true", help="Run pytest if tests exist.")
-    parser.add_argument(
-        "--allow-hyphen-name",
-        action="store_true",
-        help="Allow workflow-skill names with hyphens. Generated paper module skills should keep the default snake_case rule.",
-    )
     args = parser.parse_args()
 
     skill_dir = Path(args.skill_dir).expanduser().resolve()
@@ -141,11 +135,14 @@ def main() -> int:
             errors.append("missing YAML frontmatter")
         name = frontmatter.get("name", "")
         description = frontmatter.get("description", "")
+        if frontmatter.get("disco-role") != "operating":
+            errors.append("frontmatter metadata.disco-role must be operating")
         if not has_double_quoted_description(text):
             errors.append("frontmatter description must be double-quoted")
-        name_re = SKILL_NAME_RE if args.allow_hyphen_name else SNAKE_NAME_RE
-        if not name_re.match(name):
-            errors.append("frontmatter name must be lowercase snake_case" if not args.allow_hyphen_name else "frontmatter name must be a lowercase skill id")
+        if not SKILL_NAME_RE.fullmatch(name) or len(name) > 64:
+            errors.append("frontmatter name must be a canonical lowercase-hyphen skill id of at most 64 characters")
+        if name != skill_dir.name:
+            errors.append("frontmatter name must match the skill directory basename")
         if len(description.split()) < 8:
             errors.append("frontmatter description is too short to trigger reliably")
         if "TODO" in text or "TBD" in text:

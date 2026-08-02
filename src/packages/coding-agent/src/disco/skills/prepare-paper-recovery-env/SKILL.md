@@ -1,6 +1,8 @@
 ---
 name: prepare-paper-recovery-env
 description: "Inspect, prepare, and document an isolated runtime environment for Paper2Skills recovery experiments, including package probes, model/cache checks, GPU status, bounded benchmark acquisition, and a runtime handoff for recover-paper-result."
+metadata:
+  disco-role: meta
 ---
 
 # Prepare Paper Recovery Env

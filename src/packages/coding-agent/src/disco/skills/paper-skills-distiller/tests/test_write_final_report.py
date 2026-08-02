@@ -28,7 +28,7 @@ def test_write_final_report_creates_organized_json_and_markdown():
             {
                 "paper_id": "paper",
                 "fast_recovery_target": {"dataset": "toy", "metric": "score", "paper_value": 1.0},
-                "modules": [{"id": "core_module", "skill_name": "core_module"}],
+                "modules": [{"id": "core_module", "skill_name": "core-module"}],
             },
         )
         write_json(

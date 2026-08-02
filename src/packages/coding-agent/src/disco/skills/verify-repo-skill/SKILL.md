@@ -1,6 +1,8 @@
 ---
 name: verify-repo-skill
-description: "Verifies a generated or refreshed repo-specific Agent Skill by creating assertion-backed usability test cases, running content-level self-refine, checking native repo examples/tests when available, checking static quality gates, and producing final coverage and handoff artifacts. Use this after create-repo-skill, refresh-repo-skill, or extend-repo-skill finishes an integrated runtime skill draft, and whenever a repo skill needs usability or publication verification."
+description: "Verifies a generated or refreshed repo-specific Agent Skill by creating assertion-backed usability test cases, running content-level self-refine, checking backend-classified native repo examples/tests against the prepared CPU/GPU environment plan, enforcing required-backend and import gates, checking static quality, and producing final coverage and handoff artifacts. Use this after create-repo-skill, refresh-repo-skill, or extend-repo-skill finishes an integrated runtime skill draft, and whenever a repo skill needs usability or publication verification."
+metadata:
+  disco-role: meta
 ---
 
 # Verify Repo Skill
@@ -11,7 +13,9 @@ Use this skill after a generated, refreshed, or extended repo skill draft exists
 It owns usability test case generation, content-level self-refine, native
 repo test/example verification after whole-skill integration, static
 verification, final coverage report creation, review-package creation, and
-final verification handoff.
+final verification handoff. Treat required GPU/accelerator runtime evidence as
+a verification gate: synthetic assertions may test guidance and failure
+handling, but cannot prove that the backend actually runs.
 
 This skill does not create the repo skill from source evidence. It verifies and
 refines an already-created runtime skill directory using the original creation
@@ -26,17 +30,20 @@ main-agent integration pass over parallel subagent outputs.
 Resolve these before writing verification artifacts:
 
 - Runtime repo skill directory containing `SKILL.md`.
+  Keep this verified runtime directory outside `<agent-dir>/skills/`; if the only
+  starting copy is live, make an external working copy before refining it.
 - Review/test artifact directory. If omitted, use the artifact root selected by
   the calling workflow, normally `<repository-path>/skills/tests/<skill-id>/`.
   Write concrete test cases under `test-cases/` and reports or review
   documents under `reports/`.
 - Repository path or evidence summary used to create the skill.
-- Python inspection handoff or public package facts used by the skill, when
-  available.
+- Python inspection handoff, including `ok`/`partial`/`failed` readiness and
+  every prepared backend prefix, or public package facts used by the skill.
 - Coverage/depth matrix, target file tree, sub-skill plan, and subagent review
   rubrics from the calling workflow.
-- Integration artifacts from the calling workflow, such as integration notes,
-  native test/example candidate map, and long-tail gap register, when available.
+- Integration artifacts from the calling workflow, including the backend
+  verification plan, backend-classified native test/example candidate map,
+  integration notes, and long-tail gap register when available.
 - Import decision policy from the calling workflow. Default to
   `importAfterVerification: ask`; use `auto-import` only when the original user
   request explicitly delegated the final import decision.
@@ -63,14 +70,20 @@ Read these references as the workflow reaches each stage:
 - [scripts/run_native_cases.py](scripts/run_native_cases.py): optional
   manifest-driven helper for running preselected safe native repo verification
   commands with timeouts and JSON output. Use it only after an agent has
-  classified candidate commands as safe for the current environment.
-- [scripts/with_import_lock.mjs](scripts/with_import_lock.mjs): required helper
-  for wrapping the approved or auto-authorized import transaction that writes
-  `~/.disco/agent/skills/` and the live `repo-skills-router`.
+  classified candidate commands and backend metadata for the assigned
+  environment; it preserves required accelerator blocks instead of converting
+  them to ordinary skips.
+- [scripts/import_repo_skill.mjs](scripts/import_repo_skill.mjs): required entry
+  point for an approved or auto-authorized DisCo repo-skill import. It acquires
+  the global lock, stages and validates the runtime tree, installs it under
+  `~/.disco/agent/skills/repo-skills/`, rebuilds the sibling live
+  `repo-skills-router`, and rolls back both on failure.
+- [scripts/with_import_lock.mjs](scripts/with_import_lock.mjs): lower-level lock
+  helper used by the dedicated importer and router updater. Do not manually
+  compose the normal repo-skill import with this helper.
 - [scripts/update_repo_skills_router.mjs](scripts/update_repo_skills_router.mjs):
-  required managed updater for rebuilding and validating the live
-  `repo-skills-router` from structured routing metadata inside the same locked
-  import transaction.
+  lower-level managed updater called by the dedicated importer. Use it directly
+  only for an intentional router-only maintenance or staging operation.
 
 ## Required Workflow
 
@@ -108,13 +121,20 @@ progress.
 4. Native repo test/example verification:
    Using the native test/example candidate map from the calling workflow or one
    built during setup, select a safe representative subset of original repo
-   examples, tests, CLI help checks, tiny-fixture checks, or smoke scripts.
+   examples, tests, CLI help checks, tiny-fixture checks, or smoke scripts. Use
+   the backend verification plan to run each selected case in its assigned
+   prepared environment. Every `required` backend capability with no full CPU
+   substitute needs runtime evidence from its actual backend; do not replace it
+   with a CPU import or synthetic usability case.
    Run only commands that are safe for the current environment: short,
    deterministic, no network, no credentials, no destructive writes, no large
    downloads, and no long training unless the user explicitly approves. Record
-   PASS, SKILL_GAP, NATIVE_FAIL, SKIP_UNSAFE, and SKIP_NOT_SELECTED results
-   under the artifact directory. Use failures or gaps to revise the runtime
-   skill before static verification when the generated skill is wrong or thin.
+   PASS, SKILL_GAP, NATIVE_FAIL, BLOCKED_REQUIRED_BACKEND, SKIP_UNSAFE, and
+   SKIP_NOT_SELECTED results under the artifact directory. Use
+   `BLOCKED_REQUIRED_BACKEND` when required hardware/environment/runtime
+   evidence is unavailable. Treat it as a high or critical import blocker, not
+   a skip or pass. Use failures or gaps to revise the runtime skill before
+   static verification when the generated skill is wrong or thin.
 5. Static verification, final report, and review package:
    Run the static checks from the verification reference. Save verification
    reports, final skill coverage report, human-review notes, publication
@@ -123,25 +143,36 @@ progress.
 6. Handoff and import readiness:
    Report the runtime skill path, artifact path, usability coverage, native
    verification results, failures fixed, remaining long-tail gaps, and whether
-   the skill is ready to import. If `importAfterVerification` is `ask`, use
+   the skill is ready to import. Record that a self-contained, versioned
+   repo/package skill is classified as high reuse because it is intended to
+   support multiple checkouts, projects, and research tasks. This classification
+   selects the specialized managed repo collection, not the generic managed
+   importer or the current project's `.agents/skills`. If
+   `importAfterVerification` is `ask`, use
    `ask_user_question` when available to ask whether to import the verified
-   runtime skill into `~/.disco/agent/skills/`; do not only ask in a normal
+   runtime skill into `~/.disco/agent/skills/repo-skills/<skill-id>/`; do not only ask in a normal
    assistant message and stop. If `importAfterVerification` is `auto-import`
    and the skill is verified/import-ready with no unresolved high or critical
-   failures, import without asking again and state that the original create
-   request authorized auto-import. If import is approved or auto-authorized,
-   run the whole import as one locked transaction through
-   `scripts/with_import_lock.mjs`: copy only the runtime skill directory into
-   `~/.disco/agent/skills/`, ensure the imported skill contains
-   `references/repo-routing-metadata.json`, then run
-   `scripts/update_repo_skills_router.mjs --already-locked` inside that same
-   process to rebuild and validate the live DisCo `repo-skills-router`.
-   Do not hand-edit router Markdown as the import mechanism. While holding the
-   lock, the updater re-reads the current managed skill directory and live router
-   before applying this import so concurrent sessions cannot overwrite each
-   other's router entries. Do not synchronize into other agent tools during this
-   workflow; use `import-repo-skills-to-agent` only when the user explicitly asks to
-   export DisCo's managed skill library.
+   failures or `BLOCKED_REQUIRED_BACKEND` results, import without asking again
+   and state that the original create request authorized auto-import. A partial
+   environment handoff or required-backend block disables auto-import even if
+   the original request delegated it. Present the exact limitation and require
+   a new informed manual import decision after final verification. If import is
+   approved or auto-authorized,
+   run the dedicated importer once with the verified runtime skill directory:
+
+   ```bash
+   node scripts/import_repo_skill.mjs --agent-dir <agent-dir> [--overwrite] <runtime-skill-dir>
+   ```
+
+   Omit `--overwrite` for a new skill. Use it only after approval to replace
+   that exact existing repo skill. The importer copies only the runtime tree,
+   recursively validates its role and visibility contract, requires
+   `references/repo-routing-metadata.json`, acquires the global lock, rebuilds
+   and validates the live DisCo `repo-skills-router`, and restores both the previous skill and router on failure. Do not hand-edit router Markdown as the import mechanism or manually combine a copy command with the lower-level updater. After success,
+   DisCo Researcher can use the managed skill in a new session without exporting
+   it to another agent. Use `import-repo-skills-to-agent` only when the user
+   explicitly asks for a cross-agent export.
 
 ## Non-Negotiables
 
@@ -159,19 +190,28 @@ progress.
 - Do not treat skipped native repo examples/tests as passing. Record the skip
   reason and decide whether a synthetic assertion-backed case should cover the
   same capability.
+- Do not classify an unavailable required backend as an ordinary skip. Record
+  `BLOCKED_REQUIRED_BACKEND`, keep the skill not fully verified, and prevent
+  auto-import until the backend is verified, scope is explicitly narrowed, or
+  the user manually accepts the final limitation.
+- Do not use synthetic assertions, CPU imports, source inspection, or docs as a
+  substitute for required GPU/accelerator runtime evidence. They may validate
+  guidance while the runtime block remains visible.
 - Do not run original repo native examples/tests before the generated skill has
   been fully integrated across all sub-skills; native ground-truth checks are a
   final verification gate, not a sub-skill drafting shortcut.
 - Do not import a skill before high or critical verification failures are fixed
   or explicitly accepted by the user.
-- Do not import a skill or update the live DisCo `repo-skills-router`
-  outside the global import lock. The lock must cover the runtime skill copy,
-  router creation from the template when missing, structured metadata read,
-  managed router rebuild, stale-file removal, and final existence/link checks.
-- Do not update `repo-skills-router` by free-form Markdown editing during
-  import. The import transaction must call
-  `scripts/update_repo_skills_router.mjs` after copying the runtime skill and
-  writing or updating `references/repo-routing-metadata.json`.
+- Do not treat an earlier acceptance to continue partial drafting as final
+  import approval. Ask again after the exact native backend gaps are known.
+- Do not import a skill through an unlocked or manually assembled copy/update
+  sequence. Use `scripts/import_repo_skill.mjs`; its lock covers staging,
+  runtime skill replacement, router creation from the template when missing,
+  structured metadata reads, managed router rebuild, stale-file removal, final
+  checks, and failure rollback.
+- Do not update `repo-skills-router` by free-form Markdown editing during an
+  import. The dedicated importer owns the lower-level
+  `scripts/update_repo_skills_router.mjs` call.
 - Do not treat `auto-import` as permission to overwrite an unrelated existing
   managed skill. If the target import directory already exists and this workflow
   is not explicitly updating that exact skill, ask before replacing it or choose
@@ -194,8 +234,12 @@ By the end, the user should have:
 - Native repo test/example candidate and verification reports under
   `<artifact-root>/reports/verification/` when original repo examples/tests
   were available.
+- A reconciled backend verification result that names prepared environments,
+  required backend passes, optional skips, alternatives, and every
+  `BLOCKED_REQUIRED_BACKEND` item.
 - A final skill coverage report comparing original repo capabilities,
   generated skill coverage, native verification results, and remaining
   long-tail gaps.
-- A concise verification handoff with import readiness and a
+- A concise verification handoff with full, partial, or blocked import
+  readiness and a
   `repo-skills-router` routing update when import is approved or auto-authorized.

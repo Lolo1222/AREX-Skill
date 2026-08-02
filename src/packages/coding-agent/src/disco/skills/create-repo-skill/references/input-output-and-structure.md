@@ -37,10 +37,14 @@ variable is set, otherwise under
 or corrects the repository structure analysis, or after the agent confirms it
 under an explicit `extractionScope: agent-decide` policy, use the sibling
 `prepare-repo-skill-env` skill to create or repair an inspection environment
-and verify the repo package. The prepare-env skill handles npm-installed
-machines with no Python by bootstrapping a private host Python, prefers conda
-when available, and falls back to venv when conda is absent. Continue this skill
-only after the prepare-env handoff says the environment is ready.
+and verify the repo package. The prepare-env skill prefers Conda when available,
+can use micromamba, venv, or uv when appropriate, and runs explicit terminal
+commands for environment creation, package installation, and verification. On
+machines with no suitable manager or Python, it identifies the required
+host-level installation and asks before making that change unless the user
+already authorized it. Continue normally from an `ok` handoff; use a `partial`
+handoff only under the explicit limitation rule below, and do not continue from
+`failed`.
 
 When calling `prepare-repo-skill-env`, pass along the
 confirmed extraction scope:
@@ -49,22 +53,44 @@ confirmed extraction scope:
 - Excluded directories and why they are not needed for skill extraction.
 - Package metadata, optional dependency groups, requirements files, and install
   variants discovered during structure analysis.
+- The native test/example candidate map with backend requirement, backend
+  criticality, CPU substitution, dependency variant, hardware prerequisites,
+  and verification expectation for candidates owned by included workflows.
+- The derived backend verification plan: required, optional, and alternative
+  backends; the minimum environment set; hardware probes; preparation smoke
+  checks; final native cases; and the consequence of unavailable required
+  hardware.
 - User requirements that affect dependency selection, such as a required
   backend, extra, CLI, API family, or directory that must be covered.
 
 This scope lets environment preparation install the minimum dependency set
 needed for the selected repo areas instead of installing all extras, all
 requirements files, or packages tied only to excluded directories.
+"Minimum" means the smallest environment set that covers every required
+backend, not a CPU-only environment by default. One GPU-capable environment may
+also cover CPU checks; use multiple prefixes only for conflicting variants or
+an independently selected CPU fallback claim.
+
+Treat the prepare-env handoff states explicitly:
+
+- `ok`: continue normally and preserve the backend plan for final verification.
+- `partial`: continue drafting only after the user explicitly accepts the exact
+  required-backend limitation. Preserve it as a blocking final-verification
+  item and disable `auto-import`.
+- `failed`: stop, repair the environment, or ask the user to narrow the
+  extraction scope. Do not reinterpret a CPU-only environment as success for a
+  required GPU/accelerator capability.
 
 If the user did not provide a repository path, use the current working directory.
 
-Ask the user for more input only when bootstrap Python download fails or is
-forbidden, the package cannot be installed or verified, hardware/backend
-requirements are impossible on the current machine, modifying a user-provided
-existing environment may break it and the user has not authorized that mutation,
-a safe environment prefix cannot be chosen or used, an existing skill would be
-overwritten, or the repository structure analysis needs user confirmation
-before extraction because `extractionScope` is still `ask`.
+Ask the user for more input only when a required host-level runtime or manager
+installation is not already authorized, the package cannot be installed or
+verified, a required backend is unavailable and the user must narrow scope or
+accept partial drafting, modifying a user-provided existing environment may
+break it and the user has not authorized that mutation, a safe environment
+prefix cannot be chosen or used, an existing skill would be overwritten, or
+the repository structure/backend analysis needs user confirmation before
+extraction because `extractionScope` is still `ask`.
 
 When `extractionScope` is `agent-decide`, the repository structure analysis must
 still produce a concrete include/exclude map. It should include importable
@@ -175,6 +201,11 @@ repo-name/
 
 For a very small repo with only one coherent user-facing workflow, it is acceptable to omit `sub-skills/` and keep one concise root `SKILL.md` plus bundled `references/` and `scripts/` when useful. Do not create artificial sub-skills just to match the tree shape.
 
+Every root and sub-skill `SKILL.md` in this generated operating graph must
+declare `metadata.disco-role: operating`. This keeps the graph available in
+Researcher mode and excluded from Creator mode. Do not rely on the missing-role
+Researcher fallback for DisCo-owned generated output.
+
 Self-contained means future agents can use the generated skill after the original repository checkout is gone. Do not write generated instructions such as "run `examples/foo.py` from the repo" or "see `docs/bar.md` in the original repository." If source repo material is important, copy, distill, adapt, or wrap it into the generated skill's own `references/` or `scripts/`.
 
 When the generated skill mentions a source repo script, example, notebook, tool,
@@ -223,9 +254,11 @@ source repo state without leaking local checkout paths or environment paths.
 
 `references/repo-routing-metadata.json` is required for every generated repo
 skill. It is consumed by
-`verify-repo-skill/scripts/update_repo_skills_router.mjs` during
-import so the live `repo-skills-router` can be rebuilt deterministically. Keep
-it concise and structured; do not put generated router Markdown here.
+`verify-repo-skill/scripts/import_repo_skill.mjs`, which invokes the lower-level
+router updater inside the locked import transaction so the live
+`repo-skills-router` can be rebuilt deterministically and rolled back with the
+skill if necessary. Keep it concise and structured; do not put generated router
+Markdown here.
 
 Before choosing an `id`, read the live or bundled
 `repo-skills-router/references/scenario-registry.json` when available. Prefer an
@@ -261,7 +294,7 @@ Use this shape:
 
 The top-level skill id must match the generated skill directory basename. A
 skill may list multiple scenarios only when it has real, useful coverage in each
-scenario. Use entry point paths relative to the DisCo managed skills root,
+scenario. Use entry point paths relative to the `repo-skills/` collection root,
 such as `<skill-id>/SKILL.md` or `<skill-id>/sub-skills/<sub-skill-id>/`.
 
 Write router metadata so it works even when the user describes a task without

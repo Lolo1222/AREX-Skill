@@ -1,40 +1,51 @@
 ---
 name: import-repo-skills-to-agent
-description: "Use this skill when the user asks to import DisCo's managed skills, repo-specific skills, or repo-skills-router into another agent tool such as ~/.codex, ~/.agents, ~/.claude, or a project-local agent directory. Handles target skills-root detection, duplicate-skill overwrite questions, and repo-skills-router merging."
+description: "Use this skill when the user asks to export DisCo's managed repository skills and repo-skills-router into another agent tool such as Codex under ~/.agents/skills, Claude Code under ~/.claude/skills, or a project-local agent directory. Handles canonical source and target layout, duplicate-skill overwrite questions, Codex policy, and repo-skills-router merging."
+metadata:
+  disco-role: meta
 ---
 
 # Import Repo Skills To Agent
 
 ## Purpose
 
-Use this meta skill to copy DisCo's managed skill library into another
+Use this workflow skill to copy DisCo's managed skill library into another
 agent tool. The source library is DisCo's managed user directory:
-`~/.disco/agent/skills/` unless `DISCO_CODING_AGENT_DIR` points to a
-different DisCo agent directory.
+`~/.disco/agent/skills/repo-skills/` with its sibling
+`~/.disco/agent/skills/repo-skills-router/`, unless
+`DISCO_CODING_AGENT_DIR` points to a different DisCo agent directory.
 
-This skill is explicit export/import behavior. DisCo itself does not use
-the managed repo skills in `~/.disco/agent/skills/` as runtime skills for
-ordinary downstream tasks.
+This skill is explicit cross-agent export/import behavior. DisCo already uses
+the managed repo skills in `~/.disco/agent/skills/repo-skills/` at runtime through
+`repo-skills-router` and explicit `/skill:<name>` invocation. Do not export to
+another agent unless the user asks for that target.
 
 ## Inputs
 
-The user may provide only a tool root such as:
+The user may name an agent without a path, or provide a tool root such as:
 
-- `~/.codex`
+- `Codex`
 - `~/.agents`
 - `~/.claude`
 - `/path/to/project/.agents`
 
 Resolve the target skills root as follows:
 
-1. Expand `~` and environment variables.
-2. If the path basename is `skills`, treat it as the target skills root.
-3. Otherwise, use `<tool-root>/skills` as the target skills root.
-4. Create the target skills root only after confirming the source library is
+1. If the user says only `Codex`, default to the current standard user-level
+   target `~/.agents/skills/`.
+2. Expand `~` and environment variables in an explicit path.
+3. If the path basename is `skills`, treat it as the exact target skills root.
+4. If the path basename is `.agents` or `.claude`, use `<tool-root>/skills`.
+5. Treat an explicitly requested `.codex` root as a legacy Codex target and use
+   `<tool-root>/skills`; do not choose `~/.codex/skills` by default.
+6. Create the target skills root only after confirming the source library is
    readable.
 
-Treat the target as Codex when the user names `codex`, `~/.codex`, `$CODEX_HOME`,
-or another path whose agent/tool root basename is `.codex`. For Codex targets,
+Treat the target as Codex when the user names `codex`, identifies an explicit
+`.agents` path as a Codex target, names `$CODEX_HOME`, or explicitly requests a
+legacy `.codex` path. If an `.agents` path is given without an agent type and
+whether to write Codex policy affects the result, ask which target agent owns
+that path before copying. For Codex targets,
 non-router repo skills need an additional target-side `agents/openai.yaml`
 policy file so Codex keeps their `description` out of the initial model-visible
 skills list while leaving `repo-skills-router` visible.
@@ -50,18 +61,19 @@ before copying and show the matched skill ids in the import plan.
 If the user names specific packages or skills, import only those matched
 non-router skills plus `repo-skills-router` when at least one repo skill is
 included. If the user does not provide a package/skill filter, import every
-valid skill directory under the DisCo managed skills root that has a direct
-`SKILL.md`, including `repo-skills-router` when present.
+valid skill directory under the DisCo managed `repo-skills/` collection that
+has a direct `SKILL.md`, plus the sibling `repo-skills-router` when present.
 
 Do not import review/test artifact directories, envs, prompts, extensions,
 themes, sessions, or workflow run state. The source is only:
 
 ```text
-<disco-agent-dir>/skills/<skill-id>/SKILL.md
-<disco-agent-dir>/skills/<skill-id>/**/*
+<disco-agent-dir>/skills/repo-skills/<skill-id>/SKILL.md
+<disco-agent-dir>/skills/repo-skills/<skill-id>/**/*
+<disco-agent-dir>/skills/repo-skills-router/**/*
 ```
 
-If `repo-skills-router` is missing from the DisCo managed skills root but
+If the sibling `repo-skills-router` is missing from the DisCo managed library root but
 the bundled template is available, copy the bundled template into the import set
 only when there are repo skills to route. Do not create an empty router as the
 only imported skill unless the user explicitly asks for it.
@@ -79,20 +91,23 @@ before strict validation. If the updater cannot prove complete routing coverage,
 stop and report that source-library validation failed instead of silently
 skipping repo skills.
 
-Then inspect every selected skill directory:
+Then inspect every selected repo skill directory and the sibling router:
 
 1. Read `<skill-id>/SKILL.md` and parse its frontmatter.
 2. Require frontmatter `name` to be present, lowercase-hyphen, no longer than
    64 characters, and equal to the directory basename.
 3. Require a non-empty `description` line wrapped in double quotes.
-4. For every non-router repo skill, require
+4. Require `metadata.disco-role: operating` in every selected root and
+   descendant `SKILL.md`, including `repo-skills-router`. Do not synthesize a
+   missing role while exporting; repair the DisCo-managed source first.
+5. For every non-router repo skill, require
    `disable-model-invocation: true` in the root `SKILL.md` and in every
    `sub-skills/<id>/SKILL.md`. If the source omits it, normalize the copied
    target only when the user explicitly authorizes normalization; otherwise
    skip that skill and report the validation failure.
-5. For `repo-skills-router`, require that `disable-model-invocation: true` is
+6. For `repo-skills-router`, require that `disable-model-invocation: true` is
    absent so the router remains model-visible in the target agent.
-6. For every selected non-router repo skill, require
+7. For every selected non-router repo skill, require
    `references/repo-routing-metadata.json` unless the user explicitly imports a
    skill for manual use only and declines router participation.
 
@@ -108,11 +123,13 @@ the failed skill is required for the requested import.
 
 ## Duplicate Handling
 
-Before copying, inspect the target skills root for existing skill directories.
+Before copying, inspect `<target-skills-root>/repo-skills/` for existing repo
+skill directories and `<target-skills-root>/repo-skills-router/` for the router.
 Compare by directory basename and by the `name` frontmatter field in
 `SKILL.md`.
 
-For each non-router source skill that conflicts with a target skill:
+For each non-router source skill that conflicts with
+`<target-skills-root>/repo-skills/<skill-id>/`:
 
 1. Summarize the conflict using source path, target path, source frontmatter
    name, target frontmatter name, and a short evidence note if the contents look
@@ -147,8 +164,9 @@ temporary router as the source for the router copy or merge. Do not copy
 `<disco-agent-dir>/skills/repo-skills-router/` directly for a subset import,
 because that would expose unselected DisCo repo skills in the target router.
 
-If the target has no router, copy the filtered source router into the target
-skills root. If the target already has `repo-skills-router`, merge the filtered
+If the target has no router, copy the filtered source router into
+`<target-skills-root>/repo-skills-router/`. If the target already
+has `repo-skills-router`, merge the filtered
 source router with the target router instead of blindly replacing it.
 
 Merge rules:
@@ -181,7 +199,7 @@ After merging, verify that all scenario page links in `SKILL.md` and
 ## Copy Procedure
 
 1. Resolve source and target paths.
-2. Inventory source skill directories and target skill directories.
+2. Inventory source and target `repo-skills/` collections and sibling routers.
 3. Apply any user-provided package/skill filters and validate the selected
    source skills before planning destructive operations.
 4. Plan actions:
@@ -191,8 +209,9 @@ After merging, verify that all scenario page links in `SKILL.md` and
    - `merge-router`: both source and target have `repo-skills-router`.
 5. Ask all required overwrite/merge conflict questions before making
    destructive changes.
-6. Copy approved skills. Prefer directory-level replacement for approved
-   overwrites, preserving permissions when possible.
+6. Copy approved skills into `<target-skills-root>/repo-skills/<skill-id>/`.
+   Prefer directory-level replacement for approved overwrites, preserving
+   permissions when possible. Never flatten them into the target skills root.
 7. If the target is Codex, run
    `scripts/apply_codex_openai_policy.py <target-skill-dir>...` for every
    copied or overwritten non-router repo skill directory. This writes
@@ -212,8 +231,10 @@ After merging, verify that all scenario page links in `SKILL.md` and
    DisCo source skill directory.
 8. Build a filtered source `repo-skills-router` for the exact non-router repo
    skills that were approved for copy/overwrite, then merge or copy that
-   filtered router.
+   filtered router to the sibling `<target-skills-root>/repo-skills-router/`.
 9. Re-validate the target copy:
+   - every copied root and descendant `SKILL.md` preserves
+     `metadata.disco-role: operating`;
    - non-router repo skills still contain `disable-model-invocation: true`;
    - for Codex targets, each copied or overwritten non-router root skill and
      descendant skill contains `agents/openai.yaml` with
@@ -236,7 +257,7 @@ After merging, verify that all scenario page links in `SKILL.md` and
   review/test artifacts.
 - Do not write absolute local DisCo source paths into imported public skill
   content.
-- If the target path is inside the DisCo source skills root, stop and tell
+- If the target path is inside the DisCo source library root, stop and tell
   the user that source and target are the same library.
 - If a target conflict cannot be understood because `SKILL.md` is unreadable,
   ask before overwriting.
@@ -256,7 +277,7 @@ After merging, verify that all scenario page links in `SKILL.md` and
 
 End with a concise import summary:
 
-- source DisCo skills root;
+- source DisCo repo-skills collection and sibling router;
 - target skills root;
 - package/skill selection filters and matched skill ids;
 - skills copied;

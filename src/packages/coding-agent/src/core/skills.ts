@@ -2,6 +2,12 @@ import { existsSync, readdirSync, readFileSync, statSync } from "fs";
 import ignore from "ignore";
 import { basename, dirname, join, relative, resolve, sep } from "path";
 import { CONFIG_DIR_NAME, getAgentDir } from "../config.ts";
+import {
+	type DiscoSkillRole,
+	isSkillEligibleForDiscoMode,
+	resolveDiscoSkillRole,
+} from "../disco/modes/skill-policy.ts";
+import { DEFAULT_DISCO_AGENT_MODE, type DiscoAgentMode } from "../disco/modes/types.ts";
 import { parseFrontmatter } from "../utils/frontmatter.ts";
 import { canonicalizePath, resolvePath } from "../utils/paths.ts";
 import type { ResourceDiagnostic } from "./diagnostics.ts";
@@ -68,6 +74,7 @@ export interface SkillFrontmatter {
 	name?: string;
 	description?: string;
 	"disable-model-invocation"?: boolean;
+	metadata?: unknown;
 	[key: string]: unknown;
 }
 
@@ -78,6 +85,7 @@ export interface Skill {
 	baseDir: string;
 	sourceInfo: SourceInfo;
 	disableModelInvocation: boolean;
+	discoRole: DiscoSkillRole;
 }
 
 export interface LoadSkillsResult {
@@ -285,6 +293,16 @@ function loadSkillFromFile(
 		const { frontmatter } = parseFrontmatter<SkillFrontmatter>(rawContent);
 		const skillDir = dirname(filePath);
 		const parentDirName = basename(skillDir);
+		const roleResolution = resolveDiscoSkillRole(frontmatter);
+		if (!roleResolution.role) {
+			const serializedValue = JSON.stringify(roleResolution.invalidValue) ?? String(roleResolution.invalidValue);
+			diagnostics.push({
+				type: "warning",
+				message: `invalid metadata.disco-role ${serializedValue}; expected "meta", "operating", or "shared"`,
+				path: filePath,
+			});
+			return { skill: null, diagnostics };
+		}
 
 		// Validate description
 		const descErrors = validateDescription(frontmatter.description);
@@ -314,6 +332,7 @@ function loadSkillFromFile(
 				baseDir: skillDir,
 				sourceInfo: createSkillSourceInfo(filePath, skillDir, source),
 				disableModelInvocation: frontmatter["disable-model-invocation"] === true,
+				discoRole: roleResolution.role,
 			},
 			diagnostics,
 		};
@@ -325,6 +344,14 @@ function loadSkillFromFile(
 }
 
 /**
+ * Return the skills exposed to the model for implicit selection.
+ * Hidden skills remain registered for explicit invocation and router-directed reads.
+ */
+export function getModelVisibleSkills(skills: Skill[]): Skill[] {
+	return skills.filter((skill) => !skill.disableModelInvocation);
+}
+
+/**
  * Format skills for inclusion in a system prompt.
  * Uses XML format per Agent Skills standard.
  * See: https://agentskills.io/integrate-skills
@@ -333,7 +360,7 @@ function loadSkillFromFile(
  * (they can only be invoked explicitly via /skill:name commands).
  */
 export function formatSkillsForPrompt(skills: Skill[]): string {
-	const visibleSkills = skills.filter((s) => !s.disableModelInvocation);
+	const visibleSkills = getModelVisibleSkills(skills);
 
 	if (visibleSkills.length === 0) {
 		return "";
@@ -378,6 +405,12 @@ export interface LoadSkillsOptions {
 	skillPaths: string[];
 	/** Include default skills directories. */
 	includeDefaults: boolean;
+	/** DisCo mode used to exclude wrong-role skills before collision resolution. */
+	discoMode?: DiscoAgentMode;
+}
+
+export function filterSkillsForDiscoMode(skills: Skill[], discoMode: DiscoAgentMode): Skill[] {
+	return skills.filter((skill) => isSkillEligibleForDiscoMode(skill.discoRole, discoMode));
 }
 
 /**
@@ -386,6 +419,7 @@ export interface LoadSkillsOptions {
  */
 export function loadSkills(options: LoadSkillsOptions): LoadSkillsResult {
 	const { agentDir, skillPaths, includeDefaults } = options;
+	const discoMode = options.discoMode ?? DEFAULT_DISCO_AGENT_MODE;
 
 	// Resolve agentDir - if not provided, use default from config
 	const resolvedCwd = resolvePath(options.cwd);
@@ -399,6 +433,10 @@ export function loadSkills(options: LoadSkillsOptions): LoadSkillsResult {
 	function addSkills(result: LoadSkillsResult) {
 		allDiagnostics.push(...result.diagnostics);
 		for (const skill of result.skills) {
+			if (!isSkillEligibleForDiscoMode(skill.discoRole, discoMode)) {
+				continue;
+			}
+
 			// Resolve symlinks to detect duplicate files
 			const realPath = canonicalizePath(skill.filePath);
 

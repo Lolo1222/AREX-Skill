@@ -24,7 +24,7 @@ def make_module_plan(attempt: Path) -> None:
                 {
                     "id": "core_module",
                     "name": "Core Module",
-                    "skill_name": "core_module",
+                    "skill_name": "core-module",
                     "summary": "Core method module with deterministic behavior.",
                     "inputs": ["input"],
                     "outputs": ["output"],

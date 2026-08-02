@@ -1,6 +1,8 @@
 ---
 name: create-paper-module-skill
 description: "Convert one paper module document into a production-quality English Agent Skill with scripts, tests, validation logs, and clear input/output contracts."
+metadata:
+  disco-role: meta
 ---
 
 # Create Paper Module Skill
@@ -29,6 +31,12 @@ Every generated module skill must contain:
   tests/                # recommended for non-trivial scripts
 ```
 
+Its `SKILL.md` frontmatter must declare `metadata.disco-role: operating` so the
+module is available in Researcher mode and excluded from Creator mode.
+The `<skill_name>` directory basename and frontmatter `name` must match and use a
+canonical lowercase-hyphen skill id of at most 64 characters so the verified
+module can be installed by DisCo's operating-graph importer.
+
 Avoid extra README files. Put operational guidance in `SKILL.md` and deterministic logic in `scripts/`.
 
 ## Workflow
@@ -37,6 +45,7 @@ Avoid extra README files. Put operational guidance in `SKILL.md` and determinist
 2. Use the paper for method semantics. Use the repo only to confirm implementation details, argument names, data formats, or edge cases.
 3. Write `SKILL.md` with:
    - frontmatter `name` and `description`
+   - frontmatter `metadata.disco-role: operating`
    - when to use the skill
    - inputs and outputs
    - workflow

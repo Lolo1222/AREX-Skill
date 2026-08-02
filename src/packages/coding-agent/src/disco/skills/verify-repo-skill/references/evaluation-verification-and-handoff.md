@@ -86,6 +86,7 @@ review/test artifact directory as `reports/self-refine/evals.json`:
         "Every sub-skill frontmatter name exactly matches its sub-skills/<id>/ directory basename, usability target id, and workflow subSkill id when workflow metadata is available",
         "Sub-skill names avoid redundantly repeating the root repo skill id unless needed to disambiguate sibling sub-skills",
         "Every generated root and sub-skill frontmatter description is wrapped in double quotes",
+        "Every generated root and sub-skill SKILL.md frontmatter contains metadata.disco-role: operating",
         "Every generated root and sub-skill SKILL.md frontmatter contains disable-model-invocation: true for compatible agents; Codex target visibility is controlled during import",
         "The generated skill tree covers every public capability identified in the coverage matrix",
         "The main-agent sub-skill plan records boundaries, evidence sources, required outputs, cross-links, and acceptance rubrics for each sub-skill",
@@ -150,18 +151,30 @@ from available repo evidence before running anything. Candidate sources include
 repo-owned examples, tests, CLI help snippets, notebooks, smoke scripts,
 fixtures, golden files, and documented commands.
 
+Require each selected-workflow candidate to record backend requirement,
+backend criticality, CPU substitution, dependency variant, hardware
+prerequisites, verification expectation, and assigned prepared environment.
+Reconcile this map with the backend verification plan and environment handoff
+before selecting commands. A `partial` handoff must already identify the
+required backend block; a `failed` handoff cannot support final verification.
+
 Select a representative safe subset:
 
 - Prefer short tests, CLI `--help`/parser checks, import checks, tiny fixtures,
   smoke scripts, and examples with documented minimal inputs.
 - Include at least one native candidate for each major workflow when a safe
   candidate exists.
+- For every `required` GPU/accelerator capability with no full CPU substitute,
+  run a safe representative native candidate on the actual required backend
+  when the prepared environment and hardware are compatible.
 - Include support-workflow candidates such as validation, conversion,
   data-layout, config, and optional-dependency checks when those workflows are
   important.
-- Skip candidates that require network access, credentials, private data, large
-  downloads, unavailable hardware, long training, benchmarks, destructive
-  writes, or unknown side effects unless the user explicitly approves.
+- Skip optional candidates that require network access, credentials, private
+  data, large downloads, unavailable hardware, long training, benchmarks,
+  destructive writes, or unknown side effects unless the user explicitly
+  approves. When the same constraint prevents a required backend candidate,
+  record `BLOCKED_REQUIRED_BACKEND` instead of an ordinary skip.
 
 Record candidate and execution results under
 `<artifact-root>/reports/verification/`, for example:
@@ -184,6 +197,11 @@ Use these result statuses:
   command, relative repo evidence path, stdout/stderr summary, exit code, and
   whether the failure implies a skill issue, an environment issue, or a repo
   issue.
+- `BLOCKED_REQUIRED_BACKEND`: a selected required GPU/accelerator capability
+  with no full CPU substitute could not receive its required runtime evidence
+  because hardware, driver/runtime, dependency variant, data/cost approval, or
+  prepared environment was unavailable. Treat this as a high or critical
+  verification/import blocker.
 - `SKIP_UNSAFE`: the candidate was intentionally not run for safety,
   credentials, hardware, network, data, cost, or runtime reasons. Record the
   reason and decide whether a synthetic assertion-backed usability case covers
@@ -198,11 +216,27 @@ the failure contradicts a generated skill claim. If native execution is skipped,
 do not count it as pass; report the skip and the synthetic coverage used
 instead.
 
+For every `BLOCKED_REQUIRED_BACKEND`, do not mark the skill fully verified and
+do not auto-import. Resolve the environment/hardware, explicitly narrow the
+scope and generated claims, or present the exact final limitation for informed
+manual user acceptance. An earlier acceptance to continue partial drafting is
+not final import approval. Synthetic assertions, source inspection, docs, and
+CPU imports may verify guidance or fallback handling, but must not clear this
+runtime block.
+
 When using a helper runner, keep it generic and manifest-driven. A runner may
 execute a preselected safe manifest with timeouts and write JSON output, but it
 must not guess that arbitrary repo tests are safe. Store local absolute command
 paths only in private artifacts when needed; public runtime skill files must
 not mention local checkout paths or inspection environment paths.
+
+Include `backend_requirement`, `backend_criticality`, `cpu_substitute`,
+`dependency_variant`, `hardware_prerequisites`, `verification_expectation`, and
+`assigned_environment` in each private runner-manifest case. Invoke the runner
+separately with the matching `--python` for different prepared prefixes. The
+bundled runner emits `BLOCKED_REQUIRED_BACKEND` and exits nonzero when a
+non-runnable required accelerator case has no full CPU substitute; do not
+rewrite that result as `SKIP_UNSAFE`.
 
 ## Static Verification and Human Review
 
@@ -231,8 +265,9 @@ Treat this review package as a quality gate. Fix critical or high failures
 before finishing unless the user explicitly accepts the risk.
 
 The static pass checks frontmatter validity, canonical IDs, double-quoted
-descriptions, disabled model invocation for generated repo root/sub-skills,
-router model visibility, root and sub-skill routing, relative links,
+descriptions, `metadata.disco-role: operating` on every generated repo root,
+sub-skill, and router, disabled model invocation for generated repo
+root/sub-skills, router model visibility, root and sub-skill routing, relative links,
 reference/script reachability, install/import guidance, local path leaks,
 source-repo runtime dependencies, usability test-case shape, copyable prompts,
 README review sections, optional eval shape, generated cache/build debris,
@@ -245,11 +280,14 @@ Before finishing, confirm:
 - The directory layout matches the intended output structure.
 - Each generated `SKILL.md` has valid frontmatter.
 - Every frontmatter `description` is double-quoted, and YAML-sensitive strings are escaped.
+- Every generated repo root and sub-skill `SKILL.md`, and the live or generated
+  `repo-skills-router/SKILL.md`, declares `metadata.disco-role: operating`.
 - Every generated repo root and sub-skill `SKILL.md` contains
   `disable-model-invocation: true`.
-- The live or generated `repo-skills-router/SKILL.md` does not contain
-  `disable-model-invocation: true`, because it must remain the routing entry
-  point for compatible agents.
+- A canonical or exported `repo-skills-router/SKILL.md` does not contain
+  `disable-model-invocation: true`. A live DisCo router may contain it only as
+  the persisted result of the user's `disco repo-skills router disable` policy;
+  router rebuilds must preserve that state.
 - The generated root directory basename is a canonical lowercase-hyphen skill id, not a raw mixed-case repo name.
 - Every `name` field uses only lowercase letters, numbers, and hyphens, is no longer than 64 characters, and matches the corresponding generated skill directory basename.
 - Every sub-skill directory basename under `sub-skills/`, sub-skill
@@ -274,7 +312,13 @@ Before finishing, confirm:
   references/scripts it should contain, and how the main agent accepted it.
 - Whole-skill integration artifacts exist when generated by the calling
   workflow, including integration notes, coverage/depth matrix, native
-  candidate map, and long-tail gap register.
+  candidate map, backend verification plan, and long-tail gap register.
+- Every included native candidate records backend requirement, criticality,
+  CPU substitution, dependency variant, hardware prerequisites, verification
+  expectation, and its prepared environment or blocking reason.
+- The environment handoff covers every required backend in the confirmed
+  scope. A CPU-only environment is not accepted for a required GPU/accelerator
+  capability with no full CPU substitute.
 - Every non-trivial public capability maps to a root or sub-skill entry plus enough bundled references/scripts for practical use.
 - Each sub-skill passes a depth check: workflows, APIs, commands, configs, inputs/outputs, examples, troubleshooting, and safe scripts are sufficient for future agents to avoid reopening original source code or docs for ordinary use.
 - Every high-frequency support workflow identified in the evidence map, such
@@ -338,11 +382,16 @@ Before finishing, confirm:
 - Native repo examples/tests were considered after whole-skill integration.
 - Safe selected native candidates were run, or skipped with explicit safety,
   hardware, data, credential, network, runtime, or scope reasons.
+- Every safe required backend candidate ran in its assigned compatible
+  environment, or received `BLOCKED_REQUIRED_BACKEND` and remained an explicit
+  high/critical import blocker.
 - Native verification results were compared against generated skill coverage,
   not treated as independent environment checks only.
 - `SKILL_GAP` native results were fixed or explicitly accepted by the user.
 - Native skips were not counted as passes and were paired with synthetic
   assertion-backed coverage when needed.
+- Synthetic coverage was not used to clear required GPU/accelerator runtime
+  evidence or make a partial environment eligible for auto-import.
 - The automatic verifier was run when available, the human review package was created, and critical/high failures were fixed or explicitly accepted.
 - `reports/self-refine/`, `reports/verification/`, `reports/final/`,
   verification reports, human-review notes, publication checklists, prompt
@@ -387,9 +436,9 @@ Use this structure:
 - Bundled references/scripts:
 
 ## Coverage Matrix
-| Repo capability | Evidence paths | Skill location | Coverage | Synthetic validation | Native validation | Notes |
-| --- | --- | --- | --- | --- | --- | --- |
-| ... | ... | ... | covered/partial/gap | pass/fail/not-tested | pass/skill-gap/native-fail/skipped | ... |
+| Repo capability | Evidence paths | Required backend | Skill location | Coverage | Synthetic validation | Native validation | Notes |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| ... | ... | cpu/cuda/rocm/mps/vendor/any | ... | covered/partial/gap | pass/fail/not-tested | pass/skill-gap/native-fail/blocked-required-backend/skipped | ... |
 
 ## Long-Tail Gaps
 | Capability or artifact | Why not covered | Risk | Suggested future extension |
@@ -405,14 +454,19 @@ Use this structure:
 - Remaining warnings:
 
 ## Native Ground-Truth Verification
+- Backend verification plan and prepared environments:
 - Selected native candidates:
 - Pass/fail/skip summary:
+- Required backend blocks:
 - Skill gaps fixed:
 - Native failures or skips that remain:
 
 ## Import Readiness
 - Ready / not ready / ready with accepted warnings:
+- Environment handoff: ok / partial / failed
+- Backend gate eligible for auto-import: yes / no
 - Blocking issues:
+- Final informed acceptance of required-backend limitations: none / pending / accepted
 - Recommended follow-up:
 ```
 
@@ -435,8 +489,8 @@ When presenting the verified skill to the user, include a short verification rep
   report/eval artifact paths created.
 - Self-refine result: summarize the lightweight checks performed, important revisions made, and any explicit remaining gaps.
 - Native verification result: summarize selected original repo examples/tests,
-  PASS/SKILL_GAP/NATIVE_FAIL/SKIP counts, and any skill changes made because of
-  native evidence.
+  PASS/SKILL_GAP/NATIVE_FAIL/BLOCKED_REQUIRED_BACKEND/SKIP counts, prepared
+  backend environments, and any skill changes made because of native evidence.
 
 Also include a short publication note:
 
@@ -453,52 +507,74 @@ Also include a short publication note:
 
 ## Import and Repo Skills Router
 
+Repo-to-skills is the high-reuse managed special case in the general operating-
+graph deployment policy. A verified repo skill is self-contained, versioned,
+provenance-backed guidance intended to work across checkouts, projects, and
+research tasks. Import it to
+`~/.disco/agent/skills/repo-skills/<skill-id>/` and maintain the sibling router;
+do not place it in one project's `.agents/skills/` and do not pass its
+`repo-routing-metadata.json` through the generic operating-graph importer. If a
+candidate still depends on private or transient checkout state, it has not met
+this workflow's managed reuse contract and is not import-ready.
+
 After the generated repo skill passes verification, resolve the import decision
 policy from the calling workflow. If the policy is missing, default to
 `importAfterVerification: ask`.
 
 When `importAfterVerification` is `ask`, use `ask_user_question` when available
 to ask whether to import it into DisCo's user skills directory at
-`~/.disco/agent/skills/`. Present the verified runtime skill directory, the
+`~/.disco/agent/skills/repo-skills/<skill-id>/`. Present the verified runtime skill directory, the
 review/test artifact directory, and a concise verification summary so the user
 can make an informed decision. Do not only ask in a normal assistant message and
 stop when the structured question tool is available.
 
 When `importAfterVerification` is `auto-import`, do not ask again after a
 successful verification. Auto-import only when the skill is import-ready and no
-high or critical verification failure remains unresolved. In the handoff and
-final report, state that the original create request authorized auto-import.
+high or critical verification failure, partial environment handoff, or
+`BLOCKED_REQUIRED_BACKEND` result remains unresolved. In the handoff and final
+report, state that the original create request authorized auto-import.
 
-If the user approves import or import is auto-authorized, run the import as one
-global locked transaction using `scripts/with_import_lock.mjs`. The lock path is
-under the DisCo agent directory, resolved from `DISCO_CODING_AGENT_DIR`
-when set, otherwise `~/.disco/agent/locks/repo-skills-import.lockdir`. The
-lock must be shared by all create, refresh, and verification sessions that write
-the managed skills library. Hold it across the complete mutation of
-`<agent-dir>/skills/`, not only the final router write.
+If a required backend remains blocked, override `auto-import` to a manual
+decision for this run. Present the final backend plan, missing runtime evidence,
+affected generated claims, synthetic/fallback coverage, and risk. An earlier
+acceptance to continue drafting from a partial environment is not enough; ask
+again after final native verification. Import only after the user explicitly
+accepts that exact final limitation. Record the skill as "ready with accepted
+backend limitation", never as fully backend-verified.
 
-While holding the lock:
+If the user approves import or import is auto-authorized, use the dedicated
+importer rather than manually composing a copy and router update:
 
-1. Resolve `<agent-dir>` again from `DISCO_CODING_AGENT_DIR` or
-   `~/.disco/agent`, then set `<skills-root>` to `<agent-dir>/skills`.
-2. Re-read the current `<skills-root>/<skill-id>/` and live
-   `<skills-root>/repo-skills-router/` state. Do not rely on a router snapshot
-   prepared before the lock was acquired; another session may have imported a
-   skill while this verification run was waiting.
-3. Re-check overwrite safety for `<skills-root>/<skill-id>/`. If it already
-   exists and this workflow is not explicitly updating that exact skill, ask
-   before replacing it or choose a non-conflicting import name when that is
-   consistent with the generated skill id policy.
-4. Copy only the runtime skill directory into
-   `<skills-root>/<skill-id>/`. Do not copy usability cases, evals, review
-   reports, publication notes, prompt samples, or other check-only artifacts
-   into the user skills directory.
-5. Ensure `<skills-root>/<skill-id>/references/repo-routing-metadata.json`
-   exists. This JSON is the source of truth for the imported skill's router
-   scenario placement, role, read-when signals, best-fit tasks, avoid-when notes,
-   useful entry points, and selection guidance.
-6. Check that the routing metadata uses a canonical scenario ID or alias from
-   `<skills-root>/repo-skills-router/references/scenario-registry.json` when the
+```bash
+node scripts/import_repo_skill.mjs --agent-dir <agent-dir> [--overwrite] <runtime-skill-dir>
+```
+
+Omit `--overwrite` for a new import. Pass it only after approval to update that
+exact existing repo skill. The importer resolves `<agent-dir>` from the explicit
+option, `DISCO_CODING_AGENT_DIR`, or `~/.disco/agent`; acquires the shared global
+lock at `<agent-dir>/locks/repo-skills-import.lockdir`; and holds it across the
+complete mutation of `<agent-dir>/skills/`.
+
+Inside that transaction, the importer:
+
+1. Re-reads the current `<agent-dir>/skills/repo-skills/<skill-id>/` and sibling
+   `<agent-dir>/skills/repo-skills-router/` after acquiring the lock.
+2. Re-checks overwrite safety. A same-name target fails unless `--overwrite`
+   was supplied after approval for that exact skill.
+3. Copies only the verified runtime skill directory into a private staging
+   directory. It does not copy usability cases, evals, review reports,
+   publication notes, prompt samples, or other check-only artifacts.
+4. Recursively verifies every staged `SKILL.md` has a canonical name matching
+   its directory, a double-quoted non-empty description,
+   `disable-model-invocation: true`, and `metadata.disco-role: operating`.
+5. Requires and parses
+   `<runtime-skill-dir>/references/repo-routing-metadata.json`. This JSON is the
+   source of truth for router scenario placement, role, read-when signals,
+   best-fit tasks, avoid-when notes, useful entry points, and selection guidance.
+6. Atomically installs the staged skill, preserving any approved previous copy
+   for rollback.
+7. Checks that the routing metadata uses a canonical scenario ID or alias from
+   `<agent-dir>/skills/repo-skills-router/references/scenario-registry.json` when the
    registry exists. If the metadata introduces a new scenario, it must include a
    top-level `scenarios.<id>` entry with `allow_new: true`,
    `why_not_existing`, and `expected_future_reuse`; otherwise the updater should
@@ -507,21 +583,26 @@ While holding the lock:
    rendered labels such as `Read when`, `Avoid when`, `Best for`, or `Role`, role
    text must not start with numeric artifacts, and `useful_entry_points` must not
    contain generated count placeholders such as `1 more sub-skills`.
-7. Run `scripts/update_repo_skills_router.mjs --agent-dir <agent-dir> --already-locked`
-   inside the same locked process. Do not hand-edit the router Markdown as the
-   import mechanism. The updater re-reads live skills and the live router,
+8. Runs `scripts/update_repo_skills_router.mjs --agent-dir <agent-dir>
+   --already-locked` inside the same locked process. The updater re-reads live
+   skills and the live router,
    creates the router from the bundled template when missing, rebuilds the root
    quick map, `references/usage-scenarios.md`,
    `references/maintenance.md`, `references/scenario-registry.json`, and every
    `references/scenarios/<scenario>.md` page, removes legacy side-channel router
    files, normalizes aliases through the scenario registry, and validates
    coverage and links before returning success.
-8. Treat a non-zero updater exit as import failure before releasing success.
-   Before reporting success, verify that the imported skill directory exists and
-   that the updater output says the router was updated.
+9. Treats a non-zero updater exit or failed post-update existence check as an
+   import failure, then restores both the previous skill and previous router
+   before releasing the lock.
+
+Do not hand-edit router Markdown as the import mechanism, and do not run a copy
+command followed by the updater yourself. A successful import is available to
+DisCo Researcher in a new session; cross-agent export is a separate optional
+operation.
 
 Do not treat `auto-import` as permission to overwrite an unrelated existing
-managed skill. If `~/.disco/agent/skills/<skill-id>/` already exists and
+managed skill. If `~/.disco/agent/skills/repo-skills/<skill-id>/` already exists and
 this workflow is not explicitly updating that exact skill, ask before replacing
 it or choose a non-conflicting import name when that is consistent with the
 generated skill id policy.
@@ -577,20 +658,20 @@ Use these checks before approving import or publication:
 
 ```bash
 rg -n '"role"\s*:\s*"(Role\b|[0-9]+\b)|"read_when"\s*:\s*"Read when\b|"avoid_when"\s*:\s*"Avoid when\b|"best_for"\s*:\s*"Best for\b|"useful_entry_points"\s*:\s*\[[^\]]*"[0-9]+ more sub-skills"' \
-  <skills-root>/*/references/repo-routing-metadata.json
+  <repo-skills-root>/*/references/repo-routing-metadata.json
 ```
 
 After rebuilding the router, also check rendered Markdown:
 
 ```bash
 rg -n '^(Role|Read when|Best for|Avoid when|Useful entry points):\s*(Role|Read when|Best for|Avoid when|Useful entry points)\b|^Role:\s*[0-9]+\b' \
-  <skills-root>/repo-skills-router
+  <library-root>/repo-skills-router
 ```
 
 When import is approved or auto-authorized, update the DisCo user
-`repo-skills-router` skill only inside the global import lock and only through
-`scripts/update_repo_skills_router.mjs`. The generated router keeps its root quick
-map compact, updates `references/usage-scenarios.md`, and updates each relevant
+`repo-skills-router` only through `scripts/import_repo_skill.mjs`; that helper
+calls the lower-level updater inside the global import lock. The generated router
+keeps its root quick map compact, updates `references/usage-scenarios.md`, and updates each relevant
 `references/scenarios/<scenario>.md` page with the repo skill's role, read-when
 signals, best-fit tasks, avoid-when notes, useful entry points, and selection
 guideline. It also preserves `references/scenario-registry.json`, normalizes
@@ -602,9 +683,9 @@ on a separate similar-skill comparison file.
 
 Do not automatically synchronize the runtime skill or router into other agent
 tools as part of this verification/import workflow. If the user explicitly asks
-to export DisCo's managed skill library to another agent such as
-`~/.codex`, `~/.agents`, or `~/.claude`, use the sibling
-`import-repo-skills-to-agent` meta skill. That skill handles target skills-root
+to export DisCo's managed skill library to another agent such as Codex at
+`~/.agents/skills/` or Claude Code at `~/.claude/skills/`, use the sibling
+`import-repo-skills-to-agent` workflow skill. That skill handles target skills-root
 detection, duplicate-skill overwrite questions, and merging an existing target
 `repo-skills-router` with the DisCo-managed router.
 
@@ -620,4 +701,7 @@ The generated skill must be:
 - Public-ready: omits user-specific inspection environment details and describes only reproducible public installation and runtime requirements.
 - Well-structured: keeps `SKILL.md` files readable and moves depth into the nearest `references/` or `scripts/` directory.
 - Tested: includes usability test case directories plus a lightweight eval/self-refine pass.
+- Backend-honest: required GPU/accelerator claims have real runtime evidence,
+  or remain explicitly blocked/partially verified with auto-import disabled;
+  CPU or synthetic checks are never presented as equivalent proof.
 - Reasonable: free of vague, contradictory, misleading, or unjustified guidance that could confuse future agents.

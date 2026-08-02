@@ -4,10 +4,10 @@
  */
 
 export interface DeepResearchConfig {
-  /** Number of distinct search angles/queries to explore. */
-  angles: number;
-  /** Minimum distinct sources required for a claim to survive cross-checking. */
-  minSupport: number;
+	/** Number of distinct search angles/queries to explore. */
+	angles: number;
+	/** Minimum distinct sources required for a claim to survive cross-checking. */
+	minSupport: number;
 }
 
 /**
@@ -18,7 +18,7 @@ export interface DeepResearchConfig {
  * Inject the web tools at run time via the agent's `tools` option.
  */
 export function generateDeepResearchWorkflow(): string {
-  return `export const meta = {
+	return `export const meta = {
   name: 'deep_research',
   description: 'Deep research with real web search and cross-checked claims',
   phases: [
@@ -76,18 +76,18 @@ return { question, queries, supported: (verdict && verdict.supported) || [], rep
  * Generate a codebase audit workflow.
  */
 export function generateCodebaseAuditWorkflow(scope: string, checks: string[]): string {
-  const escapedScope = scope.replace(/'/g, "\\'").slice(0, 60);
-  const checkAgents = checks
-    .map((check) => {
-      const label = check
-        .toLowerCase()
-        .replace(/[^a-z0-9]+/g, "-")
-        .slice(0, 20);
-      return `  () => agent('Audit ${check} across: ' + scope, { label: '${label}' }),`;
-    })
-    .join("\n");
+	const escapedScope = scope.replace(/'/g, "\\'").slice(0, 60);
+	const checkAgents = checks
+		.map((check) => {
+			const label = check
+				.toLowerCase()
+				.replace(/[^a-z0-9]+/g, "-")
+				.slice(0, 20);
+			return `  () => agent('Audit ${check} across: ' + scope, { label: '${label}' }),`;
+		})
+		.join("\n");
 
-  return `export const meta = {
+	return `export const meta = {
   name: 'codebase_audit',
   description: 'Codebase audit: ${escapedScope}',
   phases: [

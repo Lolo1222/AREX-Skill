@@ -63,10 +63,18 @@ def render_command(command: str, repo_root: Path, python_executable: str) -> str
 def run_case(case: dict[str, Any], repo_root: Path, default_timeout: int, python_executable: str) -> dict[str, Any]:
     case_id = str(case.get("id") or case.get("name") or "unnamed")
     safety = str(case.get("safety_class") or case.get("safety") or "skip-unknown")
+    backend_requirement = str(case.get("backend_requirement") or "any").strip().lower()
+    backend_criticality = str(case.get("backend_criticality") or "optional").strip().lower()
+    cpu_substitute = str(case.get("cpu_substitute") or "partial").strip().lower()
     command = case.get("command")
     expected_skill_area = case.get("expected_skill_area") or case.get("skill_area")
     evidence_path = case.get("evidence_path") or case.get("artifact")
     timeout = int(case.get("timeout_seconds") or default_timeout)
+    blocked_required_backend = (
+        backend_criticality == "required"
+        and cpu_substitute != "full"
+        and backend_requirement not in {"", "any", "cpu"}
+    )
 
     result: dict[str, Any] = {
         "id": case_id,
@@ -74,20 +82,32 @@ def run_case(case: dict[str, Any], repo_root: Path, default_timeout: int, python
         "evidence_path": evidence_path,
         "expected_skill_area": expected_skill_area,
         "safety_class": safety,
+        "backend_requirement": backend_requirement,
+        "backend_criticality": backend_criticality,
+        "cpu_substitute": cpu_substitute,
+        "dependency_variant": case.get("dependency_variant"),
+        "hardware_prerequisites": case.get("hardware_prerequisites"),
+        "verification_expectation": case.get("verification_expectation"),
+        "assigned_environment": case.get("assigned_environment"),
         "command": command,
     }
 
     if safety not in RUNNABLE_SAFETY:
         result.update(
             {
-                "status": "SKIP_UNSAFE",
+                "status": "BLOCKED_REQUIRED_BACKEND" if blocked_required_backend else "SKIP_UNSAFE",
                 "reason": case.get("skip_reason") or f"safety_class is {safety}",
             }
         )
         return result
 
     if not isinstance(command, str) or not command.strip():
-        result.update({"status": "SKIP_UNSAFE", "reason": "missing command"})
+        result.update(
+            {
+                "status": "BLOCKED_REQUIRED_BACKEND" if blocked_required_backend else "SKIP_UNSAFE",
+                "reason": "missing command",
+            }
+        )
         return result
 
     rendered = render_command(command, repo_root, python_executable)
@@ -149,7 +169,7 @@ def main(argv: list[str]) -> int:
     cases = normalize_cases(manifest)
 
     report: dict[str, Any] = {
-        "schema": "disco.native-verification-report.v1",
+        "schema": "disco.native-verification-report.v2",
         "repo_root_basename": repo_root.name,
         "manifest": str(manifest_path),
         "case_count": len(cases),
@@ -169,7 +189,7 @@ def main(argv: list[str]) -> int:
     write_json(out_path, report)
     print(json.dumps(report["summary"], sort_keys=True))
 
-    if summary.get("NATIVE_FAIL", 0) > 0:
+    if summary.get("NATIVE_FAIL", 0) > 0 or summary.get("BLOCKED_REQUIRED_BACKEND", 0) > 0:
         return 1
     return 0
 

@@ -2,19 +2,19 @@
  * CLI argument parsing and help display
  */
 
-import type { ThinkingLevel } from "@auto-ml-skills/disco-agent-core";
+import type { ThinkingLevel } from "@earendil-works/pi-agent-core";
 import chalk from "chalk";
 import { APP_NAME, CONFIG_DIR_NAME, ENV_AGENT_DIR, ENV_SESSION_DIR } from "../config.ts";
 import type { ExtensionFlag } from "../core/extensions/types.ts";
+import { type DiscoAgentMode, isDiscoAgentMode } from "../disco/modes/types.ts";
 
 export type Mode = "text" | "json" | "rpc";
-export type SourceKind = "package" | "paper";
 
 export interface Args {
 	provider?: string;
 	model?: string;
 	apiKey?: string;
-	source?: SourceKind;
+	agentMode?: DiscoAgentMode;
 	systemPrompt?: string;
 	appendSystemPrompt?: string[];
 	thinking?: ThinkingLevel;
@@ -36,6 +36,7 @@ export interface Args {
 	noBuiltinTools?: boolean;
 	extensions?: string[];
 	noExtensions?: boolean;
+	discoNoBuiltinSkills?: boolean;
 	print?: boolean;
 	export?: string;
 	noSkills?: boolean;
@@ -56,20 +57,20 @@ export interface Args {
 	diagnostics: Array<{ type: "warning" | "error"; message: string }>;
 }
 
-const VALID_THINKING_LEVELS = ["off", "minimal", "low", "medium", "high", "xhigh"] as const;
+const VALID_THINKING_LEVELS = ["off", "minimal", "low", "medium", "high", "xhigh", "max"] as const;
 
 export function isValidThinkingLevel(level: string): level is ThinkingLevel {
 	return VALID_THINKING_LEVELS.includes(level as ThinkingLevel);
 }
 
-function parseSource(value: string, result: Args): void {
-	if (value === "package" || value === "paper") {
-		result.source = value;
+function parseAgentMode(value: string, result: Args): void {
+	if (isDiscoAgentMode(value)) {
+		result.agentMode = value;
 		return;
 	}
 	result.diagnostics.push({
 		type: "error",
-		message: `Invalid source "${value}". Valid values: package, paper`,
+		message: `Invalid agent mode "${value}". Valid values: creator, researcher`,
 	});
 }
 
@@ -103,12 +104,16 @@ export function parseArgs(args: string[]): Args {
 			result.model = args[++i];
 		} else if (arg === "--api-key" && i + 1 < args.length) {
 			result.apiKey = args[++i];
-		} else if (arg === "--source" && i + 1 < args.length) {
-			parseSource(args[++i], result);
-		} else if (arg.startsWith("--source=")) {
-			parseSource(arg.slice("--source=".length), result);
-		} else if (arg === "--source") {
-			result.diagnostics.push({ type: "error", message: "--source requires a value: package or paper" });
+		} else if (arg === "--agent-mode") {
+			const value = args[i + 1];
+			if (value === undefined || value.startsWith("-")) {
+				result.diagnostics.push({ type: "error", message: "--agent-mode requires a value: creator or researcher" });
+			} else {
+				parseAgentMode(value, result);
+				i++;
+			}
+		} else if (arg.startsWith("--agent-mode=")) {
+			parseAgentMode(arg.slice("--agent-mode=".length), result);
 		} else if (arg === "--system-prompt" && i + 1 < args.length) {
 			result.systemPrompt = args[++i];
 		} else if (arg === "--append-system-prompt" && i + 1 < args.length) {
@@ -170,6 +175,8 @@ export function parseArgs(args: string[]): Args {
 			result.extensions.push(args[++i]);
 		} else if (arg === "--no-extensions" || arg === "-ne") {
 			result.noExtensions = true;
+		} else if (arg === "--disco-no-builtin-skills") {
+			result.discoNoBuiltinSkills = true;
 		} else if (arg === "--skill" && i + 1 < args.length) {
 			result.skills = result.skills ?? [];
 			result.skills.push(args[++i]);
@@ -239,26 +246,29 @@ export function printHelp(extensionFlags?: ExtensionFlag[]): void {
 					})
 					.join("\n")}\n`
 			: "";
-	console.log(`${chalk.bold(APP_NAME)} - DisCo agent for creating, validating, importing, exporting, and maintaining Agent Skills
+	console.log(`${chalk.bold(APP_NAME)} - Research agent that uses code, tools, and routed Agent Skills to complete research tasks end to end
 
 ${chalk.bold("Usage:")}
   ${APP_NAME} [options] [@files...] [messages...]
 
 ${chalk.bold("Commands:")}
-  ${APP_NAME} install <source> [-l]     Install extension source and add to settings
-  ${APP_NAME} remove <source> [-l]      Remove extension source from settings
+  ${APP_NAME} install <source> [-l]     Install a package and add it to settings
+  ${APP_NAME} remove <source> [-l]      Remove a package and its source from settings
   ${APP_NAME} uninstall <source> [-l]   Alias for remove
-  ${APP_NAME} update [source|self]      Update DisCo and installed extensions
-  ${APP_NAME} list                      List installed extensions from settings
-  ${APP_NAME} config                    Open TUI to enable/disable package resources
-  ${APP_NAME} <command> --help          Show help for install/remove/uninstall/update/list
+  ${APP_NAME} update [source|self]      Update DisCo, packages, or model catalogs
+  ${APP_NAME} list                      List installed packages from settings
+  ${APP_NAME} config [-l]               Open TUI to enable/disable package resources (Tab switches scope)
+  ${APP_NAME} repo-skills <command>     Install, update, inspect, or configure repository skills
+  ${APP_NAME} auth print-api-key        Print a configured API key for a model
+  ${APP_NAME} auth print-bearer-token   Print a configured OAuth bearer token for a model
+  ${APP_NAME} <command> --help          Show help for install/remove/update/list/config/repo-skills
 
 ${chalk.bold("Options:")}
   --provider <name>              Provider name (default: google)
   --model <pattern>              Model pattern or ID (supports "provider/id" and optional ":<thinking>")
   --api-key <key>                API key (defaults to env vars)
-  --source <package|paper>       Force a skill source workflow (default: auto classify and ask if ambiguous)
-  --system-prompt <text>         System prompt (default: DisCo skill-building prompt)
+  --agent-mode <mode>            Agent role for a new session: creator or researcher (default)
+  --system-prompt <text>         System prompt (default: DisCo coding and skill workflow prompt)
   --append-system-prompt <text>  Append text or file contents to the system prompt (can be used multiple times)
   --mode <mode>                  Output mode: text (default), json, or rpc
   --print, -p                    Non-interactive mode: process prompt and exit
@@ -278,10 +288,11 @@ ${chalk.bold("Options:")}
                                  Applies to built-in, extension, and custom tools
   --exclude-tools, -xt <tools>   Comma-separated denylist of tool names to disable
                                  Applies to built-in, extension, and custom tools
-  --thinking <level>             Set thinking level: off, minimal, low, medium, high, xhigh
+  --thinking <level>             Set thinking level: off, minimal, low, medium, high, xhigh, max
   --extension, -e <path>         Load an extension file (can be used multiple times)
   --no-extensions, -ne           Disable extension discovery (explicit -e paths still work)
   --skill <path>                 Load a skill file or directory (can be used multiple times)
+  --disco-no-builtin-skills      Disable bundled DisCo skills; keep user and explicit skills
   --no-skills, -ns               Disable skills discovery and loading
   --prompt-template <path>       Load a prompt template file or directory (can be used multiple times)
   --no-prompt-templates, -np     Disable prompt template discovery and loading
@@ -303,23 +314,32 @@ ${chalk.bold("Examples:")}
   # Interactive mode
   ${APP_NAME}
 
-  # Create a repo skill interactively
-  ${APP_NAME} "Create a repo-specific skill for /path/to/repo using Python /path/to/conda/env/bin/python"
+  # Complete an ordinary coding task, using the repo-skills router when relevant
+  ${APP_NAME} "Configure and smoke-test a local vLLM OpenAI-compatible server"
 
-  # Force the package/repo workflow
-  ${APP_NAME} --source package -p "Create a skill for /path/to/repo using Python /path/to/env/bin/python"
+  # Complete a repository task and verify the result
+  ${APP_NAME} -p "Fix the failing tests in this repository and run the relevant test suite"
 
-  # Force the paper-to-skills workflow with a config
-  ${APP_NAME} --source paper -p "Use Distiller to process the runs in this config. config_path: /path/to/distiller_run_config.toml"
+  # Create a repo skill non-interactively in Creator mode
+  ${APP_NAME} --agent-mode creator -p "Create a skill for /path/to/repo using Python /path/to/env/bin/python"
 
-  # Let DisCo classify the source workflow, then confirm if ambiguous
-  ${APP_NAME} -p "Create reusable skills from the paper https://arxiv.org/abs/2604.10674"
+	  # Generate and verify paper-replication skills in Creator mode
+	  ${APP_NAME} --agent-mode creator -p "Use Distiller to generate and verify paper-replication skills for each run in this config. config_path: /path/to/distiller_run_config.toml"
+
+  # Complete a task explicitly in Researcher mode
+  ${APP_NAME} --agent-mode researcher -p "Reproduce this paper's primary result"
 
   # Extend an existing skill
   ${APP_NAME} "Extend /path/to/skill with the new CLI workflows in /path/to/repo"
 
   # Non-interactive mode (process prompt and exit)
-  ${APP_NAME} -p "Inspect /path/to/repo and draft a skill creation plan"
+  ${APP_NAME} --agent-mode creator -p "Inspect /path/to/repo and draft a skill creation plan"
+
+  # Install a package that can provide skills, extensions, prompts, and themes
+  ${APP_NAME} install npm:@foo/disco-skills
+
+  # Install the published repository skill collection
+  ${APP_NAME} repo-skills install
 
   # Include files in initial message
   ${APP_NAME} @prompt.md "Use this plan while creating the skill"
@@ -364,7 +384,12 @@ ${chalk.bold("Examples:")}
   ${APP_NAME} --export ~/${CONFIG_DIR_NAME}/agent/sessions/--path--/session.jsonl
   ${APP_NAME} --export session.jsonl output.html
 
+  # Print one configured credential for use by another local process
+  ${APP_NAME} auth print-api-key --model gpt-4o --provider openai
+  ${APP_NAME} auth print-bearer-token --model claude-sonnet --provider anthropic --min-expiry 30m
+
 ${chalk.bold("Environment Variables:")}
+  ANTHROPIC_AUTH_TOKEN             - Anthropic bearer auth token
   ANTHROPIC_API_KEY                - Anthropic Claude API key
   ANTHROPIC_OAUTH_TOKEN            - Anthropic OAuth token (alternative to API key)
   ANT_LING_API_KEY                 - Ant Ling API key
@@ -384,7 +409,7 @@ ${chalk.bold("Environment Variables:")}
   TOGETHER_API_KEY                 - Together AI API key
   OPENROUTER_API_KEY               - OpenRouter API key
   AI_GATEWAY_API_KEY               - Vercel AI Gateway API key
-  ZAI_API_KEY                      - ZAI API key
+  ZAI_API_KEY                      - ZAI Coding Plan API key (Global)
   ZAI_CODING_CN_API_KEY            - ZAI Coding Plan API key (China)
   MISTRAL_API_KEY                  - Mistral API key
   MINIMAX_API_KEY                  - MiniMax API key
@@ -394,6 +419,8 @@ ${chalk.bold("Environment Variables:")}
   CLOUDFLARE_API_KEY               - Cloudflare API token (Workers AI and AI Gateway)
   CLOUDFLARE_ACCOUNT_ID            - Cloudflare account id (required for both)
   CLOUDFLARE_GATEWAY_ID            - Cloudflare AI Gateway slug (required for AI Gateway)
+  QWEN_TOKEN_PLAN_API_KEY          - Qwen Token Plan API key (international region)
+  QWEN_TOKEN_PLAN_CN_API_KEY       - Qwen Token Plan API key (China region)
   XIAOMI_API_KEY                   - Xiaomi MiMo API key (api.xiaomimimo.com billing)
   XIAOMI_TOKEN_PLAN_CN_API_KEY     - Xiaomi MiMo Token Plan API key (China region)
   XIAOMI_TOKEN_PLAN_AMS_API_KEY    - Xiaomi MiMo Token Plan API key (Amsterdam region)
@@ -407,8 +434,12 @@ ${chalk.bold("Environment Variables:")}
   ${ENV_SESSION_DIR.padEnd(32)} - Session storage directory (overridden by --session-dir)
   DISCO_PACKAGE_DIR           - Override package directory (for Nix/Guix store paths)
   DISCO_OFFLINE               - Disable startup network operations when set to 1/true/yes
-  DISCO_TELEMETRY             - Override install telemetry when set to 1/true/yes or 0/false/no
+  DISCO_SKIP_VERSION_CHECK    - Disable the automatic npm registry version check
+  DISCO_CACHE_RETENTION       - Provider prompt cache policy: none, short (default), or long
+  DISCO_OAUTH_CALLBACK_HOST   - OAuth callback listener host (default: 127.0.0.1)
+  DISCO_TELEMETRY             - Override telemetry/attribution when set to 1/true/yes or 0/false/no
   DISCO_SHARE_VIEWER_URL      - Base URL for /share command
+  DISCO_NO_SPLASH             - Disable the interactive startup animation
 
 ${chalk.bold("Built-in Tool Names:")}
   read   - Read file contents

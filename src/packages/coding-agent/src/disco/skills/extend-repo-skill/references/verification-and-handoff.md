@@ -75,15 +75,41 @@ If verification reports critical or high failures:
 
 Warnings require judgment. Fix warnings that indicate shallow guidance, missing links, weak tests, or likely trigger issues.
 
+## Managed Import
+
+After verification passes, keep the runtime tree outside the live DisCo skills
+root and follow `verify-repo-skill`'s structured approval policy. For an approved
+new import, run:
+
+```bash
+node <verify-repo-skill>/scripts/import_repo_skill.mjs \
+  --agent-dir <agent-dir> \
+  <verified-runtime-skill-dir>
+```
+
+For an approved replacement of that exact managed repo skill, add
+`--overwrite`. The importer validates the complete runtime tree, installs it
+under `<agent-dir>/skills/repo-skills/<skill-id>/`, rebuilds the sibling live
+`repo-skills-router`, and restores both the prior skill and router on failure.
+Do not edit the live tree or manually combine copy and updater commands.
+
+After success, the extended skill is available to DisCo Researcher in a new
+session without cross-agent export. Use `import-repo-skills-to-agent` only when
+the user explicitly asks to export the managed library to another agent.
+
 ## Final Handoff
 
 Report:
 
-- Existing skill directory updated.
+- Source or external working runtime directory updated.
 - Repository evidence used for the extension.
 - Changed runtime skill files.
 - New or revised usability test cases.
 - Verification status and review package path under `reports/`.
+- Managed import path and status, including whether overwrite was approved, or a
+  clear statement that the verified runtime tree remains staged.
+- Confirmation that DisCo Researcher can use a successful managed import
+  directly; report cross-agent export only when separately requested.
 - Remaining gaps or accepted warnings.
 
 Keep the handoff concise, but make it clear what is public skill content and what is review/development artifact.

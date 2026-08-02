@@ -7,11 +7,13 @@ import * as fs from "node:fs";
 import { createRequire } from "node:module";
 import * as path from "node:path";
 import { fileURLToPath } from "node:url";
-import * as _bundledDisCoAgentCore from "@auto-ml-skills/disco-agent-core";
-import * as _bundledDisCoAi from "@auto-ml-skills/disco-ai";
-import * as _bundledDisCoAiOauth from "@auto-ml-skills/disco-ai/oauth";
-import type { KeyId } from "@auto-ml-skills/disco-tui";
-import * as _bundledDisCoTui from "@auto-ml-skills/disco-tui";
+import * as _bundledPiAgentCore from "@earendil-works/pi-agent-core";
+import type { Provider } from "@earendil-works/pi-ai";
+import * as _bundledPiAiCompat from "@earendil-works/pi-ai/compat";
+import * as _bundledPiAiOauth from "@earendil-works/pi-ai/oauth";
+import * as _bundledPiAiProviders from "@earendil-works/pi-ai/providers/all";
+import type { KeyId } from "@earendil-works/pi-tui";
+import * as _bundledPiTui from "@earendil-works/pi-tui";
 import { createJiti } from "jiti/static";
 // Static imports of packages that extensions may use.
 // These MUST be static so Bun bundles them into the compiled binary.
@@ -22,13 +24,15 @@ import * as _bundledTypeboxValue from "typebox/value";
 import { CONFIG_DIR_NAME, getAgentDir, isBunBinary } from "../../config.ts";
 // NOTE: This import works because loader.ts exports are NOT re-exported from index.ts,
 // avoiding a circular dependency. Extensions can import from @auto-ml-skills/disco.
-import * as _bundledDisCoCodingAgent from "../../index.ts";
+import * as _bundledPiCodingAgent from "../../index.ts";
 import { resolvePath } from "../../utils/paths.ts";
 import { createEventBus, type EventBus } from "../event-bus.ts";
 import type { ExecOptions } from "../exec.ts";
 import { execCommand } from "../exec.ts";
 import { createSyntheticSourceInfo } from "../source-info.ts";
+import { time } from "../timings.ts";
 import type {
+	EntryRenderer,
 	Extension,
 	ExtensionAPI,
 	ExtensionFactory,
@@ -48,21 +52,25 @@ const VIRTUAL_MODULES: Record<string, unknown> = {
 	"@sinclair/typebox": _bundledTypebox,
 	"@sinclair/typebox/compile": _bundledTypeboxCompile,
 	"@sinclair/typebox/value": _bundledTypeboxValue,
-	"@auto-ml-skills/disco-agent-core": _bundledDisCoAgentCore,
-	"@auto-ml-skills/disco-tui": _bundledDisCoTui,
-	"@auto-ml-skills/disco-ai": _bundledDisCoAi,
-	"@auto-ml-skills/disco-ai/oauth": _bundledDisCoAiOauth,
-	"@auto-ml-skills/disco": _bundledDisCoCodingAgent,
-	"@earendil-works/pi-agent-core": _bundledDisCoAgentCore,
-	"@earendil-works/pi-tui": _bundledDisCoTui,
-	"@earendil-works/pi-ai": _bundledDisCoAi,
-	"@earendil-works/pi-ai/oauth": _bundledDisCoAiOauth,
-	"@earendil-works/pi-coding-agent": _bundledDisCoCodingAgent,
-	"@mariozechner/pi-agent-core": _bundledDisCoAgentCore,
-	"@mariozechner/pi-tui": _bundledDisCoTui,
-	"@mariozechner/pi-ai": _bundledDisCoAi,
-	"@mariozechner/pi-ai/oauth": _bundledDisCoAiOauth,
-	"@mariozechner/pi-coding-agent": _bundledDisCoCodingAgent,
+	"@earendil-works/pi-agent-core": _bundledPiAgentCore,
+	"@earendil-works/pi-tui": _bundledPiTui,
+	// Extensions resolve the pi-ai root to the compat entrypoint (a strict
+	// superset of the core entrypoint): existing extensions using the old
+	// global API keep working at runtime until compat is removed.
+	"@earendil-works/pi-ai": _bundledPiAiCompat,
+	"@earendil-works/pi-ai/compat": _bundledPiAiCompat,
+	"@earendil-works/pi-ai/oauth": _bundledPiAiOauth,
+	"@earendil-works/pi-ai/providers/all": _bundledPiAiProviders,
+	"@auto-ml-skills/disco": _bundledPiCodingAgent,
+	// Legacy extension imports remain virtual aliases; they are not npm dependencies.
+	"@earendil-works/pi-coding-agent": _bundledPiCodingAgent,
+	"@mariozechner/pi-agent-core": _bundledPiAgentCore,
+	"@mariozechner/pi-tui": _bundledPiTui,
+	"@mariozechner/pi-ai": _bundledPiAiCompat,
+	"@mariozechner/pi-ai/compat": _bundledPiAiCompat,
+	"@mariozechner/pi-ai/oauth": _bundledPiAiOauth,
+	"@mariozechner/pi-ai/providers/all": _bundledPiAiProviders,
+	"@mariozechner/pi-coding-agent": _bundledPiCodingAgent,
 };
 
 const require = createRequire(import.meta.url);
@@ -92,28 +100,36 @@ function getAliases(): Record<string, string> {
 		return fileURLToPath(import.meta.resolve(specifier));
 	};
 
-	const discoCodingAgentEntry = packageIndex;
-	const discoAgentCoreEntry = resolveWorkspaceOrImport("agent/dist/index.js", "@auto-ml-skills/disco-agent-core");
-	const discoTuiEntry = resolveWorkspaceOrImport("tui/dist/index.js", "@auto-ml-skills/disco-tui");
-	const discoAiEntry = resolveWorkspaceOrImport("ai/dist/index.js", "@auto-ml-skills/disco-ai");
-	const discoAiOauthEntry = resolveWorkspaceOrImport("ai/dist/oauth.js", "@auto-ml-skills/disco-ai/oauth");
+	const piCodingAgentEntry = packageIndex;
+	const piAgentCoreEntry = resolveWorkspaceOrImport("agent/dist/index.js", "@earendil-works/pi-agent-core");
+	const piTuiEntry = resolveWorkspaceOrImport("tui/dist/index.js", "@earendil-works/pi-tui");
+	// Extensions resolve the pi-ai root to the compat entrypoint (a strict
+	// superset of the core entrypoint): existing extensions using the old
+	// global API keep working at runtime until compat is removed.
+	const piAiCompatEntry = resolveWorkspaceOrImport("ai/dist/compat.js", "@earendil-works/pi-ai/compat");
+	const piAiOauthEntry = resolveWorkspaceOrImport("ai/dist/oauth.js", "@earendil-works/pi-ai/oauth");
+	const piAiProvidersEntry = resolveWorkspaceOrImport(
+		"ai/dist/providers/all.js",
+		"@earendil-works/pi-ai/providers/all",
+	);
 
 	_aliases = {
-		"@auto-ml-skills/disco": discoCodingAgentEntry,
-		"@auto-ml-skills/disco-agent-core": discoAgentCoreEntry,
-		"@auto-ml-skills/disco-tui": discoTuiEntry,
-		"@auto-ml-skills/disco-ai": discoAiEntry,
-		"@auto-ml-skills/disco-ai/oauth": discoAiOauthEntry,
-		"@earendil-works/pi-coding-agent": discoCodingAgentEntry,
-		"@earendil-works/pi-agent-core": discoAgentCoreEntry,
-		"@earendil-works/pi-tui": discoTuiEntry,
-		"@earendil-works/pi-ai": discoAiEntry,
-		"@earendil-works/pi-ai/oauth": discoAiOauthEntry,
-		"@mariozechner/pi-coding-agent": discoCodingAgentEntry,
-		"@mariozechner/pi-agent-core": discoAgentCoreEntry,
-		"@mariozechner/pi-tui": discoTuiEntry,
-		"@mariozechner/pi-ai": discoAiEntry,
-		"@mariozechner/pi-ai/oauth": discoAiOauthEntry,
+		"@auto-ml-skills/disco": piCodingAgentEntry,
+		// Legacy extension imports remain aliases to this package's internal SDK entry.
+		"@earendil-works/pi-coding-agent": piCodingAgentEntry,
+		"@earendil-works/pi-agent-core": piAgentCoreEntry,
+		"@earendil-works/pi-tui": piTuiEntry,
+		"@earendil-works/pi-ai/providers/all": piAiProvidersEntry,
+		"@earendil-works/pi-ai/compat": piAiCompatEntry,
+		"@earendil-works/pi-ai/oauth": piAiOauthEntry,
+		"@earendil-works/pi-ai": piAiCompatEntry,
+		"@mariozechner/pi-coding-agent": piCodingAgentEntry,
+		"@mariozechner/pi-agent-core": piAgentCoreEntry,
+		"@mariozechner/pi-tui": piTuiEntry,
+		"@mariozechner/pi-ai/providers/all": piAiProvidersEntry,
+		"@mariozechner/pi-ai/compat": piAiCompatEntry,
+		"@mariozechner/pi-ai/oauth": piAiOauthEntry,
+		"@mariozechner/pi-ai": piAiCompatEntry,
 		typebox: typeboxEntry,
 		"typebox/compile": typeboxCompileEntry,
 		"typebox/value": typeboxValueEntry,
@@ -126,6 +142,30 @@ function getAliases(): Record<string, string> {
 }
 
 type HandlerFn = (...args: unknown[]) => Promise<unknown>;
+
+let extensionCacheCwd: string | undefined;
+let extensionCacheGeneration = 0;
+const extensionCache = new Map<string, ExtensionFactory>();
+
+interface ExtensionCacheToken {
+	cwd: string;
+	generation: number;
+}
+
+export function clearExtensionCache(): void {
+	extensionCache.clear();
+	extensionCacheCwd = undefined;
+	extensionCacheGeneration++;
+}
+
+function useExtensionCacheCwd(cwd: string): ExtensionCacheToken {
+	const resolvedCwd = resolvePath(cwd);
+	if (extensionCacheCwd !== undefined && extensionCacheCwd !== resolvedCwd) {
+		clearExtensionCache();
+	}
+	extensionCacheCwd = resolvedCwd;
+	return { cwd: resolvedCwd, generation: extensionCacheGeneration };
+}
 
 /**
  * Create a runtime with throwing stubs for action methods.
@@ -160,19 +200,26 @@ export function createExtensionRuntime(): ExtensionRuntime {
 		setThinkingLevel: notInitialized,
 		flagValues: new Map(),
 		pendingProviderRegistrations: [],
+		pendingNativeProviderRegistrations: [],
 		assertActive,
 		invalidate: (message) => {
 			state.staleMessage ??=
 				message ??
-				"This extension ctx is stale after session replacement or reload. Do not use a captured extension API or command ctx after ctx.newSession(), ctx.fork(), ctx.switchSession(), or ctx.reload(). For newSession, fork, and switchSession, move post-replacement work into withSession and use the ctx passed to withSession. For reload, do not use the old ctx after await ctx.reload().";
+				"This extension ctx is stale after session replacement or reload. Do not use a captured extension or command ctx after ctx.newSession(), ctx.fork(), ctx.switchSession(), or ctx.reload(). For newSession, fork, and switchSession, move post-replacement work into withSession and use the ctx passed to withSession. For reload, do not use the old ctx after await ctx.reload().";
 		},
 		// Pre-bind: queue registrations so bindCore() can flush them once the
 		// model registry is available. bindCore() replaces both with direct calls.
 		registerProvider: (name, config, extensionPath = "<unknown>") => {
 			runtime.pendingProviderRegistrations.push({ name, config, extensionPath });
 		},
+		registerNativeProvider: (provider, extensionPath = "<unknown>") => {
+			runtime.pendingNativeProviderRegistrations.push({ provider, extensionPath });
+		},
 		unregisterProvider: (name) => {
 			runtime.pendingProviderRegistrations = runtime.pendingProviderRegistrations.filter((r) => r.name !== name);
+			runtime.pendingNativeProviderRegistrations = runtime.pendingNativeProviderRegistrations.filter(
+				(r) => r.provider.id !== name,
+			);
 		},
 	};
 
@@ -242,6 +289,12 @@ function createExtensionAPI(
 		registerMessageRenderer<T>(customType: string, renderer: MessageRenderer<T>): void {
 			runtime.assertActive();
 			extension.messageRenderers.set(customType, renderer as MessageRenderer);
+		},
+
+		registerEntryRenderer<T>(customType: string, renderer: EntryRenderer<T>): void {
+			runtime.assertActive();
+			extension.entryRenderers ??= new Map();
+			extension.entryRenderers.set(customType, renderer as EntryRenderer);
 		},
 
 		// Flag access - checks extension registered it, reads from runtime
@@ -322,9 +375,14 @@ function createExtensionAPI(
 			runtime.setThinkingLevel(level);
 		},
 
-		registerProvider(name: string, config: ProviderConfig) {
+		registerProvider(providerOrName: Provider | string, config?: ProviderConfig) {
 			runtime.assertActive();
-			runtime.registerProvider(name, config, extension.path);
+			if (typeof providerOrName === "string") {
+				if (!config) throw new Error("Provider config is required when registering by name");
+				runtime.registerProvider(providerOrName, config, extension.path);
+				return;
+			}
+			runtime.registerNativeProvider(providerOrName, extension.path);
 		},
 
 		unregisterProvider(name: string) {
@@ -338,7 +396,22 @@ function createExtensionAPI(
 	return api;
 }
 
-async function loadExtensionModule(extensionPath: string) {
+function isCurrentCacheToken(cacheToken: ExtensionCacheToken | undefined): cacheToken is ExtensionCacheToken {
+	return (
+		cacheToken !== undefined &&
+		extensionCacheCwd === cacheToken.cwd &&
+		extensionCacheGeneration === cacheToken.generation
+	);
+}
+
+async function loadExtensionModule(extensionPath: string, cacheToken?: ExtensionCacheToken) {
+	if (isCurrentCacheToken(cacheToken)) {
+		const cachedFactory = extensionCache.get(extensionPath);
+		if (cachedFactory) {
+			return cachedFactory;
+		}
+	}
+
 	const jiti = createJiti(import.meta.url, {
 		moduleCache: false,
 		// In Bun binary: use virtualModules for bundled packages (no filesystem resolution)
@@ -349,7 +422,13 @@ async function loadExtensionModule(extensionPath: string) {
 
 	const module = await jiti.import(extensionPath, { default: true });
 	const factory = module as ExtensionFactory;
-	return typeof factory !== "function" ? undefined : factory;
+	if (typeof factory !== "function") {
+		return undefined;
+	}
+	if (isCurrentCacheToken(cacheToken)) {
+		extensionCache.set(extensionPath, factory);
+	}
+	return factory;
 }
 
 /**
@@ -369,6 +448,7 @@ function createExtension(extensionPath: string, resolvedPath: string): Extension
 		handlers: new Map(),
 		tools: new Map(),
 		messageRenderers: new Map(),
+		entryRenderers: new Map(),
 		commands: new Map(),
 		flags: new Map(),
 		shortcuts: new Map(),
@@ -380,11 +460,13 @@ async function loadExtension(
 	cwd: string,
 	eventBus: EventBus,
 	runtime: ExtensionRuntime,
+	cacheToken?: ExtensionCacheToken,
 ): Promise<{ extension: Extension | null; error: string | null }> {
 	const resolvedPath = resolvePath(extensionPath, cwd, { normalizeUnicodeSpaces: true });
 
 	try {
-		const factory = await loadExtensionModule(resolvedPath);
+		const factory = await loadExtensionModule(resolvedPath, cacheToken);
+		time(`${extensionPath} module import`, "extensions");
 		if (!factory) {
 			return { extension: null, error: `Extension does not export a valid factory function: ${extensionPath}` };
 		}
@@ -392,6 +474,7 @@ async function loadExtension(
 		const extension = createExtension(extensionPath, resolvedPath);
 		const api = createExtensionAPI(extension, runtime, cwd, eventBus);
 		await factory(api);
+		time(`${extensionPath} factory`, "extensions");
 
 		return { extension, error: null };
 	} catch (err) {
@@ -414,26 +497,35 @@ export async function loadExtensionFromFactory(
 	const resolvedCwd = resolvePath(cwd);
 	const api = createExtensionAPI(extension, runtime, resolvedCwd, eventBus);
 	await factory(api);
+	time(`${extensionPath} factory`, "extensions");
 	return extension;
 }
 
 /**
  * Load extensions from paths.
  */
-export async function loadExtensions(
+async function loadExtensionsInternal(
 	paths: string[],
 	cwd: string,
 	eventBus?: EventBus,
 	runtime?: ExtensionRuntime,
+	useCache = false,
 ): Promise<LoadExtensionsResult> {
 	const extensions: Extension[] = [];
 	const errors: Array<{ path: string; error: string }> = [];
-	const resolvedCwd = resolvePath(cwd);
+	const cacheToken = useCache ? useExtensionCacheCwd(cwd) : undefined;
+	const resolvedCwd = cacheToken?.cwd ?? resolvePath(cwd);
 	const resolvedEventBus = eventBus ?? createEventBus();
 	const resolvedRuntime = runtime ?? createExtensionRuntime();
 
 	for (const extPath of paths) {
-		const { extension, error } = await loadExtension(extPath, resolvedCwd, resolvedEventBus, resolvedRuntime);
+		const { extension, error } = await loadExtension(
+			extPath,
+			resolvedCwd,
+			resolvedEventBus,
+			resolvedRuntime,
+			cacheToken,
+		);
 
 		if (error) {
 			errors.push({ path: extPath, error });
@@ -452,6 +544,24 @@ export async function loadExtensions(
 	};
 }
 
+export async function loadExtensions(
+	paths: string[],
+	cwd: string,
+	eventBus?: EventBus,
+	runtime?: ExtensionRuntime,
+): Promise<LoadExtensionsResult> {
+	return loadExtensionsInternal(paths, cwd, eventBus, runtime);
+}
+
+export async function loadExtensionsCached(
+	paths: string[],
+	cwd: string,
+	eventBus?: EventBus,
+	runtime?: ExtensionRuntime,
+): Promise<LoadExtensionsResult> {
+	return loadExtensionsInternal(paths, cwd, eventBus, runtime, true);
+}
+
 interface DisCoManifest {
 	extensions?: string[];
 	themes?: string[];
@@ -466,6 +576,7 @@ function readDisCoManifest(packageJsonPath: string): DisCoManifest | null {
 		if (pkg.disco && typeof pkg.disco === "object") {
 			return pkg.disco as DisCoManifest;
 		}
+		// Keep legacy Pi extension packages usable without loading any .pi paths.
 		if (pkg.pi && typeof pkg.pi === "object") {
 			return pkg.pi as DisCoManifest;
 		}
@@ -483,13 +594,13 @@ function isExtensionFile(name: string): boolean {
  * Resolve extension entry points from a directory.
  *
  * Checks for:
- * 1. package.json with "disco.extensions" field -> returns declared paths
+ * 1. package.json with "disco.extensions" (or legacy "pi.extensions") -> returns declared paths
  * 2. index.ts or index.js -> returns the index file
  *
  * Returns resolved paths or null if no entry points found.
  */
 function resolveExtensionEntries(dir: string): string[] | null {
-	// Check for package.json with a DisCo manifest first
+	// Check for package.json with a DisCo or legacy Pi manifest first.
 	const packageJsonPath = path.join(dir, "package.json");
 	if (fs.existsSync(packageJsonPath)) {
 		const manifest = readDisCoManifest(packageJsonPath);
@@ -526,7 +637,7 @@ function resolveExtensionEntries(dir: string): string[] | null {
  * Discovery rules:
  * 1. Direct files: `extensions/*.ts` or `*.js` → load
  * 2. Subdirectory with index: `extensions/* /index.ts` or `index.js` → load
- * 3. Subdirectory with package.json: `extensions/* /package.json` with a manifest field -> load what it declares
+ * 3. Subdirectory with package.json: `extensions/* /package.json` with a DisCo/legacy Pi manifest
  *
  * No recursion beyond one level. Complex packages must use package.json manifest.
  */
@@ -600,7 +711,7 @@ export async function discoverAndLoadExtensions(
 	for (const p of configuredPaths) {
 		const resolved = resolvePath(p, resolvedCwd, { normalizeUnicodeSpaces: true });
 		if (fs.existsSync(resolved) && fs.statSync(resolved).isDirectory()) {
-			// Check for package.json with DisCo manifest or index.ts
+			// Check for package.json with a DisCo/legacy Pi manifest or index.ts.
 			const entries = resolveExtensionEntries(resolved);
 			if (entries) {
 				addPaths(entries);

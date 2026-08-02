@@ -1,6 +1,8 @@
 ---
 name: recover-paper-result
 description: "Reproduce a fast paper result using only the paper, module documents, generated module skills, and datasets, explicitly forbidding reads from the original source repository during recovery."
+metadata:
+  disco-role: meta
 ---
 
 # Recover Paper Result

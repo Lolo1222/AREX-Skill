@@ -1,30 +1,35 @@
 ---
 name: create-paper-skills
-description: "Creates reusable Agent Skills from an AI research paper using the Paper2Skills Distiller workflow. Use when the user selects source=paper, provides a paper PDF, paper URL, arXiv id, paper title, or paper/repo pair, or asks to convert a scientific paper into skills with recovery experiments. Prefer a TOML run config; ask for missing paper, repo, recovery, runtime, and budget fields before expensive work."
+description: "Creates reusable Agent Skills from an AI research paper using the Paper2Skills Distiller workflow. Use in Creator mode when the user provides a paper PDF, paper URL, arXiv id, paper title, or paper/repo pair, or asks to convert a scientific paper into skills with recovery experiments. Prefer a TOML run config; ask for missing paper, repo, recovery, runtime, and budget fields before expensive work."
+metadata:
+  disco-role: meta
 ---
 
 # Create Paper Skills
 
 ## Purpose
 
-Use this skill as the DisCo entry point for `source=paper`. It wraps the
-Paper2Skills Distiller workflow in the same role that `create-repo-skill`
-plays for `source=package`: collect the input contract, route to the correct
-workflow skills, validate artifacts, run at least a meaningful recovery smoke
-experiment when allowed, and produce reusable module-level skills.
+Use this skill as the DisCo entry point for paper-to-skill construction in
+Creator mode. It wraps the Paper2Skills Distiller workflow in the same peer
+role that `create-repo-skill` plays for repository/package construction: collect
+the input contract, route to the correct workflow skills, validate artifacts,
+run at least a meaningful recovery smoke experiment when allowed, and produce
+reusable module-level skills.
 
 Prefer a filled TOML config over free-form prompt fields. The reusable template
 is bundled at `assets/distiller-run-config-template.toml`; a longer reusable
 agent prompt is bundled at `assets/standard-distiller-run-prompt.md`.
 
-## Source Modes
+## Workflow Classification
 
-- `source=package`: do not use this skill. Use `create-repo-skill`.
-- `source=paper`: use this skill, then load `paper-skills-distiller`.
+- When the primary knowledge source is a software repository or package, use
+  `create-repo-skill` instead.
+- When the primary knowledge source is a paper, use this skill and then load
+  `paper-skills-distiller`.
 - If the user provides both a paper and an implementation repository, treat the
   repository as pre-recovery evidence only. Recovery must not read it.
-- If the source mode is ambiguous and both repo-skill and paper-skill flows are
-  plausible, ask one concise clarification before starting.
+- If the workflow classification is ambiguous and both repository and paper
+  flows are plausible, ask one concise clarification before starting.
 
 ## Required Input Contract
 
@@ -143,6 +148,31 @@ For one run in a batch, also write a selected normalized run JSON with
     the `reported` stage. Final reports belong under
     `<attempt_dir>/reports/final/`, not in the generated skill directory or a
     top-level `Distiller` directory.
+16. If the run is accepted and the generated operating graph passes final
+    validation, assess the graph's reuse as a separate deployment decision.
+    Select project scope at `<project-dir>/.agents/skills/` when the modules are
+    tied to this task, project layout, private data, evaluator, benchmark
+    instance, or runtime; also select project when cross-project reuse remains
+    uncertain. Select managed scope at `~/.disco/agent/skills/` only when the
+    complete module graph is self-contained, source/version/provenance backed,
+    independent of transient run state, verified on representative uses, and
+    expected to apply across projects or research tasks. Use the Creator
+    session's working directory as `<project-dir>` unless the user explicitly
+    selected another project. Keep all module skills in one scope.
+17. Present the reusability rationale, exact generated graph revision, selected
+    scope, all destination paths, entry skill, final validation evidence,
+    unresolved limits, collisions, and shadowing impact. Ask for approval of
+    that exact import. Any overwrite requires separate approval.
+18. After approval, resolve `distill-ml-knowledge` from the visible skill registry
+    and run its `scripts/import_operating_skill_graph.mjs` once with every
+    generated module skill root. Use `--scope project --project-dir
+    <project-dir>` or `--scope managed --agent-dir ~/.disco/agent` as approved.
+    Do not copy distillation, recovery, analysis, test, or report artifacts.
+19. Write `researcher-handoff.md` under the distillation directory with the task,
+    paper source/version, reuse rationale, selected scope, exact imported paths,
+    module skill ids, graph entry point, recovery and validation evidence, and
+    unresolved limits. Suggest `/researcher` only after import, or clearly state
+    that the skills remain staged when the user declines it.
 
 ## Recovery Discipline
 
@@ -179,5 +209,7 @@ By the end, the user should have:
 - `reports/final/final_report.md` and `reports/final/final_report.json`,
   alongside any verification or generated-skill review reports under
   `reports/`.
+- An operating-graph reusability decision, approved project/managed import result
+  when requested, and `researcher-handoff.md` with exact live paths.
 - A final summary in the requested language explaining accepted status,
   blockers, recovery evidence, generated skill paths, and remaining gaps.

@@ -56,14 +56,44 @@ wrapped safely, plan a bundled script under the root `scripts/` directory or the
 nearest owning `sub-skills/<id>/scripts/` directory.
 
 Use this shape in working notes or under the review/test artifact directory
-when practical:
+when practical. Classify backend needs now because environment preparation
+happens before native cases run:
 
 ```text
-Native artifact | Type | Workflow/capability | Safety class | Candidate command | Expected signal | Planned skill owner
-examples/infer.py | example script | inference | safe-runnable | python examples/infer.py --help | help exits 0 and names input/output flags | sub-skills/inference
-tests/test_cli.py | pytest | CLI errors and flags | safe-runnable | pytest tests/test_cli.py -q | selected tests pass | sub-skills/cli
-notebooks/train.ipynb | notebook | training workflow | skip-expensive | none | documents full training flow, not executed | sub-skills/training
+Native artifact | Workflow/capability | Safety class | Backend requirement | Backend criticality | CPU substitute | Dependency variant | Hardware prerequisites | Verification expectation | Candidate command | Expected signal | Planned skill owner
+examples/infer.py | GPU inference | tiny-fixture-runnable | cuda | required | none | [cuda] + repo-documented torch wheel | NVIDIA GPU, compatible driver/wheel, sufficient VRAM | backend smoke + native example | python examples/infer.py --tiny-fixture | exits 0 and uses CUDA | sub-skills/inference
+tests/test_cli.py | CLI errors and flags | safe-runnable | any | alternative | full | base | none | native test | pytest tests/test_cli.py -q | selected tests pass | sub-skills/cli
+notebooks/train.ipynb | training workflow | skip-expensive | cuda | optional | partial | [train,cuda] | compatible GPU plus training data | documentation/assertions only unless approved | none | documents full training flow, not executed | sub-skills/training
 ```
+
+Use these backend fields consistently:
+
+- `Backend requirement`: `cpu`, `cuda`, `rocm`, `mps`,
+  `accelerator-specific`, or `any`. Name the vendor/runtime in hardware notes
+  when `accelerator-specific` is used.
+- `Backend criticality`: `required` when the selected capability cannot be
+  truthfully validated without that backend; `optional` when it is an additive
+  capability that may remain explicitly unverified; `alternative` when another
+  backend can validate the same selected behavior.
+- `CPU substitute`: `full`, `partial`, or `none`. A CPU import check is not a
+  substitute for a CUDA/ROCm/MPS runtime check unless evidence shows equivalent
+  behavior.
+- `Dependency variant`: the exact extra, requirements file, wheel index,
+  package variant, or toolkit needed for the candidate.
+- `Hardware prerequisites`: device family, driver/runtime, compute capability,
+  memory, system service, compiler, or vendor tooling required to run it.
+- `Verification expectation`: distinguish package/backend smoke checks needed
+  while preparing the environment from native tests/examples that must wait
+  until the generated skill is fully integrated.
+
+After the extraction scope is confirmed, derive a backend verification plan
+from all candidates owned by included workflows. The plan must identify every
+required backend, optional/alternative backends, CPU substitution evidence,
+dependency variants, hardware probes, the minimum environment set, preparation
+smoke checks, final native cases, and the blocking consequence of an unavailable
+required backend. Usually one GPU-capable environment can also cover CPU cases;
+use separate prefixes only when backend variants conflict or an independent CPU
+fallback claim also requires verification.
 
 Use this shape for the source script inventory:
 
@@ -94,18 +124,24 @@ Safety classes should be conservative:
   repo state, or performs irreversible side effects.
 - `skip-unknown`: not enough information to run safely.
 
+`skip-gpu-or-hardware` is a safety/execution state, not permission to erase a
+backend requirement. If the candidate is `required` with `CPU substitute:
+none`, carry it into the backend verification plan as a blocking requirement.
+If it is `optional`, record the unverified capability without blocking the CPU
+scope. If it is `alternative`, name and verify the selected equivalent backend.
+
 The native candidate map is an input to sub-skill planning, whole-skill
 integration, and final verification. It is not public runtime skill content and
 must not make the generated skill depend on the original repo checkout.
 
-After the initial include/exclude evidence map and native test/example
-candidate map are ready, ask the user whether the repository structure analysis
+After the initial include/exclude evidence map, native test/example candidate
+map, and backend verification plan are ready, ask the user whether the analysis
 is reasonable before planning sub-skills. Keep the question concise, but include
-enough detail for the user to intervene: the main included directories, the
-main excluded directories, any ambiguous paths, and the native examples/tests
-that look likely to become final verification candidates. If the user asks to
-include or exclude additional directories, native candidates, or source
-scripts, update the maps and continue from that revised map.
+enough detail for the user to intervene: the main included/excluded directories,
+ambiguous paths, required/optional backend decisions, proposed environment set,
+and native examples/tests likely to become final verification candidates. If
+the user changes directories, candidates, backend criticality, or source
+scripts, update all affected maps and the environment plan before continuing.
 
 ## Start from Metadata and Top-Level Structure
 

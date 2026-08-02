@@ -1,6 +1,6 @@
 # Standard Distiller Run Prompt
 
-Use this file as the reusable prompt for running the Paper2Skills Distiller workflow on one or more papers. Prefer giving DisCo, Codex, or Claude Code a filled TOML config based on `create-paper-skills/assets/distiller-run-config-template.toml` from the installed Distiller skills directory; use inline fields only for quick one-off runs.
+Use this file as the reusable prompt for running the Paper2Skills Distiller workflow on one or more papers to generate and verify skills for paper replication. Prefer giving DisCo, Codex, or Claude Code a filled TOML config based on `create-paper-skills/assets/distiller-run-config-template.toml` from the installed Distiller skills directory; use inline fields only for quick one-off runs.
 
 The agent must not silently guess high-impact experiment boundaries. If required information is missing, the agent should ask concise clarification questions before starting long-running recovery work.
 
@@ -11,14 +11,17 @@ For a shorter copy/paste template, use `create-paper-skills/assets/distiller-cop
 Use `create-paper-skills/assets/distiller-run-config-template.toml` as the standard input contract. Fill one or more `[[runs]]` entries, then give the agent:
 
 ```text
-Use Distiller to process the runs in this config.
+Use Distiller to generate and verify paper-replication skills for each run in this config.
 
 config_path: /path/to/distiller_run_config.toml
 ```
 
 In shell commands below, replace `<skills_root>` with the directory that
 contains the installed Distiller skill folders, for example
-`src/packages/coding-agent/src/disco/skills` in a DisCo source checkout, `src/packages/coding-agent/dist/disco-resources/skills` in a built npm checkout, `~/.codex/skills` for a Codex user install, or `~/.agents/skills` for a generic agent install.
+`src/packages/coding-agent/src/disco/skills` in a DisCo source checkout,
+`src/packages/coding-agent/dist/disco-resources/skills` in a built npm checkout,
+or `~/.agents/skills` for the current Codex user-level install. Treat
+`~/.codex/skills` as an explicit legacy compatibility path only.
 
 Before starting source downloads or distillation initialization, the agent must validate the config:
 
@@ -42,7 +45,7 @@ Pass that selected JSON to `init_run.py --run-config` and preserve it as `run_co
 
 ## Prompt To Give The Agent
 
-You are running a complete Paper2Skills distillation using the Distiller workflow skills.
+You are running a complete Paper2Skills distillation to generate and verify skills for paper replication using the Distiller workflow skills.
 
 Use these skills in order, and explicitly open each `SKILL.md` before using it:
 
@@ -53,7 +56,7 @@ Use these skills in order, and explicitly open each `SKILL.md` before using it:
 5. `recover-paper-result`
 6. `analyze-paper-recovery`
 
-Your job is to convert an AI research paper into reusable module-level skills, validate those skills, prepare an auditable recovery runtime, run a recovery experiment without reading the original source repository, analyze the result, and iterate if needed.
+Your job is to convert an AI research paper into reusable module-level skills for paper replication, validate those skills, prepare an auditable recovery runtime, run a recovery experiment without reading the original source repository, analyze the result, and iterate if needed.
 
 ## Required User Inputs
 
@@ -69,7 +72,7 @@ Required information:
 - `source_acquisition`: whether remote paper/repo sources may be downloaded or cloned, network timeouts, whether title-search top hits may be selected automatically, and whether implementation repo discovery is allowed.
 - `repo_discovery_mode`: `ask`, `auto`, or `disabled` when `original_repo_source` is `unknown`.
 - `attempt_dir`: target distillation artifact directory, or permission to use the default `<workspace_root>/<paper_slug>/distillation`.
-- `generated_skills_root`: directory where generated paper skills should be written.
+- `generated_skills_root`: directory where generated paper-replication skills should be written.
 - `recovery_target`: dataset, split, metric, paper reference value, and whether proxy recovery is allowed.
 - `recovery_mode`: `hard` or `soft`. Default is `hard`; users may set it per run.
 - `runtime_constraints`: model path, environment path, GPU ids, API keys, network/VPN setup, search endpoint, and package mutation rules when relevant.
@@ -100,7 +103,7 @@ Do not ask these questions if the values are already explicit in the user's prom
 Use this compact prompt when starting routine runs:
 
 ```text
-Use Distiller to process the runs in this config.
+Use Distiller to generate and verify paper-replication skills for each run in this config.
 
 config_path: /path/to/distiller_run_config.toml
 ```
@@ -200,6 +203,9 @@ Add `--repo <original_repo_path>` only when an original repo exists and the user
    - `paper_profile.md`
    - `module_plan.json`
    - no more than five `modules/<module_id>.md` files
+   Keep each internal `module_id` in snake_case. Give each deployable
+   `skill_name` a unique canonical lowercase-hyphen id of at most 64 characters;
+   it must also be the generated skill directory basename and frontmatter name.
 11. Validate the module plan:
 
 ```bash
@@ -222,6 +228,7 @@ Do not perform heavyweight runtime probing, model cache scans, package installs,
     The main agent still owns integration and validation.
 14. Each generated module skill must contain:
     - `SKILL.md`
+    - `metadata.disco-role: operating` in its `SKILL.md` frontmatter
     - `scripts/` when deterministic behavior is useful
     - `tests/` or another deterministic smoke check for non-trivial behavior
     - At least one real assertion-backed test or smoke command that the validator attempts; do not satisfy this step with prose-only inspection.
@@ -293,6 +300,45 @@ python <skills_root>/paper-skills-distiller/scripts/validate_distillation_run.py
   <attempt_dir> \
   --stage reported
 ```
+33. When the run is accepted and the reported stage passes, assess the whole
+    generated module graph's reuse. Choose project scope at
+    `<project-dir>/.agents/skills/` for task/project/private-data/evaluator/
+    benchmark/environment-bound output and whenever broader reuse is uncertain.
+    Choose managed scope at `~/.disco/agent/skills/` only for a self-contained,
+    provenance-backed graph that is independent of transient run state, verified
+    on representative uses, and expected to apply across projects or research
+    tasks. Use the Creator session working directory as `<project-dir>` unless
+    the user explicitly selected another project, and keep every module in one
+    scope.
+34. Show the reuse evidence, exact graph revision, scope, every destination,
+    entry skill, validation results, unresolved limits, collisions, and shadowing
+    impact. Obtain approval for that import; overwrite always needs separate
+    approval.
+35. After approval, resolve the visible `distill-ml-knowledge` directory and call
+    its importer once with all top-level module skill roots:
+
+```bash
+node <distill-ml-knowledge-root>/scripts/import_operating_skill_graph.mjs \
+  --scope project \
+  --project-dir <project-dir> \
+  <generated-skill-root> [<generated-skill-root> ...]
+```
+
+or:
+
+```bash
+node <distill-ml-knowledge-root>/scripts/import_operating_skill_graph.mjs \
+  --scope managed \
+  --agent-dir ~/.disco/agent \
+  <generated-skill-root> [<generated-skill-root> ...]
+```
+
+    Do not import distillation, recovery, analysis, test, or report artifacts.
+36. Write `<attempt_dir>/researcher-handoff.md` with the task, paper
+    source/version, reusability rationale, selected scope, exact imported paths,
+    module ids, graph entry point, recovery/validation evidence, and unresolved
+    limits. Suggest `/researcher` after import. If import is declined, state that
+    the graph remains staged and do not claim the live paths exist.
 
 ## Required Distillation Artifacts
 
@@ -340,7 +386,7 @@ python <skills_root>/paper-skills-distiller/scripts/validate_distillation_run.py
   --output <attempt_dir>/final_validation.json
 ```
 
-The final response to the user must report whether final validation and the `reported` stage returned `ok: true`, and point to `reports/final/final_report.md`.
+The final response to the user must report whether final validation and the `reported` stage returned `ok: true`, point to `reports/final/final_report.md`, and report the operating graph's project/managed/staged deployment status plus its handoff path.
 
 ## Source Boundary Rules
 
@@ -399,6 +445,7 @@ Generated skills are acceptable only if:
 
 - The paper's main method and evaluation pathway are covered by no more than five modules.
 - Each generated skill has clear trigger frontmatter, input/output contracts, workflow, limitations, and validation guidance.
+- Each generated skill declares `metadata.disco-role: operating` in frontmatter.
 - Deterministic scripts have deterministic tests.
 - Future agents can use the skills without rereading the original repository.
 - Recovery exercises the generated skills rather than a hand-written one-off solution.
@@ -416,5 +463,6 @@ In the final user-facing response:
 - State recovery target and metric result.
 - State analysis decision.
 - State final validation result.
+- State the reusability classification, approved project/managed scope or staged-only status, exact imported paths when applicable, and `researcher-handoff.md` path.
 - Mention any blockers, fallbacks, or deviations from the requested runtime.
 - Keep the response in the user's preferred language.

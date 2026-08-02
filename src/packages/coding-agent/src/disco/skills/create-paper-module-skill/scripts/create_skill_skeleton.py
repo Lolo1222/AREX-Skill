@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Create a minimal Codex skill skeleton."""
+"""Create a minimal DisCo operating skill skeleton."""
 
 from __future__ import annotations
 
@@ -10,8 +10,8 @@ from pathlib import Path
 
 def slugify(value: str) -> str:
     value = value.strip().lower()
-    value = re.sub(r"[^a-z0-9]+", "_", value)
-    return re.sub(r"_+", "_", value).strip("_") or "skill"
+    value = re.sub(r"[^a-z0-9]+", "-", value)
+    return re.sub(r"-+", "-", value).strip("-") or "skill"
 
 
 def quote_yaml_string(value: str) -> str:
@@ -27,9 +27,13 @@ def main() -> int:
     args = parser.parse_args()
 
     skill_dir = Path(args.skill_dir).expanduser().resolve()
+    name = slugify(args.name)
+    if len(name) > 64:
+        parser.error("canonicalized --name must be at most 64 characters")
+    if skill_dir.name != name:
+        parser.error(f"skill_dir basename must match canonicalized --name: {name}")
     (skill_dir / "scripts").mkdir(parents=True, exist_ok=True)
     (skill_dir / "tests").mkdir(parents=True, exist_ok=True)
-    name = slugify(args.name)
     skill_md = skill_dir / "SKILL.md"
     if not skill_md.exists():
         skill_md.write_text(
@@ -38,9 +42,11 @@ def main() -> int:
                     "---",
                     f"name: {name}",
                     f"description: {quote_yaml_string(args.description)}",
+                    "metadata:",
+                    "  disco-role: operating",
                     "---",
                     "",
-                    f"# {name.replace('_', ' ').title()}",
+                    f"# {name.replace('-', ' ').title()}",
                     "",
                     "Use this skill when ...",
                     "",

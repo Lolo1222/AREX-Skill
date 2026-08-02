@@ -1,5 +1,5 @@
-import type { AgentTool } from "@auto-ml-skills/disco-agent-core";
-import { Box, Container, Spacer, Text } from "@auto-ml-skills/disco-tui";
+import type { AgentTool } from "@earendil-works/pi-agent-core";
+import { Box, Container, Spacer, Text } from "@earendil-works/pi-tui";
 import { constants } from "fs";
 import { access as fsAccess, readFile as fsReadFile, writeFile as fsWriteFile } from "fs/promises";
 import { type Static, Type } from "typebox";
@@ -38,7 +38,7 @@ const replaceEditSchema = Type.Object(
 		}),
 		newText: Type.String({ description: "Replacement text for this targeted edit." }),
 	},
-	{ additionalProperties: false },
+	{},
 );
 
 const editSchema = Type.Object(
@@ -49,7 +49,7 @@ const editSchema = Type.Object(
 				"One or more targeted replacements. Each edit is matched against the original file, not incrementally. Do not include overlapping or nested edits. If two changes touch the same block or nearby lines, merge them into one edit instead.",
 		}),
 	},
-	{ additionalProperties: false },
+	{},
 );
 
 export type EditToolInput = Static<typeof editSchema>;

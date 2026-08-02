@@ -1,5 +1,5 @@
-import type { ThinkingLevel } from "@auto-ml-skills/disco-agent-core";
-import { Container, type SelectItem, SelectList, type SelectListLayoutOptions } from "@auto-ml-skills/disco-tui";
+import type { ThinkingLevel } from "@earendil-works/pi-agent-core";
+import { Container, type SelectItem, SelectList, type SelectListLayoutOptions } from "@earendil-works/pi-tui";
 import { getSelectListTheme } from "../theme/theme.ts";
 import { DynamicBorder } from "./dynamic-border.ts";
 
@@ -14,7 +14,8 @@ const LEVEL_DESCRIPTIONS: Record<ThinkingLevel, string> = {
 	low: "Light reasoning (~2k tokens)",
 	medium: "Moderate reasoning (~8k tokens)",
 	high: "Deep reasoning (~16k tokens)",
-	xhigh: "Maximum reasoning (~32k tokens)",
+	xhigh: "Extra-high reasoning (~32k tokens)",
+	max: "Maximum reasoning",
 };
 
 /**

@@ -15,6 +15,8 @@ Every `SKILL.md` frontmatter block must remain valid:
 name: skill-id
 description: "Triggering description broad enough for natural user requests."
 disable-model-invocation: true
+metadata:
+  disco-role: operating
 ---
 ```
 
@@ -22,8 +24,16 @@ Preserve or add `disable-model-invocation: true` on repo root and sub-skill
 frontmatter so imported repo skills stay behind `repo-skills-router` in
 compatible agents. Do not add it to `repo-skills-router` itself; Codex target
 visibility is handled during `import-repo-skills-to-agent`.
+Preserve or add `metadata.disco-role: operating` on the same files so they are
+available in Researcher mode and excluded from Creator mode.
 
-## Edit In Place
+## Edit The Working Runtime Tree
+
+Edit in place only when the resolved tree is a source directory outside the live
+DisCo skills root. If the starting point was
+`<agent-dir>/skills/repo-skills/<skill-id>/`, edit its external working copy and
+leave the live tree unchanged until the dedicated importer replaces it under the
+global lock.
 
 Prefer these edit actions, in order:
 

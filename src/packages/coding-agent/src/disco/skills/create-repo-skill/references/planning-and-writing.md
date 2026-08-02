@@ -107,7 +107,7 @@ sub-skill extraction and review:
    all branch handoffs, and performs a whole-skill integration pass before
    handing the skill to verification.
 
-When these meta-skills are copied into another agent without DisCo's
+When these workflow skills are copied into another agent without DisCo's
 built-in workflow tool, follow the same coordination model manually: delegate
 to subagents when available, keep independent sub-skill work isolated, review
 each result against the rubrics, and iterate before integrating the root skill.
@@ -484,6 +484,8 @@ frontmatter:
 name: repo-or-sub-skill-name
 description: "Specific third-person description with trigger terms broad enough for natural user requests."
 disable-model-invocation: true
+metadata:
+  disco-role: operating
 ---
 ```
 
@@ -495,10 +497,14 @@ YAML-sensitive content.
 
 Generated repo skills use `repo-skills-router` for discovery. Include
 `disable-model-invocation: true` in every generated root and sub-skill
-frontmatter by default so bulk imported repo skills do not flood compatible
-agents' model-visible skill lists. The live `repo-skills-router` is the
-exception: it must remain model-visible and must not include
-`disable-model-invocation: true`. Codex exports add target-side
+frontmatter by default so bulk imported repo skills do not flood DisCo
+Researcher's or compatible exported agents' model-visible skill lists. Also include
+`metadata.disco-role: operating` in every root and sub-skill so the generated
+skill graph is visible in Researcher mode and excluded from Creator mode. The
+live `repo-skills-router` has the same `operating` role and follows the user's
+DisCo router policy: the updater must preserve either an enabled router or
+`disable-model-invocation: true`. Canonical and exported routers remain
+model-visible. Codex exports add target-side
 `agents/openai.yaml` policy files during `import-repo-skills-to-agent`; do not
 add those files to the source repo skill during creation.
 
@@ -647,9 +653,11 @@ Avoid:
   `reports/` subtree instead.
 - Generated root or sub-skill `SKILL.md` frontmatter missing
   `disable-model-invocation: true`.
-- A `repo-skills-router` `SKILL.md` that includes
-  `disable-model-invocation: true`, which would hide the routing entry point
-  in compatible agents.
+- Generated root or sub-skill `SKILL.md` frontmatter missing
+  `metadata.disco-role: operating`.
+- A canonical or exported `repo-skills-router` `SKILL.md` that includes
+  `disable-model-invocation: true`. Only a live DisCo router may contain this
+  field after an explicit user `router disable` command.
 - Uppercase, underscored, dotted, spaced, or otherwise invalid skill identifiers in generated directory names, frontmatter `name` fields, or `reports/self-refine/evals.json` `skill_name` under the review/test artifact directory.
 - Sub-skill frontmatter `name` values that differ from the `sub-skills/<id>/`
   directory basename, workflow `subSkill` option, or usability target id.

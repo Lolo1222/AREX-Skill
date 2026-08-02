@@ -1,16 +1,16 @@
 import { join } from "node:path";
-import { Agent, type AgentMessage, type ThinkingLevel } from "@auto-ml-skills/disco-agent-core";
-import { clampThinkingLevel, type Message, type Model, streamSimple } from "@auto-ml-skills/disco-ai";
+import { Agent, type AgentMessage, setDefaultStreamFn, type ThinkingLevel } from "@earendil-works/pi-agent-core";
+import { clampThinkingLevel, type Message, type Model, streamSimple } from "@earendil-works/pi-ai/compat";
 import { getAgentDir } from "../config.ts";
+import { DEFAULT_DISCO_AGENT_MODE, type DiscoAgentMode, isDiscoAgentMode } from "../disco/modes/types.ts";
 import { resolvePath } from "../utils/paths.ts";
 import { AgentSession } from "./agent-session.ts";
 import { formatNoModelsAvailableMessage } from "./auth-guidance.ts";
-import { AuthStorage } from "./auth-storage.ts";
 import { DEFAULT_THINKING_LEVEL } from "./defaults.ts";
 import type { ExtensionRunner, LoadExtensionsResult, SessionStartEvent, ToolDefinition } from "./extensions/index.ts";
 import { convertToLlm } from "./messages.ts";
-import { ModelRegistry } from "./model-registry.ts";
 import { findInitialModel } from "./model-resolver.ts";
+import { ModelRuntime } from "./model-runtime.ts";
 import { mergeProviderAttributionHeaders } from "./provider-attribution.ts";
 import type { ResourceLoader } from "./resource-loader.ts";
 import { DefaultResourceLoader } from "./resource-loader.ts";
@@ -31,16 +31,21 @@ import {
 	withFileMutationQueue,
 } from "./tools/index.ts";
 
+// Preserve the pre-0.81 fallback for extensions that construct Agent instances
+// or invoke low-level agent loops without supplying streamFn. Agent core remains
+// provider-agnostic and does not import disco-ai/compat itself.
+setDefaultStreamFn(streamSimple);
+
 export interface CreateAgentSessionOptions {
 	/** Working directory for project-local discovery. Default: process.cwd() */
 	cwd?: string;
 	/** Global config directory. Default: ~/.disco/agent */
 	agentDir?: string;
+	/** Session-scoped DisCo role. Defaults to the session header, then researcher. */
+	discoMode?: DiscoAgentMode;
 
-	/** Auth storage for credentials. Default: AuthStorage.create(agentDir/auth.json) */
-	authStorage?: AuthStorage;
-	/** Model registry. Default: ModelRegistry.create(authStorage, agentDir/models.json) */
-	modelRegistry?: ModelRegistry;
+	/** Canonical model/auth runtime. Defaults to a runtime using agentDir/auth.json and models.json. */
+	modelRuntime?: ModelRuntime;
 
 	/** Model to use. Default: from settings, else first available */
 	model?: Model<any>;
@@ -94,12 +99,15 @@ export interface CreateAgentSessionResult {
 
 // Re-exports
 
+export type { DiscoSkillRole } from "../disco/modes/skill-policy.ts";
+export type { DiscoAgentMode } from "../disco/modes/types.ts";
 export * from "./agent-session-runtime.ts";
 export type {
 	ExtensionAPI,
 	ExtensionCommandContext,
 	ExtensionContext,
 	ExtensionFactory,
+	InlineExtension,
 	SlashCommandInfo,
 	SlashCommandSource,
 	ToolDefinition,
@@ -137,7 +145,7 @@ function getDefaultAgentDir(): string {
  * const { session } = await createAgentSession();
  *
  * // With explicit model
- * import { getModel } from '@auto-ml-skills/disco-ai';
+ * import { getModel } from '@earendil-works/pi-ai';
  * const { session } = await createAgentSession({
  *   model: getModel('anthropic', 'claude-opus-4-5'),
  *   thinkingLevel: 'high',
@@ -168,19 +176,33 @@ export async function createAgentSession(options: CreateAgentSessionOptions = {}
 	const agentDir = options.agentDir ? resolvePath(options.agentDir) : getDefaultAgentDir();
 	let resourceLoader = options.resourceLoader;
 
-	// Use provided or create AuthStorage and ModelRegistry
 	const authPath = options.agentDir ? join(agentDir, "auth.json") : undefined;
 	const modelsPath = options.agentDir ? join(agentDir, "models.json") : undefined;
-	const authStorage = options.authStorage ?? AuthStorage.create(authPath);
-	const modelRegistry = options.modelRegistry ?? ModelRegistry.create(authStorage, modelsPath);
+	const modelRuntime = options.modelRuntime ?? (await ModelRuntime.create({ authPath, modelsPath }));
 
 	const settingsManager = options.settingsManager ?? SettingsManager.create(cwd, agentDir);
-	const sessionManager = options.sessionManager ?? SessionManager.create(cwd, getDefaultSessionDir(cwd, agentDir));
+	if (options.discoMode !== undefined && !isDiscoAgentMode(options.discoMode)) {
+		throw new Error(`Invalid discoMode ${JSON.stringify(options.discoMode)}; expected "creator" or "researcher"`);
+	}
+	const requestedDiscoMode = options.discoMode ?? DEFAULT_DISCO_AGENT_MODE;
+	const sessionManager =
+		options.sessionManager ??
+		SessionManager.create(cwd, getDefaultSessionDir(cwd, agentDir), { discoMode: requestedDiscoMode });
+	const discoMode = options.discoMode ?? sessionManager.getDiscoMode();
+	if (options.discoMode !== undefined && sessionManager.getDiscoMode() !== discoMode) {
+		throw new Error(
+			`Session manager mode ${sessionManager.getDiscoMode()} does not match requested discoMode ${discoMode}`,
+		);
+	}
 
 	if (!resourceLoader) {
-		resourceLoader = new DefaultResourceLoader({ cwd, agentDir, settingsManager });
+		resourceLoader = new DefaultResourceLoader({ cwd, agentDir, settingsManager, discoMode });
 		await resourceLoader.reload();
 		time("resourceLoader.reload");
+	}
+	const resourceLoaderMode = resourceLoader.getDiscoMode?.();
+	if (resourceLoaderMode !== undefined && resourceLoaderMode !== discoMode) {
+		throw new Error(`Resource loader mode ${resourceLoaderMode} does not match session mode ${discoMode}`);
 	}
 
 	// Check if session has existing data to restore
@@ -193,8 +215,8 @@ export async function createAgentSession(options: CreateAgentSessionOptions = {}
 
 	// If session has data, try to restore model from it
 	if (!model && hasExistingSession && existingSession.model) {
-		const restoredModel = modelRegistry.find(existingSession.model.provider, existingSession.model.modelId);
-		if (restoredModel && modelRegistry.hasConfiguredAuth(restoredModel)) {
+		const restoredModel = modelRuntime.getModel(existingSession.model.provider, existingSession.model.modelId);
+		if (restoredModel && modelRuntime.hasConfiguredAuth(restoredModel.provider)) {
 			model = restoredModel;
 		}
 		if (!model) {
@@ -210,7 +232,7 @@ export async function createAgentSession(options: CreateAgentSessionOptions = {}
 			defaultProvider: settingsManager.getDefaultProvider(),
 			defaultModelId: settingsManager.getDefaultModel(),
 			defaultThinkingLevel: settingsManager.getDefaultThinkingLevel(),
-			modelRegistry,
+			modelRuntime,
 		});
 		model = result.model;
 		if (!model) {
@@ -299,10 +321,6 @@ export async function createAgentSession(options: CreateAgentSessionOptions = {}
 		},
 		convertToLlm: convertToLlmWithBlockImages,
 		streamFn: async (model, context, options) => {
-			const auth = await modelRegistry.getApiKeyAndHeaders(model);
-			if (!auth.ok) {
-				throw new Error(auth.error);
-			}
 			const providerRetrySettings = settingsManager.getProviderRetrySettings();
 			const httpIdleTimeoutMs = settingsManager.getHttpIdleTimeoutMs();
 			// SDKs treat timeout=0 as 0ms (immediate timeout), not "no timeout".
@@ -311,20 +329,24 @@ export async function createAgentSession(options: CreateAgentSessionOptions = {}
 			const timeoutMs = options?.timeoutMs ?? providerRetrySettings.timeoutMs ?? effectiveTimeoutMs;
 			const websocketConnectTimeoutMs =
 				options?.websocketConnectTimeoutMs ?? settingsManager.getWebSocketConnectTimeoutMs();
-			return streamSimple(model, context, {
+			const headerRunner = extensionRunnerRef.current;
+			return modelRuntime.streamSimple(model, context, {
 				...options,
-				apiKey: auth.apiKey,
 				timeoutMs,
 				websocketConnectTimeoutMs,
 				maxRetries: options?.maxRetries ?? providerRetrySettings.maxRetries,
 				maxRetryDelayMs: options?.maxRetryDelayMs ?? providerRetrySettings.maxRetryDelayMs,
-				headers: mergeProviderAttributionHeaders(
-					model,
-					settingsManager,
-					options?.sessionId,
-					auth.headers,
-					options?.headers,
-				),
+				transformHeaders: async (requestHeaders) => {
+					const headers = mergeProviderAttributionHeaders(
+						model,
+						settingsManager,
+						options?.sessionId,
+						requestHeaders,
+					);
+					return headerRunner?.hasHandlers("before_provider_headers")
+						? headerRunner.emitBeforeProviderHeaders(headers ?? {})
+						: (headers ?? {});
+				},
 			});
 		},
 		onPayload: async (payload, _model) => {
@@ -380,7 +402,7 @@ export async function createAgentSession(options: CreateAgentSessionOptions = {}
 		scopedModels: options.scopedModels,
 		resourceLoader,
 		customTools: options.customTools,
-		modelRegistry,
+		modelRuntime,
 		initialActiveToolNames,
 		allowedToolNames,
 		excludedToolNames,
