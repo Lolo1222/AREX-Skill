@@ -1,129 +1,107 @@
-# Evaluation Troubleshooting
+# Troubleshooting
 
-Use this guide to diagnose FlagEmbedding evaluation setup problems without accidentally starting expensive downloads or benchmark runs.
+Use this reference for evaluation-specific failures. For broad FlagEmbedding import problems, Python/package mismatches, or backend setup questions, route to the root troubleshooting reference.
 
-## Datasets or Corpora Not Downloaded
-
-Symptoms:
-
-- Loader errors mention missing `corpus.jsonl`, `<split>_queries.jsonl`, or `<split>_qrels.jsonl`.
-- Hugging Face dataset download errors appear.
-- Public benchmark command starts fetching many files.
-
-Safe response:
-
-1. Stop and report that execution would require dataset download or a prepared local dataset.
-2. Ask the user to provide a local `--dataset_dir` or approve downloads and cache location.
-3. Generate the command plan with explicit `--dataset_dir` and `--cache_path` or AIR-Bench `--cache_dir`.
-4. Do not use private tokens unless the user explicitly confirms credentials are configured.
-
-## Credentials or Private Access Missing
+## `faiss` Or `pytrec_eval` Missing
 
 Symptoms:
 
-- HTTP 401/403 errors.
-- Dataset or model repository not found despite a valid name.
-- Errors mention `HF_TOKEN`, gated models, or private datasets.
+- `ModuleNotFoundError: No module named 'faiss'`
+- `ModuleNotFoundError: No module named 'pytrec_eval'`
+- `python -m FlagEmbedding.evaluation.custom --help` fails before showing help.
 
-Safe response:
+Cause: evaluation utilities import both dependencies at module import time. They are not safe to postpone until metric computation.
 
-- Tell the user to authenticate through their own environment and rerun.
-- Avoid printing tokens or embedding credentials in commands.
-- For model access issues, generate a retrieval-only command using a local model path if the user provides one.
+Fix for CPU evaluation:
 
-## Benchmark Is Too Expensive
+```shell
+python -m pip install faiss-cpu pytrec_eval
+python -m FlagEmbedding.evaluation.custom --help
+```
 
-Symptoms:
+Use a GPU Faiss build only when the environment is already prepared for that CUDA stack. Avoid installing CPU and GPU Faiss variants into the same environment unless the package manager explicitly supports that combination.
 
-- Request asks for all BEIR, all MTEB, all languages, or reranked MSMARCO/AIR-Bench/BRIGHT.
-- CPU-only environment but command uses large models, large corpora, high top-k, or long max lengths.
-- Multiple `cuda:*` devices are requested but unavailable.
-
-Safe response:
-
-- Skip execution and present a staged plan: small retrieval-only subset first, then larger subsets, then reranking.
-- Lower `--search_top_k`, `--rerank_top_k`, batch sizes, and max lengths for smoke tests.
-- Omit `--reranker_name_or_path` until retrieval outputs and runtime are confirmed.
-- For MLDR/BRIGHT long tasks, call out long document lengths and memory pressure.
-
-## Wrong Dataset, Language, Task, or Split
+## Dataset Layout Errors
 
 Symptoms:
 
-- Errors say dataset name or split not found.
-- The runner silently skips because no checked split is valid.
-- MTEB returns no tasks.
+- `Corpus not found ... Trying to download the corpus from the remote`
+- `Qrels not found ... Trying to download the qrels from the remote`
+- `Queries not found ... Trying to download the queries from the remote`
+- `Split <name> not found in the dataset`
 
-Safe response:
+Checks:
 
-- Validate selectors against the family:
-  - BEIR: public dataset names such as `fiqa`, `arguana`, `nq`; `msmarco` uses `dev`, most others use `test`.
-  - MIRACL: language codes include `ar`, `bn`, `en`, `es`, `fa`, `fi`, `fr`, `hi`, `id`, `ja`, `ko`, `ru`, `sw`, `te`, `th`, `zh`, `de`, `yo`; `en` supports `train` and `dev`, others `dev`.
-  - MLDR: language codes include `ar`, `de`, `en`, `es`, `fr`, `hi`, `it`, `ja`, `ko`, `pt`, `ru`, `th`, `zh`; splits are `train`, `dev`, `test`.
-  - MKQA: split is `test`; language variants include `zh_cn`, `zh_hk`, and `zh_tw`.
-  - MSMARCO: dataset names are `passage` or `document`; splits are `dev`, `dl19`, `dl20`.
-  - BRIGHT: `--task_type` must be `short` or `long`; common split values include `examples`, `gpt4_reason`, `grit_reason`, and model-reasoning split names.
-- For MTEB, narrow by `--tasks` or `--task_types` and verify the requested language code follows MTEB naming.
+- `--dataset_dir` must point at the directory containing `corpus.jsonl`, `<split>_queries.jsonl`, and `<split>_qrels.jsonl` for custom evaluation.
+- The split in `--splits` must match the file prefix. `--splits dev` requires `dev_queries.jsonl` and `dev_qrels.jsonl`.
+- For custom evaluation, do not pass `--dataset_names`; the custom loader has no dataset-name registry.
+- For official benchmark loaders with local files, each `--dataset_names` value is expected as a child directory under `--dataset_dir`.
 
-## Custom Dataset ID Mismatches
+Use the bundled tiny fixture generator to compare a known-good layout:
 
-Symptoms:
+```shell
+python scripts/create_tiny_retrieval_dataset.py --output-dir ./tiny_retrieval --overwrite
+```
 
-- Metrics are zero despite apparently relevant data.
-- Key errors happen during qrels or query lookup.
-- Search result files contain fewer query ids than expected.
+## Download And Cache Surprises
 
-Checklist:
+Official benchmark modules can download corpora, queries, qrels, benchmark metadata, and models. Network use can happen when `--dataset_dir` is omitted, files are missing, `--force_redownload True` is set, or the selected external benchmark package needs task data.
 
-- `corpus.jsonl` rows contain unique string-compatible `id` values and `text`.
-- `<split>_queries.jsonl` rows contain unique `id` values and `text`.
-- `<split>_qrels.jsonl` rows contain `qid`, `docid`, and numeric `relevance`.
-- Every qrels `qid` appears in the matching queries file.
-- Every qrels `docid` appears in `corpus.jsonl`.
-- Split names in files match `--splits` exactly.
-- If query ids overlap document ids, decide whether `--ignore_identical_ids True` is appropriate.
+Controls:
 
-## Model Cache, Token, or Network Failures
+- Set `--dataset_dir` to a populated local directory when possible.
+- Set `--cache_path` for datasets and `--cache_dir` for models. AIR-Bench uses `--cache_dir` for benchmark data and `--model_cache_dir` for models.
+- Leave `--force_redownload False` unless the user explicitly wants refreshed data.
+- Ask before enabling `--trust_remote_code` or downloading gated/private resources.
+
+## Metrics Missing From Output
 
 Symptoms:
 
-- Model loading errors from Transformers or Hugging Face Hub.
-- Network timeouts, DNS errors, proxy errors, or incomplete cache files.
-- Trust-remote-code errors for models requiring custom code.
+- The aggregate markdown has `-` in metric cells.
+- The requested metric is absent from `eval_results.json`.
 
-Safe response:
+Checks:
 
-- Ask whether to use a local model path or retry downloads.
-- Keep `--cache_dir` or `--model_cache_dir` explicit and portable.
-- Only add `--trust_remote_code True` if the user accepts remote model code execution risk.
-- Do not delete caches unless the user asks; suggest a separate clean cache path for repro.
+- `--eval_metrics` controls which metrics are displayed, not necessarily which metrics are computed.
+- `--k_values` controls metric cutoffs. Requesting `recall_at_100` requires `--k_values 100`.
+- Generic retrieval metrics include names such as `ndcg_at_10`, `map_at_10`, `recall_at_10`, `precision_at_10`, `mrr_at_10`, and `recall_cap_at_10`.
+- MKQA uses QA recall metrics such as `qa_recall_at_20`.
+- MTEB writes its own JSON aggregate and does not follow the markdown output path used by the base evaluator.
 
-## GPU/CPU, Batch, and Max-Length Problems
-
-Symptoms:
-
-- CUDA out-of-memory, process killed, or very slow CPU execution.
-- Tokenizer/model warnings about truncation.
-- Long-document benchmarks fail with sequence length limits.
-
-Safe response:
-
-- Reduce `--embedder_batch_size` and `--reranker_batch_size`.
-- Reduce `--embedder_passage_max_length`, `--embedder_query_max_length`, and `--reranker_max_length`, unless benchmark validity requires long context.
-- Remove `--devices cuda:*` when GPUs are unavailable.
-- Prefer retrieval-only smoke tests before reranking.
-- For BRIGHT/MLDR long-document workflows, explicitly balance max length against available memory.
-
-## Output Already Exists or Looks Stale
+## Reranker Top-K Problems
 
 Symptoms:
 
-- Run reuses old search results because `--overwrite False`.
-- Eval summary does not reflect new command options.
-- Metadata mismatch errors mention eval name, model name, reranker name, split, or dataset name.
+- Reranking is slower than expected.
+- Reranker output has fewer candidates than expected.
+- A reranker command runs out of memory.
 
-Safe response:
+Checks:
 
-- Inspect the output directory nesting by embedder and reranker names.
-- Use a new `--output_dir` for clean experiments, or ask before setting `--overwrite True`.
-- Ensure `--eval_name`, selectors, and model names match existing artifacts when reusing results.
+- `--search_top_k` is the first-stage retrieval cutoff.
+- `--rerank_top_k` truncates first-stage results before scoring query-document pairs.
+- Keep `--rerank_top_k <= --search_top_k`.
+- Lower `--reranker_batch_size` or `--reranker_max_length` for memory pressure.
+- If the reranker checkpoint is custom or not auto-mapped, set `--reranker_model_class`.
+
+## Identical Query And Document IDs
+
+`--ignore_identical_ids True` drops hits where `qid == docid`. This is useful for datasets where queries are derived from documents and self-retrieval is invalid.
+
+Do not enable it automatically. Some benchmarks use id spaces where identical ids are meaningful or where the loader expects them to remain. The MIRACL path warns against enabling identical-id filtering.
+
+When in doubt, inspect a few qids and docids before deciding:
+
+```shell
+head -n 3 test_queries.jsonl
+head -n 3 corpus.jsonl
+```
+
+## Reusing Corpus Embeddings Gives Wrong Results
+
+The saved corpus embedding file reflects the embedder, checkpoint, instructions, pooling, normalization, truncation, and corpus text at the time it was created. If any of those change, use a new `--corpus_embd_save_dir` or rerun with `--overwrite True`.
+
+## Official Benchmark Scope Too Broad
+
+If `--dataset_names`, `--tasks`, `--task_types`, or language selectors are omitted, a benchmark runner may evaluate every available item. For exploratory work, always pass a narrow selector and small split first.

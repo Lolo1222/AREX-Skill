@@ -1,8 +1,10 @@
-# FlagEmbedding Inference API Reference
+# Inference API Reference
 
-This reference summarizes the inference APIs future agents are most likely to use. It is self-contained and avoids depending on repository examples at runtime.
+This reference captures the FlagEmbedding inference API surface needed by this
+sub-skill. It is self-contained and uses only runtime names exposed by the
+installed package.
 
-## Import Surface
+## Public Imports
 
 ```python
 from FlagEmbedding import (
@@ -20,145 +22,226 @@ from FlagEmbedding import (
 )
 ```
 
-## Auto Embedder
+`FlagModel` is the public alias for the encoder-only base embedder.
+`BGEM3FlagModel` is the public alias for the M3 embedder. `FlagLLMModel`,
+`FlagICLModel`, and `FlagPseudoMoEModel` are decoder-only embedder classes.
+`FlagReranker` is the encoder-only reranker. `FlagLLMReranker`,
+`LayerWiseFlagLLMReranker`, and `LightWeightFlagLLMReranker` are decoder-only
+rerankers.
 
-Use `FlagAutoModel.from_finetuned(...)` when the checkpoint basename appears in FlagEmbedding's embedder mapping.
+## Verified Loader Signatures
 
 ```python
-model = FlagAutoModel.from_finetuned(
-    "BAAI/bge-base-en-v1.5",
+FlagAutoModel.from_finetuned(
+    model_name_or_path,
+    model_class=None,
     normalize_embeddings=True,
+    use_fp16=True,
+    use_bf16=False,
+    query_instruction_for_retrieval=None,
+    devices=None,
+    pooling_method=None,
+    trust_remote_code=None,
+    query_instruction_format=None,
+    truncate_dim=None,
+    **kwargs,
+)
+```
+
+```python
+FlagAutoReranker.from_finetuned(
+    model_name_or_path,
+    model_class=None,
     use_fp16=False,
-    devices="cpu",
+    trust_remote_code=None,
+    **kwargs,
 )
-embeddings = model.encode(["I love NLP", "I love retrieval"])
 ```
 
-Important parameters:
+`**kwargs` are forwarded to the concrete class. Common forwarded kwargs include
+`cache_dir`, `batch_size`, `query_max_length`, `passage_max_length` for
+embedders, and `devices`, `batch_size`, `query_max_length`, `max_length`,
+`normalize`, `cutoff_layers`, `compress_ratio`, and `compress_layers` for
+rerankers.
 
-- `model_name_or_path`: Hugging Face model id or local checkpoint directory.
-- `model_class`: explicit class selector for unmapped or renamed checkpoints; see `references/model-selection.md`.
-- `normalize_embeddings`: normalizes embedding vectors when supported; with normalized vectors, dot product behaves like cosine similarity.
-- `use_fp16` / `use_bf16`: precision controls; keep both false on CPU unless hardware support is known.
-- `query_instruction_for_retrieval`: instruction applied by `encode_queries()`.
-- `query_instruction_format`: two-slot format string, usually `"{}{}"` or an instruct format such as `"Instruct: {}\nQuery: {}"`.
-- `devices`: `None`, string, integer, list of strings, or list of integers. Integers are converted to CUDA or MUSA device strings.
-- `pooling_method`: `"cls"`, `"mean"`, or `"last_token"` depending on model architecture.
-- `truncate_dim`: output dimension truncation for Matryoshka-style embeddings when supported.
-- `batch_size`, `query_max_length`, `passage_max_length`, `convert_to_numpy`, and Hugging Face kwargs may be passed through to the concrete embedder.
-
-## Embedder Methods
-
-All embedder classes derive from the same base interface.
+## Core Method Signatures
 
 ```python
-queries = ["what is vector search?", "how does reranking work?"]
-passages = ["Vector search compares embeddings.", "Rerankers score query-document pairs."]
-
-q_vectors = model.encode_queries(queries, batch_size=32, max_length=128)
-p_vectors = model.encode_corpus(passages, batch_size=32, max_length=512)
-scores = q_vectors @ p_vectors.T
-```
-
-Method behavior:
-
-- `encode(sentences, ...)` encodes raw sentences; if `instruction` is passed directly, it formats the text before encoding.
-- `encode_queries(queries, ...)` uses `query_instruction_for_retrieval` and `query_instruction_format`.
-- `encode_corpus(corpus, ...)` uses optional `passage_instruction_for_retrieval` and `passage_instruction_format` passed as kwargs at construction.
-- `convert_to_numpy=True` returns NumPy arrays for normal embedders; `False` returns tensors where implemented.
-- If more than one target device is configured and input is a list, the base class starts a multi-process pool.
-- Call `stop_self_pool()` when long-running processes repeatedly create and destroy multi-device embedders.
-
-## Concrete Embedders
-
-- `FlagModel`: encoder-only dense embedder for classic BGE/E5/GTE-style models.
-- `BGEM3FlagModel`: BGE-M3 multi-function embedder with dense, sparse, and optional ColBERT vectors.
-- `FlagLLMModel`: decoder-only LLM embedder using last-token pooling.
-- `FlagICLModel`: decoder-only in-context-learning embedder; accepts example-related kwargs such as `examples_for_task`.
-- `FlagPseudoMoEModel`: decoder-only pseudo-MoE embedder for compatible checkpoints.
-
-## BGE-M3 Outputs
-
-`BGEM3FlagModel` and auto-loaded `encoder-only-m3` models return a dictionary, not a plain matrix, when using the M3-specific flags.
-
-```python
-outputs = model.encode(
-    ["example text"],
-    return_dense=True,
-    return_sparse=True,
-    return_colbert_vecs=False,
+AbsEmbedder.encode_queries(
+    queries,
+    batch_size=None,
+    max_length=None,
+    convert_to_numpy=None,
+    **kwargs,
 )
-dense = outputs["dense_vecs"]
-lexical = outputs["lexical_weights"]
 ```
 
-Common keys:
-
-- `dense_vecs`: dense embedding matrix or vector.
-- `lexical_weights`: sparse token-weight dictionaries.
-- `colbert_vecs`: token-level multi-vector embeddings when `return_colbert_vecs=True`.
-
-Scoring helpers:
-
-- Dense score: `query_outputs["dense_vecs"] @ passage_outputs["dense_vecs"].T`.
-- Sparse lexical score: `model.compute_lexical_matching_score(query_outputs["lexical_weights"], passage_outputs["lexical_weights"])`.
-- Full BGE-M3 scoring: `model.compute_score(sentence_pairs, weights_for_different_modes=...)` where supported by the concrete class.
-
-## Auto Reranker
-
-Use `FlagAutoReranker.from_finetuned(...)` for mapped reranker checkpoints.
-
 ```python
-reranker = FlagAutoReranker.from_finetuned(
-    "BAAI/bge-reranker-base",
-    use_fp16=False,
-    devices="cpu",
-    query_max_length=256,
-    max_length=512,
+AbsEmbedder.encode_corpus(
+    corpus,
+    batch_size=None,
+    max_length=None,
+    convert_to_numpy=None,
+    **kwargs,
 )
-score = reranker.compute_score(["what is panda?", "A panda is a bear species."])
 ```
-
-Important parameters:
-
-- `model_name_or_path`: Hugging Face model id or local checkpoint directory.
-- `model_class`: explicit class selector for unmapped or renamed checkpoints.
-- `use_fp16`: defaults false for rerankers; leave false on CPU.
-- `trust_remote_code`: default comes from the mapping when auto-mapped; defaults false when `model_class` is explicit and not provided.
-- `query_instruction_for_rerank`, `query_instruction_format`, `passage_instruction_for_rerank`, and `passage_instruction_format`: optional pair text formatting.
-- `devices`, `batch_size`, `query_max_length`, `max_length`, and `normalize`: common runtime controls.
-
-## Reranker Methods
 
 ```python
-pairs = [
-    ["what is panda?", "hi"],
-    ["what is panda?", "The giant panda is a bear species endemic to China."],
-]
-raw_scores = reranker.compute_score(pairs)
-probability_like_scores = reranker.compute_score(pairs, normalize=True)
+AbsReranker.compute_score(sentence_pairs, **kwargs)
 ```
 
-Method behavior:
+```python
+BGEM3FlagModel.compute_score(
+    sentence_pairs,
+    batch_size=None,
+    max_query_length=None,
+    max_passage_length=None,
+    weights_for_different_modes=None,
+    **kwargs,
+)
+```
 
-- A single pair may be passed as `[query, passage]` or `(query, passage)`.
-- Multiple pairs should be a list of two-item pairs.
-- `normalize=True` applies sigmoid normalization to map raw logits into `[0, 1]`-like scores.
-- `query_max_length` truncates the query side when supported; `max_length` is the total or passage-inclusive limit depending on concrete reranker.
-- Multi-device reranking starts a multi-process pool in the base class.
+## Auto Mapping Behavior
 
-## Concrete Rerankers
+Auto loaders extract an effective model name from `model_name_or_path` with
+this behavior:
 
-- `FlagReranker`: encoder-only sequence-classification reranker, including BGE reranker base/large/v2-m3 style checkpoints.
-- `FlagLLMReranker`: decoder-only reranker for compatible LLM reranker checkpoints.
-- `LayerWiseFlagLLMReranker`: decoder-only layerwise reranker; pass `cutoff_layers=[...]` to `compute_score`.
-- `LightWeightFlagLLMReranker`: decoder-only lightweight reranker; pass `cutoff_layers`, `compress_ratio`, and `compress_layers` as needed.
+- For `BAAI/bge-base-en-v1.5`, the effective name is `bge-base-en-v1.5`.
+- For a local path ending in `checkpoint-1000`, the effective name is the
+  parent directory name.
+- The effective name is checked against the built-in mapping. If it is missing,
+  auto loading raises a model-not-found `ValueError`.
 
-## Constructor Compatibility Notes
+For unmapped local checkpoints, supply `model_class` explicitly. For embedders,
+also supply `pooling_method`, `query_instruction_format`, and
+`trust_remote_code` if the checkpoint differs from standard encoder-only BGE
+defaults. For rerankers, supply `model_class` and class-specific kwargs such as
+`cutoff_layers` or compression options.
 
-The installed package exposes these stable high-level signatures:
+Some mapping entries are provider-qualified remote ids, while the loader still
+uses `os.path.basename(...)` for lookup. If a remote id that appears supported
+still misses the mapping, pass the concrete `model_class` instead of assuming
+the checkpoint is unusable.
 
-- `FlagAutoModel.from_finetuned(model_name_or_path, model_class=None, normalize_embeddings=True, use_fp16=True, use_bf16=False, query_instruction_for_retrieval=None, devices=None, pooling_method=None, trust_remote_code=None, query_instruction_format=None, truncate_dim=None, **kwargs)`
-- `FlagAutoReranker.from_finetuned(model_name_or_path, model_class=None, use_fp16=False, trust_remote_code=None, **kwargs)`
-- `AbsEmbedder.__init__(model_name_or_path, normalize_embeddings=True, use_fp16=True, use_bf16=False, query_instruction_for_retrieval=None, query_instruction_format="{}{}", devices=None, batch_size=256, query_max_length=512, passage_max_length=512, convert_to_numpy=True, truncate_dim=None, **kwargs)`
-- `AbsReranker.__init__(model_name_or_path, use_fp16=False, query_instruction_for_rerank=None, query_instruction_format="{}{}", passage_instruction_for_rerank=None, passage_instruction_format="{}{}", devices=None, batch_size=128, query_max_length=None, max_length=512, normalize=False, **kwargs)`
+## Embedder Model Classes
+
+| `model_class` id | Concrete class | Default behavior | Use when |
+|---|---|---|---|
+| `encoder-only-base` | `FlagModel` | Dense embeddings from encoder hidden states. Default concrete pooling is `cls`; auto mapping may choose `cls` or `mean`. | BGE, E5, GTE, BCE, or local encoder-only dense checkpoints. |
+| `encoder-only-m3` | `BGEM3FlagModel` | M3 dense, sparse lexical weights, and ColBERT vectors. Default pooling is `cls`. | `bge-m3` or compatible M3 checkpoints. |
+| `decoder-only-base` | `FlagLLMModel` | Last-token pooled decoder-only embeddings. | LLM embedding checkpoints such as BGE multilingual Gemma or E5/GTE instruct LLM variants. |
+| `decoder-only-icl` | `FlagICLModel` | Last-token pooled decoder-only embeddings with optional few-shot examples. | ICL embedding checkpoints. |
+| `decoder-only-pseudo_moe` | `FlagPseudoMoEModel` | Decoder-only embeddings with optional domain routing. Defaults favor bf16 and remote code. | Pseudo-MoE checkpoints that expose domain selection. |
+
+Known embedder mapping families include BGE, Qwen3-Embedding, E5, GTE, SFR,
+Linq, and BCE. Common mapped BGE names include `bge-en-icl`, `bge-m3`,
+`bge-multilingual-gemma2`, and BGE English/Chinese base, small, and large
+variants.
+
+## Reranker Model Classes
+
+| `model_class` id | Concrete class | Default behavior | Use when |
+|---|---|---|---|
+| `encoder-only-base` | `FlagReranker` | Cross-encoder sequence-classification scores. | BGE reranker base/large/v2-m3 or compatible encoder rerankers. |
+| `decoder-only-base` | `FlagLLMReranker` | Decoder-only yes-token style relevance scores. | LLM reranker checkpoints such as Gemma-style rerankers. |
+| `decoder-only-layerwise` | `LayerWiseFlagLLMReranker` | Scores from selected hidden layers. | Layerwise MiniCPM-style rerankers. |
+| `decoder-only-lightweight` | `LightWeightFlagLLMReranker` | Layerwise scores with token compression. | Lightweight Gemma2-style rerankers with compression. |
+
+Known reranker mappings include `bge-reranker-base`, `bge-reranker-large`,
+`bge-reranker-v2-m3`, `bge-reranker-v2-gemma`,
+`bge-reranker-v2-minicpm-layerwise`, and
+`bge-reranker-v2.5-gemma2-lightweight`.
+
+## Embedder Parameter Notes
+
+- `normalize_embeddings`: normalizes dense embeddings before output. With
+  normalized embeddings, inner product is cosine similarity. Set false only
+  when downstream scoring expects raw vectors.
+- `use_fp16`: half precision for speed on supported accelerators. Use false
+  for CPU smoke checks and when numerical stability matters more than speed.
+- `use_bf16`: bfloat16 for supported accelerators. If `convert_to_numpy=True`,
+  non-CPU bf16 tensors are upcast to float32 before NumPy conversion.
+- `query_instruction_for_retrieval`: instruction applied by `encode_queries`.
+  It is not automatically applied by `encode_corpus`.
+- `query_instruction_format`: template with two `{}` placeholders:
+  instruction, then query. String values containing literal `\n` are converted
+  to newlines by the base helpers.
+- `devices`: `None` auto-selects all CUDA devices, then NPU, MUSA, MPS, then
+  CPU. A string pins one device. A list enables multiprocessing across devices.
+- `pooling_method`: `cls` and `mean` are typical encoder options;
+  decoder-only embedders require `last_token` and raise if another pooling
+  method is used.
+- `trust_remote_code`: auto mapping can set this per mapped checkpoint. When
+  `model_class` is supplied manually, auto embedder defaults it to false unless
+  you pass a value.
+- `truncate_dim`: slices final embedding dimensions to `[..., :truncate_dim]`.
+  Use it only for checkpoints trained to support dimensional truncation.
+- `batch_size`: default 256. Concrete embedders attempt to reduce batch size on
+  runtime or OOM errors, but this should not replace choosing a sane starting
+  batch size.
+- `query_max_length` and `passage_max_length`: defaults are 512 for base
+  embedders. Decoder-only LLM embedders often need larger values only when the
+  model and memory budget support them.
+- `cache_dir`: forwarded to Hugging Face `from_pretrained`. Prefer a caller
+  supplied cache directory or standard Hugging Face cache environment variables;
+  do not hard-code a machine-specific cache path in reusable code.
+
+## M3 Output Contract
+
+`BGEM3FlagModel.encode`, `encode_queries`, and `encode_corpus` return a dict:
+
+```python
+{
+    "dense_vecs": numpy_array_or_none,
+    "lexical_weights": list_or_dict_or_none,
+    "colbert_vecs": list_or_array_or_none,
+}
+```
+
+Set `return_dense`, `return_sparse`, and `return_colbert_vecs` per call. Keys
+are always present; disabled modes have `None` values.
+
+M3 helper methods:
+
+- `convert_id_to_token(lexical_weights)`: maps sparse token-id weights back to
+  decoded token strings.
+- `compute_lexical_matching_score(weights_1, weights_2)`: computes sparse
+  lexical matching for one pair of dicts or all pairs from two lists.
+- `colbert_score(q_reps, p_reps)`: computes one ColBERT token interaction
+  score from query and passage multivectors.
+- `compute_score(sentence_pairs, ...)`: returns per-pair scores for `dense`,
+  `sparse`, `colbert`, `sparse+dense`, and `colbert+sparse+dense`.
+
+`weights_for_different_modes` is ordered `[dense_weight, sparse_weight,
+colbert_weight]`. When omitted, all three weights default to `1.0`.
+
+## Reranker Parameter Notes
+
+- `sentence_pairs`: use `("query", "passage")` or a list of two-item pairs.
+  A single pair still returns a list from standard rerankers.
+- `query_max_length`: max token length for the query side. If omitted,
+  concrete rerankers use their instance value or `max_length * 3 // 4`.
+- `max_length`: max token length for passages and packed reranker inputs.
+  Some prose examples use the name `passage_max_length`, but the verified
+  reranker constructors and compute methods use `max_length`.
+- `normalize`: applies a sigmoid to scores and maps them to 0-1. Use false
+  when comparing raw logits or reproducing model-native scores.
+- `cutoff_layers`: for layerwise and lightweight rerankers, choose which layers
+  produce scores. One cutoff layer returns one score list; multiple cutoff
+  layers return a list of score lists.
+- `compress_ratio`: lightweight reranker compression ratio. Supported ratios
+  are documented by the class as `1`, `2`, `4`, and `8`.
+- `compress_layers`: lightweight reranker layers selected for compression.
+- `use_bf16`: layerwise and lightweight classes accept it even though the auto
+  reranker signature does not list it; pass through `**kwargs` when needed.
+- `peft_path`: concrete decoder-only reranker classes can merge a PEFT adapter
+  when supplied. Treat this as model loading, not fine-tuning.
+
+## Device And Precision Behavior
+
+When `devices=None`, embedders and rerankers try accelerator backends before CPU.
+For deterministic smoke checks, pass `devices="cpu"` and disable fp16/bf16.
+When using multiple devices, pass one process target per device, such as
+`["cuda:0", "cuda:1"]`. Multi-device inference starts multiprocessing pools;
+stop or delete model objects after use in long-running processes to release
+memory.

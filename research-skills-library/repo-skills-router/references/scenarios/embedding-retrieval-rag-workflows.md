@@ -41,11 +41,11 @@ Useful entry points: `feast/SKILL.md`, `feast/sub-skills/feature-definitions/`, 
 
 ### `flag-embedding`
 
-Role: Use FlagEmbedding/BGE for embedding, reranking, retrieval/RAG model selection, fine-tuning data and command preparation, and evaluation workflow planning.
-Read when: The request names `flag-embedding` or asks for package-specific APIs, CLIs, configs, data/model artifacts, error messages, workflows, or repository maintenance that match this project.
-Best for: evaluation, finetuning, inference, and model catalog and rag.
-Avoid when: another repo skill in this scenario matches the user's task, package, model family, data format, serving backend, or workflow more directly.
-Useful entry points: `flag-embedding/SKILL.md`, `flag-embedding/sub-skills/evaluation/`, `flag-embedding/sub-skills/finetuning/`, `flag-embedding/sub-skills/inference/`, `flag-embedding/sub-skills/model-catalog-and-rag/`.
+Role: Guides FlagEmbedding and BGE workflows for embedding inference, reranking, retrieval evaluation, and fine-tuning data or launch commands.
+Read when: The task names FlagEmbedding, FlagOpen, BGE, BGE-M3, bge-reranker, FlagAutoModel, FlagAutoReranker, retrieval embeddings, sparse or ColBERT scoring, hard negatives, teacher scores, or FlagEmbedding evaluation modules.
+Best for: Loading BGE embedders and rerankers, choosing model_class ids, preparing fine-tuning JSONL, building torchrun commands, creating custom retrieval evaluation data, and running FlagEmbedding benchmark modules.
+Avoid when: The task is only a generic vector database client, unrelated RAG framework, general Transformers model training without FlagEmbedding APIs, or source-code maintenance not involving package workflows.
+Useful entry points: `flag-embedding/SKILL.md`, `flag-embedding/sub-skills/inference/SKILL.md`, `flag-embedding/sub-skills/fine-tuning/SKILL.md`, `flag-embedding/sub-skills/evaluation/SKILL.md`.
 
 ### `flashrag`
 

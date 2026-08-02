@@ -1,6 +1,6 @@
 ---
 name: flag-embedding
-description: "Use FlagEmbedding/BGE for embedding, reranking, retrieval/RAG model selection, fine-tuning data and command preparation, and evaluation workflow planning."
+description: "Use FlagEmbedding for embedding, reranking, retrieval evaluation, and fine-tuning workflows."
 disable-model-invocation: true
 metadata:
   disco-role: operating
@@ -8,47 +8,116 @@ metadata:
 
 # FlagEmbedding
 
-Use this skill when a task involves the FlagEmbedding package or BGE retrieval toolkit: encoding text, reranking query-passage pairs, selecting BGE model families, preparing fine-tuning data/commands, or planning benchmark/custom retrieval evaluation.
+Use this repo skill when a task involves FlagEmbedding, BGE embedding models,
+BGE-M3 dense/sparse/ColBERT retrieval, BGE rerankers, retrieval evaluation, or
+FlagEmbedding fine-tuning data and launch commands.
 
-## Start Here
+Read `references/repo-provenance.md` when checking whether this skill matches a
+current checkout or package version. Read `references/model-overview.md` when
+choosing model families or deciding whether automatic model routing is likely to
+work. Read `references/troubleshooting.md` for install/import, optional
+dependency, backend, model-cache, and remote-code problems.
 
-1. Install the package for the intended workflow:
-   - Inference/evaluation planning: `pip install -U FlagEmbedding`
-   - Fine-tuning command execution: `pip install -U "FlagEmbedding[finetune]"` plus the backend packages your hardware supports.
-2. Run the minimal import check before giving API advice:
-   ```bash
-   python - <<'PY'
-   import FlagEmbedding
-   from FlagEmbedding import FlagAutoModel, FlagAutoReranker
-   print('FlagEmbedding import OK')
-   PY
-   ```
-3. For a deeper local diagnostic, run [`scripts/check_install.py`](scripts/check_install.py). It checks imports, package metadata, Torch backend visibility, and optional fine-tune dependencies without downloading models.
-4. Read [`references/repo-provenance.md`](references/repo-provenance.md) before deciding whether this skill matches a current checkout. If the commit, package version, or public API surface changed, refresh this skill from the repo.
-5. Use [`references/troubleshooting.md`](references/troubleshooting.md) for cross-cutting install/import, dependency, model-download, and hardware issues.
+## Install And Import
 
-## Route by Task
+Base package install:
 
-- **Embedding or reranking inference**: use [`sub-skills/inference/`](sub-skills/inference/) for `FlagAutoModel`, `FlagAutoReranker`, explicit `model_class`, BGE-M3 dense/sparse/ColBERT outputs, reranker normalization, device selection, and inference snippets.
-- **Model selection or RAG design**: use [`sub-skills/model-catalog-and-rag/`](sub-skills/model-catalog-and-rag/) for BGE model-family tradeoffs, instruction templates, reranker-vs-embedder choices, RAG pipeline patterns, and auto-mapping troubleshooting.
-- **Fine-tuning preparation**: use [`sub-skills/finetuning/`](sub-skills/finetuning/) for JSONL schema validation, hard-negative/teacher-score command planning, data splitting, DeepSpeed config choices, and safe training command construction.
-- **Evaluation planning**: use [`sub-skills/evaluation/`](sub-skills/evaluation/) for BEIR, MTEB, MIRACL, MLDR, MKQA, MSMARCO, AIR-Bench, BRIGHT, and custom retrieval evaluation command planning.
+```bash
+python -m pip install -U FlagEmbedding
+```
 
-## Common Workflow Patterns
+Fine-tuning extras:
 
-- **Quick retrieval prototype**: route to `model-catalog-and-rag` to choose an embedder/reranker pair, then to `inference` for code snippets that encode queries/corpus and rerank top candidates.
-- **Custom checkpoint fails auto loading**: route to `model-catalog-and-rag` to identify `model_class`, then to `inference` to pass that class explicitly in `from_finetuned`.
-- **Fine-tune then evaluate**: route first to `finetuning` for data validation and training command construction, then to `evaluation` for safe benchmark or custom retrieval command planning.
-- **Benchmark request with missing datasets**: route to `evaluation`; produce a command plan and list required caches/credentials instead of running downloads or long benchmarks by default.
-- **BGE-M3 score confusion**: route to `inference`; handle dictionary outputs (`dense_vecs`, `lexical_weights`, `colbert_vecs`) instead of assuming every embedder returns a plain matrix.
+```bash
+python -m pip install -U "FlagEmbedding[finetune]"
+```
 
-## Safety Defaults
+Evaluation workflows also need retrieval metric/index dependencies that are not
+always installed by the base package metadata:
 
-- Do not run model downloads, long training, distributed launches, benchmark suites, or external dataset downloads unless the user explicitly approves and the environment is prepared.
-- Prefer CPU-safe import, parser, and command-builder checks for diagnostics.
-- Treat notebook and example content as evidence; use bundled references and scripts in this skill for reusable agent guidance.
-- Keep user-provided tokens, private model paths, dataset credentials, cache paths, and local environment paths out of responses and generated artifacts.
+```bash
+python -m pip install faiss-cpu pytrec_eval
+```
 
-## Bundled Shared Script
+Use GPU-specific FAISS, CUDA PyTorch, DeepSpeed, or flash-attn only after the
+runtime backend is deliberately prepared. Do not treat a CPU import as proof of
+GPU training or flash-attn compatibility.
 
-- [`scripts/check_install.py`](scripts/check_install.py): run when diagnosing package availability, backend selection, optional fine-tune dependencies, or stale installs before routing into a sub-skill.
+Minimal import check:
+
+```bash
+python - <<'PY'
+from FlagEmbedding import FlagAutoModel, FlagAutoReranker
+print(FlagAutoModel, FlagAutoReranker)
+PY
+```
+
+Bundled environment/API probe from this skill directory:
+
+```bash
+python scripts/check_flag_embedding_env.py
+```
+
+## Route Map
+
+Use `sub-skills/inference/SKILL.md` when the task is to load embedders or
+rerankers, encode queries/corpus, compute BGE-M3 dense/sparse/ColBERT scores,
+rerank query-passage pairs, choose `model_class`, handle instructions, or
+smoke-check inference APIs without running training or benchmark jobs.
+
+Use `sub-skills/fine-tuning/SKILL.md` when the task is to prepare or validate
+training JSONL, mine or reason about hard negatives, add teacher-score fields,
+split long data, choose an embedder/reranker fine-tuning module, build a
+`torchrun` command, or diagnose DeepSpeed/flash-attn/training-data issues.
+
+Use `sub-skills/evaluation/SKILL.md` when the task is to run or prepare
+retrieval evaluation with FlagEmbedding, create custom `corpus.jsonl` /
+`test_queries.jsonl` / `test_qrels.jsonl`, choose MTEB/BEIR/MSMARCO/MIRACL/MLDR
+/MKQA/AIR-Bench/BRIGHT commands, add a reranker to evaluation, or interpret
+metrics and output directories.
+
+## Common Decisions
+
+Prefer auto loaders for mapped checkpoints:
+
+```python
+from FlagEmbedding import FlagAutoModel, FlagAutoReranker
+
+embedder = FlagAutoModel.from_finetuned(
+    "BAAI/bge-base-en-v1.5",
+    query_instruction_for_retrieval="Represent this sentence for searching relevant passages:",
+    devices="cpu",
+    use_fp16=False,
+)
+
+reranker = FlagAutoReranker.from_finetuned(
+    "BAAI/bge-reranker-base",
+    devices="cpu",
+    use_fp16=False,
+)
+```
+
+For custom or unmapped checkpoints, set `model_class` explicitly instead of
+retrying the same auto call. Embedder ids include `encoder-only-base`,
+`encoder-only-m3`, `decoder-only-base`, `decoder-only-icl`, and
+`decoder-only-pseudo_moe`. Reranker ids include `encoder-only-base`,
+`decoder-only-base`, `decoder-only-layerwise`, and `decoder-only-lightweight`.
+
+Use CPU and full precision for cheap smoke checks. Move to CUDA, fp16, bf16,
+large batch sizes, remote model ids, or benchmark downloads only after the user
+approves the runtime, cache, and budget.
+
+## Verification Anchors
+
+The generated skill is grounded in these public surfaces:
+
+- Public imports and mappings under `FlagEmbedding.inference`.
+- Fine-tuning module entry points under `FlagEmbedding.finetune`.
+- Evaluation module entry points under `FlagEmbedding.evaluation`.
+- Maintained package examples distilled into bundled references and scripts.
+- Small native candidates and synthetic fixtures recorded in the integration
+  reports under the review/test artifact directory.
+
+Runtime files do not require the original checkout. Source examples and scripts
+were distilled into the generated skill references or adapted as bundled helper
+scripts.

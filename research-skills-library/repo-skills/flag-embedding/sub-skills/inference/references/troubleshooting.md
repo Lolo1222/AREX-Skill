@@ -1,215 +1,182 @@
 # Inference Troubleshooting
 
-Use this when FlagEmbedding inference code imports successfully but model loading, device selection, output handling, or scoring behaves unexpectedly.
+This reference covers workflow-specific inference issues. For package
+installation, import failures before inference code runs, missing global
+optional dependencies, or environment repair, route to the root skill
+troubleshooting reference at `../../references/troubleshooting.md`.
 
-## Unknown Checkpoint Name In Auto Mapping
+## Auto Mapping Misses
 
 Symptom:
 
 ```text
-ValueError: Model name '...' not found in the model mapping
+Model name '<name>' not found in the model mapping.
 ```
 
-Cause:
+Likely causes:
 
-- `FlagAutoModel` and `FlagAutoReranker` map by checkpoint basename.
-- Local fine-tuned checkpoints and renamed model directories often do not match built-in mapping keys.
+- The checkpoint is local and its basename is not a built-in mapping key.
+- The path ends with `checkpoint-N`; auto mapping uses the parent directory
+  basename.
+- The checkpoint is a custom fine-tuned model whose architecture is known but
+  not registered in the mapping.
+- A provider-qualified remote id is represented differently from the basename
+  used by the auto loader.
 
-Fix:
+Recovery:
 
-```python
-model = FlagAutoModel.from_finetuned(
-    "./local-embedder",
-    model_class="encoder-only-base",
-    pooling_method="cls",
-    use_fp16=False,
-    devices="cpu",
-)
+1. Choose the correct `model_class` from `references/api-reference.md`.
+2. For embedders, set `pooling_method`, `query_instruction_format`, and
+   `trust_remote_code` explicitly.
+3. For rerankers, set `query_max_length`, `max_length`, and any layerwise or
+   lightweight options explicitly.
+4. Smoke-check with `scripts/smoke_inference_api.py --model-name ... --model-class ... --devices cpu`.
 
-reranker = FlagAutoReranker.from_finetuned(
-    "./local-reranker",
-    model_class="encoder-only-base",
-    use_fp16=False,
-    devices="cpu",
-)
-```
+Do not assume a model is incompatible just because auto mapping misses it.
 
-Choose the explicit `model_class` that matches the base architecture used for fine-tuning. For `checkpoint-...` directories, the auto loader checks the parent directory name; renaming the parent to a mapped model basename can also work, but explicit `model_class` is clearer in reusable code.
+## Remote-Code And Custom-Code Loading
 
-## Model Download, Network, Cache, Or Token Failures
+Symptom:
 
-Symptoms:
+- Loading fails with an unknown architecture, missing custom class, or
+  transformer auto-model error.
+- Layerwise or lightweight rerankers fail when custom modeling files are not
+  available.
 
-- Hugging Face connection timeouts.
-- Authentication errors for gated/private models.
-- Cache corruption or missing model files.
-- Offline machines attempting downloads unexpectedly.
+Recovery:
 
-Fixes:
+- Keep `trust_remote_code=False` for standard checkpoints.
+- Set `trust_remote_code=True` only when the checkpoint requires custom model
+  code and the code has been reviewed.
+- For local layerwise or lightweight rerankers, ensure the checkpoint directory
+  contains the custom configuration/model files required by that checkpoint.
+- If the failure is an install/import issue, route to root troubleshooting.
 
-- Use a local checkpoint directory when offline.
-- Pre-download the model with the same environment that will run inference.
-- Set standard Hugging Face environment variables outside generated public code, such as `HF_HOME`, `TRANSFORMERS_CACHE`, `HF_TOKEN`, or a mirror endpoint, according to the deployment policy.
-- For private/gated models, authenticate before loading or pass a supported Hugging Face token argument through `**kwargs` if the installed Transformers version accepts it.
-- If cache corruption is suspected, clear only the affected model cache entry rather than all caches.
-- Keep snippet generators and environment diagnostics no-download by default; do not instantiate `from_finetuned()` in health checks unless model download is intentional.
+## Cache, Network, And Offline Loads
 
-## Unexpected Device Selection
+Symptom:
 
-Symptoms:
+- Loading a model id unexpectedly starts a download.
+- Offline loading fails even though the checkpoint name looks correct.
+- A cache path works on one machine but not another.
 
-- Code unexpectedly uses all GPUs.
-- Integer device `0` selects CUDA when CPU was intended.
-- Multi-process workers start when encoding a list.
-- MPS/NPU/MUSA is selected on a machine with those backends.
+Recovery:
 
-Cause:
+- Use a complete local model directory when offline behavior is required.
+- Pass `cache_dir` from runtime configuration or rely on standard Hugging Face
+  cache variables; do not hard-code machine-specific paths in skill code.
+- Remember that the bundled smoke script does not load or download anything
+  unless `--model-name` is supplied.
+- If `--model-name` is a remote id, downloads are expected unless files are
+  already cached.
 
-- `devices=None` auto-selects available CUDA, NPU, MUSA, MPS, then CPU.
-- Integer devices become CUDA or MUSA device strings.
-- Multiple target devices trigger multi-process behavior for list inputs.
+## CPU/GPU Fallback And Precision
 
-Fixes:
+Symptom:
 
-- Force CPU with `devices="cpu"`.
-- Force one accelerator with a string such as `devices="cuda:0"`.
-- Use string lists, not integer lists, when the backend must be explicit.
-- Reduce to one device when multiprocessing conflicts with an application server or notebook.
-- Call `stop_self_pool()` when disposing multi-device models in long-running processes.
+- A GPU run succeeds but a CPU run fails or is extremely slow.
+- A CPU smoke check gives different dtype behavior from GPU.
+- fp16 or bf16 runs fail on unsupported hardware.
 
-## FP16 Or BF16 Hardware Problems
+Recovery:
 
-Symptoms:
+- For smoke checks, pass `devices="cpu"`, `use_fp16=False`, and
+  `use_bf16=False`.
+- For production GPU runs, pass an explicit device such as `"cuda:0"` after the
+  CPU smoke check succeeds.
+- Use bf16 only on hardware that supports it.
+- Reranker concrete classes disable fp16 on CPU before scoring. Embedders move
+  CPU models to float precision.
+- If `devices=None`, the package auto-selects accelerators before CPU, which is
+  useful for production but less predictable for debugging.
 
-- CPU errors involving half precision operations.
-- CUDA/MPS precision errors.
-- NaN scores or degraded ranking after enabling half precision.
-- Warnings that layerwise/lightweight rerankers force half precision.
+## Out Of Memory
 
-Fixes:
+Symptom:
 
-- CPU-safe baseline: `use_fp16=False`, `use_bf16=False`, `devices="cpu"`.
-- Enable `use_fp16=True` only on hardware known to support it for the selected model.
-- Enable `use_bf16=True` only for compatible accelerators.
-- If quality changes matter, compare retrieval/reranking outputs between FP32 and half precision on a validation set.
-- For layerwise/lightweight rerankers, note that model constraints may force a half precision mode even if both half flags are false.
+- Runtime error or accelerator OOM during tokenization, padding, encode, or
+  score computation.
+- Batch size is internally reduced but the run remains slow or still fails.
 
-## BGE-M3 Dict Output Mismatch
+Recovery:
 
-Symptoms:
+1. Reduce `batch_size` explicitly.
+2. Reduce `query_max_length`, `passage_max_length`, or reranker `max_length`.
+3. Disable M3 `return_colbert_vecs` unless token-level vectors are required.
+4. Prefer `return_dense=True, return_sparse=False, return_colbert_vecs=False`
+   for a minimal M3 smoke check.
+5. For decoder-only rerankers, use smaller batches than encoder rerankers.
+6. Delete model objects or call cleanup helpers in long-running processes after
+   large multi-device jobs.
 
-```text
-AttributeError: 'dict' object has no attribute 'shape'
-TypeError: unsupported operand type(s) for @: 'dict' and 'dict'
-KeyError: 'dense_vecs'
-```
+## Output-Shape Misuse
 
-Cause:
+Symptom:
 
-- `BGEM3FlagModel` returns dictionaries for dense/sparse/ColBERT outputs, not a plain embedding matrix.
-- Keys depend on flags such as `return_dense`, `return_sparse`, and `return_colbert_vecs`.
+- Matrix multiplication fails with a dict input.
+- Reranker sorting fails because a score is nested or scalar.
+- A single input returns a 1-D vector where downstream code expects 2-D.
 
-Fix:
+Recovery:
 
-```python
-outputs = model.encode(
-    texts,
-    return_dense=True,
-    return_sparse=True,
-    return_colbert_vecs=False,
-)
-dense = outputs["dense_vecs"]
-lexical = outputs["lexical_weights"]
-```
+- Base embedders return arrays or tensors; M3 returns a dict. Use
+  `m3_output["dense_vecs"]` before dense matrix multiplication.
+- For a single base embedder input, wrap the text in a list to force a 2-D
+  output: `model.encode_queries([query])`.
+- For M3 single-string ColBERT output, normalize the shape before indexing;
+  a string input can return one array instead of a list of arrays.
+- Standard rerankers return a flat list of floats. Layerwise/lightweight
+  rerankers can return a list of score lists when multiple cutoff layers are
+  requested. Pick one layer or combine layers intentionally.
+- M3 `compute_score` returns a dict of mode names to score lists for batch
+  input, but values can be scalars for one input pair.
 
-Use `outputs["dense_vecs"]` for dense vector indexes, `outputs["lexical_weights"]` for sparse lexical scoring, and `outputs["colbert_vecs"]` only for downstream code designed for multi-vector late interaction.
+## Score-Mode Misuse
 
-## Sparse Or ColBERT Scores Look Wrong
+Symptom:
 
-Causes:
+- Dense, sparse, and reranker scores are combined without comparable scale.
+- `normalize=True` changes ranking behavior unexpectedly.
+- M3 weighted scores look wrong.
 
-- Query and passage outputs were encoded with different return flags.
-- The code used raw token ids instead of converted lexical weights.
-- ColBERT vectors were disabled by `return_colbert_vecs=False`.
-- Dense-only downstream code silently ignored sparse or ColBERT information.
+Recovery:
 
-Fixes:
+- Treat base embedder similarity, M3 sparse/ColBERT scores, and reranker logits
+  as different signals. Calibrate before adding them in production code.
+- Use `normalize=True` for rerankers only when the consumer expects sigmoid
+  scores in the 0-1 range. Raw logits are fine for sorting within one model.
+- For M3 `weights_for_different_modes`, use order `[dense, sparse, colbert]`.
+- Check that `return_sparse=True` before using `lexical_weights` and
+  `return_colbert_vecs=True` before using `colbert_vecs`.
 
-- Use matching flags for query and corpus encoding.
-- For sparse matching, call `compute_lexical_matching_score(query_lexical, passage_lexical)`.
-- For ColBERT workflows, set `return_colbert_vecs=True` and verify downstream scoring supports token-level vectors.
-- For hybrid scoring, document weights and keep the selected modes explicit.
+## Instruction Misuse
 
-## Reranker Score Normalization Confusion
+Symptom:
 
-Symptoms:
+- Passage embeddings are much worse than expected.
+- Query instructions appear twice in an encoded string.
+- Custom checkpoint retrieval quality is poor even though encoding succeeds.
 
-- Scores differ from examples by being in `[0, 1]` instead of raw logits.
-- Thresholds do not transfer between raw and normalized scores.
+Recovery:
 
-Cause:
+- For short-query to long-passage retrieval, put task instructions on queries
+  through `query_instruction_for_retrieval` and call `encode_queries`.
+- Use `encode_corpus` for passages so query instructions are not applied to
+  documents.
+- If text was manually prepended with an instruction, call `encode` or remove
+  the configured query instruction to avoid double-instruction prompts.
+- For custom checkpoints, match the instruction text and
+  `query_instruction_format` used during training.
 
-- `compute_score(..., normalize=True)` applies sigmoid normalization.
-- `normalize=False` returns raw model scores.
+## Reranker Length Parameter Mismatch
 
-Fixes:
+Symptom:
 
-- Use raw scores for ranking unless the downstream application expects normalized values.
-- Use normalized scores for display or coarse thresholding.
-- Do not mix raw and normalized scores in one ranking list.
+- Passing `passage_max_length` to a reranker has no effect or raises an
+  unexpected keyword error in custom wrappers.
 
-## Layerwise And Lightweight Reranker Kwarg Errors
+Recovery:
 
-Symptoms:
-
-- `cutoff_layers` is ignored or rejected.
-- `compress_ratio` or `compress_layers` causes unexpected keyword errors.
-- Quality changes substantially when selecting lower layers.
-
-Fixes:
-
-- Use `LayerWiseFlagLLMReranker` or `model_class="decoder-only-layerwise"` when passing `cutoff_layers`.
-- Use `LightWeightFlagLLMReranker` or `model_class="decoder-only-lightweight"` when passing `compress_ratio` and `compress_layers`.
-- Keep layer choices explicit in code, for example `cutoff_layers=[28]`.
-- Validate ranking quality for chosen layer/compression settings; lower layers and compression are efficiency trade-offs.
-
-## Instruction Formatting Errors
-
-Symptoms:
-
-- `IndexError` or formatting exceptions from instruction format strings.
-- Retrieval quality drops because instructions were applied to passages unintentionally.
-- Literal `\n` appears in prompts where a newline was intended.
-
-Fixes:
-
-- Use exactly two `{}` replacement slots: one for the instruction and one for the text.
-- Use `encode_queries()` for query instructions and `encode_corpus()` for passages.
-- Pass passage instructions separately only when the model or task requires them.
-- Literal `"\\n"` in the format is converted to a newline by base helper methods.
-
-## Max Length And Memory Errors
-
-Symptoms:
-
-- CUDA out-of-memory errors.
-- CPU inference stalls or swaps.
-- Long passages truncate away relevant evidence.
-
-Fixes:
-
-- Lower `batch_size` first.
-- Lower `query_max_length` for short queries.
-- Tune `passage_max_length` or `max_length` based on passage length and model context.
-- Use a smaller model or CPU-safe batch when deployment hardware is constrained.
-- For BGE-M3 ColBERT, disable `return_colbert_vecs` unless multi-vector retrieval is required.
-
-## Import Or Backend Diagnostics
-
-Run the bundled no-download diagnostic:
-
-```bash
-python scripts/check_inference_env.py --show-mappings
-```
-
-It checks imports, package version metadata, torch backend availability, device resolution helpers, and mapping keys without loading or downloading model checkpoints.
+- Use `query_max_length` for the query side and `max_length` for the passage or
+  packed reranker length.
+- Reserve `passage_max_length` for embedders.

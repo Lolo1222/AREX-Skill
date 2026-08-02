@@ -1,6 +1,6 @@
 ---
 name: repo-skills-router
-description: "Use this two-layer router for imported repository skills. Read it when DisCo or another agent needs to choose which repo-specific skill should inform a user request, when routing among similar repo skills, or after importing a repo skill to classify it by practical usage scenario and maintain selection guidance."
+description: "Repository-skill discovery and selection router for DisCo Researcher. Read before planning or implementing a substantive ML/AI, data, or scientific-computing task whenever an existing package or repository may help, even if the user names no repo or asks only which tool, framework, or approach to use. Covers ML systems, distributed training, datasets/evaluation, AutoML/MLOps, data pipelines, reinforcement learning; language models, fine-tuning/RLHF, inference/serving, agents, RAG/document processing, embeddings/retrieval; computer vision, multimodal, speech/audio, image generation; protein modeling, molecular ML, chemistry/drug discovery, materials, bioinformatics/genomics/single-cell, and medical imaging. Use it to find candidates, compare overlapping packages, select the best-fit repo skill, and load only its relevant branch."
 metadata:
   disco-role: operating
 ---
@@ -42,10 +42,14 @@ selected repo skill's detailed instructions.
 
 ## Maintenance After Skill Import
 
-When a verified repo-specific skill is imported after user approval, update the
-live DisCo router by running the managed updater script inside the global
-DisCo import lock instead of editing router Markdown by hand. See
-[references/maintenance.md](references/maintenance.md).
+For an approved or auto-authorized add, replacement, or refresh, run
+`verify-repo-skill/scripts/import_repo_skill.mjs` with the verified runtime
+skill outside the live skills tree. The importer validates and installs the
+skill, invokes this lower-level updater under the global lock, and restores both
+the prior skill and router if the transaction fails. Do not hand-edit router
+Markdown or manually combine a copy command with this updater. See
+[references/maintenance.md](references/maintenance.md) for the importer command
+and the narrowly scoped router-only maintenance procedure.
 
 ## Usage Scenario Quick Map
 

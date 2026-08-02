@@ -18,33 +18,36 @@ this maintenance workflow. Export or merge into another agent only through the
 dedicated `import-repo-skills-to-agent` workflow skill after the user explicitly asks for
 that target tool.
 
-All maintenance that is part of an approved or auto-authorized DisCo import
-must run inside the global import lock provided by the
-`verify-repo-skill` workflow skill's `scripts/with_import_lock.mjs` helper.
-The lock is rooted at `$DISCO_CODING_AGENT_DIR/locks/repo-skills-import.lockdir`
-when `DISCO_CODING_AGENT_DIR` is set, otherwise
-`~/.disco/agent/locks/repo-skills-import.lockdir`. It must cover the runtime
-skill copy, first-time router creation from the template, fresh metadata and
-skill-root reads, generated router writes, stale-file removal, and post-write
-validation.
+The live router is model-visible by default. Users control automatic selection
+with `disco repo-skills router disable|enable`; disabling leaves explicit
+`/skill:repo-skills-router` invocation available. Live router rebuilds preserve
+that policy. Canonical library and external-agent router output remains enabled.
+Do not hand-edit frontmatter to implement the toggle.
 
-Do not hand-edit router Markdown as the import mechanism. The import transaction
-must call `scripts/update_repo_skills_router.mjs` after copying the runtime skill
-directory and writing or updating the skill's
-`references/repo-routing-metadata.json`.
+For an approved or auto-authorized add, replacement, or refresh, use the
+`verify-repo-skill` workflow skill's dedicated importer:
 
-Inside the locked transaction:
+```bash
+node <verify-repo-skill>/scripts/import_repo_skill.mjs \
+  --agent-dir <agent-dir> \
+  [--overwrite] \
+  <verified-runtime-skill-dir>
+```
 
-1. Copy only the verified runtime skill directory into
-   `~/.disco/agent/skills/repo-skills/<skill-id>/`.
-2. Ensure that `repo-skills/<skill-id>/references/repo-routing-metadata.json` exists and
-   contains the skill's structured usage-scenario routing metadata.
-3. Run `node scripts/update_repo_skills_router.mjs --agent-dir <agent-dir> --already-locked`.
-4. Let the updater re-read the live repo-skills collection, rebuild
-   `repo-skills-router/SKILL.md`, `references/usage-scenarios.md`,
-   `references/maintenance.md`, `references/scenario-registry.json`, and
-   `references/scenarios/*.md`, remove legacy side-channel router files, and
-   validate coverage and links before success.
+Omit `--overwrite` for a new skill. Use it only after approval to replace that
+exact existing repo skill. The importer acquires the global lock at
+`<agent-dir>/locks/repo-skills-import.lockdir`, stages and recursively validates
+the runtime tree, installs it under `repo-skills/<skill-id>/`, invokes the
+lower-level router updater, and restores both the previous skill and router if
+the transaction fails. The verified runtime tree must contain
+`references/repo-routing-metadata.json` for that skill.
+
+Do not hand-edit router Markdown as the import mechanism, and do not manually
+combine a copy command with `scripts/update_repo_skills_router.mjs`. Use the
+lower-level lock and updater directly only for an intentional router-only repair
+or a removal/rename transaction that cannot be expressed as an import. That
+maintenance must hold the same global lock across the live skill mutation and
+router rebuild.
 
 ## Scenario Registry
 
