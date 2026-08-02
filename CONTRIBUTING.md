@@ -8,10 +8,12 @@ about how the skill was produced.
 
 You can contribute:
 
-- new generated repo skills under `repo-skills/<skill-id>/`;
+- new generated repo skills under
+  `research-skills-library/repo-skills/<skill-id>/`;
 - improvements to existing repo skills;
 - router, catalog, provenance, and documentation updates;
-- lightweight workflow skills under `meta-skills/`;
+- bundled workflow skills under
+  `src/packages/coding-agent/src/disco/skills/`;
 - DisCo CLI source changes under `src/`.
 
 ## New Repo Skills
@@ -20,9 +22,9 @@ The most important contribution type is a new runtime repo skill.
 
 Required files:
 
-- `repo-skills/<skill-id>/SKILL.md`
-- `repo-skills/<skill-id>/references/repo-provenance.md`
-- `repo-skills/<skill-id>/references/repo-routing-metadata.json`
+- `research-skills-library/repo-skills/<skill-id>/SKILL.md`
+- `research-skills-library/repo-skills/<skill-id>/references/repo-provenance.md`
+- `research-skills-library/repo-skills/<skill-id>/references/repo-routing-metadata.json`
 - sub-skills and references when the upstream repository has multiple major
   workflow areas
 - small validation or preflight scripts when they make the skill safer to use
@@ -31,7 +33,7 @@ Keep runtime skill content separate from review artifacts. Publication-ready
 content belongs in:
 
 ```text
-repo-skills/<skill-id>/
+research-skills-library/repo-skills/<skill-id>/
 ```
 
 Test cases, review notes, and generation reports should stay outside the
@@ -44,9 +46,9 @@ When adding, deleting, renaming, importing, or materially changing a repo skill,
 update the router:
 
 ```text
-repo-skills/repo-skills-router/SKILL.md
-repo-skills/repo-skills-router/references/usage-scenarios.md
-repo-skills/repo-skills-router/references/scenarios/*.md
+research-skills-library/repo-skills-router/SKILL.md
+research-skills-library/repo-skills-router/references/usage-scenarios.md
+research-skills-library/repo-skills-router/references/scenarios/*.md
 ```
 
 Router entries should help an agent choose among skills. They should not copy
@@ -80,8 +82,8 @@ Rules:
 Focused checks:
 
 ```bash
-find repo-skills/<skill-id> -type f -name '*.py' -print0 | xargs -0 -r python -m py_compile
-find repo-skills/<skill-id> -type f | sort
+find research-skills-library/repo-skills/<skill-id> -type f -name '*.py' -print0 | xargs -0 -r python -m py_compile
+find research-skills-library/repo-skills/<skill-id> -type f | sort
 ```
 
 ## Pull Request Requirements
@@ -92,29 +94,34 @@ For every PR that adds or modifies generated repo skills, include:
 - the model and provider used to produce the skill;
 - the reasoning or thinking level used, such as `low`, `medium`, `high`, or the
   provider-specific equivalent;
-- whether the skill was produced by DisCo, by copied meta skills, or by manual
-  editing;
+- whether the skill was produced by DisCo, by copied workflow skills, or by
+  manual editing;
 - the verification commands or review steps that were run;
 - any known gaps, skipped checks, unavailable credentials, or environment
   limits;
-- confirmation that `repo-skills-router` was updated when routing changed.
+- confirmation that the sibling `research-skills-library/repo-skills-router/`
+  was updated when routing changed.
 
 If multiple models or passes were used, list each model and its role, for
 example generation, review, refinement, or verification.
 
 ## Documentation Changes
 
-Documentation is bilingual. When changing an English page, update the
-corresponding Chinese page, and vice versa.
+The root README, architecture guide, portable-meta-skill guide, contribution
+guide, and Research Skills Library guide are bilingual. When changing one side
+of a paired page, update the other side in the same change. The 170-entry
+repository catalog remains one shared data page; keep its localized summaries
+and links in the Chinese README aligned with it.
 
 Rules:
 
 - Keep paths relative to the Markdown file location.
 - Prefer concrete commands and locations over general descriptions.
 - Keep README pages concise and move detailed workflows into `docs/`.
-- Avoid duplicating language-switch links in every document page. The README
-  files and MkDocs language switcher are the main language entry points.
-- If the catalog changes, keep the catalog and localized index aligned.
+- Use the root README files as the main language entry points instead of adding
+  a language switcher to every page.
+- If the catalog changes, keep its count, grouping, paths, and localized README
+  summary aligned.
 
 Useful checks:
 
@@ -128,28 +135,34 @@ for p in sorted(Path('docs').glob('*.md')):
 PY
 ```
 
-To preview the optional MkDocs site:
+## Workflow Skill Changes
 
-```bash
-python -m pip install mkdocs-material mkdocs-static-i18n
-mkdocs serve
-mkdocs build --strict
-```
+`src/packages/coding-agent/src/disco/skills/` is the single source of truth for
+workflow skills bundled with DisCo and optionally copied into external agents.
+The separate [meta-skill guide](docs/meta-skills-for-other-agents.md) defines
+which Creator-only directories may be copied; do not copy the operating router
+or repository collection as meta skills.
+Keep portable instructions understandable without DisCo-only extensions.
 
-## Meta Skill Changes
-
-The top-level `meta-skills/` directory is a lightweight mirror for external
-agents. Keep it understandable without DisCo-only extensions.
-
-When updating meta skills:
+When updating workflow skills:
 
 - State expected inputs and outputs explicitly.
 - Ask for user confirmation at expensive or destructive points unless the user
   authorized agent-decided behavior.
 - Keep environment changes isolated.
 - Keep generated runtime skill content separate from tests and reports.
-- Update the [`meta-skills/`](meta-skills/) mirror when names or workflow boundaries
-  change.
+- Keep meta-skill installation separate from deployment of the operating graph
+  it later produces. Task-bound or uncertain graphs default to a trusted
+  project's `.agents/skills/`; managed scope requires evidence of cross-project
+  reuse, and one graph must stay in one scope.
+- Keep repository graphs on their specialized
+  `~/.disco/agent/skills/repo-skills/` import path with the sibling router
+  rebuild; do not pass repo routing metadata through the generic graph importer.
+- Update the [workflow README](src/packages/coding-agent/src/disco/skills/README.md)
+  when names, paths, defaults, or workflow boundaries change.
+- Update generated templates and their generators together. In particular,
+  router behavior rendered by `update_repo_skills_router.mjs` must not be
+  changed only in a checked-in Markdown output.
 
 ## DisCo Source Changes
 
@@ -159,18 +172,32 @@ Common checks:
 
 ```bash
 cd src
-npm install --ignore-scripts
-npm run build
-npm run check
+npm ci --ignore-scripts
+npm run prepublishOnly
+```
+
+`prepublishOnly` runs typechecking, the full test suite, example typechecking,
+upstream provenance verification, the build, and the packed-file audit for the
+standalone package.
+
+Changes to runtime skill discovery or routing should test that managed hidden
+skills are registered but omitted from the initial prompt, the live router
+overrides the bundled fallback, untrusted project skills do not load, and
+installed package skills remain usable.
+
+Repository-library router rebuilds use the canonical collection and sibling
+router explicitly:
+
+```bash
+node src/packages/coding-agent/src/disco/skills/verify-repo-skill/scripts/update_repo_skills_router.mjs \
+  --library-root research-skills-library
 ```
 
 For publish preparation, dry-run package contents before publishing:
 
 ```bash
-npm pack --workspace packages/ai --dry-run
-npm pack --workspace packages/tui --dry-run
-npm pack --workspace packages/agent --dry-run
-npm pack --workspace packages/coding-agent --dry-run
+cd src
+npm publish --dry-run --ignore-scripts
 ```
 
 Do not hand-edit generated `dist/` files or standalone binary runtime assets as
