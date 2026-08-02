@@ -1,6 +1,8 @@
 ---
 name: refresh-repo-skill
 description: "Refreshes an existing repository-specific Agent Skill after the source repository changed. Use when the user says repo code, APIs, docs, examples, configs, dependencies, or behavior changed and an old skill may now be stale, outdated, inconsistent with current code, or needs to be resynchronized from repository evidence."
+metadata:
+  disco-role: meta
 ---
 
 # Refresh Repo Skill
@@ -63,7 +65,7 @@ Use [scripts/check_repo_provenance.py](scripts/check_repo_provenance.py) when
 current Git checkout and prints JSON with `current`, `stale`, or `unknown`
 status.
 
-When useful, also read sibling meta-skill references:
+When useful, also read sibling workflow-skill references:
 
 - `../create-repo-skill/references/` for repository evidence discovery,
   installed-package inspection, and output structure.
@@ -81,11 +83,15 @@ When useful, also read sibling meta-skill references:
    Python inspection context, review/test artifact directory, and review output
    path. If the user does not specify an artifact directory, default to
    `<repository-path>/skills/tests/<skill-id>/`, with usability cases under
-   `test-cases/` and review reports under `reports/`.
+   `test-cases/` and review reports under `reports/`. If the existing skill is
+   the live managed copy under `<agent-dir>/skills/repo-skills/<skill-id>/`, copy
+   only its runtime tree to a temporary working directory outside
+   `<agent-dir>/skills/` before editing. Keep that working copy until the
+   dedicated importer succeeds; never edit the live managed copy in place.
 2. Read [references/change-detection-and-staleness-audit.md](references/change-detection-and-staleness-audit.md).
    Build a current-state map of the existing skill. When provenance exists, run
    `python scripts/check_repo_provenance.py --skill-dir <skill_dir> --repo-path <repo_path>`
-   from this meta-skill directory or adapt the script path to the installed
+   from this workflow-skill directory or adapt the script path to the installed
    skill copy. Use its JSON output as the first staleness signal, then gather
    current repository evidence and optional change evidence from Git history or
    release notes.
@@ -99,7 +105,7 @@ When useful, also read sibling meta-skill references:
    `prepare-repo-skill-env` to create or repair one, then
    continue only from its verified handoff.
 5. Read [references/refresh-editing.md](references/refresh-editing.md). Edit the
-   existing skill in place. Preserve root and sub-skill identities unless the
+   resolved runtime working copy in place. Preserve root and sub-skill identities unless the
    user explicitly asks for a rename or the current name is invalid. Add or
    update `references/repo-provenance.md` with the refreshed source snapshot.
 6. Update usability test cases under the review/test artifact directory's
@@ -110,18 +116,18 @@ When useful, also read sibling meta-skill references:
    privacy-safe, and reachable from nearby `SKILL.md` files. Save staleness
    audits, verification reports, and human-review notes under the review/test
    artifact directory's `reports/` subtree.
-8. After verification passes, follow `verify-repo-skill`'s structured
-   locked import protocol: use `ask_user_question` when available, then run the
-   approved or auto-authorized import through
-   `verify-repo-skill/scripts/with_import_lock.mjs`. Copy into
-   `~/.disco/agent/skills/`, update the refreshed skill's
-   `references/repo-routing-metadata.json`, and run
-   `verify-repo-skill/scripts/update_repo_skills_router.mjs` against
-   the live DisCo `repo-skills-router` there as one serialized fresh-read
-   transaction. Do not hand-edit router Markdown during import. Do not
-   synchronize into other agent tools during this workflow; use
-   `import-repo-skills-to-agent` only when the user explicitly asks to export
-   DisCo's managed skill library.
+8. After verification passes, follow `verify-repo-skill`'s structured import
+   policy: use `ask_user_question` when approval is still required, then run the
+   approved or auto-authorized refresh through
+   `verify-repo-skill/scripts/import_repo_skill.mjs` with `--overwrite` and the
+   refreshed runtime skill directory. Use `--overwrite` only because this workflow
+   is updating that exact approved repo skill. The helper installs the refreshed
+   runtime tree under `~/.disco/agent/skills/repo-skills/<skill-id>/`, rebuilds
+   the sibling live DisCo `repo-skills-router` under the global lock, and restores
+   both on failure. Do not hand-edit router Markdown or manually combine copy
+   and updater commands. The refreshed skill is directly available to DisCo
+   Researcher in a new session; use `import-repo-skills-to-agent` only when the
+   user explicitly asks for a cross-agent export.
 
 ## Non-Negotiables
 
@@ -130,6 +136,9 @@ When useful, also read sibling meta-skill references:
 - Do not regenerate a replacement skill from scratch unless the user explicitly
   asks or the old skill is so structurally invalid that in-place repair would be
   misleading.
+- Do not edit a live skill under `<agent-dir>/skills/repo-skills/` before the
+  global import lock is held. Refresh an external working copy, then let
+  `verify-repo-skill/scripts/import_repo_skill.mjs` replace the live target.
 - Do not finish a refresh without `references/repo-provenance.md`; if the old
   skill lacks it, create it from the current repository snapshot.
 - Do not change the skill's public purpose to cover unrelated new repository
@@ -158,8 +167,8 @@ When useful, also read sibling meta-skill references:
 
 By the end, the user should have:
 
-- The existing skill directory refreshed in place against current repository
-  evidence.
+- A runtime working copy refreshed against current repository evidence, followed
+  by a locked live replacement when import is approved or auto-authorized.
 - An updated `references/repo-provenance.md` snapshot that future agents can use
   to detect whether the skill may be stale.
 - A staleness audit and review package under the review/test artifact

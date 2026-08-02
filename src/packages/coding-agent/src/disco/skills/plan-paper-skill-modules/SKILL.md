@@ -1,6 +1,8 @@
 ---
 name: plan-paper-skill-modules
 description: "Analyze a local AI research paper, optionally using a local repository as supporting evidence, and produce a concise paper profile plus a validated module plan of at most five reusable skill modules."
+metadata:
+  disco-role: meta
 ---
 
 # Plan Paper Skill Modules
@@ -81,7 +83,7 @@ Use this structure:
     {
       "id": "stable_module_id",
       "name": "Human readable module name",
-      "skill_name": "codex_skill_directory_name",
+      "skill_name": "operating-skill-directory-name",
       "summary": "One sentence.",
       "inputs": ["input contract"],
       "outputs": ["output contract"],
@@ -96,7 +98,9 @@ Use this structure:
 ## Acceptance Criteria
 
 - `modules` length is between 1 and 5.
-- Every module has a stable snake_case `id` and `skill_name`.
+- Every module has a stable snake_case `id` for artifact filenames and a unique
+  canonical lowercase-hyphen `skill_name` of at most 64 characters for the
+  generated operating skill directory and frontmatter name.
 - The plan covers the main paper method and the chosen recovery experiment.
 - The split avoids thin modules that only wrap one helper unless the helper is a distinct paper contribution.
 - The recovery target is explicit enough for `recover-paper-result` to run without the source repository.

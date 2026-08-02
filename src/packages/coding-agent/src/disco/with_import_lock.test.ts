@@ -6,7 +6,7 @@ import { describe, expect, it } from "vitest";
 
 const scriptPath = path.join(
 	process.cwd(),
-	"src/disco/skills/verify-repo-skill/scripts/with_import_lock.mjs",
+	"packages/coding-agent/src/disco/skills/verify-repo-skill/scripts/with_import_lock.mjs",
 );
 
 function runLocked(agentDir: string, logPath: string, label: string): Promise<void> {
@@ -24,10 +24,10 @@ function runLocked(agentDir: string, logPath: string, label: string): Promise<vo
 				"-e",
 				[
 					"const fs = require('node:fs');",
-					"const [logPath, label] = process.argv.slice(1);",
-					"fs.appendFileSync(logPath, `${label} start\\n`);",
+					"const [logPath] = process.argv.slice(1);",
+					`fs.appendFileSync(logPath, ${JSON.stringify(`${label} start\n`)});`,
 					"setTimeout(() => {",
-					"  fs.appendFileSync(logPath, `${label} end\\n`);",
+					`  fs.appendFileSync(logPath, ${JSON.stringify(`${label} end\n`)});`,
 					"}, 350);",
 				].join("\n"),
 				logPath,

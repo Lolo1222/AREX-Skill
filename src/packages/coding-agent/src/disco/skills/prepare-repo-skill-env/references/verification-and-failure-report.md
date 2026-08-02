@@ -2,116 +2,250 @@
 
 ## Purpose
 
-Read this reference after installation commands run. The central rule is simple: an environment is not ready for `create-repo-skill` until verification proves it can be used for live package inspection.
+Read this reference after installation commands run. An environment is not
+ready for `create-repo-skill` until direct checks prove that the intended
+package can be inspected from the target environment set and every required
+backend in the caller's verification plan passes its preparation smoke.
+Successful environment creation, CPU import, or `pip install` is only an
+intermediate result.
 
-## Mandatory Verification Gates
+## Verification Command Discipline
 
-A successful handoff requires all applicable gates to pass:
+Run each gate as an explicit terminal command. For Conda or micromamba, use
+`run --prefix`; for venv or uv, use the environment Python's absolute path. Do
+not activate an environment and then rely on an unqualified `python` or `pip`.
 
-1. Environment prefix exists. For conda, it is not `base`.
-2. Python executable inside the prefix runs.
-3. `python -m pip check` passes.
-4. Expected distribution metadata exists via `importlib.metadata` or `pip show`.
-5. Expected import modules import successfully.
-6. Console scripts or CLIs needed by the repo can at least run safe help commands.
-7. Backend checks pass when the user or repo requires a backend such as CUDA, ROCm, MPS, TPU, or a vendor accelerator.
-8. Repo-specific smoke checks pass when a simple import is too weak to prove usability.
+Run import and metadata checks from outside the repository checkout when
+practical. Use Python's `-I` isolated mode when compatible so the current
+directory, `PYTHONPATH`, or user site cannot make an incorrect install appear
+healthy.
 
-Gate 4 and 5 are both needed. Metadata without import success can mean a broken install. Import success without the expected distribution metadata can mean the wrong package is being imported from the repo checkout or another environment path.
+Use finite terminal-tool timeouts for CLI and smoke checks. Capture the exact
+command, exit status, and concise relevant output in the private report. Do not
+combine unrelated gates into one shell chain.
 
-## Using the Setup Script Report
+## Mandatory Gates
 
-The helper script writes `repo_env_report.json`. Treat `status: "ok"` as usable only after checking that the report covers the repo's actual requirements.
+A successful handoff requires all applicable gates:
 
-Important fields:
+1. The prefix exists and is not Conda `base`.
+2. The target environment Python runs and reports the expected executable and
+   version.
+3. `python -m pip check` passes, or an equivalent manager check is documented
+   when the environment intentionally has no pip.
+4. Expected distribution metadata exists.
+5. Expected import modules import successfully from the target environment.
+6. Required console entry points or CLIs pass safe help/version checks.
+7. Requested backend checks pass for CUDA, ROCm, MPS, TPU, or another vendor
+   backend.
+8. Repo-specific smoke checks pass when import alone is too weak.
+9. Every required native candidate is mapped to a prepared compatible prefix
+   and a final native command to run after skill integration. Optional skips and
+   evidence-backed alternatives are distinguished from required blocks.
 
-- `handoff.python_executable`: pass this to `create-repo-skill` as the temporary inspection Python.
-- `handoff.environment_manager`: `conda` or `venv`.
-- `handoff.environment_prefix`: prefix/path for the verified inspection environment.
-- `handoff.package_names`: distribution names that were installed and verified.
-- `handoff.successful_imports`: modules that imported successfully.
-- `verification.pip_check`: dependency resolver consistency.
-- `verification.imports`: per-module import results.
-- `verification.distributions`: installed package metadata checks.
-- `verification.hardware_backend`: Python-level backend facts when available.
-- `failures` and `warnings`: unresolved blockers or caveats.
+Metadata and import checks are both required. Metadata without import success
+can mean a broken install. Import success without metadata can mean the checkout
+or another Python path supplied the wrong module.
 
-If `status` is not `ok`, do not hand the environment to the next skill.
+## Direct Verification Examples
+
+Substitute concrete values before execution. Conda examples:
+
+```bash
+conda run --prefix "/absolute/path/to/prefix" python -c "import sys; print(sys.executable); print(sys.version)"
+conda run --prefix "/absolute/path/to/prefix" python -m pip check
+conda run --prefix "/absolute/path/to/prefix" python -I -c "from importlib.metadata import version; print(version('distribution-name'))"
+conda run --prefix "/absolute/path/to/prefix" python -I -c "import package_name; print(package_name.__file__)"
+conda run --prefix "/absolute/path/to/prefix" package-cli --help
+```
+
+Venv/uv examples on Unix-like systems:
+
+```bash
+"/absolute/path/to/prefix/bin/python" -c "import sys; print(sys.executable); print(sys.version)"
+"/absolute/path/to/prefix/bin/python" -m pip check
+"/absolute/path/to/prefix/bin/python" -I -c "from importlib.metadata import version; print(version('distribution-name'))"
+"/absolute/path/to/prefix/bin/python" -I -c "import package_name; print(package_name.__file__)"
+"/absolute/path/to/prefix/bin/package-cli" --help
+```
+
+On Windows use `Scripts/python.exe` and the platform's entry-point path. If
+`-I` prevents a repo-supported editable install from resolving, explain why,
+run from a neutral working directory without `PYTHONPATH` or user-site leakage,
+and retain evidence that the import came from the intended installation.
 
 ## Extra Smoke Checks
 
-Use additional smoke checks when import is not enough:
+Use the smallest safe check that exercises the required capability:
 
-- A repo exposes a CLI: run `<command> --help` with a short timeout.
-- A package has a documented minimal object construction path: run that code without downloads or credentials.
-- A torch CUDA package must prove GPU usability: allocate a tiny tensor on CUDA or run the package's backend self-test.
-- A service package needs optional dependencies: import the service module and inspect CLI help, but do not start long-running servers unless needed.
+- For a CLI, run `<command> --help` or `--version` with a short timeout.
+- For an API, construct a minimal object or inspect a signature without
+  downloading models or starting a service.
+- For torch CUDA, allocate a tiny tensor and query device capability.
+- For a service extra, import its module and inspect CLI help; do not start a
+  long-running listener just to prove installation.
 
-With the setup script, pass repeatable Python checks as:
+Execute Python smoke code directly, for example:
 
 ```bash
---smoke-code "import package; print(package.__version__)"
---smoke-code "from package import important_api; print(important_api)"
+"/absolute/path/to/prefix/bin/python" -I -c "import package_name; print(package_name.__version__)"
+"/absolute/path/to/prefix/bin/python" -I -c "from package_name import important_api; print(important_api)"
 ```
 
-For checks that need files, credentials, downloads, network, training runs, or destructive writes, do not run them silently. Report that they were skipped and explain what would be needed to verify them.
+Do not silently run checks that need credentials, external services, large
+downloads, training, destructive writes, or untrusted repo code. Record what
+was skipped, why, and what would be needed to verify it.
+
+Do not run the repo-native GPU test/example during this preparation phase. Run
+the smallest backend smoke that proves its environment is viable and preserve
+the native candidate for final `verify-repo-skill` execution. A synthetic check
+may validate generated guidance, but it cannot replace required GPU/accelerator
+runtime evidence.
+
+## Writing `repo_env_report.json`
+
+Write the report from the observed command results after the gates finish. The
+report is private setup evidence, not generated skill content. Use this minimum
+shape:
+
+```json
+{
+  "schemaVersion": 2,
+  "status": "ok",
+  "readiness": {
+    "skillDrafting": true,
+    "fullBackendVerification": true,
+    "backendGateEligibleForAutoImport": true
+  },
+  "repositoryPath": "/absolute/path/to/repo",
+  "environment": {
+    "manager": "conda",
+    "prefix": "/absolute/path/to/prefix",
+    "pythonExecutable": "/absolute/path/to/prefix/bin/python",
+    "backends": ["cpu", "cuda"]
+  },
+  "additionalEnvironments": [],
+  "backendPlan": {
+    "required": [
+      {
+        "backend": "cuda",
+        "capability": "GPU inference",
+        "cpuSubstitute": "none",
+        "hostVerdict": "compatible",
+        "preparationSmoke": "passed",
+        "finalNativeCandidates": ["examples/infer.py"]
+      }
+    ],
+    "optional": [],
+    "alternative": []
+  },
+  "installPlan": {
+    "python": "3.11",
+    "includedScope": ["src/package"],
+    "excludedScope": ["training"],
+    "installedGroups": ["base", "inference"],
+    "skippedGroups": ["dev", "train"]
+  },
+  "commands": [
+    {
+      "phase": "import verification",
+      "command": "<redacted only if it contained a secret>",
+      "exitCode": 0,
+      "outcome": "package import succeeded from target environment"
+    }
+  ],
+  "verification": {
+    "pipCheck": "passed",
+    "distributions": ["distribution-name"],
+    "imports": ["package_name"],
+    "backendSmokes": [{"backend": "cuda", "status": "passed"}]
+  },
+  "warnings": [],
+  "failures": []
+}
+```
+
+Use `status: "failed"` if any required gate remains unresolved without explicit
+partial-drafting acceptance. Never invent output, turn a skipped gate into a
+pass, or store credentials, tokens, or secret environment-variable values. Use
+`status: "partial"` only after explicit user acceptance, and set
+`fullBackendVerification` and
+`backendGateEligibleForAutoImport` to `false`. A command may be redacted only
+enough to remove a secret; preserve the executable, operation, and non-secret
+arguments needed to diagnose it.
 
 ## Handoff Template
 
-Use this exact shape when the environment is ready:
+Use this shape for every `ok`, `partial`, or `failed` handoff:
 
 ```text
-Environment ready for create-repo-skill: yes
+Environment status: <ok|partial|failed>
+Ready for skill drafting: <yes|no>
+Ready for full backend verification: <yes|no>
+Backend gate eligible for auto-import: <yes|no>
 Repository path: <repo_path>
-Environment manager: <conda|venv>
+Environment manager: <conda|micromamba|venv|uv>
 Environment prefix: <environment_prefix>
+Additional environment(s): <prefix/backend or none>
 Temporary inspection Python: <python_executable>
 Installed package name(s): <distribution names>
 Verified import(s): <modules>
 Verification report: <repo_env_report.json>
-Hardware/backend verdict: <backend ok/not required/warnings>
-Additional notes: <extras installed, skipped unsafe tests, limitations>
+Required backend verdict(s): <backend: passed/blocked>
+Final native backend case(s): <candidate ids deferred until integration>
+Accepted partial limitation: <exact limitation or none>
+Additional notes: <extras installed, skipped unsafe checks, limitations>
 ```
 
-## Failure Report Template
+## Failure Template
 
 Use this shape when the environment is not ready:
 
 ```text
-Environment ready for create-repo-skill: no
-Failed phase: <metadata discovery | conda create | dependency install | repo install | pip check | import verification | backend verification | smoke test>
+Environment status: <partial|failed>
+Ready for skill drafting: <yes only after explicit partial acceptance|no>
+Ready for full backend verification: no
+Backend gate eligible for auto-import: no
+Failed phase: <manager discovery | environment create | dependency install | repo install | pip check | metadata | import | backend | smoke test>
 Repository path: <repo_path>
-Environment manager: <conda|venv>
+Environment manager: <conda|micromamba|venv|uv|unavailable>
 Environment prefix: <environment_prefix>
 Requested backend: <cpu/cuda/rocm/mps/auto/...>
+Blocking native candidate(s): <candidate ids and criticality>
+CPU substitute: <full/partial/none with evidence>
 
 Facts:
 - OS/arch: <...>
 - Python target: <...>
-- Conda/venv: <...>
+- Available managers/runtimes: <...>
 - Hardware: <GPU/backend facts or CPU-only>
 - Driver/toolkit: <driver CUDA, nvcc, ROCm, vendor toolkit, or not present>
 
 Blocker:
-<specific reason the install cannot be considered usable>
+<specific reason the environment cannot be considered usable>
 
 Evidence:
 - Command: <failed command>
+- Exit status: <...>
 - Key error: <short stderr excerpt>
-- Report: <repo_env_report.json if available>
+- Report: <repo_env_report.json>
 
 Next viable actions:
 1. <change Python/package/backend/wheel/toolkit/driver/hardware>
-2. <fallback route if one exists, such as venv when conda is missing>
-3. <what the user must provide if external action is needed>
+2. <fallback manager or private-prefix route>
+3. <authorization or external input still required>
 ```
 
 ## Quality Bar
 
-The final claim must be evidence-backed:
-
-- "Ready" means the report and commands prove the package can be inspected from the target Python.
+- "Ready" means commands prove the package is usable from the target Python.
+- `ok` means every required backend preparation gate is satisfied; it never
+  means merely CPU-importable.
+- `partial` means drafting was explicitly accepted with a known required
+  backend block. It is not full verification and cannot authorize auto-import.
 - "Installed" is not the same as "ready".
-- "CUDA available" is not the same as "repo CUDA backend works"; run a repo-specific smoke check when needed.
-- "Cannot install on this hardware" must be supported by exact hardware/platform/version evidence.
-- Any warnings that weaken later `create-repo-skill` inspection must be surfaced in the handoff.
+- "CUDA available" is not the same as "the repo's CUDA path works".
+- Hardware impossibility requires exact platform/version evidence.
+- Every warning that weakens later package inspection appears in the handoff.
+- The report must match the command transcript; it is not a replacement for
+  executing and observing the checks.

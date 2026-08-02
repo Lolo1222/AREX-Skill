@@ -1,13 +1,12 @@
 <h1 align="center">Auto-ML-Skills</h1>
 
 <p align="center">
-  <strong>Distilling ML repositories and research papers into reusable Agent Skills</strong>
+  <strong>DisCo: A skill-powered research agent with task-related operating knowledge</strong>
 </p>
 
 <p align="center">
-  <a href="docs/imported-repo-skills.md"><img src="https://img.shields.io/badge/Skill_Library-170_repo_skills-0E9B9B?style=for-the-badge" alt="Skill Library: 170 repo skills"></a>
-  <a href="https://www.npmjs.com/package/@auto-ml-skills/disco"><img src="https://img.shields.io/badge/CLI-disco%20v0.0.4-5865F2?style=for-the-badge&logo=npm&logoColor=white" alt="DisCo CLI v0.0.4"></a>
-  <a href="meta-skills/README.md"><img src="https://img.shields.io/badge/Meta_Skills-Workflows-7A5AF8?style=for-the-badge" alt="Meta Skills"></a>
+  <a href="research-skills-library/README.md"><img src="https://img.shields.io/badge/Research_Skills_Library-1000%2B_skills-0E9B9B?style=for-the-badge" alt="Research Skills Library: 1000+ skills"></a>
+  <a href="https://www.npmjs.com/package/@auto-ml-skills/disco"><img src="https://img.shields.io/badge/CLI-disco%20v0.1.1-5865F2?style=for-the-badge&logo=npm&logoColor=white" alt="DisCo CLI v0.1.1"></a>
   <a href="CONTRIBUTING.md"><img src="https://img.shields.io/badge/Contributing-Guide-0E9B9B?style=for-the-badge" alt="Contributing Guide"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-Apache_2.0-D22128?style=for-the-badge&logo=apache&logoColor=white" alt="License: Apache 2.0"></a>
 </p>
@@ -16,20 +15,30 @@
   <b>English</b> | <a href="README.zh-CN.md">简体中文</a>
 </p>
 
-**Auto-ML-Skills helps coding agents stop treating ML repositories and papers as
-anonymous context.** It distills source-grounded operating knowledge from
-software repositories and research papers into compact Agent Skills, then gives
-DisCo, a TypeScript CLI, the workflows needed to create, verify, refresh,
-extend, import, and maintain those skills. The result is a runtime skill
-library that can guide agents through real ML software and paper-derived
-methods with less API guessing, fewer wasted tokens, and stronger evidence
-discipline.
+<p align="center">
+  <img src="assets/intro.png" alt="Auto-ML-Skills overview: skill-guided research, library composition, and evaluation results">
+</p>
 
-At the current checkout, the public library contains **170 repository-specific
-runtime skills** plus a router skill for progressive selection. The same repo
-also includes DisCo source code, copyable meta skills, architecture notes, and
-the Paper2Skills Distiller workflow for turning research papers into modular
-skills.
+Auto-ML-Skills specializes what a research agent knows to consider without
+prescribing how it must research. Relevant methods, procedures, checks, and
+recovery actions are scattered across an LLM's parametric prior, repositories,
+papers, benchmark resources, and other knowledge sources. DisCo reorganizes
+source-grounded evidence into operating-knowledge skill graphs. In Creator
+mode it constructs and verifies those graphs; in Researcher mode it loads the
+task-relevant portion through progressive disclosure and uses code, tools, and
+experiments to complete the research task.
+
+The **Research Skills Library** is the growing collection of these reusable
+skill graphs. Its scope includes repository skills, paper-derived skills,
+task- or benchmark-specific skills, and future domain collections. This public
+checkout currently ships **more than 1,000 operating skills organized into
+graphs for 170 widely used ML and research repositories across 14
+workflow-oriented families**, plus a library-level router. The repository
+collection is therefore part of the library, not its boundary.
+
+> **Naming note:** Auto-ML-Skills is the repository name. DisCo is the
+> user-facing CLI/runtime, and the Research Skills Library is the published
+> reusable skill collection.
 
 ## 🧭 Table Of Contents <a id="table-of-contents"></a>
 
@@ -39,7 +48,7 @@ skills.
 - [🗂️ Library Coverage](#library-coverage)
 - [⚙️ Installation](#installation)
 - [🚀 Quick Start](#quick-start)
-- [🛠️ DisCo Workflow Skills](#disco-workflow-skills)
+- [🛠️ Creator Meta Skills](#creator-meta-skills)
 - [🤝 Contributing](#contributing)
 - [📚 Documentation](#documentation)
 - [🙏 Acknowledgement](#acknowledgement)
@@ -48,98 +57,91 @@ skills.
 
 ## 📣 News <a id="news"></a>
 
-- **2026-06-28**: Initial release of Auto-ML-Skills, including the public
-  runtime skill library, the DisCo CLI for repo-skill and paper-to-skill
-  workflows, and the companion meta skills for bringing DisCo workflows into
-  agents such as Codex and Claude Code.
+- **2026-08-03**: Auto-ML-Skills brings together DisCo's Creator and Researcher
+  workflows and a Research Skills Library with 1,000+ operating skills for 170
+  widely used repositories.
 
 ## 💡 Why Auto-ML-Skills <a id="why-auto-ml-skills"></a>
 
-Modern coding agents can already write useful machine-learning code, but they
-often struggle when the correct action depends on a living repository rather
-than a generic package memory.
+Research agents can propose methods, write code, run experiments, and iterate
+on solutions. On a concrete ML research task, however, their success also
+depends on whether they can identify and apply the right existing knowledge
+within the same limited execution budget used to produce the final result.
 
-- **Repo-specific APIs are easy to misuse.** ML libraries hide important
-  behavior in configs, launchers, examples, registry systems, data formats, and
-  version-specific conventions.
-- **Package choice is itself a task.** LLM serving, RAG, bio/chem, vision,
-  MLOps, evaluation, RL, and scientific Python stacks overlap heavily; agents
-  need a routing map before they can pick the right tool.
-- **Fresh source evidence matters.** The safest instruction often comes from
-  today's checkout, package metadata, tests, examples, and upstream commit
-  rather than a stale public-memory summary.
-- **Papers need operational distillation.** A paper's reusable knowledge is
-  often split across method sections, equations, ablations, data assumptions,
-  and optional implementation repos; agents need that knowledge converted into
-  testable module-level skills before recovery work is credible.
-- **Trial and error is expensive.** Unstructured exploration can burn turns,
-  downloads, GPU jobs, and debugging time before the agent reaches the workflow
-  the repository already documents.
+- **Task-relevant knowledge is dispersed.** Applicable methods, tools,
+  procedures, validation checks, and recovery actions may be split across the
+  model's prior, source repositories, papers, task assets, and web resources.
+- **Raw sources are not operating context.** An agent still needs to determine
+  when a source applies, which evidence matters, how to execute it, what it
+  should observe, and how to detect and recover from failure.
+- **Reconstruction competes with research.** Re-reading and reconciling sources
+  during every task consumes context, tool calls, compute, and experiment
+  budget that could otherwise improve the research outcome.
+- **Harnesses and skills specialize different things.** A harness governs how
+  an agent plans, searches, critiques, and executes. Skills organize what the
+  agent knows to consider, without forcing a fixed research trajectory.
 
-Auto-ML-Skills addresses this by making repository knowledge installable,
-verifiable, and routable. A skill is not a broad tutorial; it is a compact
-operating map that tells an agent how to work with a specific project, when to
-load deeper references, and which mistakes to avoid. Paper-derived skills apply
-the same idea to research methods: they turn a paper into reusable modules that
-can be validated, invoked, and refined during bounded recovery runs.
+We call this task-related body of methods, procedures, checks, and recovery
+actions **operating knowledge**. DisCo turns source-oriented knowledge into an
+operating-knowledge skill graph whose skills declare use conditions, execution
+behavior, supporting evidence, validation steps, and failure handling. Creator
+mode performs this ML knowledge distillation through evidence-backed
+exploration, skill-graph generation, and verification with refinement.
+Researcher mode then loads only the relevant graph fragment as its operating
+context and applies it to the task.
 
 ## 🧰 What Is Included <a id="what-is-included"></a>
 
-| Layer | Location | What it provides |
+| Component | Purpose |
+| --- | --- |
+| [DisCo](src/) | The TypeScript research-agent CLI. Creator constructs and maintains skill graphs; Researcher uses operating skills with code, tools, and experiments. |
+| [Research Skills Library](research-skills-library/) | The reusable operating-knowledge layer. This checkout publishes more than 1,000 skills organized into graphs for 170 widely used repositories, plus their sibling `repo-skills-router`; the library model also supports paper-, task-, benchmark-, and domain-specific collections. |
+| [Examples](examples/) | Sanitized end-to-end sessions showing Creator building a FlagEmbedding skill graph and Researcher applying Gymnasium and Stable-Baselines3 skills to an auditable battery-dispatch experiment. |
+| [Documentation](docs/) | Workflow, architecture, catalog, deployment, and portability guides. The 15 bundled Creator meta skills remain part of DisCo rather than a separate manual installation. |
+
+Each session exposes a mode-specific skill inventory:
+
+| Mode | Visible skills | Responsibility |
 | --- | --- | --- |
-| Runtime skill library | [`repo-skills/`](repo-skills/) | 170 repository-specific ML, LLM, agent, RAG, bio/chem, vision, MLOps, RL, evaluation, and scientific Python skills, plus `repo-skills-router` for selection. |
-| DisCo CLI source | [`src/`](src/) | The `@auto-ml-skills/disco` TypeScript workspace, exposing the `disco` command and bundled workflows for repo-skill creation, verification, import, refresh, extension, and Paper2Skills distillation. |
-| Workflow meta skills | [`meta-skills/`](meta-skills/) | Lightweight package/repo and paper-to-skill workflows that can be copied into Codex or Claude Code when you do not need the full CLI source. |
-| Documentation | [`docs/`](docs/) | Architecture notes and the public imported-skill catalog with upstream repositories, package versions, commits, and coverage summaries. |
+| **Researcher** (default) | `operating` skills and user skills without `metadata.disco-role` | Use routed operating knowledge, code, tools, and experiments to complete an ML research task. |
+| **Creator** | Skills explicitly marked `metadata.disco-role: meta` | Start with `distill-ml-knowledge`, choose `direct`, `reuse-existing` (one workflow or a bounded composition), or `design-reusable`, and send only a verified recurring construction gap to `design-meta-skill`. |
 
-### Which Part Should You Use?
-
-- **Use the skill library** when you want an agent to use existing ML repo
-  knowledge.
-  - Copy [`repo-skills/`](repo-skills/) into DisCo's managed library at
-    `~/.disco/agent/skills/`.
-  - Then import selected or all repo skills into Codex, Claude Code, or another
-    target agent.
-- **Use the DisCo CLI** when you want to create or maintain skills.
-  - Create, verify, refresh, extend, and import repo skills.
-  - Distill papers into reusable module-level skills with `disco --source
-    paper`.
-  - Keep routing metadata and `repo-skills-router` updated for imported skills.
-- **Use workflow meta skills** when another agent should run the workflows
-  without the full CLI source.
-  - Copy [`meta-skills/`](meta-skills/) into the target agent's `skills/`
-    directory.
-  - Use this path for portable repo-skill and paper-to-skill workflows in
-    Codex, Claude Code, or similar agents.
+Use `--agent-mode creator|researcher` in non-interactive sessions, or
+`/creator` and `/researcher` in the interactive UI. Switching opens a new
+session with a clean context. See [DisCo Workflows](docs/disco-workflows.md) for
+session/export behavior, detailed workflows, and deployment rules.
 
 ## 🗂️ Library Coverage <a id="library-coverage"></a>
 
-The included skill catalog is maintained in
-[`docs/imported-repo-skills.md`](docs/imported-repo-skills.md). It records each
-skill's upstream repository, update date, package version information, source
-commit, and intended workflow coverage.
+The public repository collection spans four broad areas and 14 workflow
+families. It is built from a curated set of 170 widely used ML and research
+repositories, producing 1,060 root and focused skills with broad coverage of
+training, data, evaluation, agents, retrieval, vision, generation, ML
+operations, and scientific computing.
 
-| Area | Examples from the included library |
-| --- | --- |
-| ML infrastructure and training | Dask, DGL, PyTorch Lightning, Optuna, PyTorch Geometric |
-| Data preparation and evaluation | MTEB, LM Evaluation Harness, Datasets, Evaluate, OpenCompass, Pillow, TorchVision |
-| LLM training, fine-tuning, and serving | Axolotl, DeepSpeed, Transformers, PEFT, NeMo, vLLM, SGLang, Unsloth, TRL |
-| Agents and agentic workflows | Browser Use, CAMEL, CrewAI, OpenHands, MetaGPT, LangFlow, LangChain, LangGraph, AutoGen, OpenAI Agents SDK |
-| RAG and document AI | Haystack, Docling, LightRAG, RAGFlow, Khoj, Kotaemon, GraphRAG, LlamaIndex, Qdrant Client, Unstructured |
-| RL and distributed AI systems | Gymnasium, Ray, Acme, AgileRL, Stable-Baselines3, CleanRL, PettingZoo, Tianshou |
-| Bio, chemistry, vision, and scientific Python | AlphaFold, AlphaFold3, OmegaFold, OpenFE, DeepMD-kit, Scanpy, MONAI, MMCV, MMDetection, ComfyUI |
-| MLOps and orchestration | Airflow, BentoML, Dagster, Feast, Great Expectations, MLflow, ZenML, ClearML, Kedro, Snakemake, W&B |
+DisCo's Creator CLI and bundled meta skills provide repeatable workflows for
+creating, verifying, maintaining, and importing new skill graphs. A
+library-level router and progressive disclosure let the library scale across
+more repositories, papers, benchmarks, tasks, and domain collections while
+loading only the skills relevant to the current task.
+
+![Overview of the Auto-ML-Skills Library](assets/library.png)
+
+The [Imported Repo Skills Catalog](docs/imported-repo-skills.md) lists every
+published graph with its upstream repository, update date, package version,
+source commit, and intended workflow coverage.
 
 ## ⚙️ Installation <a id="installation"></a>
 
-The minimal setup has two steps:
+Using DisCo with the collection published in this repository requires both of
+the following installation steps, in order:
 
 1. Install the `disco` CLI.
-2. Install the skill library into DisCo's managed skill directory.
+2. Install the public repository-skill collection into DisCo's managed skill
+   directory.
 
-Installing workflow meta skills is optional. Use that path only when you want
-another agent to run DisCo-style creation or paper-to-skill workflows without
-using the full CLI.
+Installing portable Creator meta skills into another agent is optional. DisCo
+already bundles them.
 
 ### Install DisCo
 
@@ -150,9 +152,16 @@ npm install -g @auto-ml-skills/disco
 disco
 ```
 
-DisCo requires Node.js `>=22.19.0`. pi natively supports 35 model providers,
-and DisCo inherits that provider layer. Configure at least one provider in the
-startup flow with `/login`, or use environment variables such as
+DisCo requires Node.js `>=22.19.0` and builds on
+[Pi](https://github.com/earendil-works/pi)'s multi-provider model layer.
+The npm package includes its own DisCo-modified coding-agent source and uses
+pinned `@earendil-works/pi-agent-core`, `@earendil-works/pi-ai`, and
+`@earendil-works/pi-tui` packages as dependencies. It does not depend on
+`@earendil-works/pi-coding-agent`, discover `.pi` resources, or share a
+globally installed Pi dependency tree.
+
+Configure at least one provider in the startup flow with `/login`, or use
+environment variables such as
 `OPENAI_API_KEY`, `ANTHROPIC_API_KEY`, `GEMINI_API_KEY`, `OPENROUTER_API_KEY`,
 or `MISTRAL_API_KEY`.
 
@@ -162,243 +171,154 @@ or `MISTRAL_API_KEY`.
 ```bash
 git clone https://github.com/VectorSpaceLab/Auto-ML-Skills.git
 cd Auto-ML-Skills
+# If model catalog fetching fails behind an HTTP(S) proxy, use: NODE_USE_ENV_PROXY=1 bash scripts/build-from-source-link.sh
 bash scripts/build-from-source-link.sh
 ```
 
-The script installs workspace dependencies, builds the TypeScript packages, and
-links the `disco` command globally for local use.
+The script installs the standalone package dependencies from the checked-in
+shrinkwrap, builds DisCo, and links the `disco` command globally for local use.
 
 </details>
 
-### Install The Runtime Skill Library
+### Install The Published Repository Collection
 
-Clone this repository and copy the runtime repo skills into DisCo's managed
-skills directory:
+Install the official collection and its router with DisCo:
+
+```bash
+disco repo-skills install
+```
+
+The command uses a shallow checkout of the official repository, installs only
+the published runtime collection, and records its source commit. Git must be
+available locally. Later, inspect or update the managed collection with:
+
+```bash
+disco repo-skills status
+disco repo-skills update
+```
+
+`status` is local-only: it checks managed digests, router presence and current
+skill coverage without contacting GitHub. Run `update` when you want to check
+and apply the latest official commit.
+
+Updates replace only official managed skill IDs. Repo skills created or
+imported locally by Creator are preserved. If an official skill was modified
+locally or collides with an unmanaged skill, the command stops; an explicit
+`--force` update first keeps a recoverable backup.
+
+DisCo registers the managed collection, but its repository roots and focused
+sub-skills use `disable-model-invocation: true` and are omitted from the initial
+model context. By default, `repo-skills-router` remains visible, routes to one
+practical scenario, and then points DisCo to the selected skill under its
+sibling `repo-skills/` collection. Automatic router selection can be disabled
+and restored without uninstalling the collection:
+
+```bash
+disco repo-skills router disable
+disco repo-skills router enable
+```
+
+When disabled, the router is omitted from automatic model selection but remains
+registered for explicit `/skill:repo-skills-router` invocation. Start a new
+Researcher session after an install, update, or router setting change.
+
+<details>
+<summary>Manual installation fallback</summary>
 
 ```bash
 git clone https://github.com/VectorSpaceLab/Auto-ML-Skills.git
 cd Auto-ML-Skills
 mkdir -p ~/.disco/agent/skills
-cp -R repo-skills/* ~/.disco/agent/skills/
-```
-
-Restart DisCo after copying so the managed skill index is reloaded.
-
-### Install Workflow Meta Skills (Optional)
-
-The top-level [`meta-skills/`](meta-skills/) directory contains workflow skills
-for agents that should run DisCo-style repo-skill or paper-to-skill workflows
-without relying on the full DisCo CLI.
-
-If you do not already have a local checkout, clone this repository first:
-
-```bash
-git clone https://github.com/VectorSpaceLab/Auto-ML-Skills.git
-cd Auto-ML-Skills
-```
-
-Install all workflow meta skills into Codex:
-
-```bash
-mkdir -p ~/.codex/skills
-cp -R meta-skills/* ~/.codex/skills/
-```
-
-Install all workflow meta skills into Claude Code:
-
-```bash
-mkdir -p ~/.claude/skills
-cp -R meta-skills/* ~/.claude/skills/
-```
-
-<details>
-<summary>Install only the paper-to-skill workflow into Codex</summary>
-
-```bash
-mkdir -p ~/.codex/skills
 cp -R \
-  meta-skills/create-paper-skills \
-  meta-skills/paper-skills-distiller \
-  meta-skills/plan-paper-skill-modules \
-  meta-skills/create-paper-module-skill \
-  meta-skills/prepare-paper-recovery-env \
-  meta-skills/recover-paper-result \
-  meta-skills/analyze-paper-recovery \
-  ~/.codex/skills/
+  research-skills-library/repo-skills \
+  research-skills-library/repo-skills-router \
+  ~/.disco/agent/skills/
 ```
+
+Running `disco repo-skills install` later can adopt an unchanged manual copy and
+preserve additional local skill IDs.
 
 </details>
 
-See [`meta-skills/README.md`](meta-skills/README.md) for the workflow list,
-Claude Code paper-only install command, copy-and-run agent installation prompts
-that clone the repository automatically, and default workflow artifact layout.
+For router behavior, third-party skill packages, and deployment-scope details,
+see [DisCo Workflows](docs/disco-workflows.md), the
+[Research Skills Library guide](research-skills-library/README.md), and the
+[DisCo CLI README](src/README.md).
+
+### Portable Meta Skills For Another Agent (Optional)
+
+DisCo already bundles its Creator workflows. To run them in another compatible
+agent, follow [Meta Skills For Other Agents](docs/meta-skills-for-other-agents.md).
 
 ## 🚀 Quick Start <a id="quick-start"></a>
 
-### Use Repo Skills In Codex Or Claude Code
-
-After the skill library is installed in DisCo's managed skills directory, use
-DisCo's import workflow to export selected or all repo skills into your target
-agent.
-For example, import the router plus the `vllm` and `sglang` skills into Claude
-Code:
+Researcher is the default. After completing both installation steps, ask for a
+concrete research outcome; relevant repository skills are selected through the
+router and opened progressively:
 
 ```bash
-disco -p "/skill:import-repo-skills-to-agent import vllm and sglang to ~/.claude"
+disco --agent-mode researcher -p "Benchmark vLLM and SGLang with the same model and workload on this machine. Tune each server under identical hardware and memory constraints, report the best verified throughput for each, and preserve the commands and measurements needed to reproduce the comparison."
 ```
 
-To import the same skills into Codex:
+Use Creator when the task needs a new or updated operating-skill graph. It
+starts with `distill-ml-knowledge`, which normalizes the task and selects
+`direct`, `reuse-existing`, or `design-reusable`. Direct distillation builds a
+task-conditioned graph; `reuse-existing` invokes one adequate workflow or a
+bounded composition; `design-reusable` hands an evidence-backed recurring
+construction gap to `design-meta-skill`.
+
+**Create skills for a specific repository.** The bundled repository workflow
+already covers source inspection, environment preparation, skill generation,
+verification, and import. `distill-ml-knowledge` therefore selects
+`reuse-existing` with `reuse mode: single` and hands this request to
+`create-repo-skill`:
 
 ```bash
-disco -p "/skill:import-repo-skills-to-agent import vllm and sglang to ~/.codex"
+git clone https://github.com/FlagOpen/FlagEmbedding.git
+disco --agent-mode creator -p \
+  "/skill:distill-ml-knowledge Create and verify a repository skill graph for the local FlagEmbedding checkout at ./FlagEmbedding. Use its documentation, examples, tests, and runtime APIs to cover embedding inference and evaluation. Prepare the CPU/GPU environments required by the confirmed scope, then ask before importing the verified graph."
 ```
 
-Restart the agent, then ask for a concrete deployment task:
-
-```text
-Use the repo skills to compare vLLM and SGLang for deploying Qwen3-32B on this
-machine, then prepare a minimal OpenAI-compatible serving plan with launch
-commands, environment checks, and a smoke-test request.
-```
-
-<details>
-<summary>Hint: make the router easy for your agent to use</summary>
-
-After importing repo skills, tell your agent to consult `repo-skills-router`
-when a user request could benefit from installed repository skills. A project
-`CLAUDE.md` or `AGENTS.md` can include a short instruction such as:
-
-```text
-When a task involves ML libraries, LLM serving, RAG, agents, bio/chem, vision,
-MLOps, RL, evaluation, or scientific Python, proactively check
-repo-skills-router before choosing a library-specific approach.
-```
-
-You can also invoke the router directly in a request:
-
-```text
-/repo-skills-router compare vLLM and SGLang for this deployment task
-$repo-skills-router compare vLLM and SGLang for this deployment task
-```
-
-Use `/repo-skills-router` in Claude Code and `$repo-skills-router` in Codex.
-
-</details>
-
-### Create A Skill For A Repository
-
-Use DisCo to create and verify a repo-specific skill from source evidence:
+**Create one task-related skill directly.** Use `direct` when an approved
+knowledge-source directory can support the current task immediately and no new
+reusable construction workflow is needed. This example distills guidance for
+the classic Kaggle Home Credit Default Risk problem into one runtime
+`SKILL.md`:
 
 ```bash
-disco -p "Create a repo skill for /path/to/repo."
+disco --agent-mode creator -p \
+  "/skill:distill-ml-knowledge Use the direct path to create a task-related skill for Kaggle Home Credit Default Risk. The task description is at /path/to/home-credit-task/description.md, and the deep-research materials are in /path/to/home-credit-deep-research/. Output a single SKILL.md, verify it, and ask before importing it to .agents/skills/home-credit-default-risk/."
 ```
 
-The workflow analyzes repository structure, prepares or checks a Python
-inspection environment when needed, writes runtime guidance, records
-provenance, and then hands the draft to `verify-repo-skill`. Verification
-creates assertion-backed usability cases, runs content-level self-refine,
-checks safe native examples or tests when available, runs static quality gates,
-and writes coverage and review artifacts before the skill is treated as ready.
+Creator validates and stages every output for approval. The repository graph
+uses DisCo's managed repo collection, while the task-bound competition skill
+defaults to the current project's `.agents/skills/`; each is imported only
+after its own verification and approval, then used in a new Researcher session.
+The full [DisCo Workflows guide](docs/disco-workflows.md) covers explicit skill
+invocation, task-specific graphs, repository and paper construction,
+verification, maintenance, export, deployment scopes, and mode-switch behavior.
 
-To let the agent choose the extraction scope and import the verified skill into
-DisCo's managed library without another confirmation round, delegate both
-decisions in the request:
+## 🛠️ Creator Meta Skills <a id="creator-meta-skills"></a>
 
-```bash
-disco -p "Create a repo skill for /path/to/repo with auto decide and auto import."
-```
-
-### Create Skills From A Paper
-
-Use the paper-to-skill workflow integrated in the DisCo CLI when the source is
-a research paper rather than a software repository. For repeatable runs, copy
-and fill the bundled run-config template, then pass it to DisCo:
-
-```bash
-cp meta-skills/create-paper-skills/assets/distiller-run-config-template.toml \
-  /path/to/distiller_run_config.toml
-disco --source paper -p "Use Distiller to process the runs in this config. config_path: /path/to/distiller_run_config.toml"
-```
-
-The paper source can be a local PDF or text file, direct PDF URL, arXiv URL or
-id, or paper title. An implementation repository is optional and can be a local
-path, Git URL, `none`, or `unknown`. Distiller modularizes the paper, creates
-and validates module-level skills, prepares bounded runtime evidence, runs the
-strongest feasible recovery experiment without reading the original
-implementation repo, analyzes gaps, refines within `iteration_budget` when
-needed, and writes attempt artifacts plus final reports under
-`<attempt_dir>/reports/final/`. The default `recovery_mode` is `hard`, so
-reduced, proxy, toy, or fallback runs are recorded as diagnostics rather than
-accepted as successful recovery unless you explicitly choose `soft` mode.
-
-### Extend An Existing Skill
-
-Ask DisCo to extend an existing skill when it is correct but needs deeper
-coverage for a new workflow area:
-
-```bash
-disco -p "Add streaming inference coverage to the existing skill at /path/to/repo/skills/example-skill using /path/to/repo as evidence."
-```
-
-### Refresh A Skill After Upstream Changes
-
-Ask DisCo to refresh a skill when the upstream repository changes APIs,
-configs, examples, dependencies, or runtime behavior:
-
-```bash
-disco -p "Refresh the skill at /path/to/repo/skills/example-skill against the current /path/to/repo code."
-```
-
-Refresh should preserve correct existing guidance while updating stale
-instructions against the current source baseline.
-
-## 🛠️ DisCo Workflow Skills <a id="disco-workflow-skills"></a>
-
-DisCo bundles workflow skills that orchestrate skill creation, verification,
-maintenance, import, and paper distillation. They are available inside the CLI
-and mirrored under [`meta-skills/`](meta-skills/) for optional installation into
-other agents.
-
-- **Package and repository workflows**
-  - `create-repo-skill`: create a repo-specific skill from source code, docs,
-    examples, tests, package metadata, and optional installed-package
-    inspection.
-  - `prepare-repo-skill-env`: prepare or verify an isolated Python inspection
-    environment before deeper repository analysis.
-  - `verify-repo-skill`: verify generated or refreshed repo skills with
-    usability cases, content self-refine, safe native checks, static gates,
-    reports, and import-readiness checks.
-  - `refresh-repo-skill`: update an existing skill when upstream APIs, configs,
-    examples, dependencies, or runtime behavior change.
-  - `extend-repo-skill`: add deeper coverage to an existing skill for a new
-    workflow area.
-  - `repo-skills-router`: route user requests across installed repo skills by
-    scenario and package coverage.
-  - `import-repo-skills-to-agent`: copy selected or all managed repo skills,
-    plus the router, into Codex, Claude Code, or another agent skill directory.
-- **Paper-to-skill workflows**
-  - `create-paper-skills`: entry point for `disco --source paper` requests.
-  - `paper-skills-distiller`: orchestrate source resolution, paper
-    modularization, module-skill creation, recovery, analysis, refinement, and
-    final reporting.
-  - `plan-paper-skill-modules`: read the paper and produce the paper profile,
-    module plan, and module docs.
-  - `create-paper-module-skill`: convert each module doc into a reusable
-    generated Agent Skill with validation checks.
-  - `prepare-paper-recovery-env`: prepare bounded runtime evidence, package
-    setup, model/data state, and recovery handoff artifacts.
-  - `recover-paper-result`: run a bounded recovery experiment using generated
-    skills without reading the original implementation repo.
-  - `analyze-paper-recovery`: compare recovery evidence against the paper
-    target and produce accept, refine, or blocker feedback.
+DisCo bundles 15 Creator-only meta skills for adequacy assessment, workflow
+design, repository and paper distillation, verification, maintenance, and
+cross-agent export. The canonical `distill-ml-knowledge` entry point owns task
+normalization, adequacy/composition assessment, and path selection;
+`design-meta-skill` only designs the reusable bundle after receiving a verified
+`design-reusable` handoff. Each declares `metadata.disco-role: meta`;
+Researcher does not see them. The [Bundled Skills Reference](src/packages/coding-agent/src/disco/skills/README.md)
+is the source of truth for the full inventory and contracts. To run these
+workflows outside DisCo, see
+[Meta Skills For Other Agents](docs/meta-skills-for-other-agents.md).
 
 ## 🤝 Contributing <a id="contributing"></a>
 
 We welcome contributions in three main areas:
 
 1. **Contribute generated repo skills.** Add a publishable runtime skill under
-   `repo-skills/<skill-id>/`, include provenance and routing metadata, and
-   update `repo-skills-router` so agents can discover it.
+   `research-skills-library/repo-skills/<skill-id>/`, include provenance and
+   routing metadata, and update the sibling
+   `research-skills-library/repo-skills-router/` so agents can discover it.
 2. **Extend or refresh existing repo skills.** Improve stale, incomplete, or
    unclear skills with source-grounded changes. Update provenance or routing
    metadata when the upstream baseline or coverage changes.
@@ -422,11 +342,15 @@ checklist.
 
 | Page | Description |
 | --- | --- |
-| [Imported Repo Skills Catalog](docs/imported-repo-skills.md) | Public catalog of included runtime repo skills, grouped by workflow area with upstream baselines. |
-| [Architecture](docs/architecture.md) | Repository layers, DisCo source layout, skill authoring pipeline, runtime skill shape, and managed library model. |
-| [Workflow Meta Skills](meta-skills/README.md) | Copyable package/repo and paper-to-skill workflow skills for external agents. |
-| [DisCo CLI README](src/packages/coding-agent/README.md) | DisCo CLI usage for repo-skill creation, import, verification, and paper-to-skill workflows. |
-| [Contributing](CONTRIBUTING.md) | Contribution rules for generated repo skills, router/catalog updates, documentation, meta skills, and CLI source. |
+| [DisCo Workflows](docs/disco-workflows.md) | Mode and session behavior, Researcher execution, Creator construction and maintenance, deployment scopes, and cross-agent export. |
+| [Examples](examples/) | Sanitized Creator and Researcher session exports, including FlagEmbedding skill construction and Gymnasium/Stable-Baselines3 battery dispatch. |
+| [Imported Repo Skills Catalog](docs/imported-repo-skills.md) | Public catalog of included runtime repo skills, organized by repository-skill family with upstream baselines. |
+| [Research Skills Library](research-skills-library/README.md) | Broader library model, current repository-skill collection, canonical layout, and DisCo installation command. |
+| [Architecture](docs/architecture.md) | Repository layers, mode boundaries, runtime routing, source layout, authoring pipelines, project/managed deployment scopes, and the managed repository library. |
+| [Bundled Skills Reference](src/packages/coding-agent/src/disco/skills/README.md) | Role metadata, Creator meta-skill contracts, Researcher routing, and construction artifact layouts. |
+| [Meta Skills For Other Agents](docs/meta-skills-for-other-agents.md) | Portable Creator-only workflow installation for Codex, Claude Code, and project-local agents. |
+| [DisCo CLI README](src/README.md) | General task execution, runtime skill routing, package installation, and skill authoring workflows. |
+| [Contributing](CONTRIBUTING.md) | Contribution rules for generated repo skills, router/catalog updates, workflow skills, documentation, and CLI source. |
 
 ## 🙏 Acknowledgement <a id="acknowledgement"></a>
 
@@ -442,12 +366,14 @@ projects for the community to build on.
 
 ## 📄 License <a id="license"></a>
 
-Auto-ML-Skills is released under the Apache License 2.0. Unless a file
-explicitly states otherwise, the license applies to both the DisCo CLI source
-code in [`src/`](src/) and the open-sourced runtime repo skills under
-[`repo-skills/`](repo-skills/).
+The repository-level Auto-ML-Skills materials and the open-sourced runtime repo
+skills under [`research-skills-library/`](research-skills-library/) are
+released under the Apache License 2.0 unless a file states otherwise. The
+standalone DisCo npm package under [`src/`](src/) is distributed under its own
+[MIT License](src/LICENSE), with upstream attribution and third-party terms in
+[`src/THIRD_PARTY_NOTICES.md`](src/THIRD_PARTY_NOTICES.md).
 
-See [LICENSE](LICENSE) for the full license text.
+See [LICENSE](LICENSE) for the repository-level Apache-2.0 text.
 
 ## 📝 Citation <a id="citation"></a>
 

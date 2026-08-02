@@ -38,6 +38,18 @@ export interface SelfUpdateCommand extends SelfUpdateCommandStep {
 	steps?: SelfUpdateCommandStep[];
 }
 
+export type SelfUpdatePackageTarget = string | { packageName: string; installSpec?: string };
+
+function normalizeSelfUpdatePackageTarget(target: SelfUpdatePackageTarget): {
+	packageName: string;
+	installSpec: string;
+} {
+	if (typeof target === "string") {
+		return { packageName: target, installSpec: target };
+	}
+	return { packageName: target.packageName, installSpec: target.installSpec ?? target.packageName };
+}
+
 function makeSelfUpdateCommand(
 	installStep: SelfUpdateCommandStep,
 	uninstallStep?: SelfUpdateCommandStep,
@@ -103,29 +115,38 @@ function getInferredNpmInstall(): { root: string; prefix: string } | undefined {
 function getSelfUpdateCommandForMethod(
 	method: InstallMethod,
 	installedPackageName: string,
-	updatePackageName = installedPackageName,
+	updatePackageTarget: SelfUpdatePackageTarget = installedPackageName,
 	npmCommand?: string[],
 ): SelfUpdateCommand | undefined {
+	const target = normalizeSelfUpdatePackageTarget(updatePackageTarget);
 	switch (method) {
 		case "bun-binary":
 			return undefined;
-		case "pnpm":
+		case "pnpm": {
+			const match = readCommandOutput("pnpm", ["root", "-g"])
+				? undefined
+				: /^(.*[\\/]global[\\/][^\\/]+)[\\/]\.pnpm[\\/]/.exec(getPackageDir());
+			const binDirArgs = match
+				? [`--config.global-bin-dir=${process.env.PNPM_HOME || dirname(dirname(match[1]))}`]
+				: [];
 			return makeSelfUpdateCommand(
 				makeSelfUpdateCommandStep("pnpm", [
 					"install",
 					"-g",
 					"--ignore-scripts",
 					"--config.minimumReleaseAge=0",
-					updatePackageName,
+					...binDirArgs,
+					target.installSpec,
 				]),
-				updatePackageName === installedPackageName
+				target.packageName === installedPackageName
 					? undefined
-					: makeSelfUpdateCommandStep("pnpm", ["remove", "-g", installedPackageName]),
+					: makeSelfUpdateCommandStep("pnpm", ["remove", "-g", ...binDirArgs, installedPackageName]),
 			);
+		}
 		case "yarn":
 			return makeSelfUpdateCommand(
-				makeSelfUpdateCommandStep("yarn", ["global", "add", "--ignore-scripts", updatePackageName]),
-				updatePackageName === installedPackageName
+				makeSelfUpdateCommandStep("yarn", ["global", "add", "--ignore-scripts", target.installSpec]),
+				target.packageName === installedPackageName
 					? undefined
 					: makeSelfUpdateCommandStep("yarn", ["global", "remove", installedPackageName]),
 			);
@@ -136,9 +157,9 @@ function getSelfUpdateCommandForMethod(
 					"-g",
 					"--ignore-scripts",
 					"--minimum-release-age=0",
-					updatePackageName,
+					target.installSpec,
 				]),
-				updatePackageName === installedPackageName
+				target.packageName === installedPackageName
 					? undefined
 					: makeSelfUpdateCommandStep("bun", ["uninstall", "-g", installedPackageName]),
 			);
@@ -152,10 +173,10 @@ function getSelfUpdateCommandForMethod(
 				"-g",
 				"--ignore-scripts",
 				"--min-release-age=0",
-				updatePackageName,
+				target.installSpec,
 			]);
 			const uninstallStep =
-				updatePackageName === installedPackageName
+				target.packageName === installedPackageName
 					? undefined
 					: makeSelfUpdateCommandStep(command, [...prefixArgs, "uninstall", "-g", installedPackageName]);
 			return makeSelfUpdateCommand(installStep, uninstallStep);
@@ -205,7 +226,9 @@ function getGlobalPackageRoots(method: InstallMethod, _packageName: string, npmC
 		}
 		case "pnpm": {
 			const root = readCommandOutput("pnpm", ["root", "-g"]);
-			return root ? [root, dirname(root)] : [];
+			if (root) return [root, dirname(root)];
+			const match = /^(.*[\\/]global[\\/][^\\/]+)[\\/]\.pnpm[\\/]/.exec(getPackageDir());
+			return match ? [match[1]] : [];
 		}
 		case "yarn": {
 			const dir = readCommandOutput("yarn", ["global", "dir"]);
@@ -292,10 +315,10 @@ function isManagedByGlobalPackageManager(method: InstallMethod, packageName: str
 export function getSelfUpdateCommand(
 	packageName: string,
 	npmCommand?: string[],
-	updatePackageName = packageName,
+	updatePackageTarget: SelfUpdatePackageTarget = packageName,
 ): SelfUpdateCommand | undefined {
 	const method = detectInstallMethod();
-	const command = getSelfUpdateCommandForMethod(method, packageName, updatePackageName, npmCommand);
+	const command = getSelfUpdateCommandForMethod(method, packageName, updatePackageTarget, npmCommand);
 	if (!command || !isManagedByGlobalPackageManager(method, packageName, npmCommand) || !isSelfUpdatePathWritable()) {
 		return undefined;
 	}
@@ -305,20 +328,21 @@ export function getSelfUpdateCommand(
 export function getSelfUpdateUnavailableInstruction(
 	packageName: string,
 	npmCommand?: string[],
-	updatePackageName = packageName,
+	updatePackageTarget: SelfUpdatePackageTarget = packageName,
 ): string {
 	const method = detectInstallMethod();
+	const target = normalizeSelfUpdatePackageTarget(updatePackageTarget);
 	if (method === "bun-binary") {
-		return "Rebuild DisCo from source or replace the local binary with a newer release artifact.";
+		return "Replace the local DisCo binary with a newer release artifact.";
 	}
-	const command = getSelfUpdateCommandForMethod(method, packageName, updatePackageName, npmCommand);
+	const command = getSelfUpdateCommandForMethod(method, packageName, target, npmCommand);
 	if (command) {
 		if (isManagedByGlobalPackageManager(method, packageName, npmCommand) && !isSelfUpdatePathWritable()) {
 			return `This installation is managed by a global ${method} install, but the install path is not writable. Update it yourself with: ${command.display}`;
 		}
 		return `This installation is not managed by a global ${method} install. Update it with the package manager, wrapper, or source checkout that provides it.`;
 	}
-	return `Update ${updatePackageName} using the package manager, wrapper, or source checkout that provides this installation.`;
+	return `Update ${target.installSpec} using the package manager, wrapper, or source checkout that provides this installation.`;
 }
 
 export function getUpdateInstruction(packageName: string): string {
@@ -363,6 +387,20 @@ export function getPackageDir(): string {
 	return __dirname;
 }
 
+function getRuntimeSourceDir(): string | undefined {
+	const packageDir = getPackageDir();
+	const forkSourceDir = join(packageDir, "packages", "coding-agent", "src");
+	if (existsSync(forkSourceDir)) {
+		return forkSourceDir;
+	}
+	const conventionalSourceDir = join(packageDir, "src");
+	return existsSync(conventionalSourceDir) ? conventionalSourceDir : undefined;
+}
+
+function getRuntimeCodeDir(): string {
+	return getRuntimeSourceDir() ?? join(getPackageDir(), "dist");
+}
+
 /**
  * Get path to built-in themes directory (shipped with package)
  * - For Bun binary: theme/ next to executable
@@ -373,10 +411,7 @@ export function getThemesDir(): string {
 	if (isBunBinary) {
 		return join(getPackageDir(), "theme");
 	}
-	// Theme is in modes/interactive/theme/ relative to src/ or dist/
-	const packageDir = getPackageDir();
-	const srcOrDist = existsSync(join(packageDir, "src")) ? "src" : "dist";
-	return join(packageDir, srcOrDist, "modes", "interactive", "theme");
+	return join(getRuntimeCodeDir(), "modes", "interactive", "theme");
 }
 
 /**
@@ -389,9 +424,7 @@ export function getExportTemplateDir(): string {
 	if (isBunBinary) {
 		return join(getPackageDir(), "export-html");
 	}
-	const packageDir = getPackageDir();
-	const srcOrDist = existsSync(join(packageDir, "src")) ? "src" : "dist";
-	return join(packageDir, srcOrDist, "core", "export-html");
+	return join(getRuntimeCodeDir(), "core", "export-html");
 }
 
 /** Get path to package.json */
@@ -402,6 +435,16 @@ export function getPackageJsonPath(): string {
 /** Get path to README.md */
 export function getReadmePath(): string {
 	return resolve(join(getPackageDir(), "README.md"));
+}
+
+/** Get path to docs directory */
+export function getDocsPath(): string {
+	return resolve(join(getPackageDir(), "docs"));
+}
+
+/** Get path to examples directory */
+export function getExamplesPath(): string {
+	return resolve(join(getPackageDir(), "examples"));
 }
 
 /** Get path to CHANGELOG.md */
@@ -419,9 +462,7 @@ export function getInteractiveAssetsDir(): string {
 	if (isBunBinary) {
 		return join(getPackageDir(), "assets");
 	}
-	const packageDir = getPackageDir();
-	const srcOrDist = existsSync(join(packageDir, "src")) ? "src" : "dist";
-	return join(packageDir, srcOrDist, "modes", "interactive", "assets");
+	return join(getRuntimeCodeDir(), "modes", "interactive", "assets");
 }
 
 /** Get path to a bundled interactive asset */
@@ -429,20 +470,15 @@ export function getBundledInteractiveAssetPath(name: string): string {
 	return join(getInteractiveAssetsDir(), name);
 }
 
-/**
- * Get path to DisCo's bundled skills directory.
- * - For Bun binary: disco-skills/ next to executable
- * - For Node.js (dist/): dist/disco-resources/skills
- * - For tsx (src/): src/disco/skills
- */
+/** Get the bundled DisCo skill directory in source, npm, and binary layouts. */
 export function getBundledSkillsDir(): string {
 	if (isBunBinary) {
 		return join(getPackageDir(), "disco-skills");
 	}
-	const packageDir = getPackageDir();
-	const srcOrDist = existsSync(join(packageDir, "src")) ? "src" : "dist";
-	const resourceDir = srcOrDist === "src" ? "disco" : "disco-resources";
-	return join(packageDir, srcOrDist, resourceDir, "skills");
+	const sourceDir = getRuntimeSourceDir();
+	return sourceDir
+		? join(sourceDir, "disco", "skills")
+		: join(getPackageDir(), "dist", "disco-resources", "skills");
 }
 
 // =============================================================================
@@ -473,23 +509,22 @@ export const APP_TITLE: string = APP_NAME;
 export const CONFIG_DIR_NAME: string = pkg.discoConfig?.configDir || ".disco";
 export const VERSION: string = pkg.version || "0.0.0";
 
-// e.g., DISCO_CODING_AGENT_DIR
-export const ENV_AGENT_DIR = `${APP_NAME.toUpperCase()}_CODING_AGENT_DIR`;
-export const ENV_SESSION_DIR = `${APP_NAME.toUpperCase()}_CODING_AGENT_SESSION_DIR`;
+export const ENV_AGENT_DIR = "DISCO_CODING_AGENT_DIR";
+export const ENV_SESSION_DIR = "DISCO_CODING_AGENT_SESSION_DIR";
 
 export function expandTildePath(path: string): string {
 	return normalizePath(path);
 }
 
-const DEFAULT_SHARE_VIEWER_URL = "";
+const DEFAULT_SHARE_VIEWER_URL = "https://gist.github.com/";
 
 /** Get the share viewer URL for a gist ID */
 export function getShareViewerUrl(gistId: string): string {
-	const baseUrl = process.env.DISCO_SHARE_VIEWER_URL || DEFAULT_SHARE_VIEWER_URL;
-	if (!baseUrl) {
-		return gistId;
+	const configuredViewerUrl = process.env.DISCO_SHARE_VIEWER_URL?.trim();
+	if (!configuredViewerUrl) {
+		return `${DEFAULT_SHARE_VIEWER_URL}${gistId}`;
 	}
-	return `${baseUrl}#${gistId}`;
+	return `${configuredViewerUrl.replace(/#$/u, "")}#${gistId}`;
 }
 
 // =============================================================================

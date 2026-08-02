@@ -5,10 +5,7 @@ import { tmpdir } from "node:os";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
 
-const scriptPath = path.join(
-	process.cwd(),
-	"src/disco/skills/verify-repo-skill/scripts/update_repo_skills_router.mjs",
-);
+const scriptPath = path.join(process.cwd(), "packages/coding-agent/src/disco/skills/verify-repo-skill/scripts/update_repo_skills_router.mjs");
 
 type ScenarioMetadata = {
 	id: string;
@@ -60,6 +57,35 @@ function runUpdater(
 	});
 }
 
+function runLibraryUpdater(
+	libraryRoot: string,
+	extraArgs: string[] = [],
+): Promise<{ stdout: string; stderr: string; code: number }> {
+	return new Promise((resolve, reject) => {
+		const templateArgs = extraArgs.includes("--template-dir")
+			? []
+			: ["--template-dir", path.join(libraryRoot, ".empty-router-template")];
+		const child = spawn(
+			process.execPath,
+			[scriptPath, "--library-root", libraryRoot, ...templateArgs, ...extraArgs],
+			{
+				stdio: ["ignore", "pipe", "pipe"],
+			},
+		);
+
+		let stdout = "";
+		let stderr = "";
+		child.stdout.on("data", (chunk) => {
+			stdout += String(chunk);
+		});
+		child.stderr.on("data", (chunk) => {
+			stderr += String(chunk);
+		});
+		child.on("error", reject);
+		child.on("close", (code) => resolve({ stdout, stderr, code: code ?? -1 }));
+	});
+}
+
 async function writeScenarioRegistryTemplate(
 	tempRoot: string,
 	scenarios: Record<string, ScenarioDefinition> = {
@@ -95,7 +121,7 @@ async function writeSkill(
 	scenarios: ScenarioMetadata[],
 	scenarioDefinitions: Record<string, ScenarioDefinition> = {},
 ): Promise<void> {
-	const skillDir = path.join(agentDir, "skills", skillId);
+	const skillDir = path.join(agentDir, "skills", "repo-skills", skillId);
 	await mkdir(path.join(skillDir, "references"), { recursive: true });
 	await mkdir(path.join(skillDir, "sub-skills", "setup"), { recursive: true });
 	await writeFile(
@@ -105,6 +131,8 @@ async function writeSkill(
 			`name: ${skillId}`,
 			`description: "Use ${skillId} for focused repository workflows."`,
 			"disable-model-invocation: true",
+			"metadata:",
+			"  disco-role: operating",
 			"---",
 			"",
 			`# ${skillId}`,
@@ -116,8 +144,10 @@ async function writeSkill(
 		[
 			"---",
 			"name: setup",
-			"description: \"Setup workflow.\"",
+			'description: "Setup workflow."',
 			"disable-model-invocation: true",
+			"metadata:",
+			"  disco-role: operating",
 			"---",
 			"",
 			"# Setup",
@@ -132,6 +162,39 @@ async function writeSkill(
 				skills: {
 					[skillId]: {
 						scenarios,
+					},
+				},
+			},
+			null,
+			2,
+		),
+		"utf-8",
+	);
+}
+
+async function writeMetaSkill(agentDir: string, skillId: string, inlineRole = false): Promise<void> {
+	const skillDir = path.join(agentDir, "skills", skillId);
+	await mkdir(path.join(skillDir, "references"), { recursive: true });
+	await writeFile(
+		path.join(skillDir, "SKILL.md"),
+		[
+			"---",
+			`name: ${skillId}`,
+			`description: "Use ${skillId} to construct operating skills from a supported source anchor."`,
+			...(inlineRole ? ["metadata: {disco-role: meta}"] : ["metadata:", "  disco-role: meta"]),
+			"---",
+			"",
+			`# ${skillId}`,
+		].join("\n"),
+		"utf-8",
+	);
+	await writeFile(
+		path.join(skillDir, "references", "repo-routing-metadata.json"),
+		JSON.stringify(
+			{
+				skills: {
+					[skillId]: {
+						scenarios: [{ id: "creator-workflows", role: `Constructs skills with ${skillId}.` }],
 					},
 				},
 			},
@@ -194,6 +257,57 @@ async function writeMalformedRouter(agentDir: string): Promise<void> {
 }
 
 describe("update_repo_skills_router.mjs", () => {
+	it("rebuilds the nested repo collection while live meta skills share the managed skills root", async () => {
+		const tempRoot = await mkdtemp(path.join(tmpdir(), "disco-router-"));
+		try {
+			const agentDir = path.join(tempRoot, "agent");
+			await writeSkill(agentDir, "alpha-skill", [
+				{
+					id: "alpha-workflows",
+					title: "Alpha Workflows",
+					when_to_read: "Alpha repository tasks.",
+					role: "Routes alpha setup and troubleshooting.",
+				},
+			]);
+			await writeMetaSkill(agentDir, "custom-constructor");
+			await writeMetaSkill(agentDir, "inline-constructor", true);
+
+			const first = await runUpdater(agentDir);
+			expect(first.code, first.stderr).toBe(0);
+			expect(first.stdout).toContain("1 skills across 1 scenarios");
+
+			const scenarioPage = path.join(
+				agentDir,
+				"skills",
+				"repo-skills-router",
+				"references",
+				"scenarios",
+				"alpha-workflows.md",
+			);
+			await writeFile(
+				scenarioPage,
+				`${await readFile(scenarioPage, "utf-8")}\n### \`custom-constructor\`\nRole: stale meta entry.\n`,
+				"utf-8",
+			);
+
+			const second = await runUpdater(agentDir);
+			expect(second.code, second.stderr).toBe(0);
+			const routerFiles = [
+				path.join(agentDir, "skills", "repo-skills-router", "SKILL.md"),
+				path.join(agentDir, "skills", "repo-skills-router", "references", "usage-scenarios.md"),
+				scenarioPage,
+			];
+			for (const routerFile of routerFiles) {
+				expect(await readFile(routerFile, "utf-8")).not.toContain("custom-constructor");
+				expect(await readFile(routerFile, "utf-8")).not.toContain("inline-constructor");
+			}
+			expect(existsSync(path.join(agentDir, "skills", "custom-constructor", "SKILL.md"))).toBe(true);
+			expect(existsSync(path.join(agentDir, "skills", "inline-constructor", "SKILL.md"))).toBe(true);
+		} finally {
+			await rm(tempRoot, { recursive: true, force: true });
+		}
+	});
+
 	it("rebuilds a malformed router into the canonical two-layer shape", async () => {
 		const tempRoot = await mkdtemp(path.join(tmpdir(), "disco-router-"));
 		try {
@@ -228,19 +342,26 @@ describe("update_repo_skills_router.mjs", () => {
 			);
 
 			expect(root).toContain("Usage Scenario Quick Map");
+			expect(root).toContain("metadata:\n  disco-role: operating");
 			expect(root).toContain("`references/scenarios/alpha-workflows.md`");
+			expect(root).toContain("`../repo-skills/<skill-id>/SKILL.md`");
+			expect(root).toContain("normal file and command tools to complete");
+			expect(root).toContain("verify-repo-skill/scripts/import_repo_skill.mjs");
+			expect(root).toContain("restores both");
+			expect(root).not.toContain("copy the runtime skill into");
 			expect(root).not.toContain("## Scenario Router");
 			expect(root).not.toContain("### `alpha-skill`");
 			expect(root.split(/\r?\n/).length).toBeLessThan(180);
 			expect(usage).toContain("`scenarios/alpha-workflows.md`");
+			expect(usage).toContain("verify-repo-skill/scripts/import_repo_skill.mjs");
 			expect(page).toContain("### `alpha-skill`");
 			expect(page).toContain("Useful entry points: `alpha-skill/SKILL.md`, `alpha-skill/sub-skills/setup/`.");
 			expect(existsSync(path.join(agentDir, "skills", "repo-skills-router", "references", "repo-skills.md"))).toBe(
 				false,
 			);
-			expect(existsSync(path.join(agentDir, "skills", "repo-skills-router", "references", "scenarios", "old.md"))).toBe(
-				false,
-			);
+			expect(
+				existsSync(path.join(agentDir, "skills", "repo-skills-router", "references", "scenarios", "old.md")),
+			).toBe(false);
 		} finally {
 			await rm(tempRoot, { recursive: true, force: true });
 		}
@@ -278,8 +399,8 @@ describe("update_repo_skills_router.mjs", () => {
 				path.join(agentDir, "skills", "repo-skills-router", "references", "scenarios", "serving-workflows.md"),
 				"utf-8",
 			);
-			expect((trainingPage.match(/### `multi-skill`/g) ?? [])).toHaveLength(1);
-			expect((servingPage.match(/### `multi-skill`/g) ?? [])).toHaveLength(1);
+			expect(trainingPage.match(/### `multi-skill`/g) ?? []).toHaveLength(1);
+			expect(servingPage.match(/### `multi-skill`/g) ?? []).toHaveLength(1);
 		} finally {
 			await rm(tempRoot, { recursive: true, force: true });
 		}
@@ -375,8 +496,10 @@ describe("update_repo_skills_router.mjs", () => {
 				path.join(agentDir, "skills", "repo-skills-router", "references", "scenarios", "agent-workflows.md"),
 				"utf-8",
 			);
-			expect((page.match(/### `agent-skill`/g) ?? [])).toHaveLength(1);
-			expect(page).toContain("The request names agent framework APIs. The request names agent apps or tool calling.");
+			expect(page.match(/### `agent-skill`/g) ?? []).toHaveLength(1);
+			expect(page).toContain(
+				"The request names agent framework APIs. The request names agent apps or tool calling.",
+			);
 			expect(page).toContain("Useful entry points: `agent-skill/SKILL.md`, `agent-skill/sub-skills/setup/`.");
 			expect(page).toContain(
 				"Choose `agent-skill` for canonical agent workflows. Choose `agent-skill` for alias agent app workflows.",
@@ -397,7 +520,8 @@ describe("update_repo_skills_router.mjs", () => {
 					title: "Alpha Workflows",
 					when_to_read: "Alpha tasks.",
 					role: "Handles alpha tasks.",
-					selection_guidance: "Choose this skill when alpha configs, artifacts, workflow steps, or errors are central. Use it for alpha-specific logs.",
+					selection_guidance:
+						"Choose this skill when alpha configs, artifacts, workflow steps, or errors are central. Use it for alpha-specific logs.",
 				},
 			]);
 
@@ -501,10 +625,13 @@ describe("update_repo_skills_router.mjs", () => {
 					"robot-planning-workflows": {
 						title: "Robot Planning Workflows",
 						when_to_read: "Robot task planning, policy configuration, and manipulator workflow tasks.",
-						how_to_choose: "Choose this skill by the named robot planning package, planner API, or task policy. Use it for planner tasks. Route here for robot planning errors.",
+						how_to_choose:
+							"Choose this skill by the named robot planning package, planner API, or task policy. Use it for planner tasks. Route here for robot planning errors.",
 						allow_new: true,
-						why_not_existing: "Existing agent workflow scenarios cover LLM agent runtimes, not robot planning stacks.",
-						expected_future_reuse: "Future robotics repositories can route here for planner and policy workflow skills.",
+						why_not_existing:
+							"Existing agent workflow scenarios cover LLM agent runtimes, not robot planning stacks.",
+						expected_future_reuse:
+							"Future robotics repositories can route here for planner and policy workflow skills.",
 					},
 				},
 			);
@@ -570,7 +697,9 @@ describe("update_repo_skills_router.mjs", () => {
 			]);
 			expect((await runUpdater(agentDir)).code).toBe(0);
 
-			await rm(path.join(agentDir, "skills", "old-skill", "references", "repo-routing-metadata.json"));
+			await rm(
+				path.join(agentDir, "skills", "repo-skills", "old-skill", "references", "repo-routing-metadata.json"),
+			);
 			await writeSkill(agentDir, "new-skill", [
 				{
 					id: "new-workflows",
@@ -595,10 +724,13 @@ describe("update_repo_skills_router.mjs", () => {
 			);
 			expect(oldPage).toContain("### `old-skill`");
 			expect(newPage).toContain("### `new-skill`");
-			expect((oldPage.match(/Choose old for old tasks\./g) ?? [])).toHaveLength(1);
+			expect(oldPage.match(/Choose old for old tasks\./g) ?? []).toHaveLength(1);
 
 			const recoveredMetadata = JSON.parse(
-				await readFile(path.join(agentDir, "skills", "old-skill", "references", "repo-routing-metadata.json"), "utf-8"),
+				await readFile(
+					path.join(agentDir, "skills", "repo-skills", "old-skill", "references", "repo-routing-metadata.json"),
+					"utf-8",
+				),
 			);
 			expect(recoveredMetadata).not.toHaveProperty("scenarios");
 			expect(recoveredMetadata.skills["old-skill"].scenarios).toEqual([
@@ -679,6 +811,78 @@ describe("update_repo_skills_router.mjs", () => {
 		}
 	});
 
+	it("filters cross-skill scenario guidance and the registry for subset exports", async () => {
+		const tempRoot = await mkdtemp(path.join(tmpdir(), "disco-router-"));
+		try {
+			const agentDir = path.join(tempRoot, "agent");
+			const templateDir = await writeScenarioRegistryTemplate(tempRoot, {
+				"llm-finetuning-training-serving-workflows": {
+					title: "LLM Fine-Tuning, Training, and Serving Workflows",
+					when_to_read:
+						"Transformers model usage, PEFT adapters, Axolotl and ms-swift training, vLLM and SGLang serving, and BentoML deployment.",
+					how_to_choose:
+						"Choose Transformers for model APIs, PEFT for adapters, Axolotl or ms-swift for training, vLLM or SGLang for serving, and BentoML for services.",
+					aliases: ["llm-serving"],
+				},
+			});
+			const scenario = "llm-finetuning-training-serving-workflows";
+			for (const skillId of ["vllm", "sglang", "ms-swift", "transformers", "peft", "axolotl", "bentoml"]) {
+				await writeSkill(agentDir, skillId, [
+					{
+						id: scenario,
+						role: `${skillId} routing guidance mentions ms-swift and ${skillId}.`,
+						selection_guidance: `Choose \`${skillId}\` for ${skillId} workflows; compare ms-swift when the task is training.`,
+					},
+				]);
+			}
+
+			const fullResult = await runUpdater(agentDir, ["--template-dir", templateDir]);
+			expect(fullResult.code, fullResult.stderr).toBe(0);
+			const liveScenarioPage = path.join(
+				agentDir,
+				"skills",
+				"repo-skills-router",
+				"references",
+				"scenarios",
+				`${scenario}.md`,
+			);
+			expect(await readFile(liveScenarioPage, "utf-8")).toContain("ms-swift");
+
+			const outputRouterDir = path.join(tempRoot, "filtered-router");
+			const filteredResult = await runUpdater(agentDir, [
+				"--template-dir",
+				templateDir,
+				"--include-skill",
+				"vllm,sglang",
+				"--output-router-dir",
+				outputRouterDir,
+			]);
+			expect(filteredResult.code, filteredResult.stderr).toBe(0);
+			expect(filteredResult.stdout).toContain("for vllm, sglang: 2 skills across 1 scenarios");
+
+			const filteredFiles = [
+				path.join(outputRouterDir, "SKILL.md"),
+				path.join(outputRouterDir, "references", "usage-scenarios.md"),
+				path.join(outputRouterDir, "references", "scenario-registry.json"),
+				path.join(outputRouterDir, "references", "scenarios", `${scenario}.md`),
+			];
+			for (const file of filteredFiles) {
+				const text = await readFile(file, "utf-8");
+				expect(text).toContain("vllm");
+				expect(text).toContain("sglang");
+				for (const excluded of ["ms-swift", "transformers", "peft", "axolotl", "bentoml"]) {
+					expect(text, `${file} leaked ${excluded}`).not.toContain(excluded);
+				}
+			}
+
+			const filteredRegistry = JSON.parse(await readFile(filteredFiles[2], "utf-8"));
+			expect(Object.keys(filteredRegistry.scenarios)).toEqual([scenario]);
+			expect(await readFile(liveScenarioPage, "utf-8")).toContain("### `ms-swift`");
+		} finally {
+			await rm(tempRoot, { recursive: true, force: true });
+		}
+	});
+
 	it("does not feed recovered scenario How To Choose back into every recovered skill", async () => {
 		const tempRoot = await mkdtemp(path.join(tmpdir(), "disco-router-"));
 		try {
@@ -703,8 +907,10 @@ describe("update_repo_skills_router.mjs", () => {
 			]);
 			expect((await runUpdater(agentDir)).code).toBe(0);
 
-			await rm(path.join(agentDir, "skills", "old-alpha", "references", "repo-routing-metadata.json"));
-			await rm(path.join(agentDir, "skills", "old-beta", "references", "repo-routing-metadata.json"));
+			await rm(
+				path.join(agentDir, "skills", "repo-skills", "old-alpha", "references", "repo-routing-metadata.json"),
+			);
+			await rm(path.join(agentDir, "skills", "repo-skills", "old-beta", "references", "repo-routing-metadata.json"));
 			await writeSkill(agentDir, "new-gamma", [
 				{
 					id: "shared-workflows",
@@ -722,9 +928,9 @@ describe("update_repo_skills_router.mjs", () => {
 				path.join(agentDir, "skills", "repo-skills-router", "references", "scenarios", "shared-workflows.md"),
 				"utf-8",
 			);
-			expect((page.match(/Choose alpha for alpha-owned task shapes\./g) ?? [])).toHaveLength(1);
-			expect((page.match(/Choose beta for beta-owned task shapes\./g) ?? [])).toHaveLength(1);
-			expect((page.match(/Choose gamma for gamma-owned task shapes\./g) ?? [])).toHaveLength(1);
+			expect(page.match(/Choose alpha for alpha-owned task shapes\./g) ?? []).toHaveLength(1);
+			expect(page.match(/Choose beta for beta-owned task shapes\./g) ?? []).toHaveLength(1);
+			expect(page.match(/Choose gamma for gamma-owned task shapes\./g) ?? []).toHaveLength(1);
 		} finally {
 			await rm(tempRoot, { recursive: true, force: true });
 		}
@@ -734,15 +940,17 @@ describe("update_repo_skills_router.mjs", () => {
 		const tempRoot = await mkdtemp(path.join(tmpdir(), "disco-router-"));
 		try {
 			const agentDir = path.join(tempRoot, "agent");
-			const skillDir = path.join(agentDir, "skills", "unrouted-skill");
+			const skillDir = path.join(agentDir, "skills", "repo-skills", "unrouted-skill");
 			await mkdir(skillDir, { recursive: true });
 			await writeFile(
 				path.join(skillDir, "SKILL.md"),
 				[
 					"---",
 					"name: unrouted-skill",
-					"description: \"Missing routing metadata.\"",
+					'description: "Missing routing metadata."',
 					"disable-model-invocation: true",
+					"metadata:",
+					"  disco-role: operating",
 					"---",
 					"",
 					"# Unrouted",
@@ -762,14 +970,16 @@ describe("update_repo_skills_router.mjs", () => {
 		const tempRoot = await mkdtemp(path.join(tmpdir(), "disco-router-"));
 		try {
 			const agentDir = path.join(tempRoot, "agent");
-			const skillDir = path.join(agentDir, "skills", "visible-skill");
+			const skillDir = path.join(agentDir, "skills", "repo-skills", "visible-skill");
 			await mkdir(path.join(skillDir, "references"), { recursive: true });
 			await writeFile(
 				path.join(skillDir, "SKILL.md"),
 				[
 					"---",
 					"name: visible-skill",
-					"description: \"Visible repo skill should fail router preflight.\"",
+					'description: "Visible repo skill should fail router preflight."',
+					"metadata:",
+					"  disco-role: operating",
 					"---",
 					"",
 					"# Visible Skill",
@@ -796,7 +1006,7 @@ describe("update_repo_skills_router.mjs", () => {
 		}
 	});
 
-	it("fails validation when the existing router is hidden from model invocation", async () => {
+	it("preserves a live router that is hidden from model invocation", async () => {
 		const tempRoot = await mkdtemp(path.join(tmpdir(), "disco-router-"));
 		try {
 			const agentDir = path.join(tempRoot, "agent");
@@ -815,8 +1025,10 @@ describe("update_repo_skills_router.mjs", () => {
 				[
 					"---",
 					"name: repo-skills-router",
-					"description: \"Router should stay visible.\"",
+					'description: "Router should stay visible."',
 					"disable-model-invocation: true",
+					"metadata:",
+					"  disco-role: operating",
 					"---",
 					"",
 					"# Repo Skills Router",
@@ -825,8 +1037,55 @@ describe("update_repo_skills_router.mjs", () => {
 			);
 
 			const result = await runUpdater(agentDir);
-			expect(result.code).toBe(2);
-			expect(result.stderr).toContain("must stay model-visible");
+			expect(result.code).toBe(0);
+			const root = await readFile(path.join(routerDir, "SKILL.md"), "utf8");
+			expect(root).toContain("disable-model-invocation: true");
+
+			const exportedRouter = path.join(tempRoot, "exported-router");
+			const exported = await runUpdater(agentDir, ["--output-router-dir", exportedRouter]);
+			expect(exported.code, exported.stderr).toBe(0);
+			expect(await readFile(path.join(exportedRouter, "SKILL.md"), "utf8")).not.toContain(
+				"disable-model-invocation",
+			);
+		} finally {
+			await rm(tempRoot, { recursive: true, force: true });
+		}
+	});
+
+	it("can explicitly enable a hidden live router", async () => {
+		const tempRoot = await mkdtemp(path.join(tmpdir(), "disco-router-"));
+		try {
+			const agentDir = path.join(tempRoot, "agent");
+			await writeSkill(agentDir, "alpha-skill", [
+				{
+					id: "alpha-workflows",
+					title: "Alpha Workflows",
+					when_to_read: "Alpha tasks.",
+					role: "Handles alpha tasks.",
+				},
+			]);
+			const routerDir = path.join(agentDir, "skills", "repo-skills-router");
+			await mkdir(routerDir, { recursive: true });
+			await writeFile(
+				path.join(routerDir, "SKILL.md"),
+				[
+					"---",
+					"name: repo-skills-router",
+					'description: "Router can be enabled explicitly."',
+					"disable-model-invocation: true",
+					"metadata:",
+					"  disco-role: operating",
+					"---",
+					"",
+					"# Repo Skills Router",
+				].join("\n"),
+				"utf8",
+			);
+
+			const result = await runUpdater(agentDir, ["--router-visibility", "enabled"]);
+			expect(result.code).toBe(0);
+			const root = await readFile(path.join(routerDir, "SKILL.md"), "utf8");
+			expect(root).not.toContain("disable-model-invocation");
 		} finally {
 			await rm(tempRoot, { recursive: true, force: true });
 		}
@@ -883,8 +1142,8 @@ describe("update_repo_skills_router.mjs", () => {
 				path.join(agentDir, "skills", "repo-skills-router", "references", "scenarios", "shared-workflows.md"),
 				"utf-8",
 			);
-			expect((page.match(/### `alpha-skill`/g) ?? [])).toHaveLength(1);
-			expect((page.match(/### `beta-skill`/g) ?? [])).toHaveLength(1);
+			expect(page.match(/### `alpha-skill`/g) ?? []).toHaveLength(1);
+			expect(page.match(/### `beta-skill`/g) ?? []).toHaveLength(1);
 		} finally {
 			await rm(tempRoot, { recursive: true, force: true });
 		}
@@ -905,6 +1164,54 @@ describe("update_repo_skills_router.mjs", () => {
 			const result = await runUpdater(agentDir, ["--already-locked"]);
 			expect(result.code).toBe(2);
 			expect(result.stderr).toContain("--already-locked requires DISCO_IMPORT_LOCK_PATH");
+		} finally {
+			await rm(tempRoot, { recursive: true, force: true });
+		}
+	});
+
+	it("updates a repository or staging library directly through --library-root", async () => {
+		const tempRoot = await mkdtemp(path.join(tmpdir(), "disco-router-"));
+		try {
+			const agentDir = path.join(tempRoot, "agent");
+			const libraryRoot = path.join(agentDir, "skills");
+			await writeSkill(agentDir, "alpha-skill", [
+				{
+					id: "alpha-workflows",
+					title: "Alpha Workflows",
+					when_to_read: "Alpha tasks.",
+					role: "Handles alpha tasks.",
+				},
+			]);
+
+			const result = await runLibraryUpdater(libraryRoot);
+			expect(result.code, result.stderr).toBe(0);
+			expect(result.stdout).toContain("1 skills across 1 scenarios");
+			expect(existsSync(path.join(libraryRoot, "repo-skills-router", "SKILL.md"))).toBe(true);
+		} finally {
+			await rm(tempRoot, { recursive: true, force: true });
+		}
+	});
+
+	it("fails closed when a meta skill is placed inside repo-skills", async () => {
+		const tempRoot = await mkdtemp(path.join(tmpdir(), "disco-router-"));
+		try {
+			const agentDir = path.join(tempRoot, "agent");
+			await writeSkill(agentDir, "misplaced-meta", [
+				{
+					id: "creator-workflows",
+					role: "Constructs operating skills.",
+				},
+			]);
+			const skillFile = path.join(agentDir, "skills", "repo-skills", "misplaced-meta", "SKILL.md");
+			await writeFile(
+				skillFile,
+				(await readFile(skillFile, "utf-8")).replace("disco-role: operating", "disco-role: meta"),
+				"utf-8",
+			);
+
+			const result = await runUpdater(agentDir);
+			expect(result.code).toBe(2);
+			expect(result.stderr).toContain("meta skill is not allowed in the repo-skills collection");
 		} finally {
 			await rm(tempRoot, { recursive: true, force: true });
 		}

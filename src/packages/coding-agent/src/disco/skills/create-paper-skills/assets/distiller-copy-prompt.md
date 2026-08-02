@@ -1,9 +1,9 @@
 # Distiller Copy Prompt
 
-Copy this prompt into DisCo, Codex, or Claude Code when starting one or more Paper2Skills Distiller runs. Fill a config by copying `create-paper-skills/assets/distiller-run-config-template.toml` from the installed Distiller skills directory.
+Copy this prompt into DisCo, Codex, or Claude Code when starting one or more Paper2Skills Distiller runs that generate and verify skills for paper replication. Fill a config by copying `create-paper-skills/assets/distiller-run-config-template.toml` from the installed Distiller skills directory.
 
 ```text
-Use Distiller to process the runs in this config.
+Use Distiller to generate and verify paper-replication skills for each run in this config.
 
 config_path: /path/to/distiller_run_config.toml
 ```

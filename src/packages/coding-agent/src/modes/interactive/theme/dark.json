@@ -1,5 +1,5 @@
 {
-	"$schema": "./theme-schema.json",
+	"$schema": "https://raw.githubusercontent.com/VectorSpaceLab/Auto-ML-Skills/main/src/packages/coding-agent/src/modes/interactive/theme/theme-schema.json",
 	"name": "dark",
 	"vars": {
 		"cyan": "#00d7ff",
@@ -75,6 +75,7 @@
 		"thinkingMedium": "#81a2be",
 		"thinkingHigh": "#b294bb",
 		"thinkingXhigh": "#d183e8",
+		"thinkingMax": "#ff5fff",
 
 		"bashMode": "green"
 	},

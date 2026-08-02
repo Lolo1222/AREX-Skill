@@ -4,7 +4,7 @@ import type { LoadExtensionsResult, ProjectTrustContext } from "./extensions/typ
 import type { DefaultProjectTrust } from "./settings-manager.ts";
 import {
 	getProjectTrustOptions,
-	hasProjectTrustInputs,
+	hasTrustRequiringProjectResources,
 	type ProjectTrustOption,
 	type ProjectTrustStore,
 } from "./trust-manager.ts";
@@ -47,7 +47,7 @@ export async function resolveProjectTrusted(options: ResolveProjectTrustedOption
 	if (options.trustOverride !== undefined) {
 		return options.trustOverride;
 	}
-	if (!hasProjectTrustInputs(options.cwd)) {
+	if (!hasTrustRequiringProjectResources(options.cwd)) {
 		return true;
 	}
 

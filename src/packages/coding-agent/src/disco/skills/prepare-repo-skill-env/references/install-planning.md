@@ -2,250 +2,322 @@
 
 ## Purpose
 
-Read this reference before creating the conda environment or installing the repo package. The goal is to make the install plan match the repository's real package metadata, Python support, dependencies, backend expectations, and the confirmed extraction scope from `create-repo-skill` instead of guessing from the repo directory name or installing broad dependency sets.
+Read this reference before creating an environment or installing the repo
+package. The install plan must follow the repository's package metadata, Python
+support, backend constraints, and the confirmed extraction scope from
+`create-repo-skill`. Environment preparation is an adaptive agent task: inspect
+the evidence, choose concrete commands, execute them one phase at a time, and
+adjust from visible results.
 
-When this skill is called from `create-repo-skill`, repository structure
-analysis should already have identified the directories and workflows that will
-be used for skill extraction. Treat that include/exclude map as part of the
-install input. The environment should support live inspection of the selected
-repo areas, not every optional capability in the repository.
+Do not replace that reasoning with a bundled installer. In particular, keep
+environment creation, backend foundations, requirements/extras, repo install,
+and verification as separate terminal commands. This makes timeouts, resolver
+failures, wheel mismatches, and partial state observable.
 
-## Repo Evidence to Inspect
+## Repository Evidence
 
-Start with package metadata:
+Inspect package metadata first:
 
-- `pyproject.toml`: `project.name`, `requires-python`, dependencies, optional dependencies, console scripts, build backend.
-- `setup.cfg`: metadata name, `python_requires`, `install_requires`, entry points.
-- `setup.py`: fallback source for package name and custom build behavior.
-- `requirements*.txt`, lockfiles, `environment.yml`, `tox.ini`, `noxfile.py`, and CI workflow install steps.
-- README/docs install sections, especially extras such as `[dev]`, `[cuda]`, `[torch]`, `[all]`, `[serve]`, or backend-specific instructions.
+- `pyproject.toml`: `project.name`, `requires-python`, dependencies, optional
+  dependencies, console scripts, and build backend.
+- `setup.cfg`: metadata name, `python_requires`, `install_requires`, and entry
+  points.
+- `setup.py`: fallback metadata and custom build behavior.
+- `requirements*.txt`, lockfiles, `environment.yml`, `tox.ini`, `noxfile.py`,
+  and CI install commands.
+- README/docs install instructions, especially backend or extras variants such
+  as `[cuda]`, `[serve]`, `[train]`, `[dev]`, and `[all]`.
 
-Then identify the Python import roots:
+Identify import roots independently of the distribution name:
 
-- `src/<module>/`
-- top-level `<module>/` directories with `__init__.py`
-- namespace packages documented by the repo
-- top-level modules such as `<module>.py`
-- console entry points and `__main__.py`
+- `src/<module>/` and top-level packages with `__init__.py`.
+- Namespace packages and top-level `<module>.py` files.
+- Console entry points and `__main__.py`.
 
-Do not assume the distribution name and import name are identical. Examples: distribution `scikit-learn` imports as `sklearn`; distribution names often use hyphens while imports use underscores.
+Do not assume the repo, distribution, and import names match. For example,
+`scikit-learn` imports as `sklearn`.
 
-## Extraction-Scope Install Planning
+## Extraction-Scope Mapping
 
-When the caller provides confirmed included and excluded directories, map
-dependencies to that scope before installing:
+Map dependencies to the confirmed scope before installing:
 
-- Start from the package metadata needed for the main distribution and import
-  roots that correspond to included source directories.
-- Add extras only when an included workflow, included directory, or explicit
-  user requirement needs that extra. Examples: use `[serve]` only when serving
-  APIs are in scope; use `[cuda]` only when GPU behavior is in scope and the
-  hardware plan supports it.
-- Add requirements files only when they are documented as runtime requirements
-  for included workflows. Skip dev, lint, docs, benchmark, and test
-  requirements unless those workflows are explicitly in scope or needed for a
-  safe smoke check.
-- Add backend foundations such as torch, JAX, TensorFlow, CUDA, ROCm, or
-  compiler toolchains only when selected repo areas import or exercise them.
-- Skip packages used only by excluded directories, notebooks, examples,
-  research experiments, integrations, or optional services that are not part of
-  the skill extraction request.
+- Start with the distribution and import roots corresponding to included
+  source directories.
+- Add an extra only when an included workflow, included directory, or explicit
+  user requirement needs it.
+- Add a requirements file only when it is the documented runtime path for an
+  included workflow. Skip lint, docs, benchmark, and broad test requirements
+  unless those workflows are selected or a focused smoke test requires them.
+- Add torch, JAX, TensorFlow, CUDA/ROCm packages, compilers, or toolkits only
+  when selected repo areas import or exercise them.
+- Skip dependencies used only by excluded experiments, notebooks,
+  integrations, services, benchmarks, or training paths.
 
-Prefer the narrowest install that still lets import checks, signature
-inspection, CLI help, and safe smoke tests pass for the selected areas. If two
-install variants both satisfy the confirmed scope, choose the lower-risk one
-with fewer heavyweight or hardware-specific packages.
-
-Record the scope decision in the private setup report or handoff notes:
+Record the reasoning before installation:
 
 ```text
 Included scope: src/package, docs/inference.md, examples/predict.py
 Excluded scope: training/, benchmarks/, docs/serving.md
-Install choices: base package + [inference], skipped [train], [serve], requirements-dev.txt
-Reason: only inference APIs and CLI are selected for skill extraction
+Install: base package + [inference]
+Skip: [train], [serve], [all], requirements-dev.txt
+Reason: only inference APIs and CLI are selected
 ```
+
+If a broader option is large, slow, hardware-specific, or likely to destabilize
+an existing environment, ask before expanding an ambiguous scope.
+
+## Backend Verification Plan
+
+Consume the backend-classified native candidate map from `create-repo-skill`.
+For every candidate owned by an included workflow, preserve:
+
+- Backend requirement and criticality.
+- Whether CPU is a full, partial, or nonexistent substitute.
+- Required extras, requirements files, framework wheels, toolkit/compiler, and
+  package variant.
+- Hardware/driver/runtime prerequisites.
+- The small preparation smoke check and the native case deferred until final
+  verification.
+
+Choose the minimum environment set that satisfies all `required` candidates.
+This is not a CPU-first rule:
+
+- If CUDA/ROCm/MPS/vendor execution is required and CPU substitution is
+  `partial` or `none`, select the compatible backend packages and environment.
+- If one GPU-capable environment also covers CPU checks, use that single
+  prefix.
+- If required variants conflict, use separate explicit prefixes instead of
+  repeatedly replacing packages in one environment.
+- If a CPU alternative fully verifies the same selected behavior, record the
+  evidence and use that alternative.
+- If required hardware or packages are unavailable, return a blocking verdict.
+  A CPU import does not make the backend plan complete. Use a `partial` handoff
+  only after the user accepts the exact limitation; otherwise fail or narrow
+  the extraction scope.
+- Optional backend candidates may remain uninstalled when unavailable or
+  outside the selected scope, but report them as unverified and do not claim
+  backend coverage.
+
+Do not run native repo tests/examples during environment preparation. Install
+what their final execution needs and run only a minimal framework/package
+backend smoke. Preserve the native candidate ids for `verify-repo-skill`.
 
 ## Python Version Selection
 
-Use repo metadata first:
+Use evidence in this order:
 
-- Honor `requires-python` when present.
-- Prefer the version used in CI or documented install examples.
-- If unconstrained, use Python 3.11 as the default stable choice for modern ML/Python packages.
-- Avoid Python 3.13 unless the repo and all compiled dependencies explicitly support it.
-- Use Python 3.10 or 3.11 for older ML repos with `torch`, `tensorflow`, `tokenizers`, `deepspeed`, `flash-attn`, `xformers`, or similar compiled packages.
+1. Honor `requires-python` and explicit package documentation.
+2. Prefer a version exercised by current CI and supported by required wheels.
+3. If unconstrained, use Python 3.11 as a stable default.
+4. Avoid Python 3.13 unless the repo and compiled dependencies support it.
+5. Older ML repos with torch, TensorFlow, tokenizers, deepspeed, flash-attn,
+   xformers, or similar compiled packages often need Python 3.10 or 3.11.
 
-If the repo's declared Python range conflicts with the available package/backend wheels, report the conflict and choose the safest compatible version only when evidence supports it.
+If repo metadata and available backend wheels conflict, report the conflict.
+Choose another version only when package/backend evidence supports it.
 
-## Conda Prefix Policy
+## Manager Selection
 
-Use an isolated prefix:
+Probe installed tools with separate commands:
 
 ```bash
-conda create -y -p /path/to/prefix python=3.11 pip
+command -v conda
+command -v micromamba
+command -v uv
+command -v python3.11
+command -v python3
+command -v python
+```
+
+Choose in this order unless the user or repo requires otherwise:
+
+1. Existing Conda for compiled or Conda-oriented projects.
+2. Existing micromamba for the same prefix-based workflow.
+3. Compatible host Python plus `venv` for ordinary Python packages.
+4. Existing `uv` when it is the most suitable available manager.
+
+Conda and micromamba do not require a host Python to create the target prefix.
+If no suitable manager or Python exists, a bundled bootstrap script is not a
+fallback. Identify a platform-appropriate runtime/manager installation, explain
+its host-level effects, and obtain authorization unless already granted. Use
+explicit official package-manager or installer commands, inspect download
+sources and checksums where applicable, and never pipe an unreviewed download
+directly into a shell.
+
+## Prefix and Existing-Environment Policy
+
+Always use an isolated absolute prefix. For Conda:
+
+```bash
+conda create --yes --prefix "/absolute/path/to/prefix" "python=3.11" pip
+```
+
+For venv:
+
+```bash
+python3.11 -m venv "/absolute/path/to/prefix"
 ```
 
 Rules:
 
-- Do not use conda `base`.
-- Do not install the repo package into the agent's current Python unless the user explicitly asks for that.
-- If the prefix already exists, inspect it before reuse: Python version, `pip check`, existing conflicting packages, and whether the target repo package is already installed.
-- Do not delete an existing prefix unless the user explicitly authorized recreation. If cleanup is needed but not authorized, report what blocks reuse and ask or choose a different prefix only if the user allowed that.
-- If the prefix is a user-provided existing environment, distinguish
-  read-only verification from mutation. Running imports, `pip check`, metadata
-  inspection, or CLI `--help` checks is verification. Reinstalling the repo,
-  upgrading dependencies, adding extras, removing packages, or repairing
-  conflicts is mutation and can break the user's environment. Ask before
-  mutating unless the user already authorized it. If they decline, use a new
-  private prefix when available.
-- Prefer running `/path/to/prefix/bin/python -m pip ...` instead of relying on shell activation. Direct Python paths are less fragile for agents.
+- Never use or modify Conda `base` for this task. Resolve `conda info --base`
+  and compare canonical paths before any install into an existing prefix.
+- Never install into the Python running DisCo unless explicitly requested.
+- If the prefix exists, inspect its manager metadata, Python/version, installed
+  package state, and `pip check` before deciding whether reuse is safe.
+- Do not delete/recreate an existing prefix without authorization.
+- Imports, version queries, metadata inspection, `pip check`, and safe CLI
+  `--help` checks are read-only. Installs, upgrades, downgrades, uninstalls, and
+  repairs are mutations.
+- Ask before a potentially breaking mutation of a user-provided environment
+  unless it was already authorized. If declined, use a new private prefix when
+  allowed.
+- Do not rely on activation. Use `conda run --prefix`, `micromamba run
+  --prefix`, or the venv/uv Python's absolute path.
+
+For venv or uv, the Unix environment Python is
+`/absolute/path/to/prefix/bin/python`; on Windows it is
+`C:\absolute\path\to\prefix\Scripts\python.exe`.
+
+## Direct Command Templates
+
+Substitute concrete values before running these examples. Do not execute
+placeholder paths.
+
+### Conda
+
+```bash
+conda create --yes --prefix "/absolute/path/to/prefix" "python=3.11" pip
+conda run --prefix "/absolute/path/to/prefix" python -c "import sys; print(sys.executable); print(sys.version)"
+conda run --prefix "/absolute/path/to/prefix" python -m pip install -e "/absolute/path/to/repo"
+```
+
+### Micromamba
+
+```bash
+micromamba create --yes --prefix "/absolute/path/to/prefix" "python=3.11" pip
+micromamba run --prefix "/absolute/path/to/prefix" python -c "import sys; print(sys.executable); print(sys.version)"
+micromamba run --prefix "/absolute/path/to/prefix" python -m pip install -e "/absolute/path/to/repo"
+```
+
+### venv
+
+```bash
+python3.11 -m venv "/absolute/path/to/prefix"
+"/absolute/path/to/prefix/bin/python" -c "import sys; print(sys.executable); print(sys.version)"
+"/absolute/path/to/prefix/bin/python" -m pip install -e "/absolute/path/to/repo"
+```
+
+### uv
+
+```bash
+uv venv --seed --python 3.11 "/absolute/path/to/prefix"
+"/absolute/path/to/prefix/bin/python" -c "import sys; print(sys.executable); print(sys.version)"
+"/absolute/path/to/prefix/bin/python" -m pip install -e "/absolute/path/to/repo"
+```
+
+An installed `uv` may download a managed Python. Make that possibility explicit
+and apply the runtime-installation authorization rule.
 
 ## Install Order
 
-Use this order unless repo docs clearly require otherwise:
+Use this order unless repo documentation requires another:
 
-1. Create or reuse the conda prefix.
-2. Upgrade packaging basics inside that prefix:
+1. Create or inspect the prefix.
+2. Install or adjust packaging tools only when build evidence requires it.
+3. Install required backend foundations from the backend verification plan,
+   such as torch/JAX/TensorFlow and compatible CUDA/ROCm runtime or compiler
+   packages, in the prefix assigned to that backend.
+4. Install scope-required requirements files or extras.
+5. Install the local repository package.
+6. Install/build extension packages last when they must compile against an
+   already-installed backend.
+7. Run every verification gate.
 
-   ```bash
-   /path/to/prefix/bin/python -m pip install -U pip setuptools wheel
-   ```
-
-3. Install heavy backend foundations first when required: torch/JAX/TensorFlow, CUDA/ROCm-specific wheels, or conda-provided toolkit/compiler packages.
-4. Install normal Python dependencies from package metadata, requirements files, or documented extras.
-5. Install the local repo package.
-6. Install or build CUDA extension packages last, with build isolation disabled when they must compile against the already-installed torch.
-7. Run verification gates.
-
-For local package inspection, prefer editable install:
+Prefer editable installation for local inspection:
 
 ```bash
-/path/to/prefix/bin/python -m pip install -e /path/to/repo
+"/absolute/path/to/prefix/bin/python" -m pip install -e "/absolute/path/to/repo"
 ```
 
-Use normal install when editable mode is unsupported or changes import behavior:
+Use a normal install when editable mode is unsupported or changes behavior:
 
 ```bash
-/path/to/prefix/bin/python -m pip install /path/to/repo
+"/absolute/path/to/prefix/bin/python" -m pip install "/absolute/path/to/repo"
 ```
 
-Install extras only when they are needed for the repo capability being inspected
-and the confirmed extraction scope:
+Install only selected extras:
 
 ```bash
-/path/to/prefix/bin/python -m pip install -e "/path/to/repo[cuda,serve]"
+"/absolute/path/to/prefix/bin/python" -m pip install -e "/absolute/path/to/repo[inference,serve]"
 ```
 
-## Slow Install and Network Acceleration
+Run each material phase separately with a finite terminal timeout. Record the
+command and outcome before starting the next phase. Avoid large chained shell
+commands whose failure location is ambiguous.
 
-Do not wait passively while installs crawl. Treat any of these as a signal to
-pause and choose a faster route:
+## Requirements and Compiled Packages
 
-- Conda solving, package metadata fetching, or pip downloads show no meaningful
-  progress for several minutes.
-- Pip repeatedly logs retry, timeout, connection reset, TLS, proxy, or
-  read-timeout messages.
-- A small package or metadata step is moving at only a few KB/s.
-- Large backend wheels are downloading from a distant index and the estimated
-  time is unreasonable for the task.
+Do not blindly install every requirements file:
 
-When this happens:
+- `requirements.txt` is often runtime, but verify with docs/metadata.
+- `requirements-dev.txt` and `dev-requirements.txt` are usually unnecessary.
+- `requirements-cuda.txt` or `requirements-gpu.txt` applies only to the selected
+  and supported backend.
+- `environment.yml` may be authoritative for older Conda-heavy projects;
+  inspect it before translating its dependencies to prefix commands.
 
-1. Stop or interrupt the current install attempt cleanly. Keep the command,
-   elapsed time, and relevant output for the private report.
-2. Check whether the slowness is network/index related rather than compilation:
-   metadata fetches, wheel downloads, and retry logs point to network; active
-   compiler output points to build time.
-3. Ask the user whether they have a VPN/proxy command for this machine if
-   network access appears slow, blocked, or region-limited. Do not invent,
-   install, or start VPN software yourself.
-4. If the user provides a VPN/proxy command, confirm it is safe to run for this
-   task, run it, and retry the package install.
-5. If no VPN/proxy is available or it does not help, try a faster temporary
-   mirror or index that matches the package source and backend requirements.
-6. If a mirror breaks dependency resolution, serves stale packages, lacks
-   backend wheels, or changes CUDA/torch wheel availability, revert to the
-   upstream index or a package-specific official wheel index.
-7. Record the selected route in the private setup report and final environment
-   handoff. Keep private proxy commands, tokens, and local network details out
-   of generated public skill content.
+For torch CUDA extensions such as flash-attn, xformers, apex, or custom ops:
 
-Prefer temporary command-level mirror settings over mutating global user config:
+- Install and verify torch first.
+- Match the torch ABI, CUDA tag, driver, Python, architecture, and GPU compute
+  capability.
+- Use `--no-build-isolation` when the extension must compile against installed
+  torch:
+
+  ```bash
+  MAX_JOBS=4 "/absolute/path/to/prefix/bin/python" -m pip install flash-attn --no-build-isolation -v
+  ```
+
+- Keep `MAX_JOBS` conservative on memory-limited hosts.
+- If source compilation is required, verify toolkit/compiler availability
+  before launching a long build.
+
+## Slow Installs and Network Routing
+
+Interrupt and diagnose when metadata resolution or downloads make no meaningful
+progress, repeatedly retry, or show unreasonable transfer rates. Preserve the
+failed command, elapsed time, and useful output.
+
+Distinguish network delay from active compilation. For network problems, use a
+user-provided proxy/VPN only as local execution context. Otherwise consider a
+temporary trusted mirror or the package's official backend-specific index.
+Prefer per-command settings over modifying global pip or Conda configuration:
 
 ```bash
 PIP_INDEX_URL=https://pypi.org/simple \
 PIP_EXTRA_INDEX_URL=https://download.pytorch.org/whl/cu128 \
-/path/to/prefix/bin/python -m pip install <package>
+"/absolute/path/to/prefix/bin/python" -m pip install <package>
 ```
-
-For a regional PyPI mirror, use a temporary `-i` only when it is appropriate for
-the package:
 
 ```bash
-/path/to/prefix/bin/python -m pip install -i <trusted-pypi-mirror-simple-url> <package>
+conda create --yes --prefix "/absolute/path/to/prefix" -c conda-forge "python=3.11" pip
 ```
 
-For conda, prefer command-level channels or repo-documented channels before
-editing `.condarc`:
-
-```bash
-conda create -y -p /path/to/prefix -c conda-forge python=3.11 pip
-```
-
-Torch, JAX, TensorFlow, CUDA, ROCm, and vendor accelerator packages often need
-official or backend-specific indexes. Do not replace those indexes with a
-generic mirror unless the mirror is known to host the exact required wheels.
-
-## Requirements and Extras
-
-Do not blindly install every requirements file. Common meanings differ:
-
-- `requirements.txt`: often runtime dependencies, but verify with docs.
-- `requirements-dev.txt`, `dev-requirements.txt`: usually test/lint/dev tools; skip unless needed for import or smoke tests.
-- `requirements-cuda.txt`, `requirements-gpu.txt`: backend-specific; use only if hardware supports it.
-- `environment.yml`: may be the most reliable path for old conda-heavy projects; inspect before translating to prefix commands.
-
-If metadata dependencies and requirements conflict, prefer the documented install path for the current backend and record the choice.
-
-When multiple optional dependency groups are available, build a small mapping
-before running pip:
-
-```text
-Group or file | Needed? | Evidence | Decision
-[train] | no | training/ excluded | skip
-[serve] | yes | docs/serving.md included by user | install --extra serve
-requirements-dev.txt | no | lint/test tools only | skip
-requirements-cuda.txt | no | CPU requested | skip
-```
-
-If the mapping is ambiguous and the choice would add large, slow, or
-environment-breaking dependencies, ask for confirmation before installing the
-broader option.
-
-## Compiled Packages
-
-Packages such as `flash-attn`, `xformers`, `apex`, `bitsandbytes`, `deepspeed`, custom CUDA extensions, `tokenizers`, `sentencepiece`, `llama-cpp-python`, and `faiss` are sensitive to Python, platform, compiler, CUDA/ROCm, and torch versions.
-
-For torch CUDA extension packages:
-
-- Install and verify torch first.
-- Match the torch CUDA wheel tag to the driver and GPU architecture.
-- Use `--no-build-isolation` for packages that compile against torch:
-
-  ```bash
-  MAX_JOBS=4 /path/to/prefix/bin/python -m pip install flash-attn --no-build-isolation -v
-  ```
-
-- Set `MAX_JOBS` conservatively on memory-limited hosts. CUDA compilation can consume several GB of RAM per job.
-- If `nvcc` is unavailable and source compilation is required, either install a matching toolkit/compiler in conda or choose a fallback package path.
+Generic mirrors may not carry CUDA/ROCm/vendor wheels. Revert to official
+indexes when a mirror changes resolution or lacks the required artifact. Never
+put local proxy commands, credentials, tokens, or private network details into
+generated skill content.
 
 ## Reproducibility Snapshot
 
-After verification succeeds, capture a package snapshot for the private setup report:
+After verification, capture private environment evidence with direct commands:
 
 ```bash
-/path/to/prefix/bin/python -m pip freeze
-/path/to/prefix/bin/python -m pip check
+"/absolute/path/to/prefix/bin/python" -m pip freeze
+"/absolute/path/to/prefix/bin/python" -m pip check
 ```
 
-The snapshot helps debug future failures. Do not copy local prefix paths into the public generated repo skill.
+For Conda, also capture `conda list --prefix "/absolute/path/to/prefix"`. Store
+summaries or artifact paths in `repo_env_report.json`; do not copy machine paths
+or the full private environment snapshot into the public generated repo skill.

@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Run a DisCo import/update command under the global repo-skill import lock.
+ * Run a DisCo import/update command under the shared skill import lock.
  *
  * The lock serializes writes to DisCo's managed user skill library and its
  * live repo-skills-router across concurrent agent sessions. It intentionally
@@ -63,7 +63,7 @@ function parseArgs(argv) {
 function printHelp() {
 	console.log(`Usage: node with_import_lock.mjs [--agent-dir DIR] [--timeout SECONDS] [--stale-after SECONDS] -- COMMAND [ARGS...]
 
-Run COMMAND while holding the DisCo repo-skill import lock.`);
+Run COMMAND while holding the DisCo skill import lock.`);
 }
 
 function ownerPayload() {

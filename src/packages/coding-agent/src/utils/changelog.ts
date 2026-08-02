@@ -9,7 +9,7 @@ export interface ChangelogEntry {
 }
 
 const GITHUB_REPO = "VectorSpaceLab/Auto-ML-Skills";
-const CHANGELOG_LINK_BASE_PATH = "";
+const CHANGELOG_LINK_BASE_PATH = "src";
 const URL_SCHEME_RE = /^[a-z][a-z0-9+.-]*:/i;
 const INLINE_MARKDOWN_LINK_RE = /(!?\[[^\]\n]+\]\()([^\s)]+)((?:\s+[^)]*)?\))/g;
 

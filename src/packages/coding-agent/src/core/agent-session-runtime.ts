@@ -1,5 +1,6 @@
 import { copyFileSync, existsSync, mkdirSync } from "node:fs";
 import { basename, join, resolve } from "node:path";
+import type { DiscoAgentMode } from "../disco/modes/types.ts";
 import { resolvePath } from "../utils/paths.ts";
 import type { AgentSession } from "./agent-session.ts";
 import type { AgentSessionRuntimeDiagnostic, AgentSessionServices } from "./agent-session-services.ts";
@@ -165,6 +166,9 @@ export class AgentSessionRuntime {
 	}
 
 	private async teardownCurrent(reason: SessionShutdownEvent["reason"], targetSessionFile?: string): Promise<void> {
+		// Settle the active turn before replacing the session so aborted tool results
+		// and messages are persisted to the outgoing session.
+		await this.session.abort();
 		await emitSessionShutdownEvent(this.session.extensionRunner, {
 			type: "session_shutdown",
 			reason,
@@ -222,6 +226,7 @@ export class AgentSessionRuntime {
 
 	async newSession(options?: {
 		parentSession?: string;
+		discoMode?: DiscoAgentMode;
 		setup?: (sessionManager: SessionManager) => Promise<void>;
 		withSession?: (ctx: ReplacedSessionContext) => Promise<void>;
 	}): Promise<{ cancelled: boolean }> {
@@ -232,12 +237,10 @@ export class AgentSessionRuntime {
 
 		const previousSessionFile = this.session.sessionFile;
 		const sessionDir = this.session.sessionManager.getSessionDir();
+		const discoMode = options?.discoMode ?? this.session.sessionManager.getDiscoMode();
 		const sessionManager = this.session.sessionManager.isPersisted()
-			? SessionManager.create(this.cwd, sessionDir)
-			: SessionManager.inMemory(this.cwd);
-		if (options?.parentSession) {
-			sessionManager.newSession({ parentSession: options.parentSession });
-		}
+			? SessionManager.create(this.cwd, sessionDir, { parentSession: options?.parentSession, discoMode })
+			: SessionManager.inMemory(this.cwd, { parentSession: options?.parentSession, discoMode });
 
 		await this.teardownCurrent("new", sessionManager.getSessionFile());
 		this.apply(
@@ -291,8 +294,10 @@ export class AgentSessionRuntime {
 			}
 			const sessionDir = this.session.sessionManager.getSessionDir();
 			if (!targetLeafId) {
-				const sessionManager = SessionManager.create(this.cwd, sessionDir);
-				sessionManager.newSession({ parentSession: currentSessionFile });
+				const sessionManager = SessionManager.create(this.cwd, sessionDir, {
+					parentSession: currentSessionFile,
+					discoMode: this.session.sessionManager.getDiscoMode(),
+				});
 				await this.teardownCurrent("fork", sessionManager.getSessionFile());
 				this.apply(
 					await this.createRuntime({
@@ -306,6 +311,11 @@ export class AgentSessionRuntime {
 				return { cancelled: false, selectedText };
 			}
 
+			if (!existsSync(currentSessionFile)) {
+				throw new Error(
+					"This session has not been saved yet. Wait for the first assistant response before cloning or forking it.",
+				);
+			}
 			const sessionManager = SessionManager.open(currentSessionFile, sessionDir);
 			const forkedSessionPath = sessionManager.createBranchedSession(targetLeafId);
 			if (!forkedSessionPath) {
@@ -326,7 +336,10 @@ export class AgentSessionRuntime {
 
 		const sessionManager = this.session.sessionManager;
 		if (!targetLeafId) {
-			sessionManager.newSession({ parentSession: this.session.sessionFile });
+			sessionManager.newSession({
+				parentSession: this.session.sessionFile,
+				discoMode: sessionManager.getDiscoMode(),
+			});
 		} else {
 			sessionManager.createBranchedSession(targetLeafId);
 		}

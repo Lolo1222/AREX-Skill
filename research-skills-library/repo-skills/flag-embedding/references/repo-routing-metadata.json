@@ -1,0 +1,24 @@
+{
+  "skills": {
+    "flag-embedding": {
+      "scenarios": [
+        {
+          "id": "embedding-retrieval-rag-workflows",
+          "title": "Embedding Retrieval and RAG Workflows",
+          "when_to_read": "Embedding models, semantic or sparse search, reranking, retrieval training, corpus indexing, RAG pipelines, vector database clients, and retrieval evaluation.",
+          "role": "Guides FlagEmbedding and BGE workflows for embedding inference, reranking, retrieval evaluation, and fine-tuning data or launch commands.",
+          "read_when": "The task names FlagEmbedding, FlagOpen, BGE, BGE-M3, bge-reranker, FlagAutoModel, FlagAutoReranker, retrieval embeddings, sparse or ColBERT scoring, hard negatives, teacher scores, or FlagEmbedding evaluation modules.",
+          "best_for": "Loading BGE embedders and rerankers, choosing model_class ids, preparing fine-tuning JSONL, building torchrun commands, creating custom retrieval evaluation data, and running FlagEmbedding benchmark modules.",
+          "avoid_when": "The task is only a generic vector database client, unrelated RAG framework, general Transformers model training without FlagEmbedding APIs, or source-code maintenance not involving package workflows.",
+          "useful_entry_points": [
+            "flag-embedding/SKILL.md",
+            "flag-embedding/sub-skills/inference/SKILL.md",
+            "flag-embedding/sub-skills/fine-tuning/SKILL.md",
+            "flag-embedding/sub-skills/evaluation/SKILL.md"
+          ],
+          "selection_guidance": "Choose flag-embedding when the retrieval task depends on FlagEmbedding/BGE package APIs, BGE-M3 dense-sparse-ColBERT behavior, BGE rerankers, FlagEmbedding fine-tuning schemas, or its evaluation modules rather than a vector database or unrelated retrieval framework."
+        }
+      ]
+    }
+  }
+}

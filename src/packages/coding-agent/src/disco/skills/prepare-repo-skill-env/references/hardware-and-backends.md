@@ -13,7 +13,7 @@ Always gather:
 - Python version requested for the target prefix.
 - Available RAM and disk space if large source builds or GPU packages are expected.
 
-For NVIDIA:
+For NVIDIA, run the applicable terminal commands directly:
 
 ```bash
 nvidia-smi
@@ -70,18 +70,45 @@ Practical torch wheel guidance:
 
 ## When to Require GPU Verification
 
-Use `--hardware cuda` and a backend smoke test when:
+Select the CUDA install path and run a backend smoke test when:
 
 - The user explicitly requested a CUDA/GPU environment.
 - The repo package imports CUDA extensions at import time.
 - The repo's main APIs require torch CUDA, JAX CUDA, CuPy, TensorRT, vLLM, flash-attn, xformers, deepspeed ops, or similar GPU runtime.
 - The later skill needs to inspect GPU-specific APIs or CLI paths.
+- An included native test/example is classified with `Backend requirement:
+  cuda`, `Backend criticality: required`, and no full CPU substitute.
 
 Do not require CUDA just because the host has a GPU. For package inspection, CPU importability is often enough unless the repo is GPU-only or the user asked for GPU support.
 
+## Backend-Coverage Decisions
+
+Use both repo evidence and host compatibility:
+
+| Selected capability | Host verdict | Environment decision | Readiness consequence |
+| --- | --- | --- | --- |
+| Required CUDA/ROCm/MPS/vendor backend, no full CPU substitute | Compatible | Install the matching backend variant and pass a minimal device smoke | Eligible for `ok`; run the planned native case after skill integration |
+| Required backend, no full CPU substitute | Unavailable, incompatible, or unknown after probing | Do not silently use CPU | `failed`, or `partial` only after explicit user acceptance; never auto-import |
+| Optional backend | Unavailable or outside selected scope | Omit expensive backend packages and record the capability as unverified | CPU scope may remain `ok`, but do not claim backend verification |
+| Alternative backend with full CPU substitute | CPU path is evidence-backed | Prepare CPU and run the equivalent selected check | May be `ok`; record which alternative was verified |
+| Multiple required incompatible variants | Each host path is compatible | Use separate prefixes per variant | All required prefixes/smokes must pass for `ok` |
+
+A GPU-capable environment normally handles CPU checks too; do not create a
+second CPU prefix without a conflicting dependency variant or an independently
+selected CPU-fallback claim. Conversely, never install a CPU-only framework
+build and treat a successful import as CUDA/ROCm verification.
+
+If required hardware is unavailable, give the user three explicit choices:
+repair/use compatible hardware, narrow the extraction scope so the backend is
+no longer claimed, or accept partial drafting. Partial drafting preserves a
+blocking backend item for final verification and disables auto-import; it does
+not convert the missing runtime evidence into a pass.
+
 ## CUDA Verification Signals
 
-For torch-based repos, verify inside the target conda prefix:
+For torch-based repos, verify with the target environment's Python. The example
+below uses a Unix prefix path; use `conda run --prefix <prefix> python` or the
+platform-equivalent environment Python when appropriate:
 
 ```bash
 /path/to/prefix/bin/python - <<'PY'

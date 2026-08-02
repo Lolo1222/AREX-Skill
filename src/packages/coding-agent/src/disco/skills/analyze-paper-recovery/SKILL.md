@@ -1,6 +1,8 @@
 ---
 name: analyze-paper-recovery
 description: "Analyze the gap between a recovered paper result and the paper target, decide whether generated skills are acceptable, and produce actionable module-level feedback for another distillation cycle."
+metadata:
+  disco-role: meta
 ---
 
 # Analyze Paper Recovery

@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 /**
- * Programmatically rebuild DisCo's live repo-skills-router.
+ * Programmatically rebuild DisCo's repo-skills-router.
  *
  * This helper is intended to run as part of the locked repo-skill import
  * transaction. It treats repo-skills-router as generated state: it reads the
- * live managed skills root, reads structured routing metadata, writes the
- * canonical two-layer router files, removes legacy side-channel router files,
+ * repo-skills collection, reads structured routing metadata, writes the
+ * sibling two-layer router files, removes legacy side-channel router files,
  * and validates the result before returning success.
  */
 
@@ -14,6 +14,7 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { parse as parseYaml } from "yaml";
 
 const ROUTER_ID = "repo-skills-router";
 const METADATA_PATH = path.join("references", "repo-routing-metadata.json");
@@ -186,7 +187,53 @@ function hasFrontmatterValue(text, key, expected) {
 	return false;
 }
 
-function validateSkillFrontmatter(skillDir, { requireDisabled, requireQuotedDescription = true }) {
+function routerIsModelDisabled(text, source = "router SKILL.md") {
+	const block = frontmatterBlock(text);
+	if (!block) {
+		throw new RouterError(`${source} must contain YAML frontmatter`);
+	}
+	let frontmatter;
+	try {
+		frontmatter = parseYaml(block);
+	} catch (error) {
+		throw new RouterError(`${source} has invalid YAML frontmatter: ${error.message}`);
+	}
+	if (!frontmatter || typeof frontmatter !== "object" || Array.isArray(frontmatter)) {
+		throw new RouterError(`${source} frontmatter must be a mapping`);
+	}
+	if (!("disable-model-invocation" in frontmatter)) {
+		return false;
+	}
+	if (frontmatter["disable-model-invocation"] !== true) {
+		throw new RouterError(`${source} disable-model-invocation must be true when present`);
+	}
+	return true;
+}
+
+function metadataFrontmatterValue(text, key) {
+	const block = frontmatterBlock(text);
+	if (!block) {
+		return undefined;
+	}
+	try {
+		const frontmatter = parseYaml(block);
+		if (!frontmatter || typeof frontmatter !== "object" || Array.isArray(frontmatter)) {
+			return undefined;
+		}
+		const metadata = frontmatter.metadata;
+		if (!metadata || typeof metadata !== "object" || Array.isArray(metadata)) {
+			return undefined;
+		}
+		return metadata[key];
+	} catch {
+		return undefined;
+	}
+}
+
+function validateSkillFrontmatter(
+	skillDir,
+	{ requireDisabled, requireQuotedDescription = true, requireDiscoRole = true },
+) {
 	const skillMd = path.join(skillDir, "SKILL.md");
 	if (!isFile(skillMd)) {
 		throw new RouterError(`skill is missing SKILL.md: ${skillDir}`);
@@ -213,11 +260,14 @@ function validateSkillFrontmatter(skillDir, { requireDisabled, requireQuotedDesc
 	if (requireQuotedDescription && !hasDoubleQuotedFrontmatterValue(text, "description")) {
 		throw new RouterError(`${skillMd} frontmatter description must be double-quoted`);
 	}
-	if (requireDisabled && !hasFrontmatterValue(text, "disable-model-invocation", "true")) {
+	if (requireDisabled === true && !hasFrontmatterValue(text, "disable-model-invocation", "true")) {
 		throw new RouterError(`${skillMd} frontmatter must contain disable-model-invocation: true`);
 	}
-	if (!requireDisabled && hasFrontmatterValue(text, "disable-model-invocation", "true")) {
+	if (requireDisabled === false && hasFrontmatterValue(text, "disable-model-invocation", "true")) {
 		throw new RouterError(`${skillMd} must stay model-visible and must not contain disable-model-invocation: true`);
+	}
+	if (requireDiscoRole && metadataFrontmatterValue(text, "disco-role") !== "operating") {
+		throw new RouterError(`${skillMd} metadata.disco-role must be operating`);
 	}
 }
 
@@ -278,27 +328,28 @@ function readSkill(skillDir) {
 	};
 }
 
-function readLiveSkills(skillsRoot, includeSkillIds = []) {
-	if (!isDirectory(skillsRoot)) {
+function readLiveSkills(repoSkillsRoot, includeSkillIds = []) {
+	if (!isDirectory(repoSkillsRoot)) {
 		return new Map();
 	}
 	const includeSet = includeSkillIds.length ? new Set(includeSkillIds) : null;
 	const skills = new Map();
-	for (const name of fs.readdirSync(skillsRoot).sort()) {
-		const directory = path.join(skillsRoot, name);
+	for (const name of fs.readdirSync(repoSkillsRoot).sort()) {
+		const directory = path.join(repoSkillsRoot, name);
 		if (!isDirectory(directory)) {
 			continue;
 		}
 		if (name === ROUTER_ID) {
-			if (isFile(path.join(directory, "SKILL.md"))) {
-				validateSkillFrontmatter(directory, { requireDisabled: false, requireQuotedDescription: false });
-			}
+			throw new RouterError(`${ROUTER_ID} must be a sibling of repo-skills, not a member of ${repoSkillsRoot}`);
+		}
+		const skillFile = path.join(directory, "SKILL.md");
+		if (!isFile(skillFile)) {
 			continue;
+		}
+		if (metadataFrontmatterValue(readText(skillFile), "disco-role") === "meta") {
+			throw new RouterError(`meta skill is not allowed in the repo-skills collection: ${directory}`);
 		}
 		if (includeSet && !includeSet.has(name)) {
-			continue;
-		}
-		if (!isFile(path.join(directory, "SKILL.md"))) {
 			continue;
 		}
 		validateLiveSkillTree(directory);
@@ -307,7 +358,7 @@ function readLiveSkills(skillsRoot, includeSkillIds = []) {
 	if (includeSet) {
 		const missing = [...includeSet].filter((skillId) => !skills.has(skillId)).sort();
 		if (missing.length) {
-			throw new RouterError(`--include-skill references missing live repo skills: ${missing.join(", ")}`);
+			throw new RouterError(`--include-skill references missing repo skills: ${missing.join(", ")}`);
 		}
 	}
 	return skills;
@@ -621,8 +672,8 @@ function coerceBool(value, fieldName, { defaultValue = false } = {}) {
 	return value;
 }
 
-function loadScenarioRegistry(skillsRoot, templateDir) {
-	const liveRegistryPath = path.join(skillsRoot, ROUTER_ID, SCENARIO_REGISTRY_PATH);
+function loadScenarioRegistry(routerDir, templateDir) {
+	const liveRegistryPath = path.join(routerDir, SCENARIO_REGISTRY_PATH);
 	const templateRegistryPath = path.join(templateDir, SCENARIO_REGISTRY_PATH);
 	if (exists(liveRegistryPath)) {
 		return normalizeScenarioRegistry(loadJson(liveRegistryPath), liveRegistryPath);
@@ -723,6 +774,47 @@ function scenarioRegistryToJson(registry) {
 	};
 }
 
+function filterRegistryForSubset(registry, scenarios, excludedSkillIds, subsetMode) {
+	if (!registry || !subsetMode) {
+		return registry;
+	}
+
+	const nextScenarios = new Map();
+	const nextAliasToCanonical = new Map();
+	for (const scenarioId of scenarios.keys()) {
+		const rendered = scenarios.get(scenarioId);
+		const original = registry.scenarios.get(scenarioId) || {};
+		const aliases = (original.aliases || [])
+			.filter((alias) => !textMentionsAnySkillId(alias, excludedSkillIds))
+			.sort();
+		nextScenarios.set(scenarioId, {
+			...original,
+			title: filterSubsetText(rendered.title || original.title, excludedSkillIds, titleFromSlug(scenarioId)),
+			whenToRead: filterSubsetText(
+				rendered.whenToRead || original.whenToRead,
+				excludedSkillIds,
+				`Requests about ${humanizeSlug(scenarioId)}.`,
+			),
+			howToChoose: filterSubsetText(
+				rendered.howToChoose || original.howToChoose,
+				excludedSkillIds,
+				"Choose among the selected repo skills by the task surface named by the request.",
+			),
+			aliases,
+			splitGuidance: filterSubsetText(original.splitGuidance, excludedSkillIds, ""),
+		});
+		for (const alias of aliases) {
+			nextAliasToCanonical.set(alias, scenarioId);
+		}
+	}
+
+	return {
+		...registry,
+		scenarios: nextScenarios,
+		aliasToCanonical: nextAliasToCanonical,
+	};
+}
+
 function extendRegistryWithApprovedNewScenarios(registry, data) {
 	if (!registry || !data.scenarios || typeof data.scenarios !== "object" || Array.isArray(data.scenarios)) {
 		return registry;
@@ -819,8 +911,7 @@ function normalizeRecoveredEntryPoints(skillId, values) {
 	});
 }
 
-function parseExistingRouterMetadata(skillsRoot, liveSkills) {
-	const routerDir = path.join(skillsRoot, ROUTER_ID);
+function parseExistingRouterMetadata(routerDir, liveSkills) {
 	const scenariosDir = path.join(routerDir, "references", "scenarios");
 	const recovered = { skills: {}, scenarios: {} };
 	if (!isDirectory(scenariosDir)) {
@@ -840,7 +931,7 @@ function parseExistingRouterMetadata(skillsRoot, liveSkills) {
 		const titleMatch = /^#\s+(.+)$/m.exec(text);
 		const title = titleMatch ? normalizeSentence(titleMatch[1]) : titleFromSlug(scenarioId);
 		const whenToRead = sectionText(text, "When To Read") || `Requests about ${humanizeSlug(scenarioId)}.`;
-		const howToChoose = sectionText(text, "How To Choose");
+		const howToChoose = sectionText(text, "How To Choose").split(/\s+###\s+/u, 1)[0].trim();
 		recovered.scenarios[scenarioId] = { title, when_to_read: whenToRead, how_to_choose: howToChoose };
 
 		const entryMatches = [...text.matchAll(/^### `([^`]+)`\s*$/gm)];
@@ -1051,7 +1142,7 @@ function scenarioDefaults(data, registry) {
 	return defaults;
 }
 
-function buildScenarios(routing, defaults, liveSkills) {
+function buildScenarios(routing, defaults, liveSkills, excludedSkillIds = []) {
 	const byScenario = new Map();
 	for (const [skillId, skillRouting] of routing) {
 		for (const entry of skillRouting.entries) {
@@ -1066,33 +1157,47 @@ function buildScenarios(routing, defaults, liveSkills) {
 		const entries = byScenario.get(scenarioId).sort((left, right) => left[0].localeCompare(right[0]));
 		const defaultsForScenario = defaults.get(scenarioId) || {};
 		const title =
-			defaultsForScenario.title ||
+			filterSubsetText(
+				defaultsForScenario.title,
+				excludedSkillIds,
+				titleFromSlug(scenarioId),
+			) ||
 			(entries.find(([, entry]) => entry.title)?.[1].title ?? "") ||
 			titleFromSlug(scenarioId);
-		const whenToRead =
-			defaultsForScenario.whenToRead ||
-			(entries.find(([, entry]) => entry.whenToRead)?.[1].whenToRead ?? "") ||
-			`Requests about ${humanizeSlug(scenarioId)}.`;
-		const guidanceParts = entries.map(([, entry]) => entry.selectionGuidance).filter(Boolean);
+		const whenCandidates = [defaultsForScenario.whenToRead, ...entries.map(([, entry]) => entry.whenToRead)];
+		if (excludedSkillIds.length) {
+			whenCandidates.push(...entries.map(([, entry]) => entry.readWhen));
+		}
+		const whenToRead = firstSubsetText(
+			whenCandidates,
+			excludedSkillIds,
+			`Requests about ${humanizeSlug(scenarioId)}.`,
+		);
+		const guidanceParts = entries
+			.map(([skillId, entry]) =>
+				filterSubsetText(entry.selectionGuidance, excludedSkillIds, defaultSubsetSelectionGuidance(skillId)),
+			)
+			.filter(Boolean);
 		let howToChoose = mergeSentenceFields([defaultsForScenario.howToChoose, ...guidanceParts], 1400);
+		howToChoose = filterSubsetText(howToChoose, excludedSkillIds, "");
 		if (!howToChoose) {
 			const skillNames = entries.map(([skillId]) => `\`${skillId}\``).join(", ");
 			howToChoose = `Choose the repo skill whose task scope, package APIs, data or model format, command surface, error mode, or operational workflow most directly matches the user request. Current options: ${skillNames}.`;
 		}
 		scenarios.set(scenarioId, {
 			scenarioId,
-			title,
+			title: filterSubsetText(title, excludedSkillIds, titleFromSlug(scenarioId)),
 			whenToRead,
 			skillIds: entries.map(([skillId]) => skillId).filter((skillId) => liveSkills.has(skillId)),
-			howToChoose,
+			howToChoose: filterSubsetText(howToChoose, excludedSkillIds, "Choose among the selected repo skills by the task surface named by the request."),
 		});
 	}
 	return scenarios;
 }
 
-function validateEntryPoints(skillsRoot, routing) {
+function validateEntryPoints(repoSkillsRoot, routing) {
 	for (const [skillId, skillRouting] of routing) {
-		const skillRoot = path.join(skillsRoot, skillId);
+		const skillRoot = path.join(repoSkillsRoot, skillId);
 		for (const entry of skillRouting.entries) {
 			for (const value of entry.usefulEntryPoints) {
 				if (/^\d+\s+more\s+sub-skills$/i.test(value)) {
@@ -1105,7 +1210,7 @@ function validateEntryPoints(skillsRoot, routing) {
 				}
 				if (!value.startsWith(`${skillId}/`)) {
 					throw new RouterError(
-						`useful entry point for ${skillId}/${entry.scenario} must be relative to the managed skills root and start with ${skillId}/: ${value}`,
+						`useful entry point for ${skillId}/${entry.scenario} must be relative to the repo-skills collection root and start with ${skillId}/: ${value}`,
 					);
 				}
 				const relative = value.slice(skillId.length + 1).replace(/\/+$/g, "");
@@ -1143,10 +1248,12 @@ function scenarioTable(scenarios, pagePrefix) {
 	return lines.join("\n");
 }
 
-function renderRoot(scenarios) {
+function renderRoot(scenarios, modelDisabled) {
 	return `---
 name: repo-skills-router
-description: "Use this two-layer router for imported repository skills. Read it when another agent needs to choose which repo-specific skill should inform a user request, when routing among similar repo skills, or after importing a repo skill to classify it by practical usage scenario and maintain selection guidance."
+description: "Repository-skill discovery and selection router for DisCo Researcher. Read before planning or implementing a substantive ML/AI, data, or scientific-computing task whenever an existing package or repository may help, even if the user names no repo or asks only which tool, framework, or approach to use. Covers ML systems, distributed training, datasets/evaluation, AutoML/MLOps, data pipelines, reinforcement learning; language models, fine-tuning/RLHF, inference/serving, agents, RAG/document processing, embeddings/retrieval; computer vision, multimodal, speech/audio, image generation; protein modeling, molecular ML, chemistry/drug discovery, materials, bioinformatics/genomics/single-cell, and medical imaging. Use it to find candidates, compare overlapping packages, select the best-fit repo skill, and load only its relevant branch."
+${modelDisabled ? "disable-model-invocation: true\n" : ""}metadata:
+  disco-role: operating
 ---
 
 # Repo Skills Router
@@ -1155,7 +1262,7 @@ description: "Use this two-layer router for imported repository skills. Read it 
 
 Use this skill as the maintained router for repo-specific skills imported into
 DisCo's managed skill library. It helps another agent pick a relevant repo
-skill as reference for a user request without reading every imported skill.
+skill as guidance for a user request without reading every imported skill.
 
 The router uses two-layer progressive disclosure:
 
@@ -1172,8 +1279,13 @@ The router uses two-layer progressive disclosure:
    [references/usage-scenarios.md](references/usage-scenarios.md).
 3. On that scenario page, compare the candidate repo skills by role,
    non-fit cases, overlap notes, and selection guideline.
-4. Read the selected repo skill's own \`SKILL.md\` before relying on it.
-5. If no scenario fits, fall back to the available skill descriptions, project
+4. Resolve the selected skill from the sibling collection as
+   \`../repo-skills/<skill-id>/SKILL.md\`, read it in full, and then read only the sub-skills,
+   references, or scripts needed for the request.
+5. Use that guidance with the agent's normal file and command tools to complete
+   and verify the user's task. Check provenance and current repository evidence
+   before relying on version-sensitive details.
+6. If no scenario fits, fall back to the available skill descriptions, project
    context, or repository evidence. Do not invent a router entry.
 
 Use this router only for selection. A router entry is not a substitute for the
@@ -1181,10 +1293,14 @@ selected repo skill's detailed instructions.
 
 ## Maintenance After Skill Import
 
-When a verified repo-specific skill is imported after user approval, update the
-live DisCo router by running the managed updater script inside the global
-DisCo import lock instead of editing router Markdown by hand. See
-[references/maintenance.md](references/maintenance.md).
+For an approved or auto-authorized add, replacement, or refresh, run
+\`verify-repo-skill/scripts/import_repo_skill.mjs\` with the verified runtime
+skill outside the live skills tree. The importer validates and installs the
+skill, invokes this lower-level updater under the global lock, and restores both
+the prior skill and router if the transaction fails. Do not hand-edit router
+Markdown or manually combine a copy command with this updater. See
+[references/maintenance.md](references/maintenance.md) for the importer command
+and the narrowly scoped router-only maintenance procedure.
 
 ## Usage Scenario Quick Map
 
@@ -1247,9 +1363,13 @@ ${suggestedScenarioText()}
 
 Scenario pages under \`references/scenarios/<scenario>.md\` are generated by
 \`verify-repo-skill/scripts/update_repo_skills_router.mjs\` from
-structured routing metadata. Do not hand-edit generated pages during import.
-Instead, update the imported skill's routing metadata and rerun the updater
-inside the global import lock.
+structured routing metadata. For a normal add, replacement, or refresh, update
+the verified staged skill's routing metadata and run
+\`verify-repo-skill/scripts/import_repo_skill.mjs\`; it installs the skill and
+invokes the updater inside one rollback-capable locked transaction. Do not
+hand-edit generated pages or run the updater separately as the import mechanism.
+Direct updater use is reserved for intentional router-only repair or a locked
+removal/rename transaction described in the maintenance guide.
 
 Each generated scenario page has this shape:
 
@@ -1298,36 +1418,39 @@ Use the live DisCo user copy at
 Do not update another same-named \`repo-skills-router\` directory before this live
 copy has been updated. Do not push router changes into another agent tool from
 this maintenance workflow. Export or merge into another agent only through the
-dedicated \`import-repo-skills-to-agent\` meta skill after the user explicitly asks for
+dedicated \`import-repo-skills-to-agent\` workflow skill after the user explicitly asks for
 that target tool.
 
-All maintenance that is part of an approved or auto-authorized DisCo import
-must run inside the global import lock provided by the
-\`verify-repo-skill\` meta skill's \`scripts/with_import_lock.mjs\` helper.
-The lock is rooted at \`$DISCO_CODING_AGENT_DIR/locks/repo-skills-import.lockdir\`
-when \`DISCO_CODING_AGENT_DIR\` is set, otherwise
-\`~/.disco/agent/locks/repo-skills-import.lockdir\`. It must cover the runtime
-skill copy, first-time router creation from the template, fresh metadata and
-skill-root reads, generated router writes, stale-file removal, and post-write
-validation.
+The live router is model-visible by default. Users control automatic selection
+with \`disco repo-skills router disable|enable\`; disabling leaves explicit
+\`/skill:repo-skills-router\` invocation available. Live router rebuilds preserve
+that policy. Canonical library and external-agent router output remains enabled.
+Do not hand-edit frontmatter to implement the toggle.
 
-Do not hand-edit router Markdown as the import mechanism. The import transaction
-must call \`scripts/update_repo_skills_router.mjs\` after copying the runtime skill
-directory and writing or updating the skill's
-\`references/repo-routing-metadata.json\`.
+For an approved or auto-authorized add, replacement, or refresh, use the
+\`verify-repo-skill\` workflow skill's dedicated importer:
 
-Inside the locked transaction:
+\`\`\`bash
+node <verify-repo-skill>/scripts/import_repo_skill.mjs \\
+  --agent-dir <agent-dir> \\
+  [--overwrite] \\
+  <verified-runtime-skill-dir>
+\`\`\`
 
-1. Copy only the verified runtime skill directory into
-   \`~/.disco/agent/skills/<skill-id>/\`.
-2. Ensure that \`<skill-id>/references/repo-routing-metadata.json\` exists and
-   contains the skill's structured usage-scenario routing metadata.
-3. Run \`node scripts/update_repo_skills_router.mjs --agent-dir <agent-dir> --already-locked\`.
-4. Let the updater re-read the live skills root, rebuild
-   \`repo-skills-router/SKILL.md\`, \`references/usage-scenarios.md\`,
-   \`references/maintenance.md\`, \`references/scenario-registry.json\`, and
-   \`references/scenarios/*.md\`, remove legacy side-channel router files, and
-   validate coverage and links before success.
+Omit \`--overwrite\` for a new skill. Use it only after approval to replace that
+exact existing repo skill. The importer acquires the global lock at
+\`<agent-dir>/locks/repo-skills-import.lockdir\`, stages and recursively validates
+the runtime tree, installs it under \`repo-skills/<skill-id>/\`, invokes the
+lower-level router updater, and restores both the previous skill and router if
+the transaction fails. The verified runtime tree must contain
+\`references/repo-routing-metadata.json\` for that skill.
+
+Do not hand-edit router Markdown as the import mechanism, and do not manually
+combine a copy command with \`scripts/update_repo_skills_router.mjs\`. Use the
+lower-level lock and updater directly only for an intentional router-only repair
+or a removal/rename transaction that cannot be expressed as an import. That
+maintenance must hold the same global lock across the live skill mutation and
+router rebuild.
 
 ## Scenario Registry
 
@@ -1371,7 +1494,7 @@ Each imported repo skill should include this generated metadata file:
 \`\`\`
 
 The managed updater also accepts an aggregate metadata file at
-\`<skills-root>/.repo-skills-router-metadata.json\` for batch recovery workflows.
+\`<repo-skills-root>/.repo-skills-router-metadata.json\` for batch recovery workflows.
 That aggregate file uses the same top-level \`skills\` object and may also include
 a top-level \`scenarios\` object for shared scenario titles and selection
 guidance.
@@ -1410,7 +1533,7 @@ details.
 `;
 }
 
-function renderScenarioPage(scenario, routing, liveSkills) {
+function renderScenarioPage(scenario, routing, liveSkills, excludedSkillIds = []) {
 	const lines = [
 		`# ${scenario.title}`,
 		"",
@@ -1427,11 +1550,31 @@ function renderScenarioPage(scenario, routing, liveSkills) {
 		const skill = liveSkills.get(skillId);
 		const entries = routing.get(skillId).entries.filter((entry) => entry.scenario === scenario.scenarioId);
 		const entry = entries[0] || { scenario: scenario.scenarioId };
-		const role = entry.role || normalizeSentence(skill.description);
-		const readWhen = entry.readWhen || defaultReadWhen(skill);
-		const bestFor = entry.bestFor || defaultBestFor(skill);
-		const avoidWhen = entry.avoidWhen || defaultAvoidWhen();
-		const entryPoints = entry.usefulEntryPoints?.length ? entry.usefulEntryPoints : defaultEntryPoints(skill);
+		const role = filterSubsetText(
+			entry.role || normalizeSentence(skill.description),
+			excludedSkillIds,
+			`Provides ${humanizeSlug(skillId)} repository workflow guidance.`,
+		);
+		const readWhen = filterSubsetText(
+			entry.readWhen || defaultReadWhen(skill),
+			excludedSkillIds,
+			`The request names \`${skillId}\` or asks for workflows owned by this repository.`,
+		);
+		const bestFor = filterSubsetText(
+			entry.bestFor || defaultBestFor(skill),
+			excludedSkillIds,
+			`the ${humanizeSlug(skillId)} repository workflows.`,
+		);
+		const avoidWhen = filterSubsetText(
+			entry.avoidWhen || defaultAvoidWhen(),
+			excludedSkillIds,
+			"another selected repo skill matches the request more directly.",
+		);
+		const rawEntryPoints = entry.usefulEntryPoints?.length ? entry.usefulEntryPoints : defaultEntryPoints(skill);
+		const entryPoints = rawEntryPoints.filter((value) => !textMentionsAnySkillId(value, excludedSkillIds));
+		if (!entryPoints.length) {
+			entryPoints.push(`${skillId}/SKILL.md`);
+		}
 		lines.push(
 			`### \`${skillId}\``,
 			"",
@@ -1463,13 +1606,15 @@ repo skills that can handle it.
 
 Scenario pages belong to the live user-managed \`repo-skills-router\`. They are
 generated from structured routing metadata by
-\`verify-repo-skill/scripts/update_repo_skills_router.mjs\`; update the
-metadata and rerun the updater rather than hand-editing these files during
-imports.
+\`verify-repo-skill/scripts/update_repo_skills_router.mjs\`. For a normal add,
+replacement, or refresh, update the verified staged skill's metadata and run
+\`verify-repo-skill/scripts/import_repo_skill.mjs\`; do not hand-edit scenario
+pages or run the updater separately as the import mechanism. Direct updater use
+is reserved for intentional router-only maintenance under the global lock.
 `;
 }
 
-function mergeSkillMetadata(skillsRoot, existingRouterData, aggregateData) {
+function mergeSkillMetadata(repoSkillsRoot, existingRouterData, aggregateData) {
 	const merged = { skills: {}, scenarios: {} };
 	if (existingRouterData) {
 		Object.assign(merged.skills, existingRouterData.skills || {});
@@ -1480,9 +1625,9 @@ function mergeSkillMetadata(skillsRoot, existingRouterData, aggregateData) {
 		Object.assign(merged.scenarios, aggregateData.scenarios || {});
 	}
 
-	for (const name of fs.readdirSync(skillsRoot).sort()) {
-		const skillDir = path.join(skillsRoot, name);
-		if (!isDirectory(skillDir) || name === ROUTER_ID) {
+	for (const name of fs.readdirSync(repoSkillsRoot).sort()) {
+		const skillDir = path.join(repoSkillsRoot, name);
+		if (!isDirectory(skillDir)) {
 			continue;
 		}
 		const metadataFile = path.join(skillDir, METADATA_PATH);
@@ -1552,8 +1697,42 @@ function textMentionsAnySkillId(value, skillIds) {
 	if (typeof value !== "string" || !value || !skillIds.length) {
 		return false;
 	}
-	const normalized = value.toLowerCase();
-	return skillIds.some((skillId) => normalized.includes(skillId.toLowerCase()));
+	return skillIds.some((skillId) => {
+		const escaped = String(skillId).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+		return new RegExp(`(?:^|[^a-z0-9])${escaped}(?:$|[^a-z0-9])`, "i").test(value);
+	});
+}
+
+function filterSubsetText(value, excludedSkillIds, fallback = "") {
+	const normalized = normalizeSentence(value, 2000);
+	if (!excludedSkillIds.length) {
+		return normalized;
+	}
+	if (!textMentionsAnySkillId(normalized, excludedSkillIds)) {
+		return normalized || normalizeSentence(fallback, 1200);
+	}
+
+	const retained = splitSentences(normalized).filter((sentence) => !textMentionsAnySkillId(sentence, excludedSkillIds));
+	const cleaned = mergeSentenceFields(retained, 1400);
+	if (cleaned && !textMentionsAnySkillId(cleaned, excludedSkillIds)) {
+		return cleaned;
+	}
+	const safeFallback = normalizeSentence(fallback, 1200);
+	return textMentionsAnySkillId(safeFallback, excludedSkillIds) ? "" : safeFallback;
+}
+
+function firstSubsetText(values, excludedSkillIds, fallback = "") {
+	for (const value of values) {
+		const filtered = filterSubsetText(value, excludedSkillIds, "");
+		if (filtered) {
+			return filtered;
+		}
+	}
+	return normalizeSentence(fallback, 1200);
+}
+
+function defaultSubsetSelectionGuidance(skillId) {
+	return `Choose \`${skillId}\` when its package APIs, configuration, artifacts, errors, or repository workflows are central to the request.`;
 }
 
 function pruneScenarioDefaultForExcludedSkills(scenario, excludedSkillIds) {
@@ -1574,12 +1753,12 @@ function validateFilteredRouterDoesNotMentionExcludedSkills(routerDir, excludedS
 		return;
 	}
 	for (const filePath of walkFiles(routerDir)) {
-		if (!filePath.endsWith(".md")) {
+		if (!/\.(md|json|ya?ml|txt)$/i.test(filePath)) {
 			continue;
 		}
 		const text = readText(filePath);
 		for (const skillId of excludedSkillIds) {
-			if (text.includes(skillId)) {
+			if (textMentionsAnySkillId(text, [skillId])) {
 				throw new RouterError(
 					`filtered router unexpectedly mentions unselected source skill ${skillId}: ${toPosix(path.relative(routerDir, filePath))}`,
 				);
@@ -1701,10 +1880,10 @@ function metadataEntryFromRoutingEntry(entry, skillId, skill) {
 	return metadata;
 }
 
-function backfillMissingSkillMetadata(skillsRoot, routing, liveSkills) {
+function backfillMissingSkillMetadata(repoSkillsRoot, routing, liveSkills) {
 	let count = 0;
 	for (const [skillId, skillRouting] of routing) {
-		const metadataFile = path.join(skillsRoot, skillId, METADATA_PATH);
+		const metadataFile = path.join(repoSkillsRoot, skillId, METADATA_PATH);
 		if (exists(metadataFile)) {
 			continue;
 		}
@@ -1751,11 +1930,20 @@ function ensureRouterTemplate(routerDir, templateDir) {
 	}
 }
 
-function writeRouterFiles(routerDir, routing, scenarios, liveSkills, templateDir, registry) {
+function writeRouterFiles(
+	routerDir,
+	routing,
+	scenarios,
+	liveSkills,
+	templateDir,
+	registry,
+	excludedSkillIds = [],
+	modelDisabled = false,
+) {
 	ensureRouterTemplate(routerDir, templateDir);
 	fs.mkdirSync(path.join(routerDir, "references", "scenarios"), { recursive: true });
 	removeLegacyFiles(routerDir);
-	writeText(path.join(routerDir, "SKILL.md"), renderRoot(scenarios));
+	writeText(path.join(routerDir, "SKILL.md"), renderRoot(scenarios, modelDisabled));
 	writeText(path.join(routerDir, "references", "usage-scenarios.md"), renderUsageScenarios(scenarios, registry));
 	writeText(path.join(routerDir, "references", "maintenance.md"), renderMaintenance());
 	if (registry) {
@@ -1765,13 +1953,22 @@ function writeRouterFiles(routerDir, routing, scenarios, liveSkills, templateDir
 	for (const scenario of scenarios.values()) {
 		writeText(
 			path.join(routerDir, "references", "scenarios", `${scenario.scenarioId}.md`),
-			renderScenarioPage(scenario, routing, liveSkills),
+			renderScenarioPage(scenario, routing, liveSkills, excludedSkillIds),
 		);
 	}
 }
 
-function writeRouter(skillsRoot, routing, scenarios, liveSkills, templateDir, registry, outputRouterDir) {
-	const routerDir = outputRouterDir || path.join(skillsRoot, ROUTER_ID);
+function writeRouter(
+	repoSkillsRoot,
+	routerDir,
+	routing,
+	scenarios,
+	liveSkills,
+	templateDir,
+	registry,
+	excludedSkillIds = [],
+	modelDisabled = false,
+) {
 	const routerParent = path.dirname(routerDir);
 	fs.mkdirSync(routerParent, { recursive: true });
 	const tmpRouterDir = path.join(routerParent, `.${ROUTER_ID}.tmp.${process.pid}`);
@@ -1779,8 +1976,17 @@ function writeRouter(skillsRoot, routing, scenarios, liveSkills, templateDir, re
 	fs.rmSync(tmpRouterDir, { recursive: true, force: true });
 	fs.rmSync(backupRouterDir, { recursive: true, force: true });
 	try {
-		writeRouterFiles(tmpRouterDir, routing, scenarios, liveSkills, templateDir, registry);
-		validateRouterDir(skillsRoot, tmpRouterDir, scenarios, liveSkills, registry);
+		writeRouterFiles(
+			tmpRouterDir,
+			routing,
+			scenarios,
+			liveSkills,
+			templateDir,
+			registry,
+			excludedSkillIds,
+			modelDisabled,
+		);
+		validateRouterDir(repoSkillsRoot, tmpRouterDir, scenarios, liveSkills, registry, modelDisabled);
 		if (exists(routerDir)) {
 			fs.renameSync(routerDir, backupRouterDir);
 		}
@@ -1836,7 +2042,7 @@ function assertScenarioPageQuality(pageText, scenarioId, scenarioPage) {
 	}
 }
 
-function validateRouterDir(skillsRoot, routerDir, scenarios, liveSkills, registry) {
+function validateRouterDir(skillsRoot, routerDir, scenarios, liveSkills, registry, modelDisabled) {
 	const root = path.join(routerDir, "SKILL.md");
 	const usage = path.join(routerDir, "references", "usage-scenarios.md");
 	const maintenance = path.join(routerDir, "references", "maintenance.md");
@@ -1860,11 +2066,18 @@ function validateRouterDir(skillsRoot, routerDir, scenarios, liveSkills, registr
 	if (!(frontmatter.description || "").trim()) {
 		throw new RouterError("router SKILL.md frontmatter must contain description");
 	}
-	if (hasFrontmatterValue(rootText, "disable-model-invocation", "true")) {
-		throw new RouterError("router SKILL.md must stay model-visible and must not contain disable-model-invocation: true");
+	if (routerIsModelDisabled(rootText) !== modelDisabled) {
+		throw new RouterError(
+			modelDisabled
+				? "router SKILL.md must contain disable-model-invocation: true"
+				: "router SKILL.md must stay model-visible and must not contain disable-model-invocation",
+		);
 	}
 	if (!hasDoubleQuotedFrontmatterValue(rootText, "description")) {
 		throw new RouterError("router SKILL.md frontmatter description must be double-quoted");
+	}
+	if (metadataFrontmatterValue(rootText, "disco-role") !== "operating") {
+		throw new RouterError("router SKILL.md metadata.disco-role must be operating");
 	}
 	if (countMatches(rootText, START_MARKER) !== 1 || countMatches(rootText, END_MARKER) !== 1) {
 		throw new RouterError("router SKILL.md must contain exactly one balanced scenario table marker pair");
@@ -1948,54 +2161,89 @@ function validateRouterDir(skillsRoot, routerDir, scenarios, liveSkills, registr
 	}
 }
 
-function validateRouter(skillsRoot, scenarios, liveSkills, registry) {
-	validateRouterDir(skillsRoot, path.join(skillsRoot, ROUTER_ID), scenarios, liveSkills, registry);
+function resolveRouterModelDisabled(routerVisibility, liveRouterDir) {
+	if (routerVisibility === "enabled") {
+		return false;
+	}
+	if (routerVisibility === "disabled") {
+		return true;
+	}
+	const skillFile = path.join(liveRouterDir, "SKILL.md");
+	return isFile(skillFile) ? routerIsModelDisabled(readText(skillFile), skillFile) : false;
 }
 
-function rebuildRouter(agentDir, metadataFile, templateDir, { includeSkillIds = [], outputRouterDir } = {}) {
-	const skillsRoot = path.join(agentDir, "skills");
-	fs.mkdirSync(skillsRoot, { recursive: true });
-	const liveSkills = readLiveSkills(skillsRoot, includeSkillIds);
+function rebuildRouter(
+	libraryRoot,
+	metadataFile,
+	templateDir,
+	{ includeSkillIds = [], outputRouterDir, routerVisibility = "preserve" } = {},
+) {
+	const repoSkillsRoot = path.join(libraryRoot, "repo-skills");
+	const liveRouterDir = path.join(libraryRoot, ROUTER_ID);
+	if (!isDirectory(repoSkillsRoot)) {
+		throw new RouterError(`repo-skills collection does not exist: ${repoSkillsRoot}`);
+	}
+	if (isFile(path.join(liveRouterDir, "SKILL.md"))) {
+		validateSkillFrontmatter(liveRouterDir, {
+			requireDisabled: undefined,
+			requireQuotedDescription: false,
+			requireDiscoRole: false,
+		});
+	}
+	const modelDisabled = resolveRouterModelDisabled(routerVisibility, liveRouterDir);
+	const liveSkills = readLiveSkills(repoSkillsRoot, includeSkillIds);
 	if (liveSkills.size === 0) {
 		const suffix = includeSkillIds.length ? ` matching --include-skill ${includeSkillIds.join(", ")}` : "";
-		throw new RouterError(`no live repo skills with SKILL.md${suffix} found under ${skillsRoot}`);
+		throw new RouterError(`no repo skills with SKILL.md${suffix} found under ${repoSkillsRoot}`);
 	}
 
-	const defaultMetadataFile = path.join(skillsRoot, ".repo-skills-router-metadata.json");
-	let aggregateData = metadataFile ? loadRoutingMetadata(skillsRoot, metadataFile) : null;
+	const defaultMetadataFile = path.join(repoSkillsRoot, ".repo-skills-router-metadata.json");
+	let aggregateData = metadataFile ? loadRoutingMetadata(repoSkillsRoot, metadataFile) : null;
 	if (!metadataFile && exists(defaultMetadataFile)) {
-		aggregateData = loadRoutingMetadata(skillsRoot, defaultMetadataFile);
+		aggregateData = loadRoutingMetadata(repoSkillsRoot, defaultMetadataFile);
 	}
-	const baseRegistry = loadScenarioRegistry(skillsRoot, templateDir);
-	const existingRouterData = parseExistingRouterMetadata(skillsRoot, liveSkills);
-	const unfilteredMetadata = mergeSkillMetadata(skillsRoot, existingRouterData, aggregateData);
-	const excludedSkillIds = includeSkillIds.length
-		? Object.keys(unfilteredMetadata.skills || {}).filter((skillId) => !includeSkillIds.includes(skillId))
-		: [];
+	const baseRegistry = loadScenarioRegistry(liveRouterDir, templateDir);
+	const existingRouterData = parseExistingRouterMetadata(liveRouterDir, liveSkills);
+	const unfilteredMetadata = mergeSkillMetadata(repoSkillsRoot, existingRouterData, aggregateData);
+	const excludedSkillIds = [
+		...(includeSkillIds.length
+			? Object.keys(unfilteredMetadata.skills || {}).filter((skillId) => !includeSkillIds.includes(skillId))
+			: []),
+	];
 	const mergedMetadata = filterMetadataForSkills(unfilteredMetadata, includeSkillIds);
 	const registry = extendRegistryWithApprovedNewScenarios(baseRegistry, mergedMetadata);
 	const routing = normalizeRoutingMetadata(mergedMetadata, liveSkills, registry);
-	validateEntryPoints(skillsRoot, routing);
-	const backfilled = backfillMissingSkillMetadata(skillsRoot, routing, liveSkills);
+	validateEntryPoints(repoSkillsRoot, routing);
+	const backfilled = backfillMissingSkillMetadata(repoSkillsRoot, routing, liveSkills);
 	const defaults = scenarioDefaults(mergedMetadata, registry);
-	const scenarios = buildScenarios(routing, defaults, liveSkills);
-	writeRouter(skillsRoot, routing, scenarios, liveSkills, templateDir, registry, outputRouterDir);
-	if (outputRouterDir) {
-		validateRouterDir(skillsRoot, outputRouterDir, scenarios, liveSkills, registry);
-	} else {
-		validateRouter(skillsRoot, scenarios, liveSkills, registry);
-	}
-	validateFilteredRouterDoesNotMentionExcludedSkills(outputRouterDir || path.join(skillsRoot, ROUTER_ID), excludedSkillIds);
-	return { skills: liveSkills.size, scenarios: scenarios.size, backfilled, routerDir: outputRouterDir || path.join(skillsRoot, ROUTER_ID) };
+	const scenarios = buildScenarios(routing, defaults, liveSkills, excludedSkillIds);
+	const outputRegistry = filterRegistryForSubset(registry, scenarios, excludedSkillIds, includeSkillIds.length > 0);
+	const routerDir = outputRouterDir || liveRouterDir;
+	writeRouter(
+		repoSkillsRoot,
+		routerDir,
+		routing,
+		scenarios,
+		liveSkills,
+		templateDir,
+		outputRegistry,
+		excludedSkillIds,
+		modelDisabled,
+	);
+	validateRouterDir(repoSkillsRoot, routerDir, scenarios, liveSkills, outputRegistry, modelDisabled);
+	validateFilteredRouterDoesNotMentionExcludedSkills(routerDir, excludedSkillIds);
+	return { skills: liveSkills.size, scenarios: scenarios.size, backfilled, routerDir };
 }
 
 function parseArgs(argv) {
 	const args = {
-		agentDir: defaultAgentDir(),
+		agentDir: undefined,
+		libraryRoot: undefined,
 		metadataFile: undefined,
 		templateDir: bundledRouterTemplateDir(),
 		includeSkillIds: [],
 		outputRouterDir: undefined,
+		routerVisibility: undefined,
 		alreadyLocked: false,
 		timeout: DEFAULT_TIMEOUT_SECONDS,
 	};
@@ -2003,6 +2251,8 @@ function parseArgs(argv) {
 		const item = argv[index];
 		if (item === "--agent-dir") {
 			args.agentDir = argv[++index];
+		} else if (item === "--library-root") {
+			args.libraryRoot = argv[++index];
 		} else if (item === "--metadata-file") {
 			args.metadataFile = argv[++index];
 		} else if (item === "--template-dir") {
@@ -2017,6 +2267,12 @@ function parseArgs(argv) {
 			);
 		} else if (item === "--output-router-dir") {
 			args.outputRouterDir = argv[++index];
+		} else if (item === "--router-visibility") {
+			const value = argv[++index];
+			if (!value || !["preserve", "enabled", "disabled"].includes(value)) {
+				throw new RouterError("--router-visibility must be preserve, enabled, or disabled");
+			}
+			args.routerVisibility = value;
 		} else if (item === "--already-locked") {
 			args.alreadyLocked = true;
 		} else if (item === "--timeout") {
@@ -2028,6 +2284,16 @@ function parseArgs(argv) {
 			throw new RouterError(`unknown argument: ${item}`);
 		}
 	}
+	if (args.agentDir && args.libraryRoot) {
+		throw new RouterError("use either --agent-dir or --library-root, not both");
+	}
+	if (!args.agentDir && !args.libraryRoot) {
+		args.agentDir = defaultAgentDir();
+	}
+	if (args.libraryRoot && args.alreadyLocked) {
+		throw new RouterError("--library-root cannot be combined with --already-locked");
+	}
+	args.routerVisibility ??= args.outputRouterDir || args.libraryRoot ? "enabled" : "preserve";
 	return args;
 }
 
@@ -2036,6 +2302,8 @@ function printHelp() {
 
 Options:
   --agent-dir DIR       DisCo agent directory
+  --library-root DIR    Library root containing repo-skills/ and the sibling
+                        repo-skills-router/; updates directly without a live lock
   --metadata-file FILE  Optional aggregate router metadata JSON
   --template-dir DIR    Bundled repo-skills-router template directory
   --include-skill ID    Include only this repo skill in the generated router;
@@ -2043,6 +2311,9 @@ Options:
   --output-router-dir DIR
                         Write the generated router to DIR instead of
                         <agent-dir>/skills/repo-skills-router
+  --router-visibility POLICY
+                        preserve, enabled, or disabled; live updates default
+                        to preserve, while library/export output defaults enabled
   --already-locked      Assert the global import lock is already held
   --timeout SECONDS     Seconds to wait for the lock when locking is needed`);
 }
@@ -2082,13 +2353,16 @@ function main(argv) {
 		return 2;
 	}
 
-	const agentDir = path.resolve(expandHome(args.agentDir));
+	const agentDir = args.agentDir ? path.resolve(expandHome(args.agentDir)) : undefined;
+	const libraryRoot = args.libraryRoot
+		? path.resolve(expandHome(args.libraryRoot))
+		: path.join(agentDir, "skills");
 	const metadataFile = args.metadataFile ? path.resolve(expandHome(args.metadataFile)) : undefined;
 	const templateDir = path.resolve(expandHome(args.templateDir));
 	const outputRouterDir = args.outputRouterDir ? path.resolve(expandHome(args.outputRouterDir)) : undefined;
 	const includeSkillIds = uniqueSkillIds(args.includeSkillIds);
 
-	if (args.alreadyLocked && !process.env.DISCO_IMPORT_LOCK_PATH) {
+	if (agentDir && args.alreadyLocked && !process.env.DISCO_IMPORT_LOCK_PATH) {
 		if (process.env.DISCO_ALLOW_UNLOCKED_ROUTER_UPDATE_FOR_TESTS !== "1") {
 			console.error(
 				"update_repo_skills_router.mjs: --already-locked requires DISCO_IMPORT_LOCK_PATH; run through with_import_lock.mjs or omit --already-locked",
@@ -2097,12 +2371,16 @@ function main(argv) {
 		}
 	}
 
-	if (!args.alreadyLocked && !process.env.DISCO_IMPORT_LOCK_PATH) {
+	if (agentDir && !args.alreadyLocked && !process.env.DISCO_IMPORT_LOCK_PATH) {
 		return runUnderLock(argv, agentDir, args.timeout);
 	}
 
 	try {
-		const counts = rebuildRouter(agentDir, metadataFile, templateDir, { includeSkillIds, outputRouterDir });
+		const counts = rebuildRouter(libraryRoot, metadataFile, templateDir, {
+			includeSkillIds,
+			outputRouterDir,
+			routerVisibility: args.routerVisibility,
+		});
 		const backfillSummary = counts.backfilled ? `; backfilled ${counts.backfilled} routing metadata files` : "";
 		const includeSummary = includeSkillIds.length ? ` for ${includeSkillIds.join(", ")}` : "";
 		console.log(

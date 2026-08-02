@@ -9,6 +9,8 @@ Read this before editing an existing skill. The goal is to preserve working guid
 Clarify or infer:
 
 - The exact existing skill directory.
+- Whether that path is a live managed DisCo repo skill and, if so, the external
+  working-copy path with the same `<skill-id>` basename.
 - The repository path and package name.
 - The requested extension: new capability, deeper workflow, updated API, new CLI, new model/backend, new troubleshooting path, or improved tests/verification.
 - Whether the change should be public runtime skill content, usability-test coverage, evaluation artifacts, or benchmark artifacts.
@@ -16,6 +18,8 @@ Clarify or infer:
   `<repository-path>/skills/tests/<skill-id>/`, with concrete cases under
   `test-cases/` and reports under `reports/`.
 - Whether the update is additive or replaces stale guidance.
+- Whether the exact managed target already exists and therefore requires
+  explicit overwrite approval before import.
 - Whether the request is really asking for a high-frequency support workflow,
   such as data preparation, validation, conversion, command generation,
   data-layout checks, optional dependency diagnostics, environment checks, or
@@ -47,7 +51,10 @@ Inspect:
 - Prior verification reports or benchmark artifacts when available, preferably
   under the review/test artifact directory's `reports/` subtree.
 
-Use the current skill to avoid duplicate content. If a capability already exists but is shallow, deepen it in place instead of creating a parallel section.
+Use the current skill to avoid duplicate content. If a capability already exists
+but is shallow, deepen it in the resolved source or external working copy instead
+of creating a parallel section. Never use this rule to edit a live managed copy
+under `<agent-dir>/skills/repo-skills/` outside the importer transaction.
 
 ## Gather Targeted Repository Evidence
 

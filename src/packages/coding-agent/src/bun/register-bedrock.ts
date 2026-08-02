@@ -1,4 +1,4 @@
-import { setBedrockProviderModule } from "@auto-ml-skills/disco-ai";
-import { bedrockProviderModule } from "@auto-ml-skills/disco-ai/bedrock-provider";
+import { bedrockProviderModule } from "@earendil-works/pi-ai/bedrock-provider";
+import { setBedrockProviderModule } from "@earendil-works/pi-ai/compat";
 
 setBedrockProviderModule(bedrockProviderModule);

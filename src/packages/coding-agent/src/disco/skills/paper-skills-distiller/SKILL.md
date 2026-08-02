@@ -1,6 +1,8 @@
 ---
 name: paper-skills-distiller
 description: "Orchestrate a paper-to-skills distillation loop for AI research papers supplied as local files, URLs, arXiv ids, or titles, optionally with a local or remote repository, by resolving sources, modularizing the paper, creating module skills, preparing recovery runtime, recovering a paper result without the source repo, analyzing gaps, and iterating until acceptable."
+metadata:
+  disco-role: meta
 ---
 
 # Paper Skills Distiller
@@ -50,6 +52,8 @@ custom `attempt_dir` for that purpose.
 9. Load `recover-paper-result` and reproduce one fast, meaningful paper result without reading the original repo, using the runtime handoff as recovery input.
 10. Load `analyze-paper-recovery` and compare the recovery result with the paper target or an explicitly declared proxy target.
 11. If analysis says `refine`, update the relevant workflow guidance, module documents, module skills, environment handoff usage, and recovery harness, then rerun steps 7-10. Stop when status is `accept` or the configured refinement budget is exhausted.
+12. After an accepted run passes final and reported validation, classify the complete generated module graph for deployment. Default task-, project-, private-data-, evaluator-, benchmark-, or environment-bound output and all uncertain cases to project scope at `<project-dir>/.agents/skills/`. Use managed scope at `~/.disco/agent/skills/` only with evidence that the graph is self-contained, provenance-backed, independent of transient run state, representative-use verified, and reusable across projects or research tasks. Keep every module in the same scope.
+13. Present the classification evidence, exact targets, entry point, verification, unresolved limits, collisions, and shadowing impact. After approval, use the visible `distill-ml-knowledge/scripts/import_operating_skill_graph.mjs` once with every top-level module root and the selected scope. Overwrite requires separate approval. Write `researcher-handoff.md` with the selected scope and exact imported paths, then suggest `/researcher`; if import is declined, record that the graph remains staged.
 
 ## Ordering and Runtime Discipline
 
@@ -142,6 +146,9 @@ The whole paper distillation is acceptable only if:
 - The final artifact contract validator is run and its JSON output is saved to `final_validation.json`.
 - The organized final report is written to `reports/final/final_report.md` and
   `reports/final/final_report.json`, and the `reported` validation stage passes.
+- The complete module graph has a recorded reusability classification. Any live
+  deployment uses one approved scope, excludes process/review artifacts, and is
+  recorded with exact paths in `researcher-handoff.md`.
 - `run_manifest.json` and `run_config.normalized.json` record `recovery_mode`, and hard-mode runs are not accepted if `recovery_result.json` marks `is_proxy: true` or `mechanism_checks.reduced_training_executed: true`.
 - When paper/repo source acquisition was needed, the resolved local paths, commands/network operations, selected title/arXiv id, and blockers are recorded in `source/source_resolution.json` or `reports/final/final_report.md`.
 

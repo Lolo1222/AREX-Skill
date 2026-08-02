@@ -16,8 +16,15 @@ Every `SKILL.md` frontmatter block must remain valid:
 ---
 name: skill-id
 description: "Triggering description broad enough for natural user requests."
+disable-model-invocation: true
+metadata:
+  disco-role: operating
 ---
 ```
+
+Preserve or add `metadata.disco-role: operating` and
+`disable-model-invocation: true` on every repo root and sub-skill. A refreshed
+DisCo-owned repo skill must not depend on the missing-role fallback.
 
 Do not add development history to public runtime guidance unless it helps future
 agents choose correct current behavior. Put migration notes, stale-claim tables,

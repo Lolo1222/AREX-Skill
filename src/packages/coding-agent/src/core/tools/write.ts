@@ -1,5 +1,5 @@
-import type { AgentTool } from "@auto-ml-skills/disco-agent-core";
-import { Container, Text } from "@auto-ml-skills/disco-tui";
+import type { AgentTool } from "@earendil-works/pi-agent-core";
+import { Container, Text } from "@earendil-works/pi-tui";
 import { mkdir as fsMkdir, writeFile as fsWriteFile } from "fs/promises";
 import { dirname } from "path";
 import { type Static, Type } from "typebox";

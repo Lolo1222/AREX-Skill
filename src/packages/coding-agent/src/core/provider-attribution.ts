@@ -1,4 +1,4 @@
-import type { Api, Model } from "@auto-ml-skills/disco-ai";
+import type { Api, Model, ProviderHeaders } from "@earendil-works/pi-ai";
 import type { SettingsManager } from "./settings-manager.ts";
 import { isInstallTelemetryEnabled } from "./telemetry.ts";
 
@@ -7,8 +7,6 @@ const NVIDIA_NIM_HOST = "integrate.api.nvidia.com";
 const CLOUDFLARE_API_HOST = "api.cloudflare.com";
 const CLOUDFLARE_AI_GATEWAY_HOST = "gateway.ai.cloudflare.com";
 const OPENCODE_HOST = "opencode.ai";
-const ATTRIBUTION_TITLE = "DisCo";
-const ATTRIBUTION_CLIENT_ID = "disco";
 
 function matchesHost(baseUrl: string, expectedHost: string): boolean {
 	try {
@@ -46,20 +44,20 @@ function getDefaultAttributionHeaders(
 	if (isOpenRouterModel(model)) {
 		return {
 			"HTTP-Referer": "https://github.com/VectorSpaceLab/Auto-ML-Skills",
-			"X-OpenRouter-Title": ATTRIBUTION_TITLE,
+			"X-OpenRouter-Title": "DisCo",
 			"X-OpenRouter-Categories": "cli-agent",
 		};
 	}
 
 	if (isNvidiaNimModel(model)) {
 		return {
-			"X-BILLING-INVOKE-ORIGIN": ATTRIBUTION_TITLE,
+			"X-BILLING-INVOKE-ORIGIN": "DisCo",
 		};
 	}
 
 	if (isCloudflareModel(model)) {
 		return {
-			"User-Agent": `${ATTRIBUTION_CLIENT_ID}-coding-agent`,
+			"User-Agent": "disco-coding-agent",
 		};
 	}
 
@@ -75,16 +73,16 @@ function getSessionHeaders(model: Model<Api>, sessionId: string | undefined): Re
 	) {
 		return undefined;
 	}
-	return { "x-opencode-session": sessionId, "x-opencode-client": ATTRIBUTION_CLIENT_ID };
+	return { "x-opencode-session": sessionId, "x-opencode-client": "disco" };
 }
 
 export function mergeProviderAttributionHeaders(
 	model: Model<Api>,
 	settingsManager: SettingsManager,
 	sessionId: string | undefined,
-	...headerSources: Array<Record<string, string> | undefined>
-): Record<string, string> | undefined {
-	const merged = {
+	...headerSources: Array<ProviderHeaders | undefined>
+): ProviderHeaders | undefined {
+	const merged: ProviderHeaders = {
 		...getSessionHeaders(model, sessionId),
 		...getDefaultAttributionHeaders(model, settingsManager),
 	};

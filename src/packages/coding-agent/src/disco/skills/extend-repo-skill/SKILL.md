@@ -1,6 +1,8 @@
 ---
 name: extend-repo-skill
 description: "Extends an existing repository-specific Agent Skill with new capabilities, deeper coverage, troubleshooting, scripts, and usability tests. Use when the user asks to expand, improve, deepen, or add coverage to an already implemented skill instead of creating a new skill from scratch. If the repository itself changed and the old skill may be stale, use refresh-repo-skill instead."
+metadata:
+  disco-role: meta
 ---
 
 # Extend Repo Skill
@@ -29,6 +31,8 @@ skill unless the user explicitly asks for a fork.
 Gather or infer:
 
 - Existing skill directory containing `SKILL.md`.
+- Resolved DisCo agent directory, normally `~/.disco/agent` or the active
+  `DISCO_CODING_AGENT_DIR`, when the existing skill may be a live managed copy.
 - Repository path used as the evidence source for the extension.
 - The user's requested new capability, failure mode, coverage gap, or quality improvement.
 - Python inspection environment and installed package name when live API verification is needed.
@@ -45,21 +49,46 @@ Read these references as the workflow reaches each stage:
 - [references/editing-and-versioning.md](references/editing-and-versioning.md): editing rules, preserving existing behavior, frontmatter constraints, references/scripts updates, and usability-case expansion.
 - [references/verification-and-handoff.md](references/verification-and-handoff.md): automatic verification, human review package, regression-sensitive checks, and final handoff.
 
-When useful, also read sibling meta-skill references: `../create-repo-skill/references/` for canonical skill IDs, repository evidence discovery, installed-package inspection, planning, and writing, and `../verify-repo-skill/references/` for usability test-case format, verification review, and import/index routing guidance.
+When useful, also read sibling workflow-skill references: `../create-repo-skill/references/` for canonical skill IDs, repository evidence discovery, installed-package inspection, planning, and writing, and `../verify-repo-skill/references/` for usability test-case format, verification review, and import/index routing guidance.
 
 ## Required Workflow
 
-1. Resolve the existing skill directory, repository path, requested extension, and review/test artifact directory. If the user does not specify one, default to `<repository-path>/skills/tests/<skill-id>/`, with usability cases under `test-cases/` and review reports under `reports/`.
+1. Resolve the existing skill directory, repository path, requested extension,
+   DisCo agent directory, and review/test artifact directory. If the user does
+   not specify an artifact directory, default to
+   `<repository-path>/skills/tests/<skill-id>/`, with usability cases under
+   `test-cases/` and review reports under `reports/`. If the existing skill is
+   the live managed copy under
+   `<agent-dir>/skills/repo-skills/<skill-id>/`, copy only its runtime tree to a
+   working directory outside `<agent-dir>/skills/`, preserving the
+   `<skill-id>` directory basename. Keep that working copy until the dedicated
+   importer succeeds; never edit the live managed copy in place.
 2. Read [references/extension-planning.md](references/extension-planning.md). Audit current root/sub-skill routing, bundled references, bundled scripts, evals, usability tests, and known gaps before editing.
 3. Gather targeted repository evidence for the requested extension. Use source code plus installed-package inspection for API facts; use docs, examples, tests, and configs for intent and workflows.
 4. Write a concise extension plan that maps each new or changed capability to exactly one skill location, reference, script, or usability case.
-5. Read [references/editing-and-versioning.md](references/editing-and-versioning.md). Edit the existing skill in place while preserving useful current guidance, frontmatter IDs, and public structure.
+5. Read [references/editing-and-versioning.md](references/editing-and-versioning.md). Edit the resolved source or external working copy while preserving useful current guidance, frontmatter IDs, and public structure.
 6. Add or update usability test cases for the new capability and at least one regression-sensitive existing workflow under `test-cases/` in the review/test artifact directory.
-7. Read [references/verification-and-handoff.md](references/verification-and-handoff.md). Run automatic verification, create a human review package under `reports/` in the review/test artifact directory, fix blocking issues, and report the handoff.
+7. Read [references/verification-and-handoff.md](references/verification-and-handoff.md). Run automatic verification, create a human review package under `reports/` in the review/test artifact directory, and fix blocking issues.
+8. After verification passes, follow `verify-repo-skill`'s structured import
+   policy. Ask for import or overwrite approval unless the user already
+   authorized that exact action, then run
+   `verify-repo-skill/scripts/import_repo_skill.mjs` with the verified external
+   runtime directory. Pass `--overwrite` only for the exact approved existing
+   managed skill. The importer installs the runtime tree and rebuilds the
+   sibling live `repo-skills-router` under one rollback-capable global lock.
+   After success, DisCo Researcher can use the extended skill in a new session;
+   use `import-repo-skills-to-agent` only for an explicitly requested
+   cross-agent export.
 
 ## Non-Negotiables
 
 - Do not discard and rewrite the whole skill just because the extension is easier to express from scratch.
+- Do not edit a live skill under `<agent-dir>/skills/repo-skills/` directly.
+  Extend an external working copy, then let
+  `verify-repo-skill/scripts/import_repo_skill.mjs` replace the approved live
+  target.
+- Do not install an extended repo skill through a manually assembled copy and
+  router-update sequence.
 - Do not rename root or sub-skill IDs unless the user explicitly asks or the current names are invalid.
 - Do not remove existing references, scripts, routes, or usability cases unless they are wrong, stale, duplicated, or replaced by a better self-contained artifact.
 - Do not add claims about APIs, CLIs, configs, data formats, or runtime behavior without repository evidence or live inspection.
@@ -76,8 +105,12 @@ When useful, also read sibling meta-skill references: `../create-repo-skill/refe
 
 By the end, the user should have:
 
-- The existing skill directory updated in place.
+- The source skill directory or external working copy updated without mutating a
+  live managed skill outside the import transaction.
 - New or revised references/scripts/sub-skills where the requested capability needs depth.
 - Updated usability test cases in the configured review/test artifact directory's `test-cases/` subtree.
 - An automatic verification report and human review package in the configured review/test artifact directory's `reports/` subtree.
-- A final handoff that distinguishes changed public skill content, review/test artifacts, evidence used, and remaining gaps.
+- An approved managed import that DisCo Researcher can use directly in a new
+  session, or a clear staged-only status when import was declined.
+- A final handoff that distinguishes changed public skill content, review/test
+  artifacts, evidence used, import status, and remaining gaps.

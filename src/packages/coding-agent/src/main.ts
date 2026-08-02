@@ -5,16 +5,26 @@
  * createAgentSession() options. The SDK does the heavy lifting.
  */
 
+import { existsSync } from "node:fs";
 import { createInterface } from "node:readline";
-import { type ImageContent, modelsAreEqual } from "@auto-ml-skills/disco-ai";
+import { type ImageContent, modelsAreEqual } from "@earendil-works/pi-ai";
 import chalk from "chalk";
 import { type Args, type Mode, parseArgs, printHelp } from "./cli/args.ts";
+import {
+	type CredentialPrintCommand,
+	CredentialPrintError,
+	isCredentialPrintHelp,
+	parseCredentialPrintCommand,
+	printCredentialPrintHelp,
+	resolveCredentialForPrint,
+	validateCredentialPrintArgs,
+} from "./cli/credential-print.ts";
 import { processFileArguments } from "./cli/file-processor.ts";
 import { buildInitialMessage } from "./cli/initial-message.ts";
 import { listModels } from "./cli/list-models.ts";
 import { createProjectTrustContext } from "./cli/project-trust.ts";
+import { handleRepoSkillsCommand } from "./cli/repo-skills.ts";
 import { selectSession } from "./cli/session-picker.ts";
-import { buildSourceRoutingPrompt } from "./cli/source-routing.ts";
 import { shouldRunFirstTimeSetup, showFirstTimeSetup, showStartupSelector } from "./cli/startup-ui.ts";
 import { ENV_SESSION_DIR, expandTildePath, getAgentDir, getPackageDir, VERSION } from "./config.ts";
 import { type CreateAgentSessionRuntimeFactory, createAgentSessionRuntime } from "./core/agent-session-runtime.ts";
@@ -24,12 +34,11 @@ import {
 	createAgentSessionServices,
 } from "./core/agent-session-services.ts";
 import { formatNoModelsAvailableMessage } from "./core/auth-guidance.ts";
-import { AuthStorage } from "./core/auth-storage.ts";
 import { exportFromFile } from "./core/export-html/index.ts";
-import type { ExtensionFactory } from "./core/extensions/types.ts";
-import { configureHttpDispatcher } from "./core/http-dispatcher.ts";
-import type { ModelRegistry } from "./core/model-registry.ts";
+import type { InlineExtension } from "./core/extensions/types.ts";
+import { applyHttpProxySettings, configureHttpDispatcher } from "./core/http-dispatcher.ts";
 import { resolveCliModel, resolveModelScope, type ScopedModel } from "./core/model-resolver.ts";
+import { ModelRuntime } from "./core/model-runtime.ts";
 import { restoreStdout, takeOverStdout } from "./core/output-guard.ts";
 import { type AppMode, resolveProjectTrusted } from "./core/project-trust.ts";
 import type { CreateAgentSessionOptions } from "./core/sdk.ts";
@@ -42,13 +51,17 @@ import {
 import { assertValidSessionId, SessionManager } from "./core/session-manager.ts";
 import { SettingsManager } from "./core/settings-manager.ts";
 import { printTimings, resetTimings, time } from "./core/timings.ts";
-import { hasProjectTrustInputs, ProjectTrustStore } from "./core/trust-manager.ts";
+import { hasTrustRequiringProjectResources, ProjectTrustStore } from "./core/trust-manager.ts";
+import type { DiscoAgentMode } from "./disco/modes/types.ts";
+import { builtInExtensions } from "./extensions/index.ts";
 import { runMigrations, showDeprecationWarnings } from "./migrations.ts";
 import { InteractiveMode, runPrintMode, runRpcMode } from "./modes/index.ts";
 import { initTheme, stopThemeWatcher } from "./modes/interactive/theme/theme.ts";
 import { handleConfigCommand, handlePackageCommand } from "./package-manager-cli.ts";
 import { isLocalPath, normalizePath, resolvePath } from "./utils/paths.ts";
 import { cleanupWindowsSelfUpdateQuarantine } from "./utils/windows-self-update.ts";
+
+const EXTENSION_LOAD_FAILURE_HINT = 'Hint: Start without extensions using "disco -ne".';
 
 /**
  * Read all content from piped stdin.
@@ -115,6 +128,45 @@ function toPrintOutputMode(appMode: AppMode): Exclude<Mode, "rpc"> {
 
 function isPlainRuntimeMetadataCommand(parsed: Args): boolean {
 	return !parsed.print && parsed.mode === undefined && (parsed.help === true || parsed.listModels !== undefined);
+}
+
+async function runCredentialPrintCommand(args: string[]): Promise<boolean> {
+	if (isCredentialPrintHelp(args)) {
+		printCredentialPrintHelp();
+		return true;
+	}
+
+	let command: CredentialPrintCommand | undefined;
+	try {
+		command = parseCredentialPrintCommand(args);
+	} catch (error) {
+		const message = error instanceof CredentialPrintError ? error.message : "Failed to parse auth command";
+		console.error(chalk.red(`Error: ${message}`));
+		process.exitCode = 1;
+		return true;
+	}
+	if (!command) return false;
+
+	const parsed = parseArgs(command.args);
+	if (parsed.diagnostics.length > 0) {
+		for (const diagnostic of parsed.diagnostics) {
+			console.error(chalk.red(`Error: ${diagnostic.message}`));
+		}
+		process.exitCode = 1;
+		return true;
+	}
+
+	try {
+		validateCredentialPrintArgs(parsed);
+		const modelRuntime = await ModelRuntime.create({ allowModelNetwork: false });
+		const credential = await resolveCredentialForPrint(parsed, modelRuntime, command.kind, command.minExpiryMs);
+		process.stdout.write(`${credential}\n`);
+	} catch (error) {
+		const message = error instanceof CredentialPrintError ? error.message : "Failed to resolve credential";
+		console.error(chalk.red(`Error: ${message}`));
+		process.exitCode = 1;
+	}
+	return true;
 }
 
 async function prepareInitialMessage(
@@ -209,6 +261,7 @@ function validateForkFlags(parsed: Args): void {
 		parsed.continue ? "--continue" : undefined,
 		parsed.resume ? "--resume" : undefined,
 		parsed.noSession ? "--no-session" : undefined,
+		parsed.agentMode ? "--agent-mode" : undefined,
 	].filter((flag): flag is string => flag !== undefined);
 
 	if (conflictingFlags.length > 0) {
@@ -224,7 +277,6 @@ function validateSessionIdFlags(parsed: Args): void {
 		parsed.session ? "--session" : undefined,
 		parsed.continue ? "--continue" : undefined,
 		parsed.resume ? "--resume" : undefined,
-		parsed.noSession ? "--no-session" : undefined,
 	].filter((flag): flag is string => flag !== undefined);
 
 	if (conflictingFlags.length > 0) {
@@ -234,6 +286,16 @@ function validateSessionIdFlags(parsed: Args): void {
 
 	try {
 		assertValidSessionId(parsed.sessionId);
+	} catch (error: unknown) {
+		const message = error instanceof Error ? error.message : String(error);
+		console.error(chalk.red(`Error: ${message}`));
+		process.exit(1);
+	}
+}
+
+function openSessionOrExit(path: string, sessionDir?: string, discoMode?: DiscoAgentMode): SessionManager {
+	try {
+		return SessionManager.open(path, sessionDir, undefined, { discoMode });
 	} catch (error: unknown) {
 		const message = error instanceof Error ? error.message : String(error);
 		console.error(chalk.red(`Error: ${message}`));
@@ -258,7 +320,7 @@ async function createSessionManager(
 	settingsManager: SettingsManager,
 ): Promise<SessionManager> {
 	if (parsed.noSession || parsed.help || parsed.listModels !== undefined) {
-		return SessionManager.inMemory(cwd);
+		return SessionManager.inMemory(cwd, { id: parsed.sessionId, discoMode: parsed.agentMode });
 	}
 
 	if (parsed.fork) {
@@ -290,7 +352,7 @@ async function createSessionManager(
 		switch (resolved.type) {
 			case "path":
 			case "local":
-				return SessionManager.open(resolved.path, sessionDir);
+				return openSessionOrExit(resolved.path, sessionDir, parsed.agentMode);
 
 			case "global": {
 				console.log(chalk.yellow(`Session found in different project: ${resolved.cwd}`));
@@ -309,11 +371,11 @@ async function createSessionManager(
 	}
 
 	if (parsed.resume) {
-		initTheme(settingsManager.getTheme(), true);
 		try {
 			const selectedPath = await selectSession(
 				(onProgress) => SessionManager.list(cwd, sessionDir, onProgress),
 				(onProgress) => SessionManager.listAll(sessionDir, onProgress),
+				settingsManager,
 			);
 			if (!selectedPath) {
 				console.log(chalk.dim("No session selected"));
@@ -326,7 +388,12 @@ async function createSessionManager(
 	}
 
 	if (parsed.continue) {
-		return SessionManager.continueRecent(cwd, sessionDir);
+		const continuedSession = SessionManager.continueRecent(cwd, sessionDir);
+		const continuedSessionFile = continuedSession.getSessionFile();
+		if (parsed.agentMode && (!continuedSessionFile || !existsSync(continuedSessionFile))) {
+			continuedSession.newSession({ discoMode: parsed.agentMode });
+		}
+		return continuedSession;
 	}
 
 	if (parsed.sessionId) {
@@ -334,16 +401,36 @@ async function createSessionManager(
 		if (existingSession) {
 			return SessionManager.open(existingSession.path, sessionDir);
 		}
+		console.error(
+			chalk.yellow(
+				`Warning: No project session found with id '${parsed.sessionId}'; creating a new session with that id.`,
+			),
+		);
 	}
 
-	return SessionManager.create(cwd, sessionDir, { id: parsed.sessionId });
+	return SessionManager.create(cwd, sessionDir, { id: parsed.sessionId, discoMode: parsed.agentMode });
+}
+
+function validateRequestedAgentMode(parsed: Args, sessionManager: SessionManager): void {
+	if (parsed.agentMode === undefined) return;
+
+	const sessionMode = sessionManager.getDiscoMode();
+	if (sessionMode === parsed.agentMode) return;
+
+	console.error(
+		chalk.red(
+			`Error: --agent-mode ${parsed.agentMode} conflicts with the selected ${sessionMode} session. ` +
+				"Resume it without --agent-mode, or start a new session in the requested mode.",
+		),
+	);
+	process.exit(1);
 }
 
 function buildSessionOptions(
 	parsed: Args,
 	scopedModels: ScopedModel[],
 	hasExistingSession: boolean,
-	modelRegistry: ModelRegistry,
+	modelRuntime: ModelRuntime,
 	settingsManager: SettingsManager,
 ): {
 	options: CreateAgentSessionOptions;
@@ -362,7 +449,7 @@ function buildSessionOptions(
 			cliProvider: parsed.provider,
 			cliModel: parsed.model,
 			cliThinking: parsed.thinking,
-			modelRegistry,
+			modelRuntime,
 		});
 		if (resolved.warning) {
 			diagnostics.push({ type: "warning", message: resolved.warning });
@@ -385,7 +472,7 @@ function buildSessionOptions(
 		// Check if saved default is in scoped models - use it if so, otherwise first scoped model
 		const savedProvider = settingsManager.getDefaultProvider();
 		const savedModelId = settingsManager.getDefaultModel();
-		const savedModel = savedProvider && savedModelId ? modelRegistry.find(savedProvider, savedModelId) : undefined;
+		const savedModel = savedProvider && savedModelId ? modelRuntime.getModel(savedProvider, savedModelId) : undefined;
 		const savedInScope = savedModel ? scopedModels.find((sm) => modelsAreEqual(sm.model, savedModel)) : undefined;
 
 		if (savedInScope) {
@@ -418,7 +505,7 @@ function buildSessionOptions(
 		}));
 	}
 
-	// API key from CLI - set in authStorage
+	// API key from CLI - set as a non-persistent runtime override
 	// (handled by caller before createAgentSession)
 
 	// Tools
@@ -452,12 +539,12 @@ async function promptForMissingSessionCwd(
 }
 
 export interface MainOptions {
-	extensionFactories?: ExtensionFactory[];
+	extensionFactories?: InlineExtension[];
 }
 
 export async function main(args: string[], options?: MainOptions) {
 	resetTimings();
-	const extensionFactories = [...(options?.extensionFactories ?? [])];
+	const extensionFactories = [...builtInExtensions, ...(options?.extensionFactories ?? [])];
 	const offlineMode = args.includes("--offline") || isTruthyEnvFlag(process.env.DISCO_OFFLINE);
 	if (offlineMode) {
 		process.env.DISCO_OFFLINE = "1";
@@ -468,11 +555,35 @@ export async function main(args: string[], options?: MainOptions) {
 		cleanupWindowsSelfUpdateQuarantine(getPackageDir());
 	}
 
+	const cwd = process.cwd();
+	const agentDir = getAgentDir();
+	const bootstrapSettingsManager = SettingsManager.create(cwd, agentDir, { projectTrusted: false });
+	applyHttpProxySettings(bootstrapSettingsManager.getGlobalSettings().httpProxy);
+	configureHttpDispatcher();
+
+	if (await handleRepoSkillsCommand(args)) {
+		process.exit(process.exitCode ?? 0);
+		return;
+	}
+
 	if (await handlePackageCommand(args, { extensionFactories })) {
+		const exitCode = process.exitCode ?? 0;
+		if (process.platform === "win32" && exitCode === 0 && args[0] === "update") {
+			// We normally prefer process.exit(0) for package commands so bad extensions cannot keep
+			// one-shot commands alive. On Windows, Node can assert after fetch() if process.exit(0)
+			// runs during teardown; let successful `disco update` drain naturally instead.
+			// https://github.com/nodejs/node/issues/56645
+			return;
+		}
+		process.exit(exitCode);
 		return;
 	}
 
 	if (await handleConfigCommand(args, { extensionFactories })) {
+		return;
+	}
+
+	if (await runCredentialPrintCommand(args)) {
 		return;
 	}
 
@@ -490,11 +601,6 @@ export async function main(args: string[], options?: MainOptions) {
 
 	if (parsed.version) {
 		console.log(VERSION);
-		process.exit(0);
-	}
-
-	if (parsed.help) {
-		printHelp();
 		process.exit(0);
 	}
 
@@ -527,11 +633,9 @@ export async function main(args: string[], options?: MainOptions) {
 	validateSessionIdFlags(parsed);
 
 	// Run migrations (pass cwd for project-local migrations)
-	const { migratedAuthProviders: migratedProviders, deprecationWarnings } = runMigrations(process.cwd());
+	const { migratedAuthProviders: migratedProviders, deprecationWarnings } = runMigrations(cwd);
 	time("runMigrations");
 
-	const cwd = process.cwd();
-	const agentDir = getAgentDir();
 	const startupSettingsManager = SettingsManager.create(cwd, agentDir);
 	reportDiagnostics(collectSettingsDiagnostics(startupSettingsManager, "startup session lookup"));
 
@@ -553,6 +657,7 @@ export async function main(args: string[], options?: MainOptions) {
 		(envSessionDir ? expandTildePath(envSessionDir) : undefined) ??
 		startupSettingsManager.getSessionDir();
 	let sessionManager = await createSessionManager(parsed, cwd, sessionDir, startupSettingsManager);
+	validateRequestedAgentMode(parsed, sessionManager);
 	const missingSessionCwdIssue = getMissingSessionCwdIssue(sessionManager, cwd);
 	if (missingSessionCwdIssue) {
 		if (appMode === "interactive") {
@@ -579,7 +684,9 @@ export async function main(args: string[], options?: MainOptions) {
 	const trustStore = new ProjectTrustStore(agentDir);
 	const sessionCwd = sessionManager.getCwd();
 	const autoTrustOnReloadCwd =
-		parsed.projectTrustOverride === undefined && !hasProjectTrustInputs(sessionCwd) ? sessionCwd : undefined;
+		parsed.projectTrustOverride === undefined && !hasTrustRequiringProjectResources(sessionCwd)
+			? sessionCwd
+			: undefined;
 	const trustPromptMode: AppMode = parsed.help || parsed.listModels !== undefined ? "print" : appMode;
 	const projectTrustByCwd = new Map<string, boolean>();
 
@@ -587,9 +694,6 @@ export async function main(args: string[], options?: MainOptions) {
 	const resolvedSkillPaths = resolveCliPaths(cwd, parsed.skills);
 	const resolvedPromptTemplatePaths = resolveCliPaths(cwd, parsed.promptTemplates);
 	const resolvedThemePaths = resolveCliPaths(cwd, parsed.themes);
-	const sourceRoutingPrompt = buildSourceRoutingPrompt(parsed.source);
-	const appendSystemPrompt = [...(parsed.appendSystemPrompt ?? []), sourceRoutingPrompt];
-	const authStorage = AuthStorage.create();
 	const createRuntime: CreateAgentSessionRuntimeFactory = async ({
 		cwd,
 		agentDir,
@@ -600,17 +704,19 @@ export async function main(args: string[], options?: MainOptions) {
 		const isInitialRuntime = sessionStartEvent === undefined;
 		const projectTrustDiagnostics: AgentSessionRuntimeDiagnostic[] = [];
 		const cachedProjectTrust = projectTrustByCwd.get(cwd);
-		const hasTrustInputs = hasProjectTrustInputs(cwd);
+		const hasTrustRequiringResources = hasTrustRequiringProjectResources(cwd);
 		const shouldResolveProjectTrust =
-			parsed.projectTrustOverride === undefined && cachedProjectTrust === undefined && hasTrustInputs;
+			parsed.projectTrustOverride === undefined && cachedProjectTrust === undefined && hasTrustRequiringResources;
 		const projectTrusted = shouldResolveProjectTrust
 			? false
-			: (cachedProjectTrust ?? parsed.projectTrustOverride ?? (!hasTrustInputs || trustStore.get(cwd) === true));
+			: (cachedProjectTrust ??
+				parsed.projectTrustOverride ??
+				(!hasTrustRequiringResources || trustStore.get(cwd) === true));
 		const runtimeSettingsManager = SettingsManager.create(cwd, agentDir, { projectTrusted });
 		const services = await createAgentSessionServices({
 			cwd,
 			agentDir,
-			authStorage,
+			discoMode: sessionManager.getHeader()?.discoMode,
 			settingsManager: runtimeSettingsManager,
 			extensionFlagValues: parsed.unknownFlags,
 			resourceLoaderReloadOptions: shouldResolveProjectTrust
@@ -642,17 +748,18 @@ export async function main(args: string[], options?: MainOptions) {
 				additionalSkillPaths: resolvedSkillPaths,
 				additionalPromptTemplatePaths: resolvedPromptTemplatePaths,
 				additionalThemePaths: resolvedThemePaths,
+				includeDisCoBuiltinSkills: !parsed.discoNoBuiltinSkills,
 				noExtensions: parsed.noExtensions,
 				noSkills: parsed.noSkills,
 				noPromptTemplates: parsed.noPromptTemplates,
 				noThemes: parsed.noThemes,
 				noContextFiles: parsed.noContextFiles,
 				systemPrompt: parsed.systemPrompt,
-				appendSystemPrompt,
+				appendSystemPrompt: parsed.appendSystemPrompt,
 				extensionFactories,
 			},
 		});
-		const { settingsManager, modelRegistry, resourceLoader } = services;
+		const { settingsManager, modelRuntime, resourceLoader } = services;
 		const diagnostics: AgentSessionRuntimeDiagnostic[] = [
 			...projectTrustDiagnostics,
 			...services.diagnostics,
@@ -665,7 +772,7 @@ export async function main(args: string[], options?: MainOptions) {
 
 		const modelPatterns = parsed.models ?? settingsManager.getEnabledModels();
 		const scopedModels =
-			modelPatterns && modelPatterns.length > 0 ? await resolveModelScope(modelPatterns, modelRegistry) : [];
+			modelPatterns && modelPatterns.length > 0 ? await resolveModelScope(modelPatterns, modelRuntime) : [];
 		const {
 			options: sessionOptions,
 			cliThinkingFromModel,
@@ -674,7 +781,7 @@ export async function main(args: string[], options?: MainOptions) {
 			parsed,
 			scopedModels,
 			sessionManager.buildSessionContext().messages.length > 0,
-			modelRegistry,
+			modelRuntime,
 			settingsManager,
 		);
 		diagnostics.push(...sessionOptionDiagnostics);
@@ -686,7 +793,8 @@ export async function main(args: string[], options?: MainOptions) {
 					message: "--api-key requires a model to be specified via --model, --provider/--model, or --models",
 				});
 			} else {
-				authStorage.setRuntimeApiKey(sessionOptions.model.provider, parsed.apiKey);
+				await modelRuntime.setRuntimeApiKey(sessionOptions.model.provider, parsed.apiKey, { allowNetwork: false });
+				await services.modelRuntime.getAvailable();
 			}
 		}
 
@@ -721,12 +829,21 @@ export async function main(args: string[], options?: MainOptions) {
 	});
 	time("createAgentSessionRuntime");
 	const { services, session, modelFallbackMessage } = runtime;
-	const { settingsManager, modelRegistry } = services;
+	const { settingsManager, modelRuntime, resourceLoader } = services;
+	applyHttpProxySettings(settingsManager.getGlobalSettings().httpProxy);
 	configureHttpDispatcher(settingsManager.getHttpIdleTimeoutMs());
+
+	if (parsed.help) {
+		const extensionFlags = resourceLoader
+			.getExtensions()
+			.extensions.flatMap((extension) => Array.from(extension.flags.values()));
+		printHelp(extensionFlags);
+		process.exit(0);
+	}
 
 	if (parsed.listModels !== undefined) {
 		const searchPattern = typeof parsed.listModels === "string" ? parsed.listModels : undefined;
-		await listModels(modelRegistry, searchPattern);
+		await listModels(modelRuntime, searchPattern);
 		process.exit(0);
 	}
 
@@ -757,6 +874,9 @@ export async function main(args: string[], options?: MainOptions) {
 	time("resolveModelScope");
 	reportDiagnostics(runtime.diagnostics);
 	if (runtime.diagnostics.some((diagnostic) => diagnostic.type === "error")) {
+		if (runtime.diagnostics.some((diagnostic) => diagnostic.message.includes("Failed to load extension"))) {
+			console.error(chalk.yellow(EXTENSION_LOAD_FAILURE_HINT));
+		}
 		process.exit(1);
 	}
 	time("createAgentSession");
@@ -770,6 +890,11 @@ export async function main(args: string[], options?: MainOptions) {
 	if (startupBenchmark && appMode !== "interactive") {
 		console.error(chalk.red("Error: DISCO_STARTUP_BENCHMARK only supports interactive mode"));
 		process.exit(1);
+	}
+
+	// RPC refreshes catalogs here in the background; interactive mode starts its refresh after TUI initialization.
+	if (!offlineMode && appMode === "rpc") {
+		void modelRuntime.refresh().catch(() => {});
 	}
 
 	if (appMode === "rpc") {
@@ -788,9 +913,12 @@ export async function main(args: string[], options?: MainOptions) {
 		if (startupBenchmark) {
 			await interactiveMode.init();
 			time("interactiveMode.init");
-			printTimings();
+			// Give the TUI's stdin handler a brief chance to consume terminal query replies
+			// (Kitty keyboard protocol, device attributes, cell size) before restoring the terminal.
+			await new Promise((resolve) => setTimeout(resolve, 150));
 			interactiveMode.stop();
 			stopThemeWatcher();
+			printTimings();
 			if (process.stdout.writableLength > 0) {
 				await new Promise<void>((resolve) => process.stdout.once("drain", resolve));
 			}

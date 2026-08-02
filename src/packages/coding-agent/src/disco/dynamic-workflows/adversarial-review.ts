@@ -4,12 +4,12 @@
  */
 
 export interface AdversarialReviewConfig {
-  /** Number of independent reviewers per finding. */
-  reviewerCount: number;
-  /** Whether to filter out findings that don't survive cross-checking. */
-  filterContested: boolean;
-  /** Minimum agreement threshold (0-1). */
-  agreementThreshold: number;
+	/** Number of independent reviewers per finding. */
+	reviewerCount: number;
+	/** Whether to filter out findings that don't survive cross-checking. */
+	filterContested: boolean;
+	/** Minimum agreement threshold (0-1). */
+	agreementThreshold: number;
 }
 
 /**
@@ -21,7 +21,7 @@ export interface AdversarialReviewConfig {
  * agreement threshold.
  */
 export function generateAdversarialReviewWorkflow(): string {
-  return `export const meta = {
+	return `export const meta = {
   name: 'adversarial_review',
   description: 'Adversarial review: findings cross-checked by independent skeptics',
   phases: [
@@ -76,14 +76,14 @@ return { total: findings.length, survivors, report }`;
  * Generate a multi-perspective analysis workflow.
  */
 export function generateMultiPerspectiveWorkflow(topic: string, perspectives: string[]): string {
-  const perspectiveAgents = perspectives
-    .map(
-      (p, _i) =>
-        `  () => agent('Analyze from ${p} perspective: ' + topic, { label: '${p.toLowerCase().replace(/\\s+/g, "-")}' }),`,
-    )
-    .join("\n");
+	const perspectiveAgents = perspectives
+		.map(
+			(p, _i) =>
+				`  () => agent('Analyze from ${p} perspective: ' + topic, { label: '${p.toLowerCase().replace(/\\s+/g, "-")}' }),`,
+		)
+		.join("\n");
 
-  return `export const meta = {
+	return `export const meta = {
   name: 'multi_perspective_analysis',
   description: 'Analyze from ${perspectives.length} different perspectives',
   phases: [
