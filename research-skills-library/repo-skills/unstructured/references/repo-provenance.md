@@ -12,7 +12,7 @@ This skill was generated from the Unstructured Python package repository.
 - Package distribution: `unstructured`
 - Package version: `0.23.1`
 - Working tree state: dirty because this generated `skills/` tree was added during skill creation.
-- Remote URL: omitted-private-or-unknown
+- Remote URL: https://github.com/Unstructured-IO/unstructured
 
 ## Evidence Paths
 

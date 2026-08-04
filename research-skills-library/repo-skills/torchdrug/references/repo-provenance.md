@@ -12,7 +12,7 @@ Read this before deciding whether this skill is current for a checkout of TorchD
   "generated_at_utc": "2026-06-29T18:51:58Z",
   "repository": {
     "name": "torchdrug",
-    "remote_url": "omitted-private-or-unknown",
+    "remote_url": "https://github.com/DeepGraphLearning/torchdrug",
     "vcs": "git",
     "branch": "master",
     "tag": null,

@@ -12,7 +12,7 @@ Read this before deciding whether this skill is current for an OpenHands checkou
   "generated_at_utc": "2026-06-29T00:00:00Z",
   "repository": {
     "name": "OpenHands",
-    "remote_url": "omitted-private-or-unknown",
+    "remote_url": "https://github.com/OpenHands/OpenHands",
     "vcs": "git",
     "branch": "main",
     "tag": null,

@@ -5,7 +5,7 @@
 - Source branch: `master`
 - Exact tag: `none`
 - Package version from source: `2.6.2`
-- Remote URL: omitted-private-or-unknown
+- Remote URL: https://github.com/Lightning-AI/pytorch-lightning
 - Generated skill id: `lightning`
 - Generated from dirty checkout: yes
 

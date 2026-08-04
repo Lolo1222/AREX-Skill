@@ -10,7 +10,7 @@
 - Branch: `master`
 - Commit: `0d8b7510bdc5409f4a76c3191e122ddea50f4aa2`
 - Exact tag: none detected
-- Remote URL: omitted-private-or-unknown
+- Remote URL: https://github.com/comfyanonymous/ComfyUI
 - Working tree state at generation: dirty because DisCo-created files were present under `skills/`
 
 ## Evidence Paths

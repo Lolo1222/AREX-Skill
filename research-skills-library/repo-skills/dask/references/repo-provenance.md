@@ -12,7 +12,7 @@ This skill was generated from repository evidence for the Dask Python package.
 | Commit | `c9d1df34ccba182ddf43c2dbe4315c4d9c8c44e1` |
 | Branch | `main` |
 | Exact tag | none detected |
-| Remote URL | omitted-private-or-unknown |
+| Remote URL | https://github.com/dask/dask |
 | Working tree state at generation | dirty: generated `skills/` tree was untracked during skill creation |
 | Package distribution | `dask` |
 | Package version observed during inspection | `0.0.post1+gc9d1df34c` |

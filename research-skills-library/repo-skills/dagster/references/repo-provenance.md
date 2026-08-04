@@ -12,7 +12,7 @@ Read this before deciding whether this skill is current for a checkout of Dagste
   "generated_at_utc": "2026-06-21T00:00:00Z",
   "repository": {
     "name": "dagster",
-    "remote_url": "omitted-private-or-unknown",
+    "remote_url": "https://github.com/dagster-io/dagster",
     "vcs": "git",
     "branch": "master",
     "tag": null,

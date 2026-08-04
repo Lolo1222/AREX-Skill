@@ -13,7 +13,7 @@ This skill was generated from repository evidence for `scvi-tools`.
 - Working tree state: dirty at generation time
 - Dirty summary: untracked `skills/` tree containing generated DisCo runtime and review/test artifacts
 - Package version: `1.4.3`
-- Remote URL: omitted-private-or-unknown
+- Remote URL: https://github.com/scverse/scvi-tools
 
 ## Evidence Paths
 

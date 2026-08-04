@@ -8,7 +8,7 @@ schema: `disco.repo-provenance.v1`
 - Commit: `046c8b84fdcbf7e1b72bbbbd07fa2502ff9b94dd`
 - Branch: `master`
 - Exact tag: none detected
-- Remote URL: omitted-private-or-unknown
+- Remote URL: https://github.com/deepchem/deepchem
 - Working tree state at generation: dirty because the generated `skills/` tree was added during this DisCo run
 - Package distribution version observed in inspection environment: `2.8.1.dev20260621163742`
 - Package import version observed from `deepchem.__version__`: `2.8.1.dev`

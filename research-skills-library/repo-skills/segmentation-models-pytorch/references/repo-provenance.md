@@ -12,7 +12,7 @@ Read this before deciding whether this skill is current for a checkout of the re
   "generated_at_utc": "2026-06-30T00:00:00Z",
   "repository": {
     "name": "segmentation_models.pytorch",
-    "remote_url": "omitted-private-or-unknown",
+    "remote_url": "https://github.com/qubvel-org/segmentation_models.pytorch",
     "vcs": "git",
     "branch": "main",
     "tag": null,

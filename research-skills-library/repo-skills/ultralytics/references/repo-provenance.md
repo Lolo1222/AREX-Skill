@@ -10,7 +10,7 @@
 - Source branch: `main`.
 - Exact tag: none detected at generation commit.
 - Working tree state at generation: dirty because `skills/` contained untracked generated/review artifacts.
-- Remote URL: omitted-private-or-unknown.
+- Remote URL: `https://github.com/ultralytics/ultralytics`
 - Package version used for live inspection: `8.4.72`.
 
 ## Evidence Paths

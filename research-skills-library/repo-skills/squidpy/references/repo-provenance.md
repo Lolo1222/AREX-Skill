@@ -15,7 +15,7 @@ This skill was generated from a Squidpy source checkout and live package inspect
 | Working tree state | dirty: untracked `skills/` directory present |
 | Package distribution | `squidpy` |
 | Inspected package version | `0.1.dev1+g9f9d50028` |
-| Remote URL | omitted-private-or-unknown |
+| Remote URL | https://github.com/scverse/squidpy |
 
 ## Evidence Paths
 

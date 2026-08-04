@@ -13,7 +13,7 @@ This skill was generated from AlphaFold 3 repository evidence and live package i
 - Working tree state at baseline: dirty because this generated `skills/` directory was added; no pre-existing tracked source modifications were detected.
 - Package distribution: `alphafold3`
 - Package version verified during inspection: `3.0.3`
-- Remote URL: omitted-private-or-unknown
+- Remote URL: https://github.com/google-deepmind/alphafold3
 
 ## Evidence Paths
 

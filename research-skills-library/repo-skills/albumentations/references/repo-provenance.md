@@ -7,7 +7,7 @@
 - Git commit: `66212d77a44927a29d6a0e81621d3c27afbd929c`
 - Git branch: `main`
 - Exact tag: none detected
-- Remote URL: omitted-private-or-unknown
+- Remote URL: https://github.com/albumentations-team/albumentations
 - Working tree state at generation: dirty because this DisCo run added generated skill and review artifacts under `skills/`.
 
 ## Evidence paths

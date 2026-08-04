@@ -12,7 +12,7 @@
 - Installed package version inspected: `0.1.dev1+g91f2df471`
 - Python requirement from package metadata: `>=3.8`
 - Working tree state at generation: dirty because generated `skills/` outputs were added; no source-code changes were detected before skill creation.
-- Remote URL: omitted-private-or-unknown
+- Remote URL: https://github.com/facebookresearch/fastMRI
 
 ## Evidence Paths
 

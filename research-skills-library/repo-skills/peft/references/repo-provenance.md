@@ -1,6 +1,7 @@
 # Repo Provenance
 
 - Repository: `huggingface/peft`
+- Remote URL: `https://github.com/huggingface/peft`
 - Commit: `036abd27e464819e0a19ddaa26093c84d5943488`
 - Branch: `main`
 - Package/import: `peft`

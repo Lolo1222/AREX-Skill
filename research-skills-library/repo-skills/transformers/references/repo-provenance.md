@@ -12,7 +12,7 @@ This skill was generated from the Hugging Face Transformers repository state bel
 | Exact tag | none detected |
 | Package version | `5.13.0.dev0` |
 | Dirty state at generation | dirty: generated `skills/` artifacts were untracked during skill creation |
-| Remote URL | omitted-private-or-unknown |
+| Remote URL | https://github.com/huggingface/transformers |
 
 ## Evidence Paths
 

@@ -14,7 +14,7 @@ This skill was generated from MMDetection repository evidence and live package i
 | Git commit | `cfd5d3a985b0249de009b67d04f37263e11cdf3d` |
 | Exact tag | none detected |
 | Working tree state | clean at initial scope capture; generated `skills/` artifacts were added during skill creation |
-| Remote URL | omitted-private-or-unknown |
+| Remote URL | https://github.com/open-mmlab/mmdetection |
 
 ## Relative Evidence Paths
 

@@ -11,7 +11,7 @@
 - Git branch: `main`
 - Exact tag: none detected
 - Working tree state: dirty at generation time because DisCo-generated `skills/` artifacts were being added during this run; no pre-existing source-code modifications were reported by the initial repository snapshot.
-- Remote URL: omitted-private-or-unknown
+- Remote URL: https://github.com/huggingface/smolagents
 
 ## Evidence Paths
 

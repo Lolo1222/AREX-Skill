@@ -8,7 +8,7 @@
 - Source branch: `master`
 - Exact tag: none detected
 - Working tree state at generation: dirty because the new generated skill/artifact files were untracked under `skills/`; no pre-existing source-code modifications were reported before generation.
-- Remote URL: omitted-private-or-unknown
+- Remote URL: https://github.com/clearml/clearml
 
 ## Evidence Paths
 

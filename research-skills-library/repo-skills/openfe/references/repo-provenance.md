@@ -12,7 +12,7 @@ Read this before deciding whether this skill is current for a checkout of the re
   "generated_at_utc": "2026-06-29T17:38:56Z",
   "repository": {
     "name": "openfe",
-    "remote_url": "omitted-private-or-unknown",
+    "remote_url": "https://github.com/OpenFreeEnergy/openfe",
     "vcs": "git",
     "branch": "main",
     "tag": null,

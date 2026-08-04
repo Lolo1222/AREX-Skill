@@ -8,7 +8,7 @@
 - Commit: `8907e6671bfbfc92303b5f79c4b5e6ce47cdef57`
 - Exact tag: none detected
 - Working tree state at generation: dirty because the generated `skills/` tree was added
-- Remote URL: omitted-private-or-unknown
+- Remote URL: https://github.com/dauparas/ProteinMPNN
 - Package version: not declared; this is a script-style repository without `pyproject.toml`, `setup.py`, or distribution metadata
 
 ## Evidence Paths

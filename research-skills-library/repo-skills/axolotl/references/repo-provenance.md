@@ -12,7 +12,7 @@ Read this before deciding whether this Axolotl repo skill is current for a check
   "generated_at_utc": "2026-06-22T00:00:00Z",
   "repository": {
     "name": "axolotl",
-    "remote_url": "omitted-private-or-unknown",
+    "remote_url": "https://github.com/axolotl-ai-cloud/axolotl",
     "vcs": "git",
     "branch": "main",
     "tag": null,
