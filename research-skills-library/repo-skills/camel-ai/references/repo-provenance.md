@@ -1,7 +1,7 @@
 # Repo Provenance
 
 - Schema: `disco.repo-provenance.v1`
-- Source repository: CAMEL-AI local checkout; remote URL omitted-private-or-unknown.
+- Source repository: CAMEL-AI local checkout; remote URL: `https://github.com/camel-ai/camel`.
 - Source commit: `51ae9bb92be2b124927e9d9822210873e4b29c16`
 - Branch: `master`
 - Exact tag: none detected at generation commit.

@@ -6,7 +6,7 @@
 - Source commit: `9f66e8a649856524ef0ff081a23d58cd071b6ae4`
 - Source branch: `main`
 - Exact tag: none detected
-- Remote URL: omitted-private-or-unknown
+- Remote URL: https://github.com/run-llama/llama_index
 - Working tree at extraction start: clean; generated `skills/` artifacts were added afterward
 - Root package version from `pyproject.toml`: `llama-index==0.14.22`
 - Live inspected package: `llama-index-core==0.14.22`

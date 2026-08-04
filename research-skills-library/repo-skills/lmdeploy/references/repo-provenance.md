@@ -12,7 +12,7 @@ Read this before deciding whether this skill is current for a checkout of LMDepl
   "generated_at_utc": "2026-06-22T16:30:00Z",
   "repository": {
     "name": "lmdeploy",
-    "remote_url": "omitted-private-or-unknown",
+    "remote_url": "https://github.com/InternLM/lmdeploy",
     "vcs": "git",
     "branch": "main",
     "tag": null,

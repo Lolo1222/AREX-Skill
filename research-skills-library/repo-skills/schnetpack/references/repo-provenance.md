@@ -11,7 +11,7 @@ Generated skill id: `schnetpack`
 - Branch: `master`
 - Exact tag: none recorded
 - Package version: `2.2.0`
-- Remote URL: omitted-private-or-unknown
+- Remote URL: https://github.com/atomistic-machine-learning/schnetpack
 - Dirty state: the checkout contained newly generated `skills/` output during final provenance capture. No pre-existing source-code modifications were used as extraction evidence.
 
 ## Primary Evidence Paths

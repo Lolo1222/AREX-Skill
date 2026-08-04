@@ -11,7 +11,7 @@ This file records the source evidence baseline used to generate the `mlflow` ski
 - Branch: `master`
 - Exact tag: none recorded
 - Working tree state at generation: dirty because the generated `skills/` artifact tree was untracked
-- Remote URL: omitted-private-or-unknown
+- Remote URL: https://github.com/mlflow/mlflow
 
 ## Evidence Paths
 

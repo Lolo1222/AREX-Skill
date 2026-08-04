@@ -7,7 +7,7 @@
 - Branch: `master`
 - Exact tag: `v1.10.1`
 - Package version: repository tag v1.10.1
-- Remote URL: omitted-private-or-unknown
+- Remote URL: https://github.com/AUTOMATIC1111/stable-diffusion-webui
 - Working tree state: dirty
 
 ## Dirty State Summary

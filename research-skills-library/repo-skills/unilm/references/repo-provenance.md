@@ -6,7 +6,7 @@
 - Source branch: `master`
 - Exact tag: none detected
 - Working tree state at generation: dirty because `skills/` review/runtime outputs were untracked
-- Remote URL: omitted-private-or-unknown
+- Remote URL: https://github.com/microsoft/unilm
 - Package/version facts: representative lightweight live inspection verified `adalm` distribution version `0.0` and import module `finetune`; `unilm-v1/src/setup.py` declares `pytorch_pretrained_bert` version `0.4.0`
 - Inspection environment: private research context only; no local executable, prefix, or cache paths are recorded in this public skill
 

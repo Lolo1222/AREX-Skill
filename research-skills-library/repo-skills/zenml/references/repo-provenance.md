@@ -12,7 +12,7 @@ Read this before deciding whether this skill is current for a checkout of the Ze
   "generated_at_utc": "2026-06-30T00:00:00Z",
   "repository": {
     "name": "zenml",
-    "remote_url": "omitted-private-or-unknown",
+    "remote_url": "https://github.com/zenml-io/zenml",
     "vcs": "git",
     "branch": "main",
     "tag": null,

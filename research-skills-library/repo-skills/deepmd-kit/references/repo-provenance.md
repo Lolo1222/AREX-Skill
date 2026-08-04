@@ -8,7 +8,7 @@ source:
   commit: b52c359ec6b6f6f34998e00f774c35d253cf09e5
   branch: master
   tag: null
-  remote_url: omitted-private-or-unknown
+  remote_url: https://github.com/deepmodeling/deepmd-kit
 working_tree:
   dirty: true
   note: Generated skill artifacts were present during provenance capture; source code evidence was otherwise read-only for this skill creation run.

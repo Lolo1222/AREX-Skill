@@ -12,7 +12,7 @@ Read this before deciding whether this skill is current for a Feast checkout. If
   "generated_at_utc": "2026-06-21T00:00:00Z",
   "repository": {
     "name": "feast",
-    "remote_url": "omitted-private-or-unknown",
+    "remote_url": "https://github.com/feast-dev/feast",
     "vcs": "git",
     "branch": "master",
     "tag": null,

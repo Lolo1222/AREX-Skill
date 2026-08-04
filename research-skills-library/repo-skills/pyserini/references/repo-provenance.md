@@ -12,7 +12,7 @@ Read this before deciding whether this skill is current for a checkout of Pyseri
   "generated_at_utc": "2026-06-22T18:58:58Z",
   "repository": {
     "name": "pyserini",
-    "remote_url": "omitted-private-or-unknown",
+    "remote_url": "https://github.com/castorini/pyserini",
     "vcs": "git",
     "branch": "master",
     "tag": null,

@@ -6,7 +6,7 @@
 - commit: `9d14a5e06d98355e5c0eccd0736b961fbe419f87`
 - branch: `master`
 - exact tag: none
-- remote_url: omitted-private-or-unknown
+- remote_url: https://github.com/langchain-ai/langchain
 - dirty checkout: yes, generated `skills/` content was present at generation time
 
 ## Package Versions Observed from Metadata

@@ -1,6 +1,7 @@
 # Repo Provenance
 
 - Repository: `deepset-ai/haystack`
+- Remote URL: `https://github.com/deepset-ai/haystack`
 - Commit: `75c51b683f07045460f377679bc491b4b9c0c044`
 - Branch: `main`
 - Package: `haystack-ai`

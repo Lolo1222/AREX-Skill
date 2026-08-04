@@ -9,7 +9,7 @@ This skill was generated from the ESM / fair-esm source repository.
 - Commit: `2b369911bb5b4b0dda914521b9475cad1656b2ac`
 - Exact tag: none detected
 - Working tree state at generation: dirty because generated DisCo output was present under `skills/`
-- Remote URL: omitted-private-or-unknown
+- Remote URL: https://github.com/facebookresearch/esm
 - Package distribution: `fair-esm`
 - Package version observed during inspection: `2.0.1`
 

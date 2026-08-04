@@ -10,7 +10,7 @@ schema: disco.repo-provenance.v1
 - Git branch: `main`
 - Exact tag: none recorded
 - Working tree state at generation: dirty because DisCo-generated `skills/` content was present or being created
-- Remote URL: omitted-private-or-unknown
+- Remote URL: https://github.com/chemprop/chemprop
 
 ## Evidence Paths
 

@@ -10,7 +10,7 @@ Generated for the `unsloth` repository from a Git checkout.
 - Package distribution: `unsloth`
 - Package version observed during inspection: `2026.6.8`
 - Python requirement from package metadata: `>=3.9,<3.15`
-- Remote URL: omitted-private-or-unknown
+- Remote URL: https://github.com/unslothai/unsloth
 
 ## Working Tree State
 

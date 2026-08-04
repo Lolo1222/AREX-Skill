@@ -8,7 +8,7 @@ schema: `disco.repo-provenance.v1`
 - Branch: `main`
 - Exact tag: `none`
 - Working tree state: dirty; generated skill artifacts are untracked under `skills/`
-- Remote URL: omitted-private-or-unknown
+- Remote URL: https://github.com/microsoft/autogen
 - Package versions verified for inspection: `autogen-core==0.7.5`, `autogen-agentchat==0.7.5`, `autogen-ext==0.7.5`, `pyautogen==0.10.0`, `agbench==0.0.1a1`
 
 ## Evidence Paths

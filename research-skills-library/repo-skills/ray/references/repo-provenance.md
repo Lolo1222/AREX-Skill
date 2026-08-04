@@ -14,7 +14,7 @@ This repo skill was generated from repository evidence for Ray and is intended t
 | Working tree state | dirty: generated `skills/` content present |
 | Source package version | `3.0.0.dev0` from `python/ray/_version.py` |
 | Installed inspection package | `ray` 2.55.1 used only for live API/CLI signature checks |
-| Remote URL | omitted-private-or-unknown |
+| Remote URL | https://github.com/ray-project/ray |
 
 The generated skill uses current source files and documentation for Ray 3.0.0.dev0 intent, packaging, submodule coverage, and provenance. A private installed Ray 2.55.1 environment was used only to verify stable public imports, selected signatures, optional-extra behavior, and CLI help surfaces. Local environment paths and Python executable paths are intentionally omitted.
 

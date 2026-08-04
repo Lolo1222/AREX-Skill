@@ -7,7 +7,7 @@
 - Commit: `e75b8a964a870dea886548f78da1900804749040`
 - Branch: `main`
 - Exact tag: none detected
-- Remote URL: omitted-private-or-unknown
+- Remote URL: https://github.com/AnswerDotAI/RAGatouille
 - Package distribution: `RAGatouille`
 - Package version: `0.0.9post2` in source and `0.0.9.post2` from installed distribution metadata
 - Skill generation state: generated from a dirty checkout because the new `skills/` tree was created during generation

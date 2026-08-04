@@ -15,7 +15,7 @@ This skill was generated from Snakemake repository evidence and installed-packag
 | Source commit | `3d933e63e8b51a520d65aac2d3f3b2c19b1b36fd` |
 | Source branch | `main` |
 | Exact tag | `v9.23.1` |
-| Remote URL | `omitted-private-or-unknown` |
+| Remote URL | `https://github.com/snakemake/snakemake` |
 | Working tree state | Dirty: untracked `skills/` generated artifacts were present during skill creation. |
 
 ## Evidence Paths

@@ -14,7 +14,7 @@ Read this before deciding whether this skill is current for an Apache Airflow ch
   "generated_at_utc": "2026-06-23T00:00:00Z",
   "repository": {
     "name": "apache-airflow",
-    "remote_url": "omitted-private-or-unknown",
+    "remote_url": "https://github.com/apache/airflow",
     "vcs": "git",
     "branch": "main",
     "tag": null,

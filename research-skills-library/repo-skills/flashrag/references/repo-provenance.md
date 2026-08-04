@@ -12,7 +12,7 @@ Read this before deciding whether this skill is current for a checkout of FlashR
   "generated_at_utc": "2026-06-21T00:00:00Z",
   "repository": {
     "name": "FlashRAG",
-    "remote_url": "omitted-private-or-unknown",
+    "remote_url": "https://github.com/RUC-NLPIR/FlashRAG",
     "vcs": "git",
     "branch": "main",
     "tag": null,

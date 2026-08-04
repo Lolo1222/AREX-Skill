@@ -12,7 +12,7 @@ Read this before deciding whether this skill is current for a Browser Use checko
   "generated_at_utc": "2026-06-21T00:00:00Z",
   "repository": {
     "name": "browser-use",
-    "remote_url": "omitted-private-or-unknown",
+    "remote_url": "https://github.com/browser-use/browser-use",
     "vcs": "git",
     "branch": "main",
     "tag": null,

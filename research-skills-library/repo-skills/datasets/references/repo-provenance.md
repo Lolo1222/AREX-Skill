@@ -5,7 +5,7 @@
 - Source commit: `06fcc085fcdd22fc5cc741954f6187dd879543b6`
 - Source branch: `main`
 - Exact tag: none detected
-- Remote URL: omitted-private-or-unknown
+- Remote URL: https://github.com/huggingface/datasets
 - Working tree state at generation: dirty because DisCo-generated files were added under `skills/`
 - Package version from metadata and installed inspection: `5.0.1.dev0`
 - Python support from package metadata: `>=3.10.0`

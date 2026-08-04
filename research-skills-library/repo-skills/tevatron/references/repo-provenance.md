@@ -14,7 +14,7 @@ Read this before deciding whether this Tevatron skill is current for a checkout.
 | Commit | `f0fc1e8b73ecda0075e69bed66ab72611413979e` |
 | Branch | `main` |
 | Exact tag | none detected |
-| Remote URL | omitted-private-or-unknown |
+| Remote URL | https://github.com/texttron/tevatron |
 | Package distribution | `tevatron` |
 | Package version | `0.0.1` |
 | Source layout | `src/tevatron` via `setup.py` |

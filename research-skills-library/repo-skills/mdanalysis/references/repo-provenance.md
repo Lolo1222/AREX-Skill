@@ -7,7 +7,7 @@ This skill was generated from repository evidence for the MDAnalysis source tree
 ## Source Snapshot
 
 - Source repository: MDAnalysis/mdanalysis
-- Remote URL: omitted-private-or-unknown
+- Remote URL: https://github.com/MDAnalysis/mdanalysis
 - Branch: `develop`
 - Commit: `d25f074b7d9a24fbcd5ee9c6c9bd9751001949b7`
 - Exact tag: none detected

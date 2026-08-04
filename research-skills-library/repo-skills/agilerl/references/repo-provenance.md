@@ -8,7 +8,7 @@
 - Commit: `3f2a3210efa9186ed3f893b0ee1d27ffe524e698`
 - Branch: `main`
 - Exact tag: none detected
-- Remote URL: omitted-private-or-unknown
+- Remote URL: https://github.com/AgileRL/AgileRL
 - Working tree state at generation: dirty due to generated `skills/` outputs in this checkout
 
 ## Evidence Paths

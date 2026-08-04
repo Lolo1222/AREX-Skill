@@ -12,7 +12,7 @@ Read this before deciding whether this skill is current for a checkout of RFdiff
   "generated_at_utc": "2026-06-21T00:00:00Z",
   "repository": {
     "name": "RFdiffusion",
-    "remote_url": "omitted-private-or-unknown",
+    "remote_url": "https://github.com/RosettaCommons/RFdiffusion",
     "vcs": "git",
     "branch": "main",
     "tag": null,

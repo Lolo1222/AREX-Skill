@@ -12,7 +12,7 @@ This skill was generated from the Pillow repository snapshot below.
 | Git commit | `2d18dacf0b4a4c1ceab2f07f65394431a4c3428e` |
 | Branch | `main` |
 | Exact tag | none |
-| Remote URL | omitted-private-or-unknown |
+| Remote URL | https://github.com/python-pillow/Pillow |
 | Working tree state before skill generation | clean |
 | Working tree state after skill generation | generated untracked `skills/` review/runtime artifacts |
 

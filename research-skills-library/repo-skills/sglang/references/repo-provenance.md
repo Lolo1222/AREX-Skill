@@ -1,6 +1,7 @@
 # Repo Provenance
 
 - Repository: `sgl-project/sglang`
+- Remote URL: `https://github.com/sgl-project/sglang`
 - Commit: `b4dda8b3ce8dcec52f96516da9593d51333782cf`
 - Branch: `main`
 - Package/import: `sglang`

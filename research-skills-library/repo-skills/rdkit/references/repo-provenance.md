@@ -10,7 +10,7 @@ This file is the refresh baseline for the generated `rdkit` skill.
 - Commit: `73ef78025c9a265e42b8c9578775de18b11f1829`
 - Branch: `master`
 - Exact tag: none detected
-- Remote URL: omitted-private-or-unknown
+- Remote URL: https://github.com/rdkit/rdkit
 - Source version variables from `CMakeLists.txt`: `RDKit_Year=2026`, `RDKit_Month=09`, `RDKit_Revision=1`, `RDKit_RevisionModifier=pre`, `RDKit_ABI=1`
 - Working tree state at generation: dirty because new DisCo output was created under `skills/`
 

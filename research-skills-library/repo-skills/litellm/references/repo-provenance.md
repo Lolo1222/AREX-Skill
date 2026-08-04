@@ -12,7 +12,7 @@ Read this before deciding whether this skill is current for a checkout of LiteLL
   "generated_at_utc": "2026-06-21T06:41:29Z",
   "repository": {
     "name": "litellm",
-    "remote_url": "omitted-private-or-unknown",
+    "remote_url": "https://github.com/BerriAI/litellm",
     "vcs": "git",
     "branch": "litellm_internal_staging",
     "tag": null,
