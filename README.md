@@ -29,12 +29,14 @@ task-relevant portion through progressive disclosure and uses code, tools, and
 experiments to complete the research task.
 
 The **Research Skills Library** is the growing collection of these reusable
-skill graphs. Its scope includes repository skills, paper-derived skills,
-task- or benchmark-specific skills, and future domain collections. This public
-checkout currently ships **more than 1,000 operating skills organized into
-graphs for 170 widely used ML and research repositories across 14
-workflow-oriented families**, plus a library-level router. The repository
-collection is therefore part of the library, not its boundary.
+skill graphs. It has two parts: task-agnostic skills distilled from widely
+used ML repositories, and task-oriented skills constructed around specific
+research tasks rather than general package usage.
+This public checkout currently ships the task-agnostic repository collection:
+**more than 1,000 operating skills organized into graphs for 170 widely used
+ML and research repositories across 14 families and four broad areas**, plus a
+library-level router. This repository collection is a first scale point for the
+library, not its boundary.
 
 > **Naming note:** Auto-ML-Skills is the repository name. DisCo is the
 > user-facing CLI/runtime, and the Research Skills Library is the published
@@ -95,7 +97,7 @@ context and applies it to the task.
 | Component | Purpose |
 | --- | --- |
 | [DisCo](src/) | The TypeScript research-agent CLI. Creator constructs and maintains skill graphs; Researcher uses operating skills with code, tools, and experiments. |
-| [Research Skills Library](research-skills-library/) | The reusable operating-knowledge layer. This checkout publishes more than 1,000 skills organized into graphs for 170 widely used repositories, plus their sibling `repo-skills-router`; the library model also supports paper-, task-, benchmark-, and domain-specific collections. |
+| [Research Skills Library](research-skills-library/) | The reusable operating-knowledge layer. This checkout publishes the task-agnostic repository collection: more than 1,000 skills organized into graphs for 170 widely used repositories, plus their sibling `repo-skills-router`. DisCo can also construct task-oriented skills around a specific research task's source constraints, evaluation protocol, and verification conditions. |
 | [Examples](examples/) | Sanitized end-to-end sessions showing Creator building a FlagEmbedding skill graph and Researcher applying Gymnasium and Stable-Baselines3 skills to an auditable battery-dispatch experiment. |
 | [Documentation](docs/) | Workflow, architecture, catalog, deployment, and portability guides. The 15 bundled Creator meta skills remain part of DisCo rather than a separate manual installation. |
 
@@ -113,17 +115,23 @@ session/export behavior, detailed workflows, and deployment rules.
 
 ## 🗂️ Library Coverage <a id="library-coverage"></a>
 
-The public repository collection spans four broad areas and 14 workflow
-families. It is built from a curated set of 170 widely used ML and research
+The public repository collection spans 14 families and four broad areas. It is
+built from a curated set of 170 widely used ML and research
 repositories, producing 1,060 root and focused skills with broad coverage of
 training, data, evaluation, agents, retrieval, vision, generation, ML
 operations, and scientific computing.
 
 DisCo's Creator CLI and bundled meta skills provide repeatable workflows for
 creating, verifying, maintaining, and importing new skill graphs. A
-library-level router and progressive disclosure let the library scale across
-more repositories, papers, benchmarks, tasks, and domain collections while
-loading only the skills relevant to the current task.
+library-level router and progressive disclosure let the task-agnostic
+collection scale to more repositories, domains, software stacks, and languages
+while loading only the repository skills relevant to the current task.
+
+Beyond general package usage, DisCo can construct task-oriented skills for
+specific research settings. In that path, the skill graph is organized around
+the operating knowledge required by the task's source constraints, evaluation
+protocol, and verification conditions rather than around one reusable package
+workflow.
 
 ![Overview of the Auto-ML-Skills Library](assets/library.png)
 

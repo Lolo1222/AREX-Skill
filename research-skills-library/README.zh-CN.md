@@ -1,12 +1,11 @@
 # Research Skills Library
 
 Research Skills Library 是面向机器学习研究与软件工作的可复用 skill 层。它
-并不只是 Python package catalog：library 可以包含 repository skills、面向特
-定任务或 benchmark 的 operating skills、从论文中提炼的 workflows，以及社区
-为某个研究领域贡献的其他 collections。
+包含两部分：从常用机器学习仓库蒸馏得到的任务无关 operating skills，以及围绕
+具体研究任务而不是通用 package 使用构造的面向任务 operating skills。
 
-当前仓库发布了面向 170 个常用机器学习与研究仓库的 1,000+ 操作技能，并不
-表示未来规划中的 task 或 benchmark collections 已经包含在本仓库中。
+当前目录发布的是面向 170 个常用机器学习与研究仓库的 1,000+ 操作技能，因此
+它记录的是任务无关的 repository collection，而不是整个 library 的边界。
 
 ## 当前内容
 
@@ -101,6 +100,7 @@ graph，以及无法确认跨项目复用价值的 graph，默认安装到
 不要直接修改生成的 Markdown。验证与审阅要求见
 [贡献指南](../CONTRIBUTING_CN.md)。
 
-library 布局有意保留扩展空间。未来可以新增面向任务或 benchmark 的同级
-collection，并为它单独说明归属与安装规则；不能仅仅因为其中包含可执行脚本，
-就把它描述成 Python package collection。
+library 布局有意保留扩展空间。任务无关的 repository graphs 可以继续扩展到
+更多领域、软件栈和编程语言。面向任务的 collections 只有在任务范围、来源约束、
+评测协议、验证条件、归属和安装规则都明确时，才应作为同级 collection 加入；
+不能仅仅因为其中包含可执行脚本，就把它描述成 Python package collection。

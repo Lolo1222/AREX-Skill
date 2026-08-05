@@ -1,12 +1,13 @@
 # Research Skills Library
 
 The Research Skills Library is the reusable skill layer for ML research and
-software work. The concept is broader than a Python package catalog: it can
-contain repository skills, task- or benchmark-specific operating skills, paper-
-derived workflows, and future collections contributed for a research domain.
+software work. The library has two parts: task-agnostic operating skills
+distilled from widely used ML repositories, and task-oriented operating skills
+constructed around specific research tasks rather than general package usage.
 This checkout currently publishes more than 1,000 operating skills for a
-curated set of 170 widely used ML and research repositories. It does not claim
-that future task or benchmark collections are already present.
+curated set of 170 widely used ML and research repositories. This directory
+therefore catalogs the task-agnostic repository collection, not the full
+boundary of the library.
 
 ## Current Contents
 
@@ -111,7 +112,10 @@ adding or refreshing a repository graph. Keep structured
 the sibling router rather than editing generated Markdown. The [contribution
 guide](../CONTRIBUTING.md) describes validation and review requirements.
 
-The library layout is intentionally extensible. A future task-related or
-benchmark-specific collection can be added as a sibling collection with its
-own documented ownership and installation rules; do not represent it as a
-Python package merely because it contains executable helpers.
+The library layout is intentionally extensible. Additional task-agnostic
+repository graphs can expand coverage across more domains, software stacks,
+and programming languages. Task-oriented collections should be added as
+sibling collections only when their task scope, source constraints, evaluation
+protocol, verification conditions, ownership, and installation rules are
+documented; do not represent them as Python packages merely because they
+contain executable helpers.
