@@ -4,9 +4,10 @@ This catalog lists the 170 repository skill graphs currently published in the
 `research-skills-library/repo-skills/` collection. These graphs cover a curated
 set of widely used ML and research repositories and contain more than 1,000
 root and focused runtime skills. The broader Research Skills Library can also
-contain task-, benchmark-, paper-, or domain-specific collections; this page
-intentionally catalogs only the repository subset. Each entry links to the
-upstream project and summarizes the workflows its graph is designed to support.
+contain task-oriented skills constructed around specific research tasks; this
+page intentionally catalogs only the task-agnostic repository subset. Each entry
+links to the upstream project and summarizes the workflows its graph is designed
+to support.
 The sibling
 `research-skills-library/repo-skills-router/` directory is a routing index and
 is not counted as a repository graph or runtime skill in this catalog.
