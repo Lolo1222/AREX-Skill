@@ -1,4 +1,4 @@
-<h1 align="center">Auto-ML-Skills</h1>
+<h1 align="center">AREX-Skill</h1>
 
 <p align="center">
   <strong>DisCo: A skill-powered research agent with task-related operating knowledge</strong>
