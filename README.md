@@ -21,12 +21,11 @@
 </p>
 
 ```mermaid
-flowchart TD
-    A["📦 GitHub Repos · 📄 Papers · ✍️ Blogs"] --> B["🤖 Creator Agent"]
-    B --> C["Discover → Distill → Validate"]
-    C --> D["🧠 AREX Research Skills"]
-    D --> E["Claude Code · Codex · DisCo"]
-    E --> F["🔬 Autonomous ML Research"]
+flowchart LR
+    A["📦 Repos<br>📄 Papers<br>✍️ Blogs"] ==> B["🤖 <b>Creator Agent</b><br><i>discover · distill · validate</i>"]
+    B ==> C["🧠 <b>AREX Research Skills</b><br>routed · verified · executable"]
+    C ==> D["Claude Code<br>Codex · DisCo"]
+    D ==> E["🔬 <b>Autonomous<br>ML Research</b>"]
 ```
 
 > **Research knowledge is descriptive. Agents need operational knowledge.**
@@ -51,13 +50,9 @@ flowchart TD
 
 **Research knowledge is everywhere. Agents still can't use it well.**
 
-<table align="center">
-  <tr>
-    <td align="center" width="33%">📄 <b>Papers</b><br><br>Explain <i>why</i> things work</td>
-    <td align="center" width="33%">💻 <b>Codebases</b><br><br>Contain <i>working</i> implementations</td>
-    <td align="center" width="33%">🤖 <b>Agents</b><br><br>Still have to <i>rediscover everything</i></td>
-  </tr>
-</table>
+| 📄 **Papers** | 💻 **Codebases** | 🤖 **Agents** |
+|:---:|:---:|:---:|
+| Explain *why* things work | Contain *working* implementations | Still have to *rediscover everything* |
 
 Papers, repositories, and blogs hold nearly all of the field's know-how — but
 they are written for human readers. They are loose, heterogeneous, and expose

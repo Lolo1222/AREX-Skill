@@ -21,12 +21,11 @@
 </p>
 
 ```mermaid
-flowchart TD
-    A["📦 GitHub 仓库 · 📄 论文 · ✍️ 技术博客"] --> B["🤖 Creator Agent"]
-    B --> C["发掘 → 蒸馏 → 验证"]
-    C --> D["🧠 AREX Research Skills"]
-    D --> E["Claude Code · Codex · DisCo"]
-    E --> F["🔬 自主 ML 研究"]
+flowchart LR
+    A["📦 仓库<br>📄 论文<br>✍️ 博客"] ==> B["🤖 <b>Creator Agent</b><br><i>发掘 · 蒸馏 · 验证</i>"]
+    B ==> C["🧠 <b>AREX Research Skills</b><br>可路由 · 已验证 · 可执行"]
+    C ==> D["Claude Code<br>Codex · DisCo"]
+    D ==> E["🔬 <b>自主 ML 研究</b>"]
 ```
 
 > **研究知识是描述性的，而 Agent 需要的是操作性知识。**
@@ -50,13 +49,9 @@ flowchart TD
 
 **研究知识无处不在，但 Agent 仍然用不好它。**
 
-<table align="center">
-  <tr>
-    <td align="center" width="33%">📄 <b>论文</b><br><br>解释<i>为什么</i>有效</td>
-    <td align="center" width="33%">💻 <b>代码仓库</b><br><br>包含<i>能跑通的</i>实现</td>
-    <td align="center" width="33%">🤖 <b>Agent</b><br><br>仍要<i>每次重新摸索</i></td>
-  </tr>
-</table>
+| 📄 **论文** | 💻 **代码仓库** | 🤖 **Agent** |
+|:---:|:---:|:---:|
+| 解释*为什么*有效 | 包含*能跑通的*实现 | 仍要*每次重新摸索* |
 
 论文、仓库和博客几乎承载了这个领域全部的 know-how——但它们是写给人读的：
 松散、异构、没有 Agent 可以直接调用的统一接口。于是每个任务里，Agent 都在
