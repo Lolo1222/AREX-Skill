@@ -5,8 +5,8 @@
 </p>
 
 <p align="center">
-  将描述性的研究知识编译为可复用的操作性技能，<br>
-  让 coding agent 可以直接调用。
+  一个开放技能库：从 <b>1,000 个 ML 仓库</b>蒸馏出
+  <b>5,000+ 个经过验证、可直接执行的技能</b>——以及构建它们的 agent。
 </p>
 
 <p align="center">
@@ -24,21 +24,21 @@
 flowchart LR
     A["📦 仓库<br>📄 论文<br>✍️ 博客"] ==> B["🤖 <b>Creator Agent</b><br><i>发掘 · 蒸馏 · 验证</i>"]
     B ==> C["🧠 <b>AREX Research Skills</b><br>可路由 · 已验证 · 可执行"]
-    C ==> D["Claude Code<br>Codex · DisCo"]
+    C ==> D["🧑‍💻 <b>你的 coding agent</b><br>Claude Code · Codex · DisCo"]
     D ==> E["🔬 <b>自主 ML 研究</b>"]
 ```
 
-> **研究知识是描述性的，而 Agent 需要的是操作性知识。**
-> AREX-Skill 把 ML 生态——它的仓库与论文——编译成经过验证、可直接执行的
-> 技能，让任何 coding agent 都能"继承"这些知识，而不是每次从零重新摸索。
+> **同一个 Agent，同样的预算，MLE-bench 相对提升 +134%。**
+> 装上 AREX 技能后，原生 Codex 的 Any-Medal 从 **31% 跃升到 73%**——超过
+> 全部公开榜单条目。靠的是技能，不是 agent engineering。
 
 ---
 
 ## 📣 动态
 
 - **2026-08**：技能库扩展到 **1,000 个仓库、5,000+ 技能**，路由器重建后
-  覆盖全部仓库。技术报告发布，包含 MLE-bench、PaperBench、Frontier-CS、
-  PassNet 的完整评测结果。
+  覆盖全部仓库。技术报告即将发布，包含 MLE-bench、PaperBench、
+  Frontier-CS、PassNet 的完整评测结果。
 - **2026-08-03**：AREX-Skill 首发，包含 DisCo 的 Creator / Researcher
   工作流，以及面向 170 个常用仓库、超过 1,000 个操作技能的 Research
   Skills Library。
@@ -69,12 +69,20 @@ flowchart LR
 
 ```mermaid
 flowchart LR
-    subgraph D["描述性知识"]
-        d1["论文 / 仓库 / 博客<br><i>这是什么？</i>"]
+    subgraph D["📚 描述性知识——写给人类"]
+        direction TB
+        d1["📄 论文<br><i>方法与原理</i>"]
+        d2["💻 仓库<br><i>代码、配置、示例</i>"]
+        d3["✍️ 博客<br><i>技巧与坑</i>"]
     end
-    D -- "技能蒸馏" --> O
-    subgraph O["操作性知识"]
-        o1["何时使用<br>如何使用<br>该运行什么<br>如何验证<br>失败如何恢复"]
+    D == "⚗️ 技能蒸馏" ==> O
+    subgraph O["🛠 操作性知识——为 Agent 而建"]
+        direction TB
+        o1["🎯 何时使用"]
+        o2["📋 如何使用"]
+        o3["▶️ 该运行什么"]
+        o4["✅ 如何验证结果"]
+        o5["🚑 失败如何恢复"]
     end
 ```
 
@@ -113,11 +121,12 @@ AREX Skill
 
 ```mermaid
 flowchart LR
-    S["研究知识<br>来源"] --> A["🔍 发掘<br><i>这个仓库能做什么？</i>"]
-    A --> B["🧠 蒸馏<br><i>能力 → 技能</i>"]
-    B --> C["🧪 验证<br><i>运行 · 复现 · 检查</i>"]
-    C --> D["🔁 进化<br><i>迭代直到通过验证</i>"]
-    D -.-> B
+    S["📦 仓库 · 论文 · 博客"] --> A["🔍 <b>发掘</b><br><i>摸清这个来源<br>真正能做什么</i>"]
+    A --> B["🧠 <b>蒸馏</b><br><i>写出带证据、检查项<br>与恢复路径的技能</i>"]
+    B --> C["🧪 <b>验证</b><br><i>在真实环境中<br>执行示例与测试</i>"]
+    C == "✅ 通过" ==> L["📚 <b>入库</b><br><i>进入技能库</i>"]
+    C -- "❌ 失败" --> E["🔁 <b>进化</b><br><i>修复并精化</i>"]
+    E --> B
 ```
 
 普通的 repo-to-doc 工具止步于 `仓库 → 文档`。AREX 的 Creator agent 跑的是
@@ -132,10 +141,11 @@ flowchart LR
 **不需要新 Agent，不需要新工作流。**
 
 ```mermaid
-flowchart TD
-    A["Claude Code"] --> S["AREX Skills"]
-    B["Codex"] --> S
-    C["DisCo（内置 CLI）"] --> S
+flowchart LR
+    S["🧠 <b>AREX Skills</b><br><i>标准 SKILL.md 技能图<br>+ 一个库级路由器</i>"]
+    S ==> A["<b>Claude Code</b><br><i>放进 skills 目录即可</i>"]
+    S ==> B["<b>Codex</b><br><i>benchmark 所用 harness</i>"]
+    S ==> C["<b>DisCo</b><br><i>内置 CLI——负责安装、<br>路由与更新</i>"]
 ```
 
 技能就是标准的 `SKILL.md` 技能图（agent-skills 格式）。把它们放进你正在用
@@ -204,7 +214,7 @@ PaperBench（复现得分，20 篇论文）
 | **Frontier-CS**（Agent Track，188 任务） | Score | 70.63 | **77.14** | **+6.51** |
 | **PassNet**（200 样本） | AS Score | 1.343 | **1.531** | **+14.0%** |
 
-来自[技术报告](https://github.com/qhjqhj00/Auto-ML-SKILLs-paper)的几个要点：
+来自技术报告（即将发布）的几个要点：
 
 - **超越 agent engineering。** 原生 Codex + 技能超过了 MLE-bench 最强公开
   条目（72.89 vs 64.44）——没有定制 harness，没有修改控制循环，只加了蒸馏
@@ -302,10 +312,10 @@ Researcher 是默认模式；用 `--agent-mode creator|researcher` 或界面里�
 
 ```mermaid
 flowchart LR
-    A["仓库 + 论文"] --> B["研究技能"]
-    B --> C["技能生态"]
-    C --> D["自主研究 Agent"]
-    D --> E["自动化 ML 研发"]
+    A["📦 <b>仓库 + 论文</b><br><i>写给人类</i>"] --> B["🧠 <b>研究技能</b><br><i>蒸馏一次，验证入库</i>"]
+    B --> C["🌐 <b>技能生态</b><br><i>共享与继承</i>"]
+    C --> D["🤖 <b>自主研究 Agent</b><br><i>站在领域已有进展之上</i>"]
+    D --> E["⚙️ <b>自动化<br>ML 研发</b>"]
 ```
 
 每个技能只需蒸馏一次，之后的每个 Agent 都能继承。随着技能库增长——更多

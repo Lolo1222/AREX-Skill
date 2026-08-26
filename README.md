@@ -5,8 +5,8 @@
 </p>
 
 <p align="center">
-  Compile descriptive research knowledge into reusable operational skills<br>
-  that coding agents can directly use.
+  An open library of <b>5,000+ verified, executable skills</b> distilled from
+  <b>1,000 ML repositories</b> — and the agent that builds them.
 </p>
 
 <p align="center">
@@ -24,22 +24,22 @@
 flowchart LR
     A["📦 Repos<br>📄 Papers<br>✍️ Blogs"] ==> B["🤖 <b>Creator Agent</b><br><i>discover · distill · validate</i>"]
     B ==> C["🧠 <b>AREX Research Skills</b><br>routed · verified · executable"]
-    C ==> D["Claude Code<br>Codex · DisCo"]
+    C ==> D["🧑‍💻 <b>Your coding agent</b><br>Claude Code · Codex · DisCo"]
     D ==> E["🔬 <b>Autonomous<br>ML Research</b>"]
 ```
 
-> **Research knowledge is descriptive. Agents need operational knowledge.**
-> AREX-Skill compiles the ML ecosystem — its repositories and papers — into
-> verified, executable skills that any coding agent can inherit instead of
-> rediscovering from scratch.
+> **Same agent. Same budget. +134% on MLE-bench.**
+> With AREX skills, vanilla Codex jumps from **31% → 73%** Any-Medal —
+> outscoring every public leaderboard entry. Skills, not agent engineering.
 
 ---
 
 ## 📣 News
 
 - **2026-08**: The library scales to **1,000 repositories and 5,000+ skills**,
-  with a rebuilt router covering every repo. Technical report released with
-  full benchmark results on MLE-bench, PaperBench, Frontier-CS, and PassNet.
+  with a rebuilt router covering every repo. Technical report coming soon,
+  with full benchmark results on MLE-bench, PaperBench, Frontier-CS, and
+  PassNet.
 - **2026-08-03**: AREX-Skill launches with DisCo's Creator and Researcher
   workflows and a Research Skills Library of 1,000+ operating skills for 170
   widely used repositories.
@@ -72,12 +72,20 @@ skills.
 
 ```mermaid
 flowchart LR
-    subgraph D["Descriptive Knowledge"]
-        d1["papers / repos / blogs<br><i>what is it?</i>"]
+    subgraph D["📚 Descriptive Knowledge — written for humans"]
+        direction TB
+        d1["📄 Papers<br><i>methods & why they work</i>"]
+        d2["💻 Repos<br><i>code, configs, examples</i>"]
+        d3["✍️ Blogs<br><i>tricks & pitfalls</i>"]
     end
-    D -- "Skill Distillation" --> O
-    subgraph O["Operational Knowledge"]
-        o1["when to use<br>how to use<br>what to run<br>how to validate<br>how to recover from failure"]
+    D == "⚗️ Skill Distillation" ==> O
+    subgraph O["🛠 Operational Knowledge — built for agents"]
+        direction TB
+        o1["🎯 when to use it"]
+        o2["📋 how to use it"]
+        o3["▶️ what to run"]
+        o4["✅ how to validate results"]
+        o5["🚑 how to recover from failure"]
     end
 ```
 
@@ -118,11 +126,12 @@ repositories at the cost of a few files in context.
 
 ```mermaid
 flowchart LR
-    S["Research<br>Sources"] --> A["🔍 Discover<br><i>what can this repo do?</i>"]
-    A --> B["🧠 Distill<br><i>capabilities → skills</i>"]
-    B --> C["🧪 Validate<br><i>run · reproduce · check</i>"]
-    C --> D["🔁 Evolve<br><i>refine until verified</i>"]
-    D -.-> B
+    S["📦 repo · paper · blog"] --> A["🔍 <b>Discover</b><br><i>map what the source<br>can actually do</i>"]
+    A --> B["🧠 <b>Distill</b><br><i>write skills with evidence,<br>checks & recovery paths</i>"]
+    B --> C["🧪 <b>Validate</b><br><i>execute examples & tests<br>in a real environment</i>"]
+    C == "✅ passed" ==> L["📚 <b>Ship</b><br><i>into the library</i>"]
+    C -- "❌ failed" --> E["🔁 <b>Evolve</b><br><i>repair & refine</i>"]
+    E --> B
 ```
 
 An ordinary repo-to-doc tool stops at `Repo → Documentation`. AREX's Creator
@@ -139,10 +148,11 @@ own tests.
 **No new agent. No new workflow.**
 
 ```mermaid
-flowchart TD
-    A["Claude Code"] --> S["AREX Skills"]
-    B["Codex"] --> S
-    C["DisCo (bundled CLI)"] --> S
+flowchart LR
+    S["🧠 <b>AREX Skills</b><br><i>plain SKILL.md graphs<br>+ one library router</i>"]
+    S ==> A["<b>Claude Code</b><br><i>drop into your skills dir</i>"]
+    S ==> B["<b>Codex</b><br><i>the harness in our benchmarks</i>"]
+    S ==> C["<b>DisCo</b><br><i>bundled CLI — manages<br>install, routing & updates</i>"]
 ```
 
 Skills are plain `SKILL.md` graphs in the emerging agent-skills format. Drop
@@ -215,7 +225,7 @@ PaperBench (replication score, 20 papers)
 | **Frontier-CS** (Agent Track, 188 tasks) | Score | 70.63 | **77.14** | **+6.51** |
 | **PassNet** (200 samples) | AS Score | 1.343 | **1.531** | **+14.0%** |
 
-Highlights from the [technical report](https://github.com/qhjqhj00/Auto-ML-SKILLs-paper):
+Highlights from the technical report (release coming soon):
 
 - **Beyond agent engineering.** Vanilla Codex + skills tops the strongest
   public MLE-bench entries (72.89 vs 64.44) — no custom harness, no modified
@@ -318,10 +328,10 @@ update/backup semantics, router behavior, and every fallback path.
 
 ```mermaid
 flowchart LR
-    A["Repos + Papers"] --> B["Research Skills"]
-    B --> C["Skill Ecosystem"]
-    C --> D["Autonomous Research Agents"]
-    D --> E["Automated ML R&D"]
+    A["📦 <b>Repos + Papers</b><br><i>written for humans</i>"] --> B["🧠 <b>Research Skills</b><br><i>distilled once, verified</i>"]
+    B --> C["🌐 <b>Skill Ecosystem</b><br><i>shared & inherited</i>"]
+    C --> D["🤖 <b>Autonomous Agents</b><br><i>start where the field left off</i>"]
+    D --> E["⚙️ <b>Automated<br>ML R&D</b>"]
 ```
 
 Every skill distilled once is inherited by every agent afterward. As the
