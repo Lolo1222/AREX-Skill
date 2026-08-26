@@ -4,6 +4,7 @@ description: "Create, step, wrap, and troubleshoot Gymnasium vectorized environm
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Gymnasium Vectorization

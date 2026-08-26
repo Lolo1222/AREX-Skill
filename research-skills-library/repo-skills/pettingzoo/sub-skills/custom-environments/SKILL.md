@@ -4,6 +4,7 @@ description: "Create and review PettingZoo AEC and Parallel custom environments,
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # Custom Environments

@@ -4,6 +4,7 @@ description: "Use MarkItDown to convert documents to Markdown, configure cloud/O
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # MarkItDown Repo Skill

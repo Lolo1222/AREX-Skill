@@ -4,6 +4,7 @@ description: "Evaluate LitGPT checkpoints with LM Evaluation Harness and serve L
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # LitGPT Evaluation and Serving

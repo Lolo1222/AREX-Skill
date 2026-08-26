@@ -4,6 +4,7 @@ description: "Use Habitat-Lab, Habitat-Baselines, and Habitat-HITL for embodied 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Habitat-Lab Repo Skill

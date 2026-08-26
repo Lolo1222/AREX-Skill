@@ -4,6 +4,7 @@ description: "Use LightRAG as an embedded Python library: construct LightRAG, in
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Core LightRAG Embedded Usage

@@ -4,6 +4,7 @@ description: "Use SchNetPack for atomistic machine-learning datasets, Hydra trai
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # SchNetPack Repo Skill

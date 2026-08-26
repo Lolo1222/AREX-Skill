@@ -4,6 +4,7 @@ description: "Load datasets from the Hub, local files, packaged builders, Python
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Loading Local and Hub Datasets

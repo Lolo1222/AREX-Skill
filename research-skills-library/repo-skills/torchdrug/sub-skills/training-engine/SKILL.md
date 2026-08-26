@@ -4,6 +4,7 @@ description: "Assemble TorchDrug models and tasks into core.Engine training, eva
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Training Engine

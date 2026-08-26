@@ -4,6 +4,7 @@ description: "Configure ClearML and build safe remote execution commands or SDK 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # ClearML Remote Execution CLI

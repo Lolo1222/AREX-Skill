@@ -4,6 +4,7 @@ description: "Configure OpenAI Agents SDK SandboxAgent workspaces, manifests, ca
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Sandbox Agents

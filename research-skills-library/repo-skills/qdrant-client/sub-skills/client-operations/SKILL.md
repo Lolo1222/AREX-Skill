@@ -4,6 +4,7 @@ description: "Use sync QdrantClient for collections, point writes, universal que
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Client Operations

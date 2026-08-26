@@ -4,6 +4,7 @@ description: "Direct use of bitsandbytes quantized PyTorch modules, autograd mat
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Quantized Modules and Functional Primitives

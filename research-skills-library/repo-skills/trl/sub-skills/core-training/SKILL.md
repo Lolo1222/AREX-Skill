@@ -4,6 +4,7 @@ description: "Choose, instantiate, and troubleshoot TRL stable post-training tra
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Core TRL Training

@@ -4,6 +4,7 @@ description: "Use and maintain Nilearn, the Python neuroimaging package for Niim
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: BSD 3-Clause
 ---
 
 # Nilearn Repo Skill

@@ -4,6 +4,7 @@ description: "Run and diagnose GraphRAG global, local, DRIFT, basic, streaming, 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Querying

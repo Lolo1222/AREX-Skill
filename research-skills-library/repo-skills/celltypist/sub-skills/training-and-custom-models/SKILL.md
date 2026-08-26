@@ -4,6 +4,7 @@ description: "Plan and preflight custom CellTypist model training, including dat
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Training and Custom Models

@@ -4,6 +4,7 @@ description: "Run practical PyDESeq2 differential expression workflows with Dese
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # PyDESeq2 DEA Workflows

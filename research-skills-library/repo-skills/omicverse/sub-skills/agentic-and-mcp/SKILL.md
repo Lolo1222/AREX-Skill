@@ -4,6 +4,7 @@ description: "OmicVerse CLI, MCP server, registry manifest, JARVIS/gateway, smar
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: GPL 3.0
 ---
 
 # Agentic and MCP

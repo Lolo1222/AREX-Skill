@@ -4,6 +4,7 @@ description: "Define and run OpenAI Agents Python core agents, interpret run res
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Core Runtime

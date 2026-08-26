@@ -4,6 +4,7 @@ description: "Build safe RFdiffusion unconditional monomer/backbone generation c
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # Unconditional Generation

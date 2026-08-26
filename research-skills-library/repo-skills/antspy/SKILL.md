@@ -4,6 +4,7 @@ description: "Use ANTsPy/antspyx for medical image IO, ANTsImage metadata, image
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # ANTsPy Repo Skill

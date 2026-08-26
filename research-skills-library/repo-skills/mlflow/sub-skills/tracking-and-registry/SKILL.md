@@ -4,6 +4,7 @@ description: "Use this MLflow sub-skill for experiment tracking, runs, params, m
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Tracking and Registry

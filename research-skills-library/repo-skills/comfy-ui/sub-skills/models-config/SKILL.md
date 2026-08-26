@@ -4,6 +4,7 @@ description: "Configure ComfyUI model folders, extra model paths, supported mode
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: GPL 3.0
 ---
 
 # ComfyUI Models and Configuration

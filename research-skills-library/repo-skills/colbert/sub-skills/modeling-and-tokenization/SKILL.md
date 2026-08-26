@@ -4,6 +4,7 @@ description: "Use when inspecting ColBERT checkpoints, ColBERTConfig model/token
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Modeling and Tokenization

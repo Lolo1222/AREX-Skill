@@ -4,6 +4,7 @@ description: "Build, configure, debug, distribute, and deploy PyTorch Lightning 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Lightning Repo Skill

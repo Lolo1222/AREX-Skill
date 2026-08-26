@@ -4,6 +4,7 @@ description: "Install and import Hail, choose local/Spark/Batch query backends, 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Hail Setup and Backends

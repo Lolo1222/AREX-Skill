@@ -4,6 +4,7 @@ description: "Use Tianshou data carriers, replay buffers, collectors, return bat
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Data Collection

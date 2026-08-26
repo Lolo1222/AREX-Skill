@@ -4,6 +4,7 @@ description: "Use for Dask Bag, dask.bytes, text/byte IO, JSON-like records, Avr
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: BSD 3-Clause
 ---
 
 # Dask Bag and Bytes Workflows

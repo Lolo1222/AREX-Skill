@@ -4,6 +4,7 @@ description: "Use open_clip NaFlex variable-resolution image/audio pipelines and
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # NaFlex Generative

@@ -4,6 +4,7 @@ description: "Track, compare, inspect, and troubleshoot DVC metrics, params, and
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # DVC Metrics, Params, and Plots

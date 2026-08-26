@@ -4,6 +4,7 @@ description: "Develop inside the OpenAI Agents Python repository safely, includi
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Repo Development

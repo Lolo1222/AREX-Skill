@@ -4,6 +4,7 @@ description: "Use RFdiffusion for protein backbone generation workflows, includi
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # RFdiffusion

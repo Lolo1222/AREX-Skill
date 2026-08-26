@@ -4,6 +4,7 @@ description: "Bind and troubleshoot ADK Python tools, ToolContext, long-running 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # ADK Tools and Integrations

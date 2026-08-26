@@ -4,6 +4,7 @@ description: "Tune LMDeploy PyTorch/TurboMind backend configs and extend PyTorch
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # LMDeploy Backend Extension

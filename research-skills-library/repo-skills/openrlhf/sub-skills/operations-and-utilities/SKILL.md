@@ -4,6 +4,7 @@ description: "Install, diagnose, and operate OpenRLHF runtime utilities, includi
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # OpenRLHF Operations and Utilities

@@ -4,6 +4,7 @@ description: "Load and validate MTEB models, built-in model metadata, SentenceTr
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # MTEB Models and Encoders

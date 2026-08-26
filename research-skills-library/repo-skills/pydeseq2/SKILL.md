@@ -4,6 +4,7 @@ description: "Route PyDESeq2 bulk RNA-seq differential expression analysis tasks
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # PyDESeq2 Repo Skill

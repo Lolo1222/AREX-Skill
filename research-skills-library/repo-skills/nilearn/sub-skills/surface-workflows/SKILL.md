@@ -4,6 +4,7 @@ description: "Work with Nilearn surface meshes, surface images, volume-to-surfac
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: BSD 3-Clause
 ---
 
 # Surface Workflows

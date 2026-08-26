@@ -4,6 +4,7 @@ description: "Operate SkyPilot interactive clusters safely with CLI launch, exec
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Cluster Operations

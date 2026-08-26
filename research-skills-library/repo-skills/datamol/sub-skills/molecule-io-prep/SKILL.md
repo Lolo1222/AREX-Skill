@@ -4,6 +4,7 @@ description: "Guides agents using datamol to construct, standardize, convert, va
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Molecule IO and Preparation

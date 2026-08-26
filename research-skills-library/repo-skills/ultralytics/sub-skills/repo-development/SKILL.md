@@ -4,6 +4,7 @@ description: "Use this sub-skill for maintainer-facing Ultralytics repository ed
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: AGPL 3.0
 ---
 
 # Repo Development

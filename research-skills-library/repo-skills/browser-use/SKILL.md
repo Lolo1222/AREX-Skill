@@ -4,6 +4,7 @@ description: "Use this self-contained Browser Use repo skill for Python agents t
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Browser Use Repo Skill

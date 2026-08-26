@@ -4,6 +4,7 @@ description: "Use this sub-skill when working with Hugging Face Accelerate confi
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Accelerate Configuration and CLI

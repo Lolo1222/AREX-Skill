@@ -4,6 +4,7 @@ description: "Use this skill when working with TorchVision models, weights, tran
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: BSD 3-Clause
 ---
 
 # TorchVision Repo Skill

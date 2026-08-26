@@ -4,6 +4,7 @@ description: "Use scikit-bio TreeNode objects, Newick trees, distance-based tree
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: BSD 3-Clause
 ---
 
 # trees-phylogeny

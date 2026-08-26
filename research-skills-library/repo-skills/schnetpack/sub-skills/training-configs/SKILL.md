@@ -4,6 +4,7 @@ description: "Construct and troubleshoot SchNetPack spktrain and spkpredict Hydr
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # SchNetPack Training Configs

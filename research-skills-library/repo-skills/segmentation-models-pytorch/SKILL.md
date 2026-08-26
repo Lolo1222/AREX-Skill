@@ -4,6 +4,7 @@ description: "Route segmentation_models_pytorch tasks for semantic segmentation 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Segmentation Models PyTorch

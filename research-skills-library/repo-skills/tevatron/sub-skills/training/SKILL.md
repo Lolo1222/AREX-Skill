@@ -4,6 +4,7 @@ description: "Build Tevatron dense, sparse, distillation, GradCache, LoRA, DeepS
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Training

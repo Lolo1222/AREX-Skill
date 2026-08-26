@@ -4,6 +4,7 @@ description: "Use this sub-skill for Optuna artifact upload/download workflows, 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # Optuna Artifacts and Integrations

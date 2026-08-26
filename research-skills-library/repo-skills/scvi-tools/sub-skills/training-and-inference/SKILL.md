@@ -4,6 +4,7 @@ description: "Configure scvi-tools training, Trainer options, CPU/GPU devices, v
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: BSD 3-Clause
 ---
 
 # training-and-inference

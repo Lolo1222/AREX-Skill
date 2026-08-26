@@ -4,6 +4,7 @@ description: "Use OpenRLHF for Ray/vLLM/DeepSpeed RLHF workflows, including data
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # OpenRLHF

@@ -4,6 +4,7 @@ description: "Use AgileRL evolvable modules, networks, architecture configs, cus
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # AgileRL Evolvable Modules

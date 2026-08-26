@@ -4,6 +4,7 @@ description: "Use Hail for scalable genomic Tables, MatrixTables, VariantDataset
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Hail

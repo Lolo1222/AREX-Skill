@@ -4,6 +4,7 @@ description: "Maintain the Langflow monorepo safely across tests, formatting, ge
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Langflow Repo Maintenance

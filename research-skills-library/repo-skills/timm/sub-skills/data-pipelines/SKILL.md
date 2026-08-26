@@ -4,6 +4,7 @@ description: "Build timm data configs, datasets, transforms, loaders, ImageNet m
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # timm Data Pipelines

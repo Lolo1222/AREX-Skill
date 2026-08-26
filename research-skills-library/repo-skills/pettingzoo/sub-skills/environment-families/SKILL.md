@@ -4,6 +4,7 @@ description: "Choose PettingZoo environment families, install minimal extras, an
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # PettingZoo Environment Families

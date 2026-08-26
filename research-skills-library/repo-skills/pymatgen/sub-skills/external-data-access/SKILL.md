@@ -4,6 +4,7 @@ description: "Use pymatgen external data clients for Materials Project, COD, and
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # External Data Access

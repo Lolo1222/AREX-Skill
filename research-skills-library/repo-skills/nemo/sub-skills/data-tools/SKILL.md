@@ -4,6 +4,7 @@ description: "Use for NeMo Speech data preparation, JSON manifests, Lhotse and t
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Data Tools

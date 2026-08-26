@@ -4,6 +4,7 @@ description: "Operate Prefect CLI, profiles, settings, server, Cloud, variables,
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # CLI And Server Operations

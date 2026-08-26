@@ -4,6 +4,7 @@ description: "Use Prefect events, automations, blocks, assets, variables, notifi
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Events Blocks Assets

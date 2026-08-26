@@ -4,6 +4,7 @@ description: "Load, save, convert, and export pySCENIC expression matrices, sign
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: GPL 3.0
 ---
 
 # Data I/O And Export

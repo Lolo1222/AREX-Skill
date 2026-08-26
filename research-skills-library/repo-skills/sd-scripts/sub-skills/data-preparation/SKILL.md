@@ -4,6 +4,7 @@ description: "Prepare, validate, and troubleshoot sd-scripts training data befor
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Data Preparation

@@ -4,6 +4,7 @@ description: "Construct, debug, and explain classic SPLADE Hydra workflows for t
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # SPLADE Hydra Pipelines

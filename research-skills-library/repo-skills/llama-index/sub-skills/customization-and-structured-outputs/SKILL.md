@@ -4,6 +4,7 @@ description: "Customize LlamaIndex Settings, prompts, callbacks, instrumentation
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Customization and Structured Outputs

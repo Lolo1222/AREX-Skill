@@ -4,6 +4,7 @@ description: "Use SparseEncoder for SPLADE-style sparse embeddings, sparse simil
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Sparse Encoder Search

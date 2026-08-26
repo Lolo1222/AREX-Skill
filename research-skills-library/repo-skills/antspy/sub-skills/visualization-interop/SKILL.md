@@ -4,6 +4,7 @@ description: "Plot, render, convert channels/RGB, matrix/image data, and interop
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Visualization and Interop

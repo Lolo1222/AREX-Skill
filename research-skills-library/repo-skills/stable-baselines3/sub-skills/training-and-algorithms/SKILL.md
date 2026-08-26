@@ -4,6 +4,7 @@ description: "Choose and train Stable-Baselines3 algorithms, instantiate A2C/PPO
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Training and Algorithms

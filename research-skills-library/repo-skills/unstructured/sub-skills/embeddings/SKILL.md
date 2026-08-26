@@ -4,6 +4,7 @@ description: "Add embeddings to Unstructured elements with provider-specific enc
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Embeddings

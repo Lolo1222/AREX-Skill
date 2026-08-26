@@ -4,6 +4,7 @@ description: "Use Dipy for diffusion MRI IO, preprocessing, reconstruction, trac
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # Dipy Repo Skill

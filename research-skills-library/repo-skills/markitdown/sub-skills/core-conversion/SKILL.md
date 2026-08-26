@@ -4,6 +4,7 @@ description: "Convert files, streams, paths, URIs, and HTTP responses to Markdow
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Core Conversion

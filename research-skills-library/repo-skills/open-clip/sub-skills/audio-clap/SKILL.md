@@ -4,6 +4,7 @@ description: "Use and troubleshoot OpenCLIP CLAP and NaFlexClap audio models, au
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # Audio CLAP

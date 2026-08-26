@@ -4,6 +4,7 @@ description: "Partition local files, file-like objects, URLs, text, HTML, PDF/im
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Partitioning

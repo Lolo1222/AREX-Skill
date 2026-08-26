@@ -4,6 +4,7 @@ description: "Integrate with Langflow through REST APIs, OpenAPI contracts, Pyth
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # SDK And API Clients

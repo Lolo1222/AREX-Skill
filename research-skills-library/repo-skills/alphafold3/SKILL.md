@@ -4,6 +4,7 @@ description: "Use this skill for AlphaFold 3 input preparation, prediction comma
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # AlphaFold 3

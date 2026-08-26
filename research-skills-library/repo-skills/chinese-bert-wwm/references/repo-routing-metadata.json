@@ -1,0 +1,17 @@
+{
+  "schema_version": "2.0",
+  "repo_id": "ymcui/Chinese-BERT-wwm",
+  "skill_id": "chinese-bert-wwm",
+  "taxonomy_sha256": "b2c4f99cbae303c887f58de2d72096ef6719fcff74b1c0173705cc085eb249ab",
+  "routing_status": "classified",
+  "assignments": [
+    {
+      "area": "Natural Language Processing",
+      "family": "Language-Specific NLP"
+    },
+    {
+      "area": "LLM Models, Training, and Alignment",
+      "family": "Open-Weight Model Releases"
+    }
+  ]
+}

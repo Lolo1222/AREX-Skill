@@ -4,6 +4,7 @@ description: "Maintain decontamination hygiene, clean-training-data safety, requ
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Decontamination Maintenance

@@ -4,6 +4,7 @@ description: "OmicVerse multi-omics Python workflows for AnnData, single-cell, s
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: GPL 3.0
 ---
 
 # OmicVerse

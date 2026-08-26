@@ -4,6 +4,7 @@ description: "Configure OpenCompass model backends including HuggingFace, API, c
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Model Backends

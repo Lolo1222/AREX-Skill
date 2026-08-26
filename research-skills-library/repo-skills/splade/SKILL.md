@@ -4,6 +4,7 @@ description: "Route SPLADE sparse retrieval tasks across Hydra pipelines, HF tra
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # SPLADE Repo Skill

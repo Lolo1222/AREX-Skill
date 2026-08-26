@@ -4,6 +4,7 @@ description: "Use scikit-bio IO registry formats and metadata objects for readin
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: BSD 3-Clause
 ---
 
 # scikit-bio IO and Metadata

@@ -4,6 +4,7 @@ description: "Use for Scanpy sc.pl plotting, figure saving, headless rendering, 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: BSD 3-Clause
 ---
 
 # Scanpy Plotting and Reporting

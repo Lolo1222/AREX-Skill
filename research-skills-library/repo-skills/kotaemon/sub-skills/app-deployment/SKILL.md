@@ -4,6 +4,7 @@ description: "Install, launch, configure, and troubleshoot the Kotaemon Gradio a
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Kotaemon App Deployment

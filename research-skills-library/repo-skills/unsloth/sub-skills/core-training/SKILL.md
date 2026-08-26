@@ -4,6 +4,7 @@ description: "Plan and validate code-first Unsloth Core model loading, LoRA/full
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # Core Training

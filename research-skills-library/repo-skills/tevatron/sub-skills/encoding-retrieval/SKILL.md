@@ -4,6 +4,7 @@ description: "Encode Tevatron queries and corpora, run FAISS retrieval, merge sh
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Encoding and Retrieval

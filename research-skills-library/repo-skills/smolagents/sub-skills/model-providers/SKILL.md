@@ -4,6 +4,7 @@ description: "Select and configure smolagents Model wrappers for Hugging Face In
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Model Providers

@@ -4,6 +4,7 @@ description: "Inspect ControlNet model/config APIs and safely reason about check
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Model and Weight Utilities

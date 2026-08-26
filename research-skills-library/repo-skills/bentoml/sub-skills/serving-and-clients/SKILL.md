@@ -4,6 +4,7 @@ description: "Serve BentoML services locally over HTTP or gRPC and call endpoint
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # BentoML Serving And Clients

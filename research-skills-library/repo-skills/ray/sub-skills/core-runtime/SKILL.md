@@ -4,6 +4,7 @@ description: "Use Ray Core for Python tasks, actors, object refs, resources, run
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Ray Core Runtime

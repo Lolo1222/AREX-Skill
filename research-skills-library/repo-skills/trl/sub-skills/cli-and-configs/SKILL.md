@@ -4,6 +4,7 @@ description: "Build and debug TRL CLI commands, YAML configs, dataset mixture co
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # TRL CLI and Configs

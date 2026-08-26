@@ -4,6 +4,7 @@ description: "Use Microsoft GraphRAG from CLI or Python: configure data/model/st
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # GraphRAG

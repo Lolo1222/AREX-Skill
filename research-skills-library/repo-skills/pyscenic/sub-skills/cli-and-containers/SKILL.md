@@ -4,6 +4,7 @@ description: "Orchestrate safe pySCENIC CLI, command-file, container, and HPC wo
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: GPL 3.0
 ---
 
 # CLI And Containers

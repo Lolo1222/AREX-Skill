@@ -4,6 +4,7 @@ description: "Use this Chemprop sub-skill for reaction SMILES, reaction-plus-mol
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # Chemprop Specialized Molecular Tasks

@@ -4,6 +4,7 @@ description: "Use NNI feature selectors and standalone utilities for tabular fea
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Feature Engineering and Utilities

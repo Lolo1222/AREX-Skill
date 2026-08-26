@@ -4,6 +4,7 @@ description: "Use RAGatouille to train, index, search, rerank, integrate, and ex
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # RAGatouille Repo Skill

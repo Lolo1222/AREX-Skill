@@ -4,6 +4,7 @@ description: "Use CLAM for weakly supervised computational pathology workflows o
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: GPL 3.0
 ---
 
 # CLAM

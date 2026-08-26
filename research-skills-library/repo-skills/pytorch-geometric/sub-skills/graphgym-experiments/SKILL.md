@@ -4,6 +4,7 @@ description: "Configure, validate, customize, and troubleshoot PyTorch Geometric
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # GraphGym Experiments

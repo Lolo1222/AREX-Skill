@@ -4,6 +4,7 @@ description: "Use and troubleshoot Khoj semantic search, query filters, embeddin
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: AGPL 3.0
 ---
 
 # Khoj Search Retrieval

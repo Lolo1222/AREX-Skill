@@ -4,6 +4,7 @@ description: "Launch, troubleshoot, and inspect MMSegmentation training, validat
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Training and Evaluation

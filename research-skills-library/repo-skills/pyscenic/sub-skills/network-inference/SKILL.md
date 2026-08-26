@@ -4,6 +4,7 @@ description: "Use pySCENIC and Arboreto to infer co-expression adjacencies, add 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: GPL 3.0
 ---
 
 # Network Inference

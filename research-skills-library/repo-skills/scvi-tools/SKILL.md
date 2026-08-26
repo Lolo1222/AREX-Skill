@@ -4,6 +4,7 @@ description: "Use scvi-tools for probabilistic single-cell omics analysis with A
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: BSD 3-Clause
 ---
 
 # scvi-tools

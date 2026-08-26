@@ -4,6 +4,7 @@ description: "Initialize GraphRAG workspaces and run, update, inspect, or troubl
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # GraphRAG Indexing

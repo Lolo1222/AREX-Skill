@@ -4,6 +4,7 @@ description: "Use this skill for Hugging Face Diffusers tasks: pipeline inferenc
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Diffusers

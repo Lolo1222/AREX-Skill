@@ -4,6 +4,7 @@ description: "Work on langchain-core primitives: runnables, messages/content blo
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Core Primitives

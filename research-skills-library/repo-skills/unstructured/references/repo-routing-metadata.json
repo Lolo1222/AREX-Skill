@@ -1,27 +1,17 @@
 {
-  "skills": {
-    "unstructured": {
-      "scenarios": [
-        {
-          "id": "document-processing-unstructured-data-and-rag-preparation",
-          "title": "Document Processing, Unstructured Data, and RAG Preparation",
-          "when_to_read": "Document conversion, partitioning, OCR/table pipelines, Markdown conversion, document elements, chunking, extraction, cleaning, staging, remote document services, and RAG-ready document preparation.",
-          "role": "Use the Unstructured Python package to partition documents into elements, inspect element metadata, chunk outputs for RAG, clean/stage data, add embeddings, evaluate extraction quality, and diagnose optional dependency readiness.",
-          "read_when": "The request names `unstructured` or asks for package-specific APIs, CLIs, configs, data/model artifacts, error messages, workflows, or repository maintenance that match this project.",
-          "best_for": "chunking, data preparation, elements and metadata, embeddings, evaluation, and partitioning.",
-          "avoid_when": "another repo skill in this scenario matches the user's task, package, model family, data format, serving backend, or workflow more directly.",
-          "useful_entry_points": [
-            "unstructured/SKILL.md",
-            "unstructured/sub-skills/chunking/",
-            "unstructured/sub-skills/data-preparation/",
-            "unstructured/sub-skills/elements-and-metadata/",
-            "unstructured/sub-skills/embeddings/",
-            "unstructured/sub-skills/evaluation/",
-            "unstructured/sub-skills/partitioning/"
-          ],
-          "selection_guidance": "Choose `unstructured` when the request names `unstructured`, centers on RAG, clean/stage data, add embeddings, evaluate extraction quality, and diagnose optional dependency readiness, uses its APIs or CLIs, references its configs/artifacts/errors, or asks for repository workflows in document processing unstructured data and rag preparation. Then route to chunking, data preparation, elements and metadata, or embeddings when those focused workflows match."
-        }
-      ]
+  "schema_version": "2.0",
+  "repo_id": "Unstructured-IO/unstructured",
+  "skill_id": "unstructured",
+  "taxonomy_sha256": "b2c4f99cbae303c887f58de2d72096ef6719fcff74b1c0173705cc085eb249ab",
+  "routing_status": "classified",
+  "assignments": [
+    {
+      "area": "Computer Vision",
+      "family": "Document Vision"
+    },
+    {
+      "area": "LLM Applications",
+      "family": "Document Intelligence"
     }
-  }
+  ]
 }

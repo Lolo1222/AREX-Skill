@@ -4,6 +4,7 @@ description: "Use the TIAToolbox console safely: discover commands, choose the r
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # TIAToolbox CLI and Configuration

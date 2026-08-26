@@ -4,6 +4,7 @@ description: "Build Haystack agents and tool ecosystems with Tool, Toolset, Comp
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # Agents, Tools, and HITL

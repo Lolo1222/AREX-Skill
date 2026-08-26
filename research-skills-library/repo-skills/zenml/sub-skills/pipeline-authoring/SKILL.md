@@ -4,6 +4,7 @@ description: "Build, configure, run, schedule, debug, and validate ZenML step an
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Pipeline Authoring

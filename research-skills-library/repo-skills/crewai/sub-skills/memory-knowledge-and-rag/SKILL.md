@@ -4,6 +4,7 @@ description: "Guides agents using CrewAI memory, knowledge sources, RAG clients 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Memory, Knowledge, and RAG

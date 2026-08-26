@@ -4,6 +4,7 @@ description: "Guides OpenMM maintainer and extension-author work on C++ core API
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT, GPL, LGPL
 ---
 
 # OpenMM Development Extensions

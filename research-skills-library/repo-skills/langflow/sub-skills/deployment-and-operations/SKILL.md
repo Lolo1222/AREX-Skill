@@ -4,6 +4,7 @@ description: "Install, run, configure, deploy, and troubleshoot Langflow in loca
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Deployment and Operations

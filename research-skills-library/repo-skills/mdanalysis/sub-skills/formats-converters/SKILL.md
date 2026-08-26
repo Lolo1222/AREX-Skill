@@ -4,6 +4,7 @@ description: "Navigate MDAnalysis format support, optional format dependencies, 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # MDAnalysis Formats and Converters

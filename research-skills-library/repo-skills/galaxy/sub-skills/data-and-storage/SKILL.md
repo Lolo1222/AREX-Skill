@@ -4,6 +4,7 @@ description: "Manage Galaxy datatypes, metadata, dataset storage, object stores,
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # Galaxy Data and Storage

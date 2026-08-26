@@ -4,6 +4,7 @@ description: "Use Snakemake 9.23.1 programmatically with SnakemakeApi, WorkflowA
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Python API Plugins

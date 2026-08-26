@@ -4,6 +4,7 @@ description: "Manage InvokeAI model taxonomy, records, install/load/cache diagno
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # Model Management

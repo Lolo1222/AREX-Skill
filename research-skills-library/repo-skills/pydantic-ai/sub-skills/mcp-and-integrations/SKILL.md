@@ -4,6 +4,7 @@ description: "Guides agents that connect Pydantic AI agents to MCP, FastMCP, A2A
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # MCP and Integrations

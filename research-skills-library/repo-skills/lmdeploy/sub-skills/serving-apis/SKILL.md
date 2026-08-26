@@ -4,6 +4,7 @@ description: "Serve LMDeploy models through OpenAI-compatible, Responses-compati
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Serving APIs

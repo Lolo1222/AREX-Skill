@@ -4,6 +4,7 @@ description: "Operate the LightRAG API server, WebUI, route families, auth, serv
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # LightRAG API Server And WebUI

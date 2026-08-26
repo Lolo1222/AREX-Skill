@@ -4,6 +4,7 @@ description: "Design, validate, and troubleshoot MMEngine datasets, transforms, 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # MMEngine Data Structures and IO

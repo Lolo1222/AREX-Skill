@@ -4,6 +4,7 @@ description: "Select and adapt torchtune post-training recipes without launching
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: BSD 3-Clause
 ---
 
 # Post-Training Recipes

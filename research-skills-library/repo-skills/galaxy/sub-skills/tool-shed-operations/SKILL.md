@@ -4,6 +4,7 @@ description: "Operate Galaxy Tool Shed repositories, repository metadata, instal
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # Galaxy Tool Shed Operations

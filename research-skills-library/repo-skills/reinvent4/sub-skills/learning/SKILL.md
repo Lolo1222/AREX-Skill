@@ -4,6 +4,7 @@ description: "Configure REINVENT4 transfer learning and staged reinforcement lea
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # REINVENT4 Learning

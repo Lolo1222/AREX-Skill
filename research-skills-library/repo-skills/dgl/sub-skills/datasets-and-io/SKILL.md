@@ -4,6 +4,7 @@ description: "Build and validate DGL datasets, CSV dataset folders, graph serial
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # DGL Datasets and IO

@@ -4,6 +4,7 @@ description: "Build, validate, import/export, tweak, and run Langflow flow JSON 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Flow Authoring

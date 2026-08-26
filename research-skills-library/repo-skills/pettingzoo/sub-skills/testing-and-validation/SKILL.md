@@ -4,6 +4,7 @@ description: "Run and interpret PettingZoo compliance, seed, render, max-cycles,
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # Testing And Validation

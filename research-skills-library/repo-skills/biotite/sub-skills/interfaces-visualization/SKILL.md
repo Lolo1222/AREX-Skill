@@ -4,6 +4,7 @@ description: "Use Biotite optional interfaces for PyMOL, RDKit, OpenMM, Matplotl
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: BSD 3-Clause
 ---
 
 # Biotite Interfaces and Visualization

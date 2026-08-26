@@ -4,6 +4,7 @@ description: "Save, load, inspect, minify, and share scvi-tools model artifacts 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: BSD 3-Clause
 ---
 
 # model-io-and-hub

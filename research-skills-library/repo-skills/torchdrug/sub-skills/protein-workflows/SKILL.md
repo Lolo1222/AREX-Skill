@@ -4,6 +4,7 @@ description: "Plan TorchDrug protein sequence, structure, contact prediction, fu
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Protein Workflows

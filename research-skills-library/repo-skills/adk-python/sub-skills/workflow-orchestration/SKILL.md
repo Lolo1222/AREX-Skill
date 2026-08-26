@@ -4,6 +4,7 @@ description: "Build and debug ADK 2.0 Workflow graphs, BaseNode/function nodes, 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # ADK Workflow Orchestration

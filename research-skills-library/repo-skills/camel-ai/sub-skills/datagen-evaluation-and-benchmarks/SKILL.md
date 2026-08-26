@@ -4,6 +4,7 @@ description: "Use CAMEL-AI synthetic data generation, data collectors, datasets,
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # CAMEL Datagen, Evaluation, and Benchmarks

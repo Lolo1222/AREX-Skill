@@ -4,6 +4,7 @@ description: "Use Biotite database clients and external application wrappers for
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: BSD 3-Clause
 ---
 
 # Database and Application

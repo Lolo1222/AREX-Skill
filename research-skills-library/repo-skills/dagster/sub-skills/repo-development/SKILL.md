@@ -4,6 +4,7 @@ description: "Use when a coding agent edits the Dagster OSS repository itself: p
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Repo Development

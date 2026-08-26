@@ -4,6 +4,7 @@ description: "Use Diffusers pipelines for loading, text-to-image, image-to-image
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Pipelines and Inference

@@ -4,6 +4,7 @@ description: "Maintain the DVC repository itself: source layout, CLI command int
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # DVC Repository Development

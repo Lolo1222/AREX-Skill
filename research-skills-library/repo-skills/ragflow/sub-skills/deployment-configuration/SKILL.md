@@ -4,6 +4,7 @@ description: "Deploy, configure, validate, and troubleshoot RAGFlow Docker, sour
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Deployment Configuration

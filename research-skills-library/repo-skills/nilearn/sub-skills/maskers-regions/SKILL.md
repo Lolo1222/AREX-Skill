@@ -4,6 +4,7 @@ description: "Choose and use Nilearn maskers, atlas region extraction, inverse t
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: BSD 3-Clause
 ---
 
 # Maskers and Regions

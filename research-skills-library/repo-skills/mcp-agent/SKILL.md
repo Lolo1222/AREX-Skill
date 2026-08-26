@@ -4,6 +4,7 @@ description: "Build, compose, serve, operate, and troubleshoot mcp-agent applica
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # mcp-agent
@@ -42,7 +43,7 @@ Use this repo skill when a task involves the `mcp-agent` Python package or its C
 - `sub-skills/mcp-server-integration/scripts/validate_server_config.py` checks MCP server config shape and optional executable availability.
 - `sub-skills/cli-cloud-operations/scripts/collect_cli_help.py` collects safe `--help` snapshots without deploy/login/install side effects.
 - `sub-skills/durable-execution/scripts/check_temporal_config.py` validates Temporal config statically without starting a worker.
-- `sub-skills/observability-integrations/scripts/check_observability_config.py` and `scripts/summarize_event_log.py` inspect logger/OTEL config and JSONL event logs safely.
+- `sub-skills/observability-integrations/scripts/check_observability_config.py` and `sub-skills/observability-integrations/scripts/summarize_event_log.py` inspect logger/OTEL config and JSONL event logs safely.
 
 ## Safety Notes
 

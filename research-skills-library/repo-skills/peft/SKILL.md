@@ -4,6 +4,7 @@ description: "Use PEFT for parameter-efficient fine-tuning adapters, LoRA and qu
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # PEFT

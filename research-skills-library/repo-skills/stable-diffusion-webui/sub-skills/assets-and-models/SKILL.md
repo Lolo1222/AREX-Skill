@@ -4,6 +4,7 @@ description: "Manage Stable Diffusion WebUI checkpoints, VAEs, embeddings, hyper
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: AGPL 3.0
 ---
 
 # Assets and Models

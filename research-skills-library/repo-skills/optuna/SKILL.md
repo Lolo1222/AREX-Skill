@@ -4,6 +4,7 @@ description: "Use this skill for Optuna hyperparameter optimization workflows: s
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # Optuna Repo Skill

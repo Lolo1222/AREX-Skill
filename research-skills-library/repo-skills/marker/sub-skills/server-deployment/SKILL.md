@@ -4,6 +4,7 @@ description: "Run Marker app, API server, client, and deployment surfaces safely
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # Marker Server Deployment

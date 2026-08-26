@@ -4,6 +4,7 @@ description: "Build CPU-safe PyTorch CNN layers and model helpers with MMCV buil
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # MMCV CNN Model Building

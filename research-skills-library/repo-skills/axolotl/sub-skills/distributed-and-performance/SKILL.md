@@ -4,6 +4,7 @@ description: "Guides agents configuring and troubleshooting Axolotl multi-GPU, D
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Distributed and Performance

@@ -4,6 +4,7 @@ description: "Use dense Hail MatrixTable workflows for VCF, PLINK, BGEN, variant
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Hail Genomics Analysis

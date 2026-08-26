@@ -4,6 +4,7 @@ description: "Use CAMEL-AI to build, configure, tool, remember, evaluate, and tr
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # CAMEL-AI Repo Skill

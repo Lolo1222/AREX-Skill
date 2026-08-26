@@ -4,6 +4,7 @@ description: "Use TorchDrug for knowledge graph reasoning, triple datasets, embe
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Knowledge Graphs

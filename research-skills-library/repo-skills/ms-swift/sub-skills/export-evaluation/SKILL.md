@@ -4,6 +4,7 @@ description: "Export, quantize, push, and EvalScope-evaluate ms-swift models saf
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # export-evaluation

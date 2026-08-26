@@ -4,6 +4,7 @@ description: "Maintain, debug, and design low-level autogen_core applications: r
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # AutoGen Core Runtime

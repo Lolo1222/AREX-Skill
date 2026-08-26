@@ -4,6 +4,7 @@ description: "Use Tianshou 2.0.1 offline RL, imitation learning, model-based/cur
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Offline and Specialized RL

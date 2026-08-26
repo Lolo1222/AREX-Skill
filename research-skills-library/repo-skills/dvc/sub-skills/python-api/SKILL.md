@@ -4,6 +4,7 @@ description: "Use DVC as a Python library for streaming reads, fsspec filesystem
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # DVC Python API

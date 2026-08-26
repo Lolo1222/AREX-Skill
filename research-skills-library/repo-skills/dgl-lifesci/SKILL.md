@@ -4,6 +4,7 @@ description: "Use DGL-LifeSci and dgllife for molecular graph learning, molecule
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # DGL-LifeSci

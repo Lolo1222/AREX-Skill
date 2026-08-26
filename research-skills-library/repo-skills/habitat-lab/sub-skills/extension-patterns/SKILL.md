@@ -4,6 +4,7 @@ description: "Add and inspect Habitat-Lab registry extensions for tasks, sensors
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Habitat-Lab Extension Patterns

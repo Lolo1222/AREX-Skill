@@ -4,6 +4,7 @@ description: "Choose, configure, customize, and debug Optuna search and pruning 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # Samplers and Pruners

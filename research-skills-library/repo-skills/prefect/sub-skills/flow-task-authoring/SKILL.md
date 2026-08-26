@@ -4,6 +4,7 @@ description: "Author, run, debug, and locally test Prefect flows and tasks with 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Flow And Task Authoring

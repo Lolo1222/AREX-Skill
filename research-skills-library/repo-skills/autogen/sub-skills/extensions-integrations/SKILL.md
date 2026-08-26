@@ -4,6 +4,7 @@ description: "Install, choose, configure, and troubleshoot AutoGen `autogen_ext`
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # AutoGen Extensions Integrations

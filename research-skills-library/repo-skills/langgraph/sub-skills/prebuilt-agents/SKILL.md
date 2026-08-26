@@ -4,6 +4,7 @@ description: "Use LangGraph prebuilt ReAct agents, ToolNode, ValidationNode, inj
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # LangGraph Prebuilt Agents

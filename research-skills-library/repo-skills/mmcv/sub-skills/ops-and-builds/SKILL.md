@@ -4,6 +4,7 @@ description: "Choose MMCV package variants, inspect compiled ops availability, a
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # MMCV Ops And Builds

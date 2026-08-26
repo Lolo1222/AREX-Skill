@@ -4,6 +4,7 @@ description: "Route BEIR repository tasks for benchmark data loading, retrieval 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # BEIR Repo Skill

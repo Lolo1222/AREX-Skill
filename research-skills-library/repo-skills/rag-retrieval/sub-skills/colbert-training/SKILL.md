@@ -4,6 +4,7 @@ description: "Train ColBERT-style late-interaction retrieval models with bundled
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # ColBERT Training

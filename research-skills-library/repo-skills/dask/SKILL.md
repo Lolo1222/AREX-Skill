@@ -4,6 +4,7 @@ description: "Use this repo skill for Dask, the Python parallel computing librar
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: BSD 3-Clause
 ---
 
 # Dask Repo Skill

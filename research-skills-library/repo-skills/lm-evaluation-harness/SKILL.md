@@ -4,6 +4,7 @@ description: "Use EleutherAI LM Evaluation Harness for language-model evaluation
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # LM Evaluation Harness

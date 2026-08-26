@@ -4,6 +4,7 @@ description: "Prepare, load, orient, and validate PyDESeq2 count and metadata in
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Data I/O And Validation

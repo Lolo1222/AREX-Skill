@@ -4,6 +4,7 @@ description: "Work with Airflow providers, standard operators/sensors/hooks, cus
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 <!-- SPDX-License-Identifier: Apache-2.0 -->

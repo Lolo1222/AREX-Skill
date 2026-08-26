@@ -4,6 +4,7 @@ description: "Route OpenCLIP model loading, inference, training, audio CLAP, NaF
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # OpenCLIP

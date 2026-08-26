@@ -4,6 +4,7 @@ description: "Maintain segmentation_models_pytorch source, docs, and focused tes
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Repo Development

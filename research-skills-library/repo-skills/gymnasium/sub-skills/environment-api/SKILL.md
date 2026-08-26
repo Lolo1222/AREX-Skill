@@ -4,6 +4,7 @@ description: "Use Gymnasium's single-environment API: make/reset/step/render/clo
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Gymnasium Environment API

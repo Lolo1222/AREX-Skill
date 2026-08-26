@@ -4,6 +4,7 @@ description: "Create and manage Prefect deployments, schedules, serve processes,
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Deployments And Workers

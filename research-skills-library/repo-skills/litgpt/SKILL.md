@@ -4,6 +4,7 @@ description: "Use LitGPT to run local LLM inference, chat, finetuning, pretraini
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # LitGPT Repo Skill

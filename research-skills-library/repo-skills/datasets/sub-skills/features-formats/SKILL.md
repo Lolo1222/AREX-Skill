@@ -4,6 +4,7 @@ description: "Define, validate, cast, decode, and troubleshoot Hugging Face Data
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Features and Formats

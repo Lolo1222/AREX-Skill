@@ -4,6 +4,7 @@ description: "Build Hail Table and expression pipelines for imports, keys, joins
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Hail Tables and Expressions

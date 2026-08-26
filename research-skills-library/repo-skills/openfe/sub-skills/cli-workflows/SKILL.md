@@ -4,6 +4,7 @@ description: "Use OpenFE console commands for planning networks, running quickru
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # OpenFE CLI Workflows

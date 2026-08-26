@@ -4,6 +4,7 @@ description: "Use for LlamaFactory v0 training runs, config files, CLI overrides
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Training and Configs

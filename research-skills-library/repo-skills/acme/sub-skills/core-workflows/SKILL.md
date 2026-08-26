@@ -4,6 +4,7 @@ description: "Build and debug Acme core dm_env loops, specs, wrappers, logging, 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Acme Core Workflows

@@ -4,6 +4,7 @@ description: "Routes agents working with Pydantic AI, pydantic-graph, pydantic-e
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Pydantic AI Repo Skill

@@ -4,6 +4,7 @@ description: "Export Segment Anything's prompt encoder and mask decoder to ONNX,
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # ONNX and Browser Workflows

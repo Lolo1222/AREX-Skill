@@ -4,6 +4,7 @@ description: "Use Khoj as a self-hosted AI second-brain server, document indexin
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: AGPL 3.0
 ---
 
 # Khoj

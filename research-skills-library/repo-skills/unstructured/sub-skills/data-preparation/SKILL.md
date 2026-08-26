@@ -4,6 +4,7 @@ description: "Clean extracted text, stage Unstructured elements for annotation a
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Data Preparation

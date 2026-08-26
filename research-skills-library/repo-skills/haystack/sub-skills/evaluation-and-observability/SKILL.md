@@ -4,6 +4,7 @@ description: "Evaluate Haystack retrieval, answers, and pipelines, and instrumen
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # Evaluation and Observability

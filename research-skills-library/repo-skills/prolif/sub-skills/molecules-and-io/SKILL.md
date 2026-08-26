@@ -4,6 +4,7 @@ description: "Prepare ProLIF molecules, residues, and input files from RDKit, MD
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # ProLIF Molecules and I/O

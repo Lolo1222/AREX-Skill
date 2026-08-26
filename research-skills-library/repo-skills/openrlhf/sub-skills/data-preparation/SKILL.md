@@ -4,6 +4,7 @@ description: "Prepare and validate OpenRLHF datasets for SFT, reward modeling, D
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # OpenRLHF Data Preparation

@@ -4,6 +4,7 @@ description: "Use UniLM E5 and SimLM for embedding evaluation, dense retrieval, 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Embeddings Retrieval

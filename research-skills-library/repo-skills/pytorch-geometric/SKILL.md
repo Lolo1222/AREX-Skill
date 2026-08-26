@@ -4,6 +4,7 @@ description: "Use PyTorch Geometric to build graph data, loaders, GNN models, he
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # PyTorch Geometric

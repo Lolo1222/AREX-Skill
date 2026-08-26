@@ -4,6 +4,7 @@ description: "Use for vLLM OpenAI-compatible serving workflows: vllm serve/chat/
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # openai-serving

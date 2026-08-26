@@ -4,6 +4,7 @@ description: "Prepare and validate Chemprop CSV/NPZ inputs, SMILES/reaction colu
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # Chemprop Data Featurization

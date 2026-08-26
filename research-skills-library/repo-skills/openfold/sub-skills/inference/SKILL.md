@@ -4,6 +4,7 @@ description: "Plan and validate OpenFold monomer, multimer, SoloSeq, precomputed
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # OpenFold Inference

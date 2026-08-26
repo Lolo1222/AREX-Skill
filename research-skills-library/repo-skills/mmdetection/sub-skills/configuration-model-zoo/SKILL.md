@@ -4,6 +4,7 @@ description: "Choose, inspect, modify, and validate MMDetection 3.3.0 configs an
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Configuration Model Zoo

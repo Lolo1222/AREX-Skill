@@ -4,6 +4,7 @@ description: "Choose, install, configure, extend, and troubleshoot LM Evaluation
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Model Backends

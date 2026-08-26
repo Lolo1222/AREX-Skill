@@ -4,6 +4,7 @@ description: "Build safe GroundingDINO web demos and handoffs to segmentation, G
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # GroundingDINO Integrations

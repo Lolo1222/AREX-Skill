@@ -4,6 +4,7 @@ description: "Share Datasets datasets to the Hub, operate datasets-cli, manage c
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Sharing, CLI, and Cache Operations

@@ -4,6 +4,7 @@ description: "Work on ZenML FastAPI server routers, auth/RBAC, domain models, st
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Server and Stores

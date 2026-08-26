@@ -4,6 +4,7 @@ description: "Configure OpenAI Agents Python model settings, OpenAI providers, R
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Models & Providers

@@ -4,6 +4,7 @@ description: "Diversify an existing RFdiffusion backbone or complex with partial
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # Partial Diffusion

@@ -4,6 +4,7 @@ description: "Use qdrant-client inference with FastEmbed local embeddings or Qdr
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Inference

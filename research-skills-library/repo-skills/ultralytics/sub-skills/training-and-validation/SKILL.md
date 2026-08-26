@@ -4,6 +4,7 @@ description: "Plan and troubleshoot Ultralytics YOLO training, validation, resum
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: AGPL 3.0
 ---
 
 # Training and Validation

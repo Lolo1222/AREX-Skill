@@ -4,6 +4,7 @@ description: "Use this sub-skill for Ultralytics YOLO predict workflows, source 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: AGPL 3.0
 ---
 
 # Inference and Results

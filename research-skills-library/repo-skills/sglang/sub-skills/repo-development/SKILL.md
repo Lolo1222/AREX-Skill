@@ -4,6 +4,7 @@ description: "Work safely inside the SGLang checkout with source layout, depende
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Repo Development

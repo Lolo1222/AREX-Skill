@@ -4,6 +4,7 @@ description: "Understand SaProt LMDB datasets, JSONL-to-LMDB conversion, task YA
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # SaProt Datasets and Configs

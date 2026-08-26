@@ -1,26 +1,21 @@
 {
-  "skills": {
-    "langgraph": {
-      "scenarios": [
-        {
-          "id": "agent-frameworks-tooling-and-sandboxed-llm-workflows",
-          "title": "Agent Frameworks, Tooling, and Sandboxed LLM Workflows",
-          "when_to_read": "LLM agent frameworks, browser automation agents, tool calling, graph/state runtimes, hosted or sandbox execution, MCP, CLIs, and production agent operations.",
-          "role": "Build, run, persist, deploy, and operate LangGraph Python applications using the core runtime, prebuilt agents, checkpointing, CLI, and SDK clients.",
-          "read_when": "The request names `langgraph` or asks for package-specific APIs, CLIs, configs, data/model artifacts, error messages, workflows, or repository maintenance that match this project.",
-          "best_for": "cli deployment, graph runtime, persistence, prebuilt agents, and sdk clients.",
-          "avoid_when": "another repo skill in this scenario matches the user's task, package, model family, data format, serving backend, or workflow more directly.",
-          "useful_entry_points": [
-            "langgraph/SKILL.md",
-            "langgraph/sub-skills/cli-deployment/",
-            "langgraph/sub-skills/graph-runtime/",
-            "langgraph/sub-skills/persistence/",
-            "langgraph/sub-skills/prebuilt-agents/",
-            "langgraph/sub-skills/sdk-clients/"
-          ],
-          "selection_guidance": "Choose `langgraph` when the request names `langgraph`, centers on building, run, persist, deploy, and operate LangGraph Python applications using the core runtime, prebuilt agents, checkpointing, CLI, and SDK clients, uses its APIs or CLIs, references its configs/artifacts/errors, or asks for repository workflows in agent frameworks tooling and sandboxed llm workflows. Then route to CLI deployment, graph runtime, persistence, or prebuilt agents when those focused workflows match."
-        }
-      ]
+  "schema_version": "2.0",
+  "repo_id": "langchain-ai/langgraph",
+  "skill_id": "langgraph",
+  "taxonomy_sha256": "b2c4f99cbae303c887f58de2d72096ef6719fcff74b1c0173705cc085eb249ab",
+  "routing_status": "classified",
+  "assignments": [
+    {
+      "area": "LLM Applications",
+      "family": "Multi-Agent Orchestration"
+    },
+    {
+      "area": "LLM Applications",
+      "family": "LLM Workflow Frameworks"
+    },
+    {
+      "area": "LLM Applications",
+      "family": "Memory and Context"
     }
-  }
+  ]
 }

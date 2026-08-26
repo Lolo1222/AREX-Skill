@@ -4,6 +4,7 @@ description: "Load CLIP models, prepare images/text, and run safe image-text inf
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # CLIP Model Loading and Inference

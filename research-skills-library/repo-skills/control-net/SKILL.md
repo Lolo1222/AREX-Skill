@@ -4,6 +4,7 @@ description: "Route ControlNet 1.0 source-checkout tasks for annotators, Gradio 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # ControlNet Repo Skill

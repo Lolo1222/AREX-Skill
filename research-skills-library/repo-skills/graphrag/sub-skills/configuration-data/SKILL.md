@@ -4,6 +4,7 @@ description: "Initialize, inspect, and troubleshoot GraphRAG settings, environme
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # GraphRAG Configuration and Data

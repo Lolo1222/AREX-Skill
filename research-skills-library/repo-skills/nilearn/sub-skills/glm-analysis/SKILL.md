@@ -4,6 +4,7 @@ description: "Build Nilearn first-level and second-level GLM workflows, includin
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: BSD 3-Clause
 ---
 
 # GLM Analysis

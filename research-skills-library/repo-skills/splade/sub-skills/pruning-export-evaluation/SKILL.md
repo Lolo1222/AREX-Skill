@@ -4,6 +4,7 @@ description: "Export SPLADE vectors for Anserini, prune Anserini-style JSONL, an
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # SPLADE Pruning, Export, and Evaluation

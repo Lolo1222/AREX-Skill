@@ -4,6 +4,7 @@ description: "Use when modifying verl rollout engines, multi-turn agent loops, f
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Rollout And Tools

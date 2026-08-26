@@ -4,6 +4,7 @@ description: "Use evaluate.evaluator and EvaluationSuite to evaluate model pipel
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Evaluator Pipelines

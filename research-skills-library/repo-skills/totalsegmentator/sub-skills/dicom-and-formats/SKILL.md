@@ -4,6 +4,7 @@ description: "Handle TotalSegmentator NIfTI and DICOM inputs, DICOM outputs, mod
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # DICOM and Formats

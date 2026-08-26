@@ -4,6 +4,7 @@ description: "Configure and troubleshoot LightRAG LLM, embedding, VLM, role-spec
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # LightRAG LLM Providers

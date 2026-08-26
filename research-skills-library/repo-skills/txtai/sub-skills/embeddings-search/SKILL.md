@@ -4,6 +4,7 @@ description: "Build, query, maintain, and troubleshoot txtai embeddings database
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Embeddings Search

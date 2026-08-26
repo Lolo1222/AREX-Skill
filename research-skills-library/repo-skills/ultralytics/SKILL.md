@@ -4,6 +4,7 @@ description: "Use this skill for Ultralytics YOLO package workflows: CLI/Python 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: AGPL 3.0
 ---
 
 # Ultralytics Repo Skill

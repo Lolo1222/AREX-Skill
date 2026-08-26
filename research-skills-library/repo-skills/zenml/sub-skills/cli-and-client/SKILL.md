@@ -4,6 +4,7 @@ description: "Use ZenML from the CLI and Python Client for repository initializa
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # CLI and Client

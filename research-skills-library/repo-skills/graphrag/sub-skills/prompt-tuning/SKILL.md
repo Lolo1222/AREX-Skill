@@ -4,6 +4,7 @@ description: "Run, plan, and diagnose GraphRAG prompt tuning for indexing prompt
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # GraphRAG Prompt Tuning

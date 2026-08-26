@@ -4,6 +4,7 @@ description: "Assemble OpenFF Topology objects, load PDB/biopolymer systems, man
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Topology and Systems

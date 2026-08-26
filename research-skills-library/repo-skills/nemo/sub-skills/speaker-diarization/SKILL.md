@@ -4,6 +4,7 @@ description: "Use for NeMo Speech speaker recognition, diarization, VAD, Sortfor
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Speaker Diarization

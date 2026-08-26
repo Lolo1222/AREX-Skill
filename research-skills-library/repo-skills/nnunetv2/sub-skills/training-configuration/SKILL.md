@@ -4,6 +4,7 @@ description: "Configure and launch nnU-Net v2 training runs after planning/prepr
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # nnU-Net v2 Training Configuration

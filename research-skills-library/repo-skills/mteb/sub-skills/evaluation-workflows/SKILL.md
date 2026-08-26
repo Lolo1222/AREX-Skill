@@ -4,6 +4,7 @@ description: "Run MTEB evaluations from Python, configure cache/overwrite/predic
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Evaluation Workflows

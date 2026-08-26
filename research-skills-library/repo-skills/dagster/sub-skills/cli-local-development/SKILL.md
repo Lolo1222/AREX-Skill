@@ -4,6 +4,7 @@ description: "Use when a coding agent needs to run local Dagster OSS CLI command
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # CLI Local Development

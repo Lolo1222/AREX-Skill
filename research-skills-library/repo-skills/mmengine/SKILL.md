@@ -4,6 +4,7 @@ description: "Use MMEngine to configure, train, evaluate, inspect, visualize, an
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # MMEngine Repo Skill

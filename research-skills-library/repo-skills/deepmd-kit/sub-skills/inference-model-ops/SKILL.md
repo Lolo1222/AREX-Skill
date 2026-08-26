@@ -4,6 +4,7 @@ description: "Load DeePMD-kit models, run Python or CLI inference, extract descr
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: LGPL 3.0
 ---
 
 # DeePMD-kit Inference and Model Operations

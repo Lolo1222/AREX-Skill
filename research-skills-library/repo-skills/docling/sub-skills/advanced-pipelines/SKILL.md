@@ -4,6 +4,7 @@ description: "Configure Docling VLM, ASR, enrichment, model-catalog, optional ba
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Advanced Pipelines

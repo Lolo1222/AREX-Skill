@@ -4,6 +4,7 @@ description: "Plan and debug Dipy tractography, streamline clustering, bundle se
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # Dipy Tracking And Segmentation

@@ -4,6 +4,7 @@ description: "Use when working with Dagster OSS: assets, jobs, Definitions, conf
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Dagster

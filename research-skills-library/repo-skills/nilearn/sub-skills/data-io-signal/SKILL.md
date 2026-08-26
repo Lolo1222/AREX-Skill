@@ -4,6 +4,7 @@ description: "Handle Nilearn Niimg image I/O, volume image operations, masking/u
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: BSD 3-Clause
 ---
 
 # Nilearn Data I/O and Signal Skill

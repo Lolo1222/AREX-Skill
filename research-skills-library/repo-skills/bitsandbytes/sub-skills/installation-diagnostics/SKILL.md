@@ -4,6 +4,7 @@ description: "Diagnose and fix bitsandbytes installation, import, backend compat
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Installation Diagnostics

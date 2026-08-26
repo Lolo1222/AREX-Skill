@@ -4,6 +4,7 @@ description: "Choose and fit Dipy diffusion reconstruction models, compute scala
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # Reconstruction Models

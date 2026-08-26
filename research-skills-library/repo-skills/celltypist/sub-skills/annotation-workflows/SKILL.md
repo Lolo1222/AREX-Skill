@@ -4,6 +4,7 @@ description: "Run CellTypist prediction and annotation workflows from Python or 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # CellTypist Annotation Workflows

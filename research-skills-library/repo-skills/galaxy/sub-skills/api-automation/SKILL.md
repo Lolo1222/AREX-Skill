@@ -4,6 +4,7 @@ description: "Use Galaxy HTTP APIs, API test helpers, OpenAPI surfaces, and safe
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # Galaxy API Automation

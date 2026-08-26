@@ -1,0 +1,21 @@
+{
+  "schema_version": "2.0",
+  "repo_id": "Improbable-AI/walk-these-ways",
+  "skill_id": "walk-these-ways",
+  "taxonomy_sha256": "b2c4f99cbae303c887f58de2d72096ef6719fcff74b1c0173705cc085eb249ab",
+  "routing_status": "classified",
+  "assignments": [
+    {
+      "area": "Reinforcement Learning",
+      "family": "RL Algorithm Implementations"
+    },
+    {
+      "area": "Robotics and Embodied AI",
+      "family": "Robot Simulation"
+    },
+    {
+      "area": "Robotics and Embodied AI",
+      "family": "Robot Locomotion"
+    }
+  ]
+}

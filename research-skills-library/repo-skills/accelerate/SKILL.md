@@ -4,6 +4,7 @@ description: "Use Hugging Face Accelerate for PyTorch training-loop migration, d
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Accelerate

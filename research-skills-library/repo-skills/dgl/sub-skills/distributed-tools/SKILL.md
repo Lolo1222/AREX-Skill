@@ -4,6 +4,7 @@ description: "Plan safe DGL distributed graph partitioning, launch commands, Dis
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # DGL Distributed Tools

@@ -4,6 +4,7 @@ description: "Use for LlamaFactory model/tokenizer/processor loading, model patc
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Model Loading and Export

@@ -4,6 +4,7 @@ description: "Use for NeMo Speech ASR model selection, checkpoint loading, trans
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # ASR

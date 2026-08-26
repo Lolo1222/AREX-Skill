@@ -4,6 +4,7 @@ description: "Use for MLflow GenAI observability work: tracing, trace search/exp
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # GenAI Observability

@@ -4,6 +4,7 @@ description: "Analyze completed Optuna studies with parameter importances, trial
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # Optuna Analysis and Visualization

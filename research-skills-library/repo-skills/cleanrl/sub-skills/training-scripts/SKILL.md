@@ -4,6 +4,7 @@ description: "Choose, run, inspect, and safely adapt CleanRL single-file trainin
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # CleanRL Training Scripts

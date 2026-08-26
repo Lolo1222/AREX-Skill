@@ -4,6 +4,7 @@ description: "Guides agents to write, inspect, and debug Axolotl YAML configs, d
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Data and Configs

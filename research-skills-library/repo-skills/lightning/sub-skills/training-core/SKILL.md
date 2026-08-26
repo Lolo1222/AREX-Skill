@@ -4,6 +4,7 @@ description: "Build, convert, debug, and validate core Lightning training workfl
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Lightning Training Core

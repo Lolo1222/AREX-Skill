@@ -4,6 +4,7 @@ description: "Customize ms-swift datasets, registries, plugins, models, and temp
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Data and Model Customization

@@ -1,0 +1,13 @@
+{
+  "schema_version": "2.0",
+  "repo_id": "opengeos/leafmap",
+  "skill_id": "leafmap",
+  "taxonomy_sha256": "b2c4f99cbae303c887f58de2d72096ef6719fcff74b1c0173705cc085eb249ab",
+  "routing_status": "classified",
+  "assignments": [
+    {
+      "area": "Data Science",
+      "family": "Geospatial Computing"
+    }
+  ]
+}

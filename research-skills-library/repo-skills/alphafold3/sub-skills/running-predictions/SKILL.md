@@ -4,6 +4,7 @@ description: "Plan and run AlphaFold 3 predictions via Docker or local Python, i
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Running AlphaFold 3 Predictions

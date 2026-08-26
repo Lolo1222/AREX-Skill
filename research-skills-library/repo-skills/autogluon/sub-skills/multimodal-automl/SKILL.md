@@ -4,6 +4,7 @@ description: "Use AutoGluon MultiModalPredictor for text, image, tabular+text/im
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # MultiModal AutoML

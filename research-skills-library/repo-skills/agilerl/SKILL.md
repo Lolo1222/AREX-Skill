@@ -4,6 +4,7 @@ description: "Use AgileRL for reinforcement learning workflows: classical RL tra
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # AgileRL

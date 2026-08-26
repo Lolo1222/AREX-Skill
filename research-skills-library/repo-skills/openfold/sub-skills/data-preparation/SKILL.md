@@ -4,6 +4,7 @@ description: "Prepare and validate OpenFold FASTA, mmCIF, MSA, alignment DB, cac
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # OpenFold Data Preparation

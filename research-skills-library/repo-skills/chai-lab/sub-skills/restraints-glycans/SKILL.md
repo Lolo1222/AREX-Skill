@@ -4,6 +4,7 @@ description: "Author, validate, and troubleshoot Chai-1 restraint CSVs, covalent
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Chai-1 Restraints and Glycans

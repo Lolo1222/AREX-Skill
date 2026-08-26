@@ -4,6 +4,7 @@ description: "Single-cell biological analysis workflows for annotation, integrat
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: GPL 3.0
 ---
 
 # Single-Cell Workflows

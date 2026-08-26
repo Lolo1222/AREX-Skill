@@ -4,6 +4,7 @@ description: "Use ESM-IF1 for fixed-backbone protein inverse design, sequence lo
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Inverse Folding

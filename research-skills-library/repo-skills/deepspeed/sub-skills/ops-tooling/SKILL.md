@@ -4,6 +4,7 @@ description: "Diagnose DeepSpeed installs, build/JIT flags, CLI tools, autotunin
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # DeepSpeed Ops Tooling

@@ -4,6 +4,7 @@ description: "Select, configure, swap, serialize, and troubleshoot Diffusers sch
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Schedulers

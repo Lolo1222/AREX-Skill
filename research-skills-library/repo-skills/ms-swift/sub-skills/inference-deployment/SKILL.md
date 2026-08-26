@@ -4,6 +4,7 @@ description: "Run and debug ms-swift inference, app, deployment, backend selecti
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Inference and Deployment

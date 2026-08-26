@@ -4,6 +4,7 @@ description: "Prepare RAGatouille ColBERT training data and run RAGTrainer fine-
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Training Data and Fine-Tuning

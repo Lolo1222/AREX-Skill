@@ -4,6 +4,7 @@ description: "Plan and validate Protenix protein MSA, template search, RNA MSA, 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Protenix MSA, Template, and Prep

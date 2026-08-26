@@ -1,0 +1,21 @@
+{
+  "schema_version": "2.0",
+  "repo_id": "pycaret/pycaret",
+  "skill_id": "pycaret",
+  "taxonomy_sha256": "b2c4f99cbae303c887f58de2d72096ef6719fcff74b1c0173705cc085eb249ab",
+  "routing_status": "classified",
+  "assignments": [
+    {
+      "area": "MLOps",
+      "family": "AutoML"
+    },
+    {
+      "area": "MLOps",
+      "family": "ML Platform Suites"
+    },
+    {
+      "area": "Model Deployment and Optimization",
+      "family": "Inference Serving"
+    }
+  ]
+}

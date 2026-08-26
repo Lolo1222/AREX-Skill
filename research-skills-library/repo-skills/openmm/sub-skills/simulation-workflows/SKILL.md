@@ -4,6 +4,7 @@ description: "Set up and run practical OpenMM Python application-layer simulatio
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT, GPL, LGPL
 ---
 
 # Simulation Workflows

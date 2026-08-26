@@ -4,6 +4,7 @@ description: "Use qdrant_client.models, REST model classes, REST/gRPC interopera
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Models and Conversions

@@ -4,6 +4,7 @@ description: "Inspect Kedro projects with read-only snapshots and troubleshoot t
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Inspection and Server

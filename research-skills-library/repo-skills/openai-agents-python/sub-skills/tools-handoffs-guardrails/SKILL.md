@@ -4,6 +4,7 @@ description: "Build function tools, local and hosted tool surfaces, agents-as-to
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Tools, Handoffs, and Guardrails

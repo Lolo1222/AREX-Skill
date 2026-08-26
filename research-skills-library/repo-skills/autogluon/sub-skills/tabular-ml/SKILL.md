@@ -4,6 +4,7 @@ description: "Build, evaluate, customize, troubleshoot, and deploy AutoGluon Tab
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # AutoGluon Tabular ML

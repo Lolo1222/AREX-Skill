@@ -4,6 +4,7 @@ description: "Convert documents with Marker through safe CLI and Python API work
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # Marker conversion CLI/API

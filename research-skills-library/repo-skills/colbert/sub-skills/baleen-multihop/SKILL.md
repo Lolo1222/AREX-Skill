@@ -4,6 +4,7 @@ description: "Optional ColBERT Baleen multi-hop retrieval extension: HopSearcher
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Baleen Multi-hop

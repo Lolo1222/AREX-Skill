@@ -4,6 +4,7 @@ description: "Choose, load, inspect, modify, and validate Detectron2 Yacs, LazyC
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Configuration and Model Zoo

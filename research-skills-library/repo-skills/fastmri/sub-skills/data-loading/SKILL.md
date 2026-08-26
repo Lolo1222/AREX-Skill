@@ -4,6 +4,7 @@ description: "Load and inspect fastMRI HDF5 data, datasets, masks, transforms, a
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # fastMRI Data Loading

@@ -4,6 +4,7 @@ description: "Run, script, and troubleshoot Chai-1 folding with the chai-lab fol
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Chai-1 CLI and Inference

@@ -4,6 +4,7 @@ description: "Use Chemprop 2.2.3 for molecular property prediction: CLI training
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # Chemprop

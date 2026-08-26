@@ -4,6 +4,7 @@ description: "Evaluate and summarize Boltz prediction outputs, benchmark result 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Evaluation

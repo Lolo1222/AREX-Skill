@@ -4,6 +4,7 @@ description: "Compute, interpret, export, and troubleshoot PyDESeq2 statistical 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # PyDESeq2 Statistics and Results

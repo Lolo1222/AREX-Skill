@@ -4,6 +4,7 @@ description: "Use LightRAG as a graph-based RAG framework: embedded Python APIs,
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # LightRAG Repo Skill

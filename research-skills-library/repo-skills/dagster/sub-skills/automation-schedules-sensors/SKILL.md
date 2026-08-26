@@ -4,6 +4,7 @@ description: "Define, debug, and test Dagster schedules, sensors, asset sensors,
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Automation: schedules, sensors, and declarative conditions

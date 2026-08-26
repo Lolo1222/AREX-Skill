@@ -4,6 +4,7 @@ description: "Model, validate, test, and troubleshoot Dagster assets, jobs, Defi
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Asset Definitions

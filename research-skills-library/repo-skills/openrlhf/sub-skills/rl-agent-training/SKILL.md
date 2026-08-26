@@ -4,6 +4,7 @@ description: "Plan and adapt OpenRLHF PPO/Ray/vLLM reinforcement-learning runs, 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # OpenRLHF RL Agent Training

@@ -4,6 +4,7 @@ description: "Run Chemprop prediction and fingerprint workflows from trained mod
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # Chemprop Prediction and Fingerprints

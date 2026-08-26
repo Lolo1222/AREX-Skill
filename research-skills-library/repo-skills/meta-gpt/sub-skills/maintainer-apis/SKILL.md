@@ -4,6 +4,7 @@ description: "Maintain MetaGPT internal APIs for serialization, memory, experien
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Maintainer APIs

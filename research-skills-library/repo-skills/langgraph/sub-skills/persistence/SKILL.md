@@ -4,6 +4,7 @@ description: "Choose and wire LangGraph persistence: checkpoint savers, stores, 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Persistence

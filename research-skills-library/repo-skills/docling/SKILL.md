@@ -4,6 +4,7 @@ description: "Use Docling to convert, parse, configure, extract, chunk, serve, a
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Docling

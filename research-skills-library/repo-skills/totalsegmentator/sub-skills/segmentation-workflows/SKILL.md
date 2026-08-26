@@ -4,6 +4,7 @@ description: "Build reproducible TotalSegmentator CLI and Python API segmentatio
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Segmentation Workflows

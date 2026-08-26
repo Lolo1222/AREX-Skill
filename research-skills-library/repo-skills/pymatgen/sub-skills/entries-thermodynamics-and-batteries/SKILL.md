@@ -4,6 +4,7 @@ description: "Prepare pymatgen computed entries, compatibility-corrected thermod
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # Entries, Thermodynamics, and Batteries

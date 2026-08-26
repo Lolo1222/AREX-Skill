@@ -4,6 +4,7 @@ description: "Choose, inspect, configure, and safely adapt ControlNet 1.0 Gradio
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # ControlNet Gradio Inference Apps

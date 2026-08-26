@@ -4,6 +4,7 @@ description: "Use this Pillow sub-skill when an agent needs to open or save spec
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # Pillow Formats and Metadata

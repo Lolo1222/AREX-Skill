@@ -4,6 +4,7 @@ description: "Contribute to Feast itself: setup, scoped tests, lint/type checks,
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Feast Repo Development

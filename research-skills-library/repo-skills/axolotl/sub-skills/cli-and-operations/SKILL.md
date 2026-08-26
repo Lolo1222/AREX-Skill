@@ -4,6 +4,7 @@ description: "Guides agents using Axolotl CLI commands, launcher flags, agent-do
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # CLI and Operations

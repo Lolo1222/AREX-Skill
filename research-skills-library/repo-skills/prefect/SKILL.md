@@ -4,6 +4,7 @@ description: "Route Prefect SDK, CLI, server, deployment, event, client, setting
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Prefect Repo Skill

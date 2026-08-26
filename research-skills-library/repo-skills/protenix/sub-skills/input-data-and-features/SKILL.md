@@ -4,6 +4,7 @@ description: "Author, validate, and convert Protenix input JSON for proteins, nu
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Input Data and Features

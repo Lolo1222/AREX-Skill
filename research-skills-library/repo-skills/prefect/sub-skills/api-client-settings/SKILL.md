@@ -4,6 +4,7 @@ description: "Use Prefect Python clients, settings, profiles, schemas, and the p
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Prefect API Client and Settings

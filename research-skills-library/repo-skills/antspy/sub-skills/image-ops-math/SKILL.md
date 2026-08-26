@@ -4,6 +4,7 @@ description: "Use ANTsPy image operations for smoothing, resampling, masking, cr
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Image Operations and Math

@@ -4,6 +4,7 @@ description: "Use this sub-skill for Lightning Fabric expert-controlled PyTorch 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Fabric Expert Loops

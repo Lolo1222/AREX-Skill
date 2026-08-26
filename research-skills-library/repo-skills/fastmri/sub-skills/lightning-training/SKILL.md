@@ -4,6 +4,7 @@ description: "Build fastMRI PyTorch Lightning training and test workflows with F
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # fastMRI Lightning Training

@@ -4,6 +4,7 @@ description: "Handle CellTypist AnnotationResult exports, AnnData insertion, UMA
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Visualization and Results

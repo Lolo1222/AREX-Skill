@@ -4,6 +4,7 @@ description: "Create and maintain Langflow Python components, extension bundles,
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Langflow Component Development

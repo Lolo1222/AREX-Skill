@@ -4,6 +4,7 @@ description: "Convert mcp-agent workflows into durable Temporal-backed workers w
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # durable-execution

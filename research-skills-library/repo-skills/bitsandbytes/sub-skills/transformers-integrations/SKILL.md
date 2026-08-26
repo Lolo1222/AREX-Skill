@@ -4,6 +4,7 @@ description: "Use bitsandbytes through Hugging Face Transformers, Diffusers, PEF
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Transformers Integrations

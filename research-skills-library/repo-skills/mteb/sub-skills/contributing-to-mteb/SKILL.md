@@ -4,6 +4,7 @@ description: "Add or review MTEB task, benchmark, model metadata, result-submiss
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Contributing to MTEB

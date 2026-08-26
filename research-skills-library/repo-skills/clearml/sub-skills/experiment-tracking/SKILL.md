@@ -4,6 +4,7 @@ description: "Instrument Python ML and data scripts with ClearML Task experiment
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # ClearML Experiment Tracking

@@ -4,6 +4,7 @@ description: "Run trained SchNetPack models through ASE calculators, ensemble un
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # SchNetPack Interfaces and Molecular Dynamics

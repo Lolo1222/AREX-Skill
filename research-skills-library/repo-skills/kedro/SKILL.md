@@ -4,6 +4,7 @@ description: "Use Kedro to create, configure, run, extend, inspect, and troubles
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Kedro

@@ -4,6 +4,7 @@ description: "Use AgileRL multi-agent PettingZoo workflows, MADDPG/MATD3/IPPO, v
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # AgileRL Multi-Agent And Wrappers

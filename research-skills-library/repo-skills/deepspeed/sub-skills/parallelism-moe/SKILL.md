@@ -4,6 +4,7 @@ description: "Design DeepSpeed pipeline parallelism, MoE layers, sequence parall
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Parallelism, MoE, and Checkpointing

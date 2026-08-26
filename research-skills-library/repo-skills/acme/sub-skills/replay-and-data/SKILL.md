@@ -4,6 +4,7 @@ description: "Use Acme adders, Reverb replay tables and datasets, offline data i
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Replay and Data

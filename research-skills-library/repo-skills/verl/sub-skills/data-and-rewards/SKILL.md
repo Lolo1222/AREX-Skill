@@ -4,6 +4,7 @@ description: "Prepare and validate verl post-training parquet data, reward-model
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Data and Rewards

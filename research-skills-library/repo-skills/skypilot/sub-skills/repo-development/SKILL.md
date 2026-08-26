@@ -4,6 +4,7 @@ description: "Modify the SkyPilot repository safely with structure, style, tests
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # SkyPilot Repo Development

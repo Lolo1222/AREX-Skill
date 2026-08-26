@@ -4,6 +4,7 @@ description: "Use verl for LLM post-training workflows: setup, data and rewards,
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # verl

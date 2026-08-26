@@ -4,6 +4,7 @@ description: "Create and validate Gymnasium custom environments for Stable-Basel
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Environments And Vectorization

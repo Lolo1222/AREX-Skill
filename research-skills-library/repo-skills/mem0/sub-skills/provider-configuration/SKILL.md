@@ -4,6 +4,7 @@ description: "Configure Mem0 OSS providers, vector stores, embedders, LLMs, rera
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Mem0 Provider Configuration

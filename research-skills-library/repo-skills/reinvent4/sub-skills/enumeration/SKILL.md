@@ -4,6 +4,7 @@ description: "Configure and validate REINVENT4 enumeration workflows, peptide am
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Enumeration

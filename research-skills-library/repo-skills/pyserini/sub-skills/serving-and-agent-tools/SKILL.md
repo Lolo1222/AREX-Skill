@@ -4,6 +4,7 @@ description: "Run and troubleshoot Pyserini REST and MCP servers, server YAML co
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Serving and Agent Tools

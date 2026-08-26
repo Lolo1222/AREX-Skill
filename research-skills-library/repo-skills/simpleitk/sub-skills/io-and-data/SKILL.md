@@ -4,6 +4,7 @@ description: "Read and write SimpleITK images and transforms, choose ImageIO bac
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # SimpleITK IO and Data

@@ -4,6 +4,7 @@ description: "Use FlashRAG generators, prompt templates, OpenAI/vLLM/HF/FastChat
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Generation and Refinement

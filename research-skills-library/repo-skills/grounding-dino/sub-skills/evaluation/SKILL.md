@@ -4,6 +4,7 @@ description: "Evaluate GroundingDINO on COCO-style data and diagnose zero-shot A
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # GroundingDINO Evaluation

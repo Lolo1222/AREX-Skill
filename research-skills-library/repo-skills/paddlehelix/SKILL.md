@@ -4,6 +4,7 @@ description: "Route PaddleHelix tasks across pahelix core APIs, compound/drug-di
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # PaddleHelix

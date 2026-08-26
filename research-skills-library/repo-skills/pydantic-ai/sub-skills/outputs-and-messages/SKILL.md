@@ -4,6 +4,7 @@ description: "Guides agents designing Pydantic AI output contracts, structured o
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Outputs and Messages

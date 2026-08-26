@@ -4,6 +4,7 @@ description: "Build, run, persist, deploy, and operate LangGraph Python applicat
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # LangGraph

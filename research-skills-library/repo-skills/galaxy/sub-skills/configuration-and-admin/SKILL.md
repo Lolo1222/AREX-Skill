@@ -4,6 +4,7 @@ description: "Configure, start, validate, and troubleshoot Galaxy server/admin d
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # Galaxy Configuration And Admin

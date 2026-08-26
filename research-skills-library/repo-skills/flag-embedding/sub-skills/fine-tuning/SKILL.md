@@ -4,6 +4,7 @@ description: "Prepare FlagEmbedding fine-tuning data and safe training commands 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Fine-Tuning

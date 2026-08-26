@@ -4,6 +4,7 @@ description: "Use this sub-skill when implementing or debugging Dagster Pythonic
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Configuration Resources

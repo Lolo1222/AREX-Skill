@@ -4,6 +4,7 @@ description: "Use DVC for core data tracking and pipeline workflows: dvc init/ad
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # DVC Data and Pipelines

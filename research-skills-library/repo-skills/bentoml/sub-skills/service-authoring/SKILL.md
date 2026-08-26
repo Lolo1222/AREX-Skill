@@ -4,6 +4,7 @@ description: "Author BentoML services and APIs with the current class-based SDK,
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # BentoML Service Authoring

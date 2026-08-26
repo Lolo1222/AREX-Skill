@@ -4,6 +4,7 @@ description: "Prepare and validate ProteinMPNN parsed-PDB JSONL and design-const
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # ProteinMPNN Constraint Inputs

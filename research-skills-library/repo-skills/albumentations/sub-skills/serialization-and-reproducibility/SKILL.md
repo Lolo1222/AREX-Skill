@@ -4,6 +4,7 @@ description: "Save, load, replay, inspect, and reproduce Albumentations augmenta
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Albumentations serialization and reproducibility

@@ -4,6 +4,7 @@ description: "Set up and validate BERT or LLM reranker training, dataset formats
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Reranker Training

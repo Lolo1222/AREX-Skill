@@ -4,6 +4,7 @@ description: "Work with LightRAG document ingestion internals: parser routing, f
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # LightRAG Document Pipeline

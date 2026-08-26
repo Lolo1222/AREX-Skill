@@ -4,6 +4,7 @@ description: "Use Detectron2 for object detection, segmentation, configuration, 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Detectron2 Repo Skill

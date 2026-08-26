@@ -4,6 +4,7 @@ description: "Customize MMSegmentation models, registries, projects, checkpoints
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Model Customization

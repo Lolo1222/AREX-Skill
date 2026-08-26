@@ -4,6 +4,7 @@ description: "Plan and validate PaddleHelix HelixFold structure-prediction workf
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # Structure Prediction

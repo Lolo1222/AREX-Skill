@@ -4,6 +4,7 @@ description: "Use torchtune model/tokenizer builders, PEFT modules, losses, conv
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: BSD 3-Clause
 ---
 
 # models-and-modules

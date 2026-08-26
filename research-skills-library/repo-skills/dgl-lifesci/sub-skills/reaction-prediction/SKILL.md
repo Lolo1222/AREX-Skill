@@ -4,6 +4,7 @@ description: "Plan and troubleshoot DGL-LifeSci WLN reaction center prediction a
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Reaction Prediction

@@ -4,6 +4,7 @@ description: "Ingest, convert, parse, and manage user content in Khoj through /a
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: AGPL 3.0
 ---
 
 # Content Indexing

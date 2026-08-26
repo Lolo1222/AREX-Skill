@@ -4,6 +4,7 @@ description: "Author, validate, troubleshoot, and adapt SkyPilot task and servic
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # SkyPilot Task YAML

@@ -4,6 +4,7 @@ description: "Start and configure InvokeAI server operations, CLI entry points, 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # Operations Config

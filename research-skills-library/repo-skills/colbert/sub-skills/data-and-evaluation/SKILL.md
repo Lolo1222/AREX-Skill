@@ -4,6 +4,7 @@ description: "Use when preparing or validating ColBERT collection/query/ranking/
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # ColBERT Data and Evaluation

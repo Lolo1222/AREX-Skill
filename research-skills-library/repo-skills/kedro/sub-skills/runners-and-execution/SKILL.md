@@ -4,6 +4,7 @@ description: "Run Kedro pipelines, choose runners, configure execution flags, re
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Runners and Execution

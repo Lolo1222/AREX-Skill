@@ -4,6 +4,7 @@ description: "Build, connect, run, serialize, debug, and extend Haystack Pipelin
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # Pipelines and Components

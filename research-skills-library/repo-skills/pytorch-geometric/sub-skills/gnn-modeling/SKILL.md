@@ -4,6 +4,7 @@ description: "Design, train, debug, and smoke-test PyTorch Geometric GNN modules
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # GNN Modeling

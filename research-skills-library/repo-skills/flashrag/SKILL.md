@@ -4,6 +4,7 @@ description: "Use FlashRAG for retrieval-augmented generation research workflows
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # FlashRAG

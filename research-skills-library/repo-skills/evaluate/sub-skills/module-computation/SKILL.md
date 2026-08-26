@@ -4,6 +4,7 @@ description: "Compute evaluate metrics, comparisons, and measurements with direc
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Module Computation

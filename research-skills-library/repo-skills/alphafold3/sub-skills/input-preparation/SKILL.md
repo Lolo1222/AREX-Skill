@@ -4,6 +4,7 @@ description: "Build, validate, convert, and troubleshoot AlphaFold 3 input JSON 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # AlphaFold 3 Input Preparation

@@ -4,6 +4,7 @@ description: "Use, select, author, validate, wrap, and integrate PettingZoo mult
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # PettingZoo

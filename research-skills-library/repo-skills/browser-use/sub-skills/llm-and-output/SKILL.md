@@ -4,6 +4,7 @@ description: "Select Browser Use LLM adapters and configure provider credentials
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # LLM and Output

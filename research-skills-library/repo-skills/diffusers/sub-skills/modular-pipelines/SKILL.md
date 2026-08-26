@@ -4,6 +4,7 @@ description: "Create, customize, debug, and test Diffusers Modular Pipeline bloc
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Modular Pipelines

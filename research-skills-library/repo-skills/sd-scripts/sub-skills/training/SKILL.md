@@ -4,6 +4,7 @@ description: "Choose and compose sd-scripts training commands for LoRA/additiona
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # sd-scripts Training

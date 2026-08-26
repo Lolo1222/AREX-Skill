@@ -4,6 +4,7 @@ description: "Index documents, query document stores, configure retrievers/ranke
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # Retrieval and RAG

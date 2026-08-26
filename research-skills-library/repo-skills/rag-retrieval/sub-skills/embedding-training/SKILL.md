@@ -4,6 +4,7 @@ description: "Prepare and validate bundled RAG-Retrieval embedding fine-tuning, 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Embedding Training

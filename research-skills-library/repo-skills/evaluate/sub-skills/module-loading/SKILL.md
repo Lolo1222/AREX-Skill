@@ -4,6 +4,7 @@ description: "Discover, inspect, and load Hugging Face Evaluate metrics, compari
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Module Loading

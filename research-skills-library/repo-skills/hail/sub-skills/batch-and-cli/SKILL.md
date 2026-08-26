@@ -4,6 +4,7 @@ description: "Use hailtop.batch DAGs and packaged hailctl commands for Hail Batc
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Batch and CLI

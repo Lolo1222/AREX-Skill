@@ -4,6 +4,7 @@ description: "Use ProLIF to prepare molecular inputs, define protein-ligand inte
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # ProLIF

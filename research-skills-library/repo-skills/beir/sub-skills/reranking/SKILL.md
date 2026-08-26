@@ -4,6 +4,7 @@ description: "Rerank BEIR retrieval results with cross-encoder, MonoT5, SBERT, o
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # BEIR Reranking

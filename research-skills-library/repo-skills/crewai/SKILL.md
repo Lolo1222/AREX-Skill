@@ -4,6 +4,7 @@ description: "Routes agents using or contributing to CrewAI, including crews, fl
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # CrewAI

@@ -4,6 +4,7 @@ description: "Use PettingZoo AEC and Parallel environments safely, including res
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # Use Environments

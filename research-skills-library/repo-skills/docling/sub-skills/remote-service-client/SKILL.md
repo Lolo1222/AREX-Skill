@@ -4,6 +4,7 @@ description: "Use Docling through a remote docling-serve service: convert-remote
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Remote Service Client

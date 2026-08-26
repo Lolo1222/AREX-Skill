@@ -4,6 +4,7 @@ description: "Use OpenCompass to configure, run, debug, and analyze large-model 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # OpenCompass

@@ -4,6 +4,7 @@ description: "Use qdrant-client local in-memory and persistent stores for safe p
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # local-mode

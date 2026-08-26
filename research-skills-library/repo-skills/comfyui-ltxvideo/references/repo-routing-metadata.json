@@ -1,0 +1,21 @@
+{
+  "schema_version": "2.0",
+  "repo_id": "Lightricks/ComfyUI-LTXVideo",
+  "skill_id": "comfyui-ltxvideo",
+  "taxonomy_sha256": "b2c4f99cbae303c887f58de2d72096ef6719fcff74b1c0173705cc085eb249ab",
+  "routing_status": "classified",
+  "assignments": [
+    {
+      "area": "Generative Media",
+      "family": "Media Generation Applications"
+    },
+    {
+      "area": "Generative Media",
+      "family": "Video Synthesis"
+    },
+    {
+      "area": "Generative Media",
+      "family": "Audio Generation"
+    }
+  ]
+}

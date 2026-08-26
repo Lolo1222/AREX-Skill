@@ -4,6 +4,7 @@ description: "Use MetaGPT RAG pipelines, retrievers, document stores, search/bro
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # MetaGPT RAG and Tools

@@ -4,6 +4,7 @@ description: "Choose and diagnose TRL scaling, memory, kernel, PEFT, and vLLM ba
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Scaling and Backends

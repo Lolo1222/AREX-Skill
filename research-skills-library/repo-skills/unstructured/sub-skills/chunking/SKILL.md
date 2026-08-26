@@ -4,6 +4,7 @@ description: "Configure and validate Unstructured post-partition chunking for RA
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Chunking

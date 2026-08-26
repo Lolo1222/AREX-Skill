@@ -4,6 +4,7 @@ description: "Customize Stable-Baselines3 policies, feature extractors, Dict-obs
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Policies and Customization

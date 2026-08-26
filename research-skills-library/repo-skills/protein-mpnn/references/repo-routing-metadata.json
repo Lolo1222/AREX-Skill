@@ -1,24 +1,13 @@
 {
-  "skills": {
-    "protein-mpnn": {
-      "scenarios": [
-        {
-          "id": "protein-structure-prediction-and-design-workflows",
-          "title": "Protein Structure Prediction and Design Workflows",
-          "when_to_read": "AlphaFold, ColabFold, Boltz, Chai-1, ESM, ProteinMPNN, RFdiffusion, MSA generation, structure prediction outputs, protein backbone generation, binder design, and sequence design.",
-          "role": "Use ProteinMPNN to design protein sequences from backbones, prepare constraint JSONL inputs, interpret scores/probability outputs, retrain models, and use custom checkpoints in a local ProteinMPNN checkout.",
-          "read_when": "The request names `protein-mpnn` or asks for package-specific APIs, CLIs, configs, data/model artifacts, error messages, workflows, or repository maintenance that match this project.",
-          "best_for": "constraint inputs, inference design, and training custom models.",
-          "avoid_when": "another repo skill in this scenario matches the user's task, package, model family, data format, serving backend, or workflow more directly.",
-          "useful_entry_points": [
-            "protein-mpnn/SKILL.md",
-            "protein-mpnn/sub-skills/constraint-inputs/",
-            "protein-mpnn/sub-skills/inference-design/",
-            "protein-mpnn/sub-skills/training-custom-models/"
-          ],
-          "selection_guidance": "Choose `protein-mpnn` when the request names `protein-mpnn`, centers on Use ProteinMPNN to design protein sequences from backbones, prepare constraint JSONL inputs, interpret scores/probability outputs, retrain models, and use custom checkpoints in a local ProteinMPNN checkout, uses its APIs or CLIs, references its configs/artifacts/errors, or asks for repository workflows in protein structure prediction and design workflows. Then route to constraint inputs, inference design, or training custom models when those focused workflows match."
-        }
-      ]
+  "schema_version": "2.0",
+  "repo_id": "dauparas/ProteinMPNN",
+  "skill_id": "protein-mpnn",
+  "taxonomy_sha256": "b2c4f99cbae303c887f58de2d72096ef6719fcff74b1c0173705cc085eb249ab",
+  "routing_status": "classified",
+  "assignments": [
+    {
+      "area": "Scientific Computing",
+      "family": "Protein Modeling"
     }
-  }
+  ]
 }

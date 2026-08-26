@@ -4,6 +4,7 @@ description: "Use Squidpy tool-layer workflows for sliding windows, distance-to-
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: BSD 3-Clause
 ---
 
 # Tools Workflows

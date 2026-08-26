@@ -4,6 +4,7 @@ description: "Choose and troubleshoot Gymnasium built-in environment families, o
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Gymnasium Built-in Environments

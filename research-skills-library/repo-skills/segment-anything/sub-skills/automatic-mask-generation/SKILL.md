@@ -4,6 +4,7 @@ description: "Generate masks for all objects in images or folders with Segment A
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Automatic Mask Generation

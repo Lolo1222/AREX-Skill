@@ -4,6 +4,7 @@ description: "Use Mem0 SDKs for hosted Platform clients and local OSS memory in 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Mem0 SDK Memory

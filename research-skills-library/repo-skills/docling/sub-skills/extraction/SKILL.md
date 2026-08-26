@@ -4,6 +4,7 @@ description: "Use Docling structured extraction with DocumentExtractor, VLM extr
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Docling Structured Extraction

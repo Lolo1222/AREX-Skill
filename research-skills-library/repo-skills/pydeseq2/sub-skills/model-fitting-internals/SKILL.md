@@ -4,6 +4,7 @@ description: "Inspect and control PyDESeq2 staged model-fitting internals, norma
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # PyDESeq2 Model-Fitting Internals

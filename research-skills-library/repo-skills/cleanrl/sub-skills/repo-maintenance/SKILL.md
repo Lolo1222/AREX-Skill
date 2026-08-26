@@ -4,6 +4,7 @@ description: "Maintain CleanRL-style code, docs, tests, metadata, and contributi
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # CleanRL Repo Maintenance

@@ -4,6 +4,7 @@ description: "Use when working with the LiteLLM AI Gateway proxy: starting the C
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # LiteLLM Proxy Server

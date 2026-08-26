@@ -4,6 +4,7 @@ description: "Use SkyPilot to run, manage, and scale AI workloads across clouds,
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # SkyPilot

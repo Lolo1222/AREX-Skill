@@ -4,6 +4,7 @@ description: "Compose timm API-level training loops with optimizer and scheduler
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Training Workflows

@@ -4,6 +4,7 @@ description: "Deploy and integrate Browser Use with sandbox execution, Browser U
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Production Integrations

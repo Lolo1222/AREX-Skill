@@ -4,6 +4,7 @@ description: "Use for Feast offline/historical retrieval, online retrieval, poin
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Feast Retrieval and Materialization

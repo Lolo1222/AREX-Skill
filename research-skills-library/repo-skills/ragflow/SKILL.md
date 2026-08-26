@@ -4,6 +4,7 @@ description: "Work with RAGFlow, a full-stack Retrieval-Augmented Generation eng
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # RAGFlow

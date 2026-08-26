@@ -4,6 +4,7 @@ description: "Use Haystack to build, debug, evaluate, and maintain RAG, agent, p
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # Haystack

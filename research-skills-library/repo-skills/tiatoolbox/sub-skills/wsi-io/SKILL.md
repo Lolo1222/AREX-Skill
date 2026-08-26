@@ -4,6 +4,7 @@ description: "Use TIAToolbox for whole-slide image reading, metadata, resolution
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # WSI I/O

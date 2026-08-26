@@ -4,6 +4,7 @@ description: "Create and manage Kedro projects through the CLI, project metadata
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Project CLI and Sessions

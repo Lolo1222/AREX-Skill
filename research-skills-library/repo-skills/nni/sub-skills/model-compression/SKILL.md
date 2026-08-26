@@ -4,6 +4,7 @@ description: "Use NNI model compression for pruning, quantization, distillation,
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Model Compression

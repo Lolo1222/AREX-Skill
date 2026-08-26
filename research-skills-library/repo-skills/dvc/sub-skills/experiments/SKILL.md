@@ -4,6 +4,7 @@ description: "Run, queue, compare, promote, share, and clean up DVC experiments 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # DVC Experiments

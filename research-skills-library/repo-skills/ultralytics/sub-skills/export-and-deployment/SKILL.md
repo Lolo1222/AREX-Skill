@@ -4,6 +4,7 @@ description: "Export, benchmark, and route Ultralytics YOLO models to deployment
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: AGPL 3.0
 ---
 
 # Export And Deployment

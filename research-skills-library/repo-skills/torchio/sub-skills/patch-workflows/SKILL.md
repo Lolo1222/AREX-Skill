@@ -4,6 +4,7 @@ description: "Design TorchIO patch-based training queues and dense patch inferen
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Patch Workflows

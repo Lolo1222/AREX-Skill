@@ -4,6 +4,7 @@ description: "Guides agents configuring Axolotl DPO, IPO, KTO, ORPO, SimPO, rewa
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Preference Tuning

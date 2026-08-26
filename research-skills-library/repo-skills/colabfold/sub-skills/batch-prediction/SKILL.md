@@ -4,6 +4,7 @@ description: "Plan and run ColabFold batch structure prediction workflows, inclu
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Batch Prediction

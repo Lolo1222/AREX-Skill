@@ -4,6 +4,7 @@ description: "Use TorchIO's command-line interface and I/O integration surfaces 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # TorchIO CLI and I/O

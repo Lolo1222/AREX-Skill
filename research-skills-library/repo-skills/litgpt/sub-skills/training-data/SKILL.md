@@ -4,6 +4,7 @@ description: "Plan and validate LitGPT finetuning, LoRA/QLoRA/full/adapter train
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # LitGPT Training And Data

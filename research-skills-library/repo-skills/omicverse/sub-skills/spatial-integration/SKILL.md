@@ -4,6 +4,7 @@ description: "Use for OmicVerse spatial transcriptomics, histology-to-spatial pr
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: GPL 3.0
 ---
 
 # Spatial Integration

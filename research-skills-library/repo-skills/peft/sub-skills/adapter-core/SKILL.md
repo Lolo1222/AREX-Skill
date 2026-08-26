@@ -4,6 +4,7 @@ description: "Core PEFT adapter setup, configuration, target module selection, a
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Adapter Core

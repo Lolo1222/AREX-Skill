@@ -4,6 +4,7 @@ description: "Choose segmentation_models_pytorch encoders/backbones, configure w
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Encoders and Preprocessing

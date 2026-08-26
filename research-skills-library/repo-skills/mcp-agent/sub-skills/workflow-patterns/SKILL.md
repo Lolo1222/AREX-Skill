@@ -4,6 +4,7 @@ description: "Choose and implement mcp-agent workflow patterns including routers
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # mcp-agent Workflow Patterns

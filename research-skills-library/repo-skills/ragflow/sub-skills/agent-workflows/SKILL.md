@@ -4,6 +4,7 @@ description: "Work with RAGFlow agent canvas DSL, components, tools, templates, 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Agent Workflows

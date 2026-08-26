@@ -4,6 +4,7 @@ description: "Understand and adapt DeepVariant make_examples, call_variants, pos
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: BSD 3-Clause
 ---
 
 # DeepVariant Pipeline Stages

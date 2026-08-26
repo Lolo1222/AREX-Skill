@@ -4,6 +4,7 @@ description: "Create, validate, and publish custom Hugging Face Evaluate modules
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Evaluate Hub and CLI

@@ -4,6 +4,7 @@ description: "Use CellTypist for single-cell RNA-seq cell type annotation, model
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # CellTypist Repo Skill

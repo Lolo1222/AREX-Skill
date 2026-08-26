@@ -4,6 +4,7 @@ description: "Build Haystack ingestion flows that construct data classes, conver
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # Data Ingestion

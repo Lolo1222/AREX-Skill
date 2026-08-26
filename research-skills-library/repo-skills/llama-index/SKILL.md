@@ -4,6 +4,7 @@ description: "Build, customize, troubleshoot, and maintain LlamaIndex Python app
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # LlamaIndex

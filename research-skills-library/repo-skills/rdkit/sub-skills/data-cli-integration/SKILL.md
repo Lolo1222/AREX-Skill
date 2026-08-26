@@ -4,6 +4,7 @@ description: "Use for RDKit data-file discovery, pharmacophore feature-definitio
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: BSD 3-Clause
 ---
 
 # RDKit Data, CLI, and Integration

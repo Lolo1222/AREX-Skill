@@ -4,6 +4,7 @@ description: "Modify Langflow's React/Vite frontend, graph workspace, stores, ic
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Frontend Development

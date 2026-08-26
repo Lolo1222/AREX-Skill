@@ -4,6 +4,7 @@ description: "Use ControlNet 1.0 annotators and preprocessing safely: Canny, HED
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Annotators and Preprocessing

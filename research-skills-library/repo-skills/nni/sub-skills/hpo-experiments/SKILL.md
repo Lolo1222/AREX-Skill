@@ -4,6 +4,7 @@ description: "Use NNI HPO experiments, nnictl, ExperimentConfig, trial metric AP
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # HPO Experiments

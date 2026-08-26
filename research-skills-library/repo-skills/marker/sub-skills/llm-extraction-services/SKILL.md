@@ -4,6 +4,7 @@ description: "Use Marker LLM enhancement services and structured extraction safe
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # Marker LLM Extraction Services

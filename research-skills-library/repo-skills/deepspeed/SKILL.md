@@ -4,6 +4,7 @@ description: "Use DeepSpeed for distributed training, inference acceleration, Ze
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # DeepSpeed Repo Skill

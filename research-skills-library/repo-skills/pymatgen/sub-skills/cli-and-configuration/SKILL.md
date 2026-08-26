@@ -4,6 +4,7 @@ description: "Use pymatgen command-line tools and persistent configuration safel
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # CLI and Configuration

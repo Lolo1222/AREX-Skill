@@ -4,6 +4,7 @@ description: "Routes CrewAI CLI, project scaffolding, JSONC projects, run/train/
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # CrewAI CLI and Projects

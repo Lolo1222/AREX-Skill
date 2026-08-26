@@ -4,6 +4,7 @@ description: "Work on RAGFlow dataset/document/chunk ingestion, parser_config, t
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Dataset Ingestion Retrieval

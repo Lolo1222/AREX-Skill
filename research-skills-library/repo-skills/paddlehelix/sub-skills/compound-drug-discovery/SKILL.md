@@ -4,6 +4,7 @@ description: "Plan, validate, and troubleshoot PaddleHelix compound representati
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # Compound Drug Discovery

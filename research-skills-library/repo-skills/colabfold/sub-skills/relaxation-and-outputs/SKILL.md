@@ -4,6 +4,7 @@ description: "Post-process ColabFold results with Amber/OpenMM relaxation, confi
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Relaxation and Outputs

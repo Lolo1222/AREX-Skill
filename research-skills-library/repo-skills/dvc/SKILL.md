@@ -4,6 +4,7 @@ description: "Use the DVC repository skill for data versioning, pipelines, exper
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # DVC Repo Skill

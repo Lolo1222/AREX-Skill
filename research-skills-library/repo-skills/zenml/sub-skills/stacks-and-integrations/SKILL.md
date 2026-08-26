@@ -4,6 +4,7 @@ description: "Register, configure, and extend ZenML stacks, stack components, in
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # ZenML Stacks and Integrations

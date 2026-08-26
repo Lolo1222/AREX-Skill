@@ -4,6 +4,7 @@ description: "Build OpenAI Agents Python realtime sessions, audio event loops, t
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Realtime Voice

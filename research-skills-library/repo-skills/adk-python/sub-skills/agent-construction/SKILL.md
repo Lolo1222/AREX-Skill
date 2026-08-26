@@ -4,6 +4,7 @@ description: "Build and troubleshoot ADK Python Agent/LlmAgent definitions, mode
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # ADK Python Agent Construction

@@ -4,6 +4,7 @@ description: "Use ANTsPy statistical learning and deep-learning helper utilities
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # ANTsPy Learning and Deeplearn Helpers

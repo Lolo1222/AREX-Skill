@@ -4,6 +4,7 @@ description: "Work on the LangChain Python monorepo: package routing, core primi
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # LangChain Python Monorepo

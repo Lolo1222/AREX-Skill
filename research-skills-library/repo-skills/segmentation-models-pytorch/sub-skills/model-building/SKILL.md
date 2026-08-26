@@ -4,6 +4,7 @@ description: "Create and debug segmentation_models_pytorch model architectures, 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Model Building

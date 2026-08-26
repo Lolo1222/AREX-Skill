@@ -4,6 +4,7 @@ description: "Build ColBERT indexes, load existing indexes, run single-query and
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # ColBERT Indexing and Search

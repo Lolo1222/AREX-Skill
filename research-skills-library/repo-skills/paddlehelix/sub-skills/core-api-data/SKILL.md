@@ -4,6 +4,7 @@ description: "Use core PaddleHelix pahelix APIs for datasets, NPZ caches, splitt
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # Core API and Data

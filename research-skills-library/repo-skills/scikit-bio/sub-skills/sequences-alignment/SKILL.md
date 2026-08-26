@@ -4,6 +4,7 @@ description: "Construct, transform, compare, and align scikit-bio biological seq
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: BSD 3-Clause
 ---
 
 # scikit-bio Sequences and Alignment

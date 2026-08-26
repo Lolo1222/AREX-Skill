@@ -4,6 +4,7 @@ description: "Plan and analyze SGLang benchmarks, throughput/latency runs, profi
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Benchmarking Profiling

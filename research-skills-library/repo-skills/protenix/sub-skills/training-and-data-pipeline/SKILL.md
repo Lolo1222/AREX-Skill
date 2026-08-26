@@ -4,6 +4,7 @@ description: "Plan Protenix training data roots, custom CIF preprocessing, safe 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Protenix Training and Data Pipeline

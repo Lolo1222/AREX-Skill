@@ -4,6 +4,7 @@ description: "Install Habitat-Lab, compose Habitat/Habitat-Baselines Hydra confi
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Setup And Configuration

@@ -4,6 +4,7 @@ description: "Use for scvi-tools label transfer, query/reference mapping, semi-s
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: BSD 3-Clause
 ---
 
 # annotation-and-query

@@ -4,6 +4,7 @@ description: "Use PaddleHelix LinearRNA for LinearFold and LinearPartition RNA s
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # LinearRNA

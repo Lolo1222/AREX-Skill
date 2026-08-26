@@ -4,6 +4,7 @@ description: "Route Docling CLI work, construct safe local conversion commands, 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Docling CLI and Formats

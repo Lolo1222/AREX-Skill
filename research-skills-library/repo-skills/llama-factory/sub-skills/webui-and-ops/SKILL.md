@@ -4,6 +4,7 @@ description: "Operate LLaMA Factory's LlamaBoard Web UI, web chat, install/runti
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Web UI and Ops

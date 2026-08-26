@@ -4,6 +4,7 @@ description: "Use this sub-skill when a user needs to run bounded timm benchmark
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Benchmarking and Results

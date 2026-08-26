@@ -4,6 +4,7 @@ description: "Use bitsandbytes for k-bit PyTorch quantization, Hugging Face quan
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # bitsandbytes

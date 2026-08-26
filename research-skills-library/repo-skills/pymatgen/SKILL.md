@@ -4,6 +4,7 @@ description: "Use pymatgen for computational materials workflows, including stru
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # pymatgen

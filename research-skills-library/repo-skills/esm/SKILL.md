@@ -4,6 +4,7 @@ description: "Use the fair-esm repository skill for protein language-model embed
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # ESM

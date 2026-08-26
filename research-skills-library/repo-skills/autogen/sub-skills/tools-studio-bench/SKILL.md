@@ -4,6 +4,7 @@ description: "Use for AutoGen developer tooling maintenance: AutoGen Studio, AG 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # AutoGen Tools, Studio, and Benchmarking

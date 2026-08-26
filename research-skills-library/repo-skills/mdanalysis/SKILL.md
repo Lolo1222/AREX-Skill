@@ -4,6 +4,7 @@ description: "Use MDAnalysis to load molecular simulation data, select atoms, ru
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # MDAnalysis Repo Skill

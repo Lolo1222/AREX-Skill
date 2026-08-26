@@ -4,6 +4,7 @@ description: "Use this vLLM sub-skill for structured outputs, JSON/regex/grammar
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Structured Tool Reasoning

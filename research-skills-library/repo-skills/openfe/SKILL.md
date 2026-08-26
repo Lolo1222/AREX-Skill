@@ -4,6 +4,7 @@ description: "Use OpenFE for alchemical free energy setup, network planning, pro
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # OpenFE

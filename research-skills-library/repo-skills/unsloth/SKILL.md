@@ -4,6 +4,7 @@ description: "Use Unsloth Core, CLI, Studio, and export workflows for fast LLM f
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # Unsloth

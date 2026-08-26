@@ -4,6 +4,7 @@ description: "Build MONAI preprocessing, IO, metadata, caching, dataset, dataloa
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # MONAI Data and Transform Workflows

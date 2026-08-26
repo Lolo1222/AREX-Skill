@@ -4,6 +4,7 @@ description: "Author, inspect, and validate OpenCompass Python configs and datas
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # OpenCompass Configuration and Datasets

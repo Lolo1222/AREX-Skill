@@ -4,6 +4,7 @@ description: "Use AgileRL LLM fine-tuning and post-training workflows for GRPO, 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # AgileRL LLM Fine-Tuning

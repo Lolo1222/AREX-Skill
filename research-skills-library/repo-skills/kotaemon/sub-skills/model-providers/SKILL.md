@@ -4,6 +4,7 @@ description: "Configure and troubleshoot Kotaemon LLM, embedding, reranking, web
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Kotaemon Model Providers

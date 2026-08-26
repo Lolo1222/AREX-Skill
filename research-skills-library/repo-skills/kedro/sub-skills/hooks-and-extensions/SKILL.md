@@ -4,6 +4,7 @@ description: "Extend Kedro with hooks plugins custom CLI commands custom dataset
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Hooks And Extensions

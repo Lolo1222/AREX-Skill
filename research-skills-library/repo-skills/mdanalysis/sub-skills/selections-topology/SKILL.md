@@ -4,6 +4,7 @@ description: "Use and debug MDAnalysis atom selections, topology attributes, gro
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # MDAnalysis Selections and Topology

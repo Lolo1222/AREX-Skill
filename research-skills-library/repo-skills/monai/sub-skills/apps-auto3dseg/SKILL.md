@@ -4,6 +4,7 @@ description: "Use high-level MONAI application workflows, especially Auto3DSeg o
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # MONAI Apps and Auto3DSeg

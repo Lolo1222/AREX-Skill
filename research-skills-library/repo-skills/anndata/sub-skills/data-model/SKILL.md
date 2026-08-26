@@ -4,6 +4,7 @@ description: "Construct, inspect, validate, slice, copy, and mutate in-memory An
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: BSD 3-Clause
 ---
 
 # AnnData Data Model

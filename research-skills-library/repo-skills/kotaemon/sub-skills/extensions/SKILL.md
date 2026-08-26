@@ -4,6 +4,7 @@ description: "Build and customize Kotaemon/ktem components, indexes, pages, sett
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Kotaemon Extensions

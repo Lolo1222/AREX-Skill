@@ -4,6 +4,7 @@ description: "Plan Tevatron multimodal and LLM retriever/ranker workflows, inclu
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Multimodal and LLM Workflows

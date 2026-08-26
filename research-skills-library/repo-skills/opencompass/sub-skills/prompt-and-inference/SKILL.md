@@ -4,6 +4,7 @@ description: "Build and debug OpenCompass prompt templates, PromptList dialogue 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # OpenCompass Prompt and Inference

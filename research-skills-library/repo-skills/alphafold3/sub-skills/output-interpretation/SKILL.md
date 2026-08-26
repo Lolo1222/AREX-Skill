@@ -4,6 +4,7 @@ description: "Explain and validate AlphaFold 3 output directories, ranking/confi
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # AlphaFold 3 Output Interpretation

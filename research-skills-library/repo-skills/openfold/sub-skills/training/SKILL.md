@@ -4,6 +4,7 @@ description: "Plan OpenFold training, fine-tuning, validation, distillation, che
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # OpenFold Training

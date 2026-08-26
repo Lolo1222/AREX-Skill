@@ -4,6 +4,7 @@ description: "Use BentoML to author model-serving Services, build and containeri
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # BentoML

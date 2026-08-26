@@ -4,6 +4,7 @@ description: "Use GroundingDINO for open-vocabulary object detection, single-ima
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # GroundingDINO Repo Skill

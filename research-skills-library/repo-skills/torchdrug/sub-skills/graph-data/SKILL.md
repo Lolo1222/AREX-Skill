@@ -4,6 +4,7 @@ description: "Construct, batch, split, mask, validate, and troubleshoot TorchDru
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # TorchDrug Graph Data

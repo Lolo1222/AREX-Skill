@@ -4,6 +4,7 @@ description: "Plan AlphaFold Docker execution, database/model-parameter acquisit
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Docker and Data Setup

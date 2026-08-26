@@ -4,6 +4,7 @@ description: "Create, validate, split, transform, and package PyTorch Geometric 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Data and Datasets

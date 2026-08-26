@@ -4,6 +4,7 @@ description: "Use AiZynthFinder for retrosynthetic planning, configuration, rout
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # AiZynthFinder Repo Skill

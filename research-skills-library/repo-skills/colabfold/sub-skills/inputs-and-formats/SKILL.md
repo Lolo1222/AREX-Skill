@@ -4,6 +4,7 @@ description: "Prepare and validate ColabFold FASTA, CSV, A3M, AlphaFold3 molecul
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # ColabFold inputs and formats

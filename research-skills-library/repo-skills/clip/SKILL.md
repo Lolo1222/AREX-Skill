@@ -4,6 +4,7 @@ description: "Use OpenAI CLIP for zero-shot image-text inference, prompt enginee
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # CLIP

@@ -4,6 +4,7 @@ description: "Plan and implement TIAToolbox annotation stores, DSL filters, grap
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # TIAToolbox Annotation Visualization

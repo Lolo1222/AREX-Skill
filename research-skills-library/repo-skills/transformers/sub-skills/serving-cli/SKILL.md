@@ -4,6 +4,7 @@ description: "Use the Transformers CLI for download, chat, local serving, OpenAI
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Serving CLI

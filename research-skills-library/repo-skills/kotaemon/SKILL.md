@@ -4,6 +4,7 @@ description: "Use Kotaemon to build, deploy, configure, extend, and troubleshoot
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Kotaemon

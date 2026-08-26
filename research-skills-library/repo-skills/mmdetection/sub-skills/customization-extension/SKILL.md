@@ -4,6 +4,7 @@ description: "Extend MMDetection 3.3.0 with custom registries, models, losses, d
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Customization Extension

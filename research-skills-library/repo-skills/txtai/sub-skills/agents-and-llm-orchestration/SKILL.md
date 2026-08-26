@@ -4,6 +4,7 @@ description: "Build txtai LLM, RAG, and Agent workflows with backend selection, 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Agents and LLM Orchestration

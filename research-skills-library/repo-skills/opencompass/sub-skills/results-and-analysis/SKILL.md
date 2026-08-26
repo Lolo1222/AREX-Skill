@@ -4,6 +4,7 @@ description: "Interpret OpenCompass summaries, result tables, summary_groups, su
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # OpenCompass Results and Analysis

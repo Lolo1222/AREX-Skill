@@ -4,6 +4,7 @@ description: "Configure and troubleshoot PEFT prompt-learning and soft-token met
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # PEFT Prompt And Soft Methods

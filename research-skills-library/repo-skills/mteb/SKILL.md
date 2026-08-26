@@ -4,6 +4,7 @@ description: "Use MTEB to evaluate embedding models, select tasks and benchmarks
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # MTEB

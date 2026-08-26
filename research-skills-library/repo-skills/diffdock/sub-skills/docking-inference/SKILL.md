@@ -4,6 +4,7 @@ description: "Plan, validate, command-build, and troubleshoot DiffDock command-l
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Docking Inference

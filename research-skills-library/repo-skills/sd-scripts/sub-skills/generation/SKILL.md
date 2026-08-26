@@ -4,6 +4,7 @@ description: "Run and troubleshoot sd-scripts image generation and minimal infer
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # sd-scripts Generation

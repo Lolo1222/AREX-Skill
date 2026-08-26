@@ -4,6 +4,7 @@ description: "Build MDAnalysis on-the-fly coordinate transformation pipelines an
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # MDAnalysis Transformations and Writing

@@ -4,6 +4,7 @@ description: "Guides agents using pysam samtools and bcftools command wrappers, 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # command-wrappers

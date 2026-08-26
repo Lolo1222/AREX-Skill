@@ -4,6 +4,7 @@ description: "Create, log, consume, download, link, and troubleshoot W&B Artifac
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # W&B Artifacts and Registries

@@ -4,6 +4,7 @@ description: "Build, adapt, validate, and troubleshoot ZenML pipeline deployment
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # ZenML Deployments and Agents

@@ -4,6 +4,7 @@ description: "Use sd-scripts model and network utilities safely: LoRA merge/extr
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Model Utilities

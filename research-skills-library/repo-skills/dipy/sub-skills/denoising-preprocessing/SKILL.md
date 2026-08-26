@@ -4,6 +4,7 @@ description: "Choose and run Dipy denoising and preprocessing steps, including N
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # Denoising And Preprocessing

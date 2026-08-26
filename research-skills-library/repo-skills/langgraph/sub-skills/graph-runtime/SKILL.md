@@ -4,6 +4,7 @@ description: "Build, compile, invoke, stream, debug, interrupt, and route custom
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Graph Runtime

@@ -4,6 +4,7 @@ description: "Run BEIR retrieval backends and metric evaluation for dense, spars
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Retrieval Evaluation

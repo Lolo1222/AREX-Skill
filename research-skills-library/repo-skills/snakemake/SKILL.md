@@ -4,6 +4,7 @@ description: "Create, run, debug, deploy, and programmatically inspect Snakemake
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Snakemake

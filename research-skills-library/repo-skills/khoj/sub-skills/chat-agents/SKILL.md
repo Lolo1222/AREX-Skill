@@ -4,6 +4,7 @@ description: "Build, use, and troubleshoot Khoj chat, conversation sessions, age
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: AGPL 3.0
 ---
 
 # Khoj Chat and Agents

@@ -4,6 +4,7 @@ description: "Save, reload, share, and deployment-check segmentation_models_pyto
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Model Export

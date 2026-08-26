@@ -4,6 +4,7 @@ description: "Use FlagEmbedding for embedding, reranking, retrieval evaluation, 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # FlagEmbedding

@@ -4,6 +4,7 @@ description: "Use and maintain lfx, lfx run, lfx serve, lfx-mcp, Flow DevOps com
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Executor CLI

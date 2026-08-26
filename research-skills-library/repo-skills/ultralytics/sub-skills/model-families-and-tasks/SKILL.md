@@ -4,6 +4,7 @@ description: "Choose the correct Ultralytics model class, family, task, model na
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: AGPL 3.0
 ---
 
 # Model Families and Tasks

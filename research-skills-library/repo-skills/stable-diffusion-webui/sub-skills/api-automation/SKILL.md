@@ -4,6 +4,7 @@ description: "Build and validate Stable Diffusion WebUI REST API calls for gener
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: AGPL 3.0
 ---
 
 # API Automation

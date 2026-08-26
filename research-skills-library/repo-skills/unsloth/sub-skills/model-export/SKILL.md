@@ -4,6 +4,7 @@ description: "Save and export Unsloth checkpoints as LoRA adapters, merged weigh
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # Model Export

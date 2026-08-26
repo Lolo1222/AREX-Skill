@@ -4,6 +4,7 @@ description: "Diagnose Snakemake workflows with linting, graph outputs, summarie
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Debugging and Reporting

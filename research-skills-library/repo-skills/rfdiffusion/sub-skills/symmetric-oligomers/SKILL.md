@@ -4,6 +4,7 @@ description: "Build RFdiffusion symmetric oligomer and symmetric motif-scaffoldi
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # Symmetric Oligomers

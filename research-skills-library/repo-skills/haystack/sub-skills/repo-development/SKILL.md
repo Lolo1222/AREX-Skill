@@ -4,6 +4,7 @@ description: "Work safely inside the Haystack checkout with Hatch, focused tests
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # Repo Development

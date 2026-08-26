@@ -4,6 +4,7 @@ description: "Use ComfyUI as a modular AI content-creation engine: launch and au
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: GPL 3.0
 ---
 
 # ComfyUI

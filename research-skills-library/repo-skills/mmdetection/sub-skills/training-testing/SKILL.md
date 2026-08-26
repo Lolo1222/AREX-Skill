@@ -4,6 +4,7 @@ description: "Plan and validate MMDetection 3.3.0 training, resume, testing, eva
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # training-testing

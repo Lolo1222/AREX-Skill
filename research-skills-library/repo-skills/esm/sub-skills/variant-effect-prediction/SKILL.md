@@ -4,6 +4,7 @@ description: "Score deep mutational scan CSVs with ESM-1v or MSA Transformer usi
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Variant Effect Prediction

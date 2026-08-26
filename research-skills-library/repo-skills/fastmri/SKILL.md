@@ -4,6 +4,7 @@ description: "Use fastMRI for MRI reconstruction data loading, MRI operators, re
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # fastMRI

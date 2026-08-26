@@ -4,6 +4,7 @@ description: "Plan and implement FlashRAG end-to-end RAG pipelines, quick-start 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # FlashRAG Pipelines and Methods

@@ -4,6 +4,7 @@ description: "Work with FlashRAG Config, dataset JSONL, corpus JSONL, Item/Datas
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # FlashRAG Data and Config

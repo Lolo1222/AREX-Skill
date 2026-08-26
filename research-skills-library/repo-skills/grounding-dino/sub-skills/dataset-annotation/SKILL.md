@@ -4,6 +4,7 @@ description: "Pseudo-label image folders with GroundingDINO detections, optional
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Dataset Annotation

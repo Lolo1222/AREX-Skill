@@ -4,6 +4,7 @@ description: "Build Squidpy spatial neighbor graphs and run graph/statistical an
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: BSD 3-Clause
 ---
 
 # Squidpy Graph Analysis

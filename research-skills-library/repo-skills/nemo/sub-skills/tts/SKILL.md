@@ -4,6 +4,7 @@ description: "Use for NeMo Speech TTS synthesis, FastPitch and HiFi-GAN cascades
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # TTS

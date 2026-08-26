@@ -4,6 +4,7 @@ description: "Use Dipy console entry points, workflow parser behavior, and safe 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # Dipy CLI Workflows

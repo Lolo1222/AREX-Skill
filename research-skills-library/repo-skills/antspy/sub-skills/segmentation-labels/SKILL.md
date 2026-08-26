@@ -4,6 +4,7 @@ description: "Use ANTsPy segmentation and label workflows for Atropos, k-means, 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # ANTsPy Segmentation and Labels

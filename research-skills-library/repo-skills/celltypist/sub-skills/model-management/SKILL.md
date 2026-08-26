@@ -4,6 +4,7 @@ description: "Manage CellTypist built-in model discovery, local cache behavior, 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # CellTypist Model Management

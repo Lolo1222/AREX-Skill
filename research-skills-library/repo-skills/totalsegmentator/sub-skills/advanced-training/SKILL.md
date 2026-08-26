@@ -4,6 +4,7 @@ description: "Plan TotalSegmentator nnU-Net retraining, evaluation, dataset conv
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Advanced Training

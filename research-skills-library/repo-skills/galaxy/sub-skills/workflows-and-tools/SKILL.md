@@ -4,6 +4,7 @@ description: "Author, validate, test, and troubleshoot Galaxy tool wrappers, too
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # Galaxy Workflows and Tools

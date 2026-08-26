@@ -4,6 +4,7 @@ description: "Export, inspect, and benchmark Detectron2 models with TorchScript,
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Detectron2 Deployment Export

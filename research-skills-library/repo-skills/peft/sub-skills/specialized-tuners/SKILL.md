@@ -4,6 +4,7 @@ description: "Select, configure, and troubleshoot PEFT's specialized non-LoRA/no
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # PEFT Specialized Tuners

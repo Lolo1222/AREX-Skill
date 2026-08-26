@@ -4,6 +4,7 @@ description: "Launch and debug SkyPilot managed jobs, recovery, queues, logs, ca
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Managed Jobs

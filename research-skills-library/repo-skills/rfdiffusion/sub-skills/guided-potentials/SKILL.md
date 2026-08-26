@@ -4,6 +4,7 @@ description: "Configure RFdiffusion auxiliary guiding potentials, including mono
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # RFdiffusion Guided Potentials

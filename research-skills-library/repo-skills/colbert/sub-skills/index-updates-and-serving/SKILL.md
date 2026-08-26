@@ -4,6 +4,7 @@ description: "Mutate existing ColBERT indexes with IndexUpdater, persist index c
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # ColBERT Index Updates and Serving

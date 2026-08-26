@@ -4,6 +4,7 @@ description: "Use anndata reference accessors for validation, plotting, data sel
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: BSD 3-Clause
 ---
 
 # Accessors and Extensions

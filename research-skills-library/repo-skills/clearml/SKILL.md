@@ -4,6 +4,7 @@ description: "Route ClearML Python SDK tasks across experiment tracking, data/ve
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # ClearML Repo Skill

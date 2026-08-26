@@ -4,6 +4,7 @@ description: "Convert CLAM patch coordinate files into feature .h5 and .pt artif
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: GPL 3.0
 ---
 
 # Feature Extraction

@@ -4,6 +4,7 @@ description: "Connect mcp-agent applications to MCP servers and expose MCPApp wo
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # MCP Server Integration

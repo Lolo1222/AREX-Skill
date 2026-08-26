@@ -4,6 +4,7 @@ description: "Discover TotalSegmentator tasks, classes, modalities, license flag
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Capability Discovery

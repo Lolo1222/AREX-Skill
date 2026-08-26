@@ -4,6 +4,7 @@ description: "Configure and deploy txtai Application/API services, OpenAI-compat
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # API and Deployment

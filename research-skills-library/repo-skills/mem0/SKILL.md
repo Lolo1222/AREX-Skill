@@ -4,6 +4,7 @@ description: "Route Mem0 repository tasks across Python/TypeScript SDKs, OSS pro
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Mem0 Repo Skill

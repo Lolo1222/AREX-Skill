@@ -4,6 +4,7 @@ description: "Route Snakemake configuration, sample metadata, schema validation,
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Configuration Data

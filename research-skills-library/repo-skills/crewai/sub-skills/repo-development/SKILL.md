@@ -4,6 +4,7 @@ description: "Guides CrewAI repository contributors through monorepo layout, wor
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Repo Development

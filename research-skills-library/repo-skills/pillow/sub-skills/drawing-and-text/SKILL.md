@@ -4,6 +4,7 @@ description: "Draw primitives, text overlays, anchors, fonts, strokes, embedded 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # Drawing and Text

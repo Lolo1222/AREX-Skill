@@ -4,6 +4,7 @@ description: "Wire Tianshou 2.0.1 procedural training pipelines with explicit en
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Procedural Training

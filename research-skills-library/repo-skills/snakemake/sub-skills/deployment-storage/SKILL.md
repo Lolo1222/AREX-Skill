@@ -4,6 +4,7 @@ description: "Plan and diagnose Snakemake 9.23.1 software deployment, containers
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Deployment and Storage

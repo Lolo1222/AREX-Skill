@@ -4,6 +4,7 @@ description: "Use and maintain AUTOMATIC1111 Stable Diffusion WebUI workflows, i
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: AGPL 3.0
 ---
 
 # Stable Diffusion WebUI

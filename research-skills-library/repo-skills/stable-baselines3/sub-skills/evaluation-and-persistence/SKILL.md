@@ -4,6 +4,7 @@ description: "Evaluate Stable-Baselines3 policies, configure callbacks/logging, 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Evaluation and Persistence

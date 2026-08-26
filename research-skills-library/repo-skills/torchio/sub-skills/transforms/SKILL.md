@@ -4,6 +4,7 @@ description: "Build TorchIO 2.0 preprocessing and augmentation pipelines with de
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # TorchIO Transforms

@@ -4,6 +4,7 @@ description: "Configure and troubleshoot SkyPilot clouds, Kubernetes, Slurm, SSH
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Infrastructure And Storage

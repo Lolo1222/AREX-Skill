@@ -4,6 +4,7 @@ description: "Build and debug PyTorch Geometric heterogeneous graph data, loader
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Heterogeneous Graphs

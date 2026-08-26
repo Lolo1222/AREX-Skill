@@ -4,6 +4,7 @@ description: "Use the Python qdrant-client package for Qdrant vector database co
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Qdrant Client

@@ -4,6 +4,7 @@ description: "Build and debug Browser Use tools/actions: custom Tools/Controller
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Tools and Actions

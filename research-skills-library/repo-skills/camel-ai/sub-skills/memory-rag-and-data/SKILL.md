@@ -4,6 +4,7 @@ description: "Build CAMEL memory, retrieval/RAG, embedding, storage, loader, dat
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Memory, RAG, And Data

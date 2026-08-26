@@ -4,6 +4,7 @@ description: "Use MetaGPT extension optimizers, Android/Stanford Town/werewolf/M
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Extensions and Environments

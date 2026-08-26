@@ -4,6 +4,7 @@ description: "Assemble MONAI training and evaluation loops with Ignite-based eng
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # MONAI Training and Evaluation

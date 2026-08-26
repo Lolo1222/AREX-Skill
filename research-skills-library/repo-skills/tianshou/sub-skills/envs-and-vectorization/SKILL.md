@@ -4,6 +4,7 @@ description: "Integrate Gymnasium and PettingZoo environments with Tianshou vect
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Tianshou Environments and Vectorization

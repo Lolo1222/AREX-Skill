@@ -4,6 +4,7 @@ description: "Use MMCV image, video, optical-flow, visualization, and array quan
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # MMCV Media Processing

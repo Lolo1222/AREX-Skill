@@ -4,6 +4,7 @@ description: "Create, inspect, convert, split, and validate SchNetPack atomistic
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # SchNetPack Data Pipelines

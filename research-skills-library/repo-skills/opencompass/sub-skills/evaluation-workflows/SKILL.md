@@ -4,6 +4,7 @@ description: "Run, resume, dry-run, and debug OpenCompass evaluation jobs from t
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Evaluation Workflows

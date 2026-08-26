@@ -4,6 +4,7 @@ description: "Extract CLIP features and evaluate downstream workflows safely."
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # CLIP Feature Evaluation

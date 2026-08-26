@@ -4,6 +4,7 @@ description: "Guides agents using the datamol Python package for RDKit-first mol
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Datamol Repo Skill

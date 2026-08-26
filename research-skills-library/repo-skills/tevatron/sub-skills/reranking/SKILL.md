@@ -4,6 +4,7 @@ description: "Train and run Tevatron cross-encoder rerankers, prepare pairwise r
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Tevatron Reranking

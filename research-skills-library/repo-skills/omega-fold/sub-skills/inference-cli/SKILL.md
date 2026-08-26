@@ -4,6 +4,7 @@ description: "Run OmegaFold CLI inference from FASTA to PDB safely, including de
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # OmegaFold inference CLI

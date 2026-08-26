@@ -4,6 +4,7 @@ description: "Route tasks for using, debugging, and maintaining the OpenAI Agent
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # OpenAI Agents Python

@@ -4,6 +4,7 @@ description: "Export, optimize, validate, and serve Lightning models for predict
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Lightning Deployment Serving

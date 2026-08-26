@@ -4,6 +4,7 @@ description: "Use ms-swift for LLM and multimodal training, inference, deploymen
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # ms-swift

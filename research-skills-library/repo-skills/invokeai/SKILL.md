@@ -4,6 +4,7 @@ description: "Route InvokeAI server operations, node workflow authoring, workflo
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # InvokeAI Repo Skill

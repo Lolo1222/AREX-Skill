@@ -4,6 +4,7 @@ description: "Plan and preprocess prepared nnU-Net v2 datasets: fingerprint extr
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Planning and Preprocessing

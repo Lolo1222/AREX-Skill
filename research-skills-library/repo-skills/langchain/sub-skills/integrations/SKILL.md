@@ -4,6 +4,7 @@ description: "Work on LangChain partner integration packages under libs/partners
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Integrations

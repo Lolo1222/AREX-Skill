@@ -4,6 +4,7 @@ description: "Build, configure, run, stream, serialize, load, and debug smolagen
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Agent Workflows

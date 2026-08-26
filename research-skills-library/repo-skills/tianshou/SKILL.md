@@ -4,6 +4,7 @@ description: "Use Tianshou 2.0.1 for PyTorch/Gymnasium deep reinforcement learni
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Tianshou

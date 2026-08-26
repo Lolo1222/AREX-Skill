@@ -4,6 +4,7 @@ description: "Guides agents choosing and troubleshooting Axolotl model configs, 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Model Loading and Adapters

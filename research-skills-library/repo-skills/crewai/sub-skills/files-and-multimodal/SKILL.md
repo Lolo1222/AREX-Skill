@@ -4,6 +4,7 @@ description: "Guides agents handling CrewAI crewai-files, input_files, file sour
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Files and Multimodal

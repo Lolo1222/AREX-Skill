@@ -4,6 +4,7 @@ description: "Use for Ultralytics track mode, tracker YAML selection, persistent
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: AGPL 3.0
 ---
 
 # Tracking and Solutions

@@ -4,6 +4,7 @@ description: "Plan and sanity-check UniLM architecture research, long-context/di
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Architectures and Training

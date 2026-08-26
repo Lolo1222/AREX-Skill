@@ -4,6 +4,7 @@ description: "Use OpenFF Toolkit for molecule processing, SMIRNOFF force fields,
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # OpenFF Toolkit

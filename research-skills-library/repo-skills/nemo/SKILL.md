@@ -4,6 +4,7 @@ description: "Use for NVIDIA NeMo Speech ASR, TTS, audio processing, SpeechLM2 a
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # NeMo

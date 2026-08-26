@@ -4,6 +4,7 @@ description: "Use Habitat-Lab task, dataset, environment, Gym, and vectorized en
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Habitat-Lab Tasks, Datasets, and Environments

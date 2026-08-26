@@ -4,6 +4,7 @@ description: "Select, instantiate, inspect, and troubleshoot DGL-LifeSci model-z
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Model Zoo and Pretraining

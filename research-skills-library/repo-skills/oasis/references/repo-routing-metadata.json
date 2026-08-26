@@ -1,0 +1,21 @@
+{
+  "schema_version": "2.0",
+  "repo_id": "camel-ai/oasis",
+  "skill_id": "oasis",
+  "taxonomy_sha256": "b2c4f99cbae303c887f58de2d72096ef6719fcff74b1c0173705cc085eb249ab",
+  "routing_status": "classified",
+  "assignments": [
+    {
+      "area": "Scientific Computing",
+      "family": "Agent-Based Simulation"
+    },
+    {
+      "area": "Data Science",
+      "family": "Data Visualization"
+    },
+    {
+      "area": "Data Science",
+      "family": "Recommender Systems"
+    }
+  ]
+}

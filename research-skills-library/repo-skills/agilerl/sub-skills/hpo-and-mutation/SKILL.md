@@ -4,6 +4,7 @@ description: "Use AgileRL evolutionary HPO, tournament selection, mutation proba
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # AgileRL HPO And Mutation

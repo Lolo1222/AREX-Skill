@@ -4,6 +4,7 @@ description: "Plan and troubleshoot DGL-LifeSci molecular generative workflows w
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Generative Models

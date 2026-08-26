@@ -4,6 +4,7 @@ description: "Extend nnU-Net v2 with custom trainers, planners, preprocessors, n
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # nnU-Net v2 Customization and Extension

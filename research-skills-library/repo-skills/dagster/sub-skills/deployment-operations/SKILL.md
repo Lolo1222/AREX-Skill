@@ -4,6 +4,7 @@ description: "Use when a coding agent needs to configure or troubleshoot Dagster
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Deployment Operations

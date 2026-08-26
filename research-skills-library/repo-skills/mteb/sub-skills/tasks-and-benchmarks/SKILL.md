@@ -4,6 +4,7 @@ description: "Discover, filter, inspect, and reason about MTEB tasks and predefi
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # MTEB Tasks and Benchmarks

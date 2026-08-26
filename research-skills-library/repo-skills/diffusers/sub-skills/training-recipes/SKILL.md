@@ -4,6 +4,7 @@ description: "Diffusers training recipes for DreamBooth, LoRA, textual inversion
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Diffusers Training Recipes

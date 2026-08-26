@@ -4,6 +4,7 @@ description: "Route AutoGluon repo tasks across tabular ML, time-series forecast
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # AutoGluon Repo Skill

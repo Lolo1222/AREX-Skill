@@ -4,6 +4,7 @@ description: "Use DGL message passing, PyTorch GNN layers, full-graph training l
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Message Passing Training

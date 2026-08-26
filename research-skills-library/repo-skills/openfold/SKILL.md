@@ -4,6 +4,7 @@ description: "Route OpenFold protein-structure prediction, data preparation, tra
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # OpenFold Repo Skill

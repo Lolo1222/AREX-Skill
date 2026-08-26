@@ -4,6 +4,7 @@ description: "Build and debug ClearML automation workflows with PipelineControll
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # ClearML Automation Pipelines

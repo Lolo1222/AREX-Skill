@@ -4,6 +4,7 @@ description: "Build and review OpenRLHF supervised/preference training plans for
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Supervised Preference Training

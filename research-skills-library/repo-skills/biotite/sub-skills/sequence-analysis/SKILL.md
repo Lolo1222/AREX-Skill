@@ -4,6 +4,7 @@ description: "Use Biotite for sequence construction, alphabets, annotations, tra
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: BSD 3-Clause
 ---
 
 # Sequence Analysis

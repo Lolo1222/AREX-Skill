@@ -4,6 +4,7 @@ description: "Prepare, validate, load, download, and persist BEIR-format dataset
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Data Loading

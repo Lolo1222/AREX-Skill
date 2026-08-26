@@ -4,6 +4,7 @@ description: "Select, configure, and adapt Acme JAX agents and JAX experiment wo
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Acme JAX Agents

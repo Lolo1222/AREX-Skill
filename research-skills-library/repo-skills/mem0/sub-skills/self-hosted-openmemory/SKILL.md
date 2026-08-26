@@ -4,6 +4,7 @@ description: "Deploy, configure, and troubleshoot self-hosted Mem0 server, dashb
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # self-hosted-openmemory

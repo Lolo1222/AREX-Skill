@@ -4,6 +4,7 @@ description: "Use this skill for MLflow repository work: experiment tracking, mo
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # MLflow

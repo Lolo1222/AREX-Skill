@@ -4,6 +4,7 @@ description: "Select and use scvi-tools built-in core model families, including 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: BSD 3-Clause
 ---
 
 # Core Models

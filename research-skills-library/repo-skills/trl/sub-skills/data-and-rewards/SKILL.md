@@ -4,6 +4,7 @@ description: "Prepare and validate TRL datasets, chat templates, multimodal mess
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # TRL Data and Rewards

@@ -4,6 +4,7 @@ description: "Configure and troubleshoot ADK runtime services: Runner, App, sess
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Runtime Services

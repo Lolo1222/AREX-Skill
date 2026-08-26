@@ -4,6 +4,7 @@ description: "Use Mem0 framework, agent, and editor integrations: Vercel AI SDK 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # integrations-plugins

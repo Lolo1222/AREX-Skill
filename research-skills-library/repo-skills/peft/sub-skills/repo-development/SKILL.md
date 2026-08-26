@@ -4,6 +4,7 @@ description: "Use when modifying PEFT itself, preparing a PEFT pull request, add
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # PEFT Repo Development

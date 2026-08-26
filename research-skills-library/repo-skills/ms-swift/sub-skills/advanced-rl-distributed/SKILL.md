@@ -4,6 +4,7 @@ description: "Plan and debug advanced ms-swift RLHF, GRPO/GKD, rollout, Ray, and
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Advanced RL and Distributed Execution

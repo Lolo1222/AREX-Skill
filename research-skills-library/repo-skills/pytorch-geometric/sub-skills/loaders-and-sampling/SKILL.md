@@ -4,6 +4,7 @@ description: "Mini-batch PyTorch Geometric Data objects, configure DataLoader/Ne
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # PyTorch Geometric Loaders and Sampling

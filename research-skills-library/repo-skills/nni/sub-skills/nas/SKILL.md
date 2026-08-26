@@ -4,6 +4,7 @@ description: "Use NNI neural architecture search with model spaces, mutables, ev
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # NNI NAS

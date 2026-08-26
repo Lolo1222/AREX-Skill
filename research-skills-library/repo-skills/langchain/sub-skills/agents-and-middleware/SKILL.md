@@ -4,6 +4,7 @@ description: "Work on the actively maintained LangChain v1 agent package: init_c
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Agents and Middleware

@@ -4,6 +4,7 @@ description: "Use stable Squidpy image APIs for ImageContainer storage, processi
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: BSD 3-Clause
 ---
 
 # Squidpy Image Analysis

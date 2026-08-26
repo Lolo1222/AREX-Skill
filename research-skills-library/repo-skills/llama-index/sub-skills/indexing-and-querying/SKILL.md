@@ -4,6 +4,7 @@ description: "Build and query LlamaIndex indexes, persist and reload storage, co
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Indexing and Querying

@@ -4,6 +4,7 @@ description: "Use MetaGPT's core virtual software-company workflow from CLI or P
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Software Company

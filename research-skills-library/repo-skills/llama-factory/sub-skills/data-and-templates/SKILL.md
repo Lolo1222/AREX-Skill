@@ -4,6 +4,7 @@ description: "Use this sub-skill when working on LlamaFactory dataset_info entri
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # LlamaFactory Data And Templates

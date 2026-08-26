@@ -4,6 +4,7 @@ description: "Build and troubleshoot REINVENT4 scoring configurations, component
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Scoring

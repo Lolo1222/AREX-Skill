@@ -4,6 +4,7 @@ description: "Construct and validate TorchIO images, subjects/studies, affines, 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # TorchIO Data Model

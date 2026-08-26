@@ -4,6 +4,7 @@ description: "Use Nilearn dataset/template/atlas fetchers and public interfaces 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: BSD 3-Clause
 ---
 
 # Nilearn Datasets and Interfaces

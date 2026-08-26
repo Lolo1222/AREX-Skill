@@ -4,6 +4,7 @@ description: "Install SimpleITK binaries, choose source or SuperBuild builds, in
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # SimpleITK Builds and Wrapping

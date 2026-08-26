@@ -4,6 +4,7 @@ description: "Launch and debug SGLang serving runtime, OpenAI-compatible APIs, s
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Serving Runtime

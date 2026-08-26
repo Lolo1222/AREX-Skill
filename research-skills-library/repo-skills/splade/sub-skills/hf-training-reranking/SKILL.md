@@ -4,6 +4,7 @@ description: "Build safe SPLADE HuggingFace Trainer, reranker-training, rerank, 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # HF Training and Reranking

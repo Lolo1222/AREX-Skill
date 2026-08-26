@@ -4,6 +4,7 @@ description: "Use MarkItDown Azure Document Intelligence and Azure Content Under
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # MarkItDown Cloud Integrations

@@ -4,6 +4,7 @@ description: "Instantiate, inspect, and debug fastMRI reconstruction model archi
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # fastMRI Model Architectures

@@ -4,6 +4,7 @@ description: "Build and troubleshoot programmatic Kotaemon RAG pipelines with co
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Kotaemon RAG Core

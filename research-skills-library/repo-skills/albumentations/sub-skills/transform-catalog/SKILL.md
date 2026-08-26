@@ -4,6 +4,7 @@ description: "Select and parameterize Albumentations 2D transform families, incl
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Transform Catalog

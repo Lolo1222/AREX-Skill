@@ -4,6 +4,7 @@ description: "Extend SGLang model support, model configs, custom serving paths, 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Model Kernel Extension

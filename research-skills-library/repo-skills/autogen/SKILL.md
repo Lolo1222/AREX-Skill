@@ -4,6 +4,7 @@ description: "Use this skill for maintaining, migrating, debugging, and safely o
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # AutoGen

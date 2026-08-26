@@ -4,6 +4,7 @@ description: "Guides agents using datamol visualization, molecule image renderin
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Visualization Utilities

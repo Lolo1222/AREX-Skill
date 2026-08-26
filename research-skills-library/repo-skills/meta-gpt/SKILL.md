@@ -4,6 +4,7 @@ description: "Use MetaGPT for multi-agent software-company workflows, Data Inter
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # MetaGPT

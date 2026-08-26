@@ -4,6 +4,7 @@ description: "Build Chemprop v2 Python API workflows for data objects, dataloade
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # Chemprop Python API Modeling

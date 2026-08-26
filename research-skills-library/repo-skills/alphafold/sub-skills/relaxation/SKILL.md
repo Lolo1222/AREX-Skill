@@ -4,6 +4,7 @@ description: "Guide AlphaFold Amber/OpenMM relaxation, AmberRelaxation APIs, CPU
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # AlphaFold Relaxation

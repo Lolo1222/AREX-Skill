@@ -4,6 +4,7 @@ description: "Build and diagnose FlashRAG corpora, BM25/dense/multimodal/web ret
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Retrieval and Indexing

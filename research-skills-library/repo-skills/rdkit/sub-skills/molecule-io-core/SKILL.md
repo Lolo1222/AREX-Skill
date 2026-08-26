@@ -4,6 +4,7 @@ description: "Use for RDKit molecule creation, file/string I/O, validation, sani
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: BSD 3-Clause
 ---
 
 # RDKit Molecule I/O Core

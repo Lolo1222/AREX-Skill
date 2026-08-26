@@ -4,6 +4,7 @@ description: "Write and debug Browser Use Python agent workflows with legacy bro
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Agent Programming

@@ -4,6 +4,7 @@ description: "Adapt PettingZoo training tutorials for CleanRL, Tianshou, SB3, Ra
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # PettingZoo Training Integrations

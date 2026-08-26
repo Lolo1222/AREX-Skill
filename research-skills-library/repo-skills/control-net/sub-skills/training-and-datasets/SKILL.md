@@ -4,6 +4,7 @@ description: "Prepare, validate, adapt, and troubleshoot ControlNet training dat
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # ControlNet Training And Datasets

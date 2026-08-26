@@ -4,6 +4,7 @@ description: "Attach Python functions, CAMEL toolkits, MCP/OpenAPI tools, runtim
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Tools, Runtimes, and Services

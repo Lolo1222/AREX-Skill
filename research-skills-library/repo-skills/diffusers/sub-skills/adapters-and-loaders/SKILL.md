@@ -4,6 +4,7 @@ description: "Use when a Diffusers task involves loading, composing, validating,
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Adapters And Loaders

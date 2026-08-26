@@ -4,6 +4,7 @@ description: "Use this sub-skill for LlamaFactory inference, ChatModel usage, ch
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Inference and Serving

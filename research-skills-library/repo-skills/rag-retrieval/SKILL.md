@@ -4,6 +4,7 @@ description: "Use RAG-Retrieval for RAG reranker inference plus bundled preparat
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # RAG-Retrieval

@@ -4,6 +4,7 @@ description: "Use MMDetection 3.3.0 public APIs for image, batch, folder, NumPy-
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # inference-visualization

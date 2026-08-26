@@ -4,6 +4,7 @@ description: "Use OpenFold programmatic model APIs, config presets, weight impor
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # OpenFold Model APIs

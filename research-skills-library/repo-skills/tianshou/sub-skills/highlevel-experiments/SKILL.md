@@ -4,6 +4,7 @@ description: "Use Tianshou 2.0.1 high-level experiment builders for declarative 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # High-Level Experiments

@@ -4,6 +4,7 @@ description: "Use this skill when working with Hugging Face Datasets: loading lo
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Hugging Face Datasets

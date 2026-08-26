@@ -4,6 +4,7 @@ description: "Build, save, and run GX Checkpoints; configure actions, notificati
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Checkpoints, Actions, and Data Docs

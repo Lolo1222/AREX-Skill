@@ -4,6 +4,7 @@ description: "Implement and debug OpenMM custom expression forces, CustomIntegra
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT, GPL, LGPL
 ---
 
 # Custom Forces and Integrators

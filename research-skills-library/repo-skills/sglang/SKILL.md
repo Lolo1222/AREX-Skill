@@ -4,6 +4,7 @@ description: "Use SGLang for high-throughput LLM and VLM serving, OpenAI-compati
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # SGLang

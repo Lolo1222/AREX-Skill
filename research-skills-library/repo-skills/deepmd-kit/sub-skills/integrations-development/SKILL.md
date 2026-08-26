@@ -4,6 +4,7 @@ description: "Integrate DeePMD-kit with LAMMPS, i-PI, native APIs, dpdata, ASE, 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: LGPL 3.0
 ---
 
 # Integrations Development

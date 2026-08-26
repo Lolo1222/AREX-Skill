@@ -4,6 +4,7 @@ description: "Use the Microsoft UniLM umbrella repository for language generatio
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # UniLM

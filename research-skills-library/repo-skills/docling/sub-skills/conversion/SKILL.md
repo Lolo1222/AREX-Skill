@@ -4,6 +4,7 @@ description: "Use Docling's Python conversion API for local paths, URLs, streams
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Conversion

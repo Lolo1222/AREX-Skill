@@ -4,6 +4,7 @@ description: "Design and run ADK evaluation, test, and debugging workflows for e
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Evaluation Debugging

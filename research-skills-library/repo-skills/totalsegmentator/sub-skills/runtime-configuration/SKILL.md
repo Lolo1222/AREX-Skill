@@ -4,6 +4,7 @@ description: "Install, inspect, and configure TotalSegmentator runtime dependenc
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Runtime Configuration

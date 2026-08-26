@@ -4,6 +4,7 @@ description: "Work with SimpleITK Image objects, spatial metadata, pixel/compone
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # SimpleITK Image Core

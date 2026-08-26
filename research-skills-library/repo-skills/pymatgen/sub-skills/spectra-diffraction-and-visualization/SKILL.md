@@ -4,6 +4,7 @@ description: "Use pymatgen diffraction calculators, spectrum objects, plotting h
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # Spectra, Diffraction, and Visualization

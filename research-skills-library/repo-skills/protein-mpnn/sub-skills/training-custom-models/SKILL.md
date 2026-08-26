@@ -4,6 +4,7 @@ description: "Retrain ProteinMPNN, validate training data layout, resume or debu
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Training Custom Models

@@ -4,6 +4,7 @@ description: "Use TotalSegmentator as an installed package for medical-image seg
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # TotalSegmentator

@@ -4,6 +4,7 @@ description: "Inspect and modify AlphaFold model presets, RunModel configuration
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # AlphaFold Model Config and API

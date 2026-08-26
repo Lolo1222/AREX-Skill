@@ -4,6 +4,7 @@ description: "Use torchtune's tune CLI, recipe registry, and OmegaConf config sy
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: BSD 3-Clause
 ---
 
 # cli-and-config

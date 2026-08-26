@@ -4,6 +4,7 @@ description: "Use torchtune generation, Eleuther evaluation, and quantization wo
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: BSD 3-Clause
 ---
 
 # inference-evaluation-quantization

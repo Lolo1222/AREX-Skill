@@ -4,6 +4,7 @@ description: "Guides agents through Pydantic AI model selection, provider config
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Models and Providers

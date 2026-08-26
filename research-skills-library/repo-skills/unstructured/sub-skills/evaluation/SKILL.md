@@ -4,6 +4,7 @@ description: "Evaluate Unstructured partition outputs against gold outputs for t
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Evaluation

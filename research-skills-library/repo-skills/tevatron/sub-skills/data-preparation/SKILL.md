@@ -4,6 +4,7 @@ description: "Prepare and validate Tevatron JSON/JSONL datasets, rankings, qrels
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Tevatron Data Preparation

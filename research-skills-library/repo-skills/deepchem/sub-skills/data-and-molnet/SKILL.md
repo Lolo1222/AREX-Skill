@@ -4,6 +4,7 @@ description: "Load user data into DeepChem datasets, split datasets, apply trans
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # DeepChem Data And MoleculeNet

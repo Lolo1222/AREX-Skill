@@ -4,6 +4,7 @@ description: "Reason about Habitat-HITL realtime apps, viewers, interaction serv
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Habitat-HITL Apps and Interaction

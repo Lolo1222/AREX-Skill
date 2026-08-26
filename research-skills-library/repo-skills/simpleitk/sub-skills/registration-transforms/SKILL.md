@@ -4,6 +4,7 @@ description: "Configure SimpleITK transforms, resampling, ImageRegistrationMetho
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # SimpleITK Registration and Transforms

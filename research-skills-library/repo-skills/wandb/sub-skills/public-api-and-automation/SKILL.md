@@ -4,6 +4,7 @@ description: "Query, export, and automate W&B resources with wandb.Api, includin
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # W&B Public API and Automation

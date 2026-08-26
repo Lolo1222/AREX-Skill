@@ -4,6 +4,7 @@ description: "Inspect DeePMD-kit data systems and draft or repair training input
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: LGPL 3.0
 ---
 
 # DeePMD-kit Data and Training Configuration

@@ -4,6 +4,7 @@ description: "Use for NeMo Speech audio-to-audio enhancement, restoration, separ
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Audio

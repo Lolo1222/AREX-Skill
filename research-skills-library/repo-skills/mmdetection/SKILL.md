@@ -4,6 +4,7 @@ description: "Use this skill when working with MMDetection 3.x for object detect
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # MMDetection

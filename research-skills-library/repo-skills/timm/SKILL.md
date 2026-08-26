@@ -4,6 +4,7 @@ description: "Use PyTorch Image Models (timm) for model discovery, pretrained lo
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # PyTorch Image Models (timm)

@@ -4,6 +4,7 @@ description: "Maintain the LlamaIndex monorepo safely: inspect package layout an
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # LlamaIndex Repo Maintenance

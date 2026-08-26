@@ -4,6 +4,7 @@ description: "Load, construct, inspect, iterate, and write molecular systems wit
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # Universe I/O

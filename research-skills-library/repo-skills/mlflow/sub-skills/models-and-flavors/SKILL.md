@@ -4,6 +4,7 @@ description: "Use this sub-skill for MLflow Models, pyfunc, flavor APIs, signatu
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # MLflow Models and Flavors

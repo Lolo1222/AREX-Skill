@@ -4,6 +4,7 @@ description: "Build, inspect, and troubleshoot MarkItDown third-party plugins an
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # MarkItDown Plugin Development

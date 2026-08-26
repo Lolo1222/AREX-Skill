@@ -4,6 +4,7 @@ description: "Use segmentation_models_pytorch losses, metrics, tensor modes, and
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # training-evaluation

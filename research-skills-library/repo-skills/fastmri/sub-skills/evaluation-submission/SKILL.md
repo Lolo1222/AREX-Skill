@@ -4,6 +4,7 @@ description: "Prepare fastMRI reconstructions for validation, metric evaluation,
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # fastMRI evaluation-submission

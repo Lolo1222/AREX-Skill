@@ -4,6 +4,7 @@ description: "Guides agents creating Axolotl SFT and continual pretraining confi
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # SFT and Pretraining

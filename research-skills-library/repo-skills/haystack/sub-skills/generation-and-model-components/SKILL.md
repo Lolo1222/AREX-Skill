@@ -4,6 +4,7 @@ description: "Choose and configure Haystack prompt builders, generators, embedde
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # Generation and Model Components

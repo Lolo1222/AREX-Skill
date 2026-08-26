@@ -4,6 +4,7 @@ description: "Integrate RAGatouille with LangChain or LlamaIndex-style pipelines
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # RAGatouille Integrations and Export

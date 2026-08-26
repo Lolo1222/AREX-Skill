@@ -4,6 +4,7 @@ description: "Route DiffDock docking, web UI, training/data preparation, and ben
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # DiffDock

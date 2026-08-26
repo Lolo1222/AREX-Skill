@@ -4,6 +4,7 @@ description: "Develop, test, build, and troubleshoot Galaxy's Vue/TypeScript cli
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # Galaxy Web Client Development

@@ -4,6 +4,7 @@ description: "Use when working with Dask Array: chunked NumPy-like arrays, `dask
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: BSD 3-Clause
 ---
 
 # Dask Array Workflows

@@ -4,6 +4,7 @@ description: "Choose, inspect, and troubleshoot OpenFF Toolkit optional backend 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Toolkit Backends

@@ -4,6 +4,7 @@ description: "Guides agents using pysam VariantFile, VariantHeader, and VariantR
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # variant-io

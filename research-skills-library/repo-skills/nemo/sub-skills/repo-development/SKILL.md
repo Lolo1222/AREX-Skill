@@ -4,6 +4,7 @@ description: "Use for NeMo Speech repository maintenance: installs, code style, 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Repo Development

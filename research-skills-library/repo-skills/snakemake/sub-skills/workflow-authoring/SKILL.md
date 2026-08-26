@@ -4,6 +4,7 @@ description: "Write, refactor, and troubleshoot Snakemake 9.23.1 Snakefiles, rul
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Workflow Authoring

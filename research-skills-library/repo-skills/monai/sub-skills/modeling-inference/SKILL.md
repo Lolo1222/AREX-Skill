@@ -4,6 +4,7 @@ description: "Choose and wire MONAI networks, losses, metrics, inferers, postpro
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # MONAI Modeling and Inference

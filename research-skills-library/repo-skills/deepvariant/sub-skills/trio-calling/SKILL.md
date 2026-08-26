@@ -4,6 +4,7 @@ description: "Plans DeepTrio trio and duo variant-calling workflows with child a
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: BSD 3-Clause
 ---
 
 # DeepTrio Trio Calling

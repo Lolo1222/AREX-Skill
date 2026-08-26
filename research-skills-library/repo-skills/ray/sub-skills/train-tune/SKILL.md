@@ -4,6 +4,7 @@ description: "Use Ray Train and Ray Tune for distributed training, checkpointing
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Ray Train And Tune

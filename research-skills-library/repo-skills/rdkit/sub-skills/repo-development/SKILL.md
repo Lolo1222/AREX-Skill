@@ -4,6 +4,7 @@ description: "Safely edit, build, and test the RDKit repository itself, includin
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: BSD 3-Clause
 ---
 
 # RDKit Repository Development

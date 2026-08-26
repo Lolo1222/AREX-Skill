@@ -4,6 +4,7 @@ description: "Use for Mem0/mem0ai command-line memory workflows: Python or Node 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # cli-memory

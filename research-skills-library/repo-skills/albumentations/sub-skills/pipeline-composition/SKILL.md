@@ -4,6 +4,7 @@ description: "Build, edit, validate, seed, and debug Albumentations augmentation
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Albumentations Pipeline Composition

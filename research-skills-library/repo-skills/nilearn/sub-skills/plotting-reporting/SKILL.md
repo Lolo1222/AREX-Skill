@@ -4,6 +4,7 @@ description: "Create Nilearn plots, interactive views, surface visualizations, c
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: BSD 3-Clause
 ---
 
 # Plotting and Reporting

@@ -4,6 +4,7 @@ description: "Prepare, validate, preprocess, filter, standardize, and deduplicat
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Data Pipeline

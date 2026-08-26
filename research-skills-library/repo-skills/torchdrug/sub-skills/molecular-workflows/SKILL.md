@@ -4,6 +4,7 @@ description: "Plan TorchDrug molecular property prediction, molecular pretrainin
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Molecular Workflows

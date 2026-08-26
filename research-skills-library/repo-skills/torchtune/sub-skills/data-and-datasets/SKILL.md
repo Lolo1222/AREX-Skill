@@ -4,6 +4,7 @@ description: "Build and validate torchtune dataset configs, message transforms, 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: BSD 3-Clause
 ---
 
 # data-and-datasets

@@ -4,6 +4,7 @@ description: "Load OpenCLIP, CLIP-style, and CoCa models for safe inference, tok
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # Model Inference

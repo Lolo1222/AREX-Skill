@@ -4,6 +4,7 @@ description: "Route Apache Airflow repo tasks across Dag authoring, operations, 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 <!-- SPDX-License-Identifier: Apache-2.0 -->

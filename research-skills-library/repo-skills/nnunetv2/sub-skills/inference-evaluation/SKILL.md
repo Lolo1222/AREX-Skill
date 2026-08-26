@@ -4,6 +4,7 @@ description: "Run nnU-Net v2 prediction from dataset/results or explicit model f
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # nnU-Net v2 Inference and Evaluation

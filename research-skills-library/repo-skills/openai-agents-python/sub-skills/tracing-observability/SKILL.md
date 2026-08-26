@@ -4,6 +4,7 @@ description: "Configure OpenAI Agents Python tracing, trace processors, spans, s
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Tracing & Observability

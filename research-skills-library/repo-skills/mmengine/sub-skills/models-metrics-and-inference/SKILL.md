@@ -4,6 +4,7 @@ description: "Implement and troubleshoot MMEngine model, metric, evaluator, infe
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Models, Metrics, and Inference

@@ -4,6 +4,7 @@ description: "Operate mcp-agent projects with mcp-agent, mcp-cloud, and mcpc CLI
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # CLI Cloud Operations

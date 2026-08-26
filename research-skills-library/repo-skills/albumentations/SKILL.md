@@ -4,6 +4,7 @@ description: "Build, debug, serialize, and integrate Albumentations 2.x augmenta
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Albumentations Repo Skill

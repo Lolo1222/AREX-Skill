@@ -4,6 +4,7 @@ description: "Use ClearML HTTP routers, local FastAPI proxies, endpoint telemetr
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # ClearML Routers and Services

@@ -4,6 +4,7 @@ description: "Use timm reusable layers, classifier heads, pooling, normalization
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Layers and Components

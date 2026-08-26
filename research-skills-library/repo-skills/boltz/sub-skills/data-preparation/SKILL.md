@@ -4,6 +4,7 @@ description: "Prepare and diagnose Boltz raw training/evaluation data pipelines,
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Boltz Data Preparation

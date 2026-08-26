@@ -4,6 +4,7 @@ description: "Inspect and troubleshoot Protenix configs, model internals, kernel
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Protenix Advanced Model Configuration

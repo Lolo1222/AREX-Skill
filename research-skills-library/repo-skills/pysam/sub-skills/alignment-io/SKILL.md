@@ -4,6 +4,7 @@ description: "Guides agents using pysam for SAM/BAM/CRAM AlignmentFile I/O, head
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # pysam alignment I/O

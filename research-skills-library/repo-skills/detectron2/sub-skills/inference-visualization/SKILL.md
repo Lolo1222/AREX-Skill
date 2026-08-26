@@ -4,6 +4,7 @@ description: "Run Detectron2 inference, inspect model outputs, and visualize pre
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Detectron2 Inference & Visualization

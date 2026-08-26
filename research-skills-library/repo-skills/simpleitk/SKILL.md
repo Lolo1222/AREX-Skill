@@ -4,6 +4,7 @@ description: "Use SimpleITK for medical-image IO, image metadata, NumPy conversi
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # SimpleITK Repo Skill

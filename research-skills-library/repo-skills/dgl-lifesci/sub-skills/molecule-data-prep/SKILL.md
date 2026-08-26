@@ -4,6 +4,7 @@ description: "Prepare molecular and protein-ligand data for DGL-LifeSci by valid
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Molecule Data Prep

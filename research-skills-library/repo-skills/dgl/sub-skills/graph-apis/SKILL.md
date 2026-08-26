@@ -4,6 +4,7 @@ description: "Construct, inspect, transform, batch, and debug homogeneous and he
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # DGL Graph APIs

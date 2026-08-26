@@ -4,6 +4,7 @@ description: "Plan safe SaProt pretraining, fine-tuning, zero-shot mutation benc
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # SaProt Training Evaluation

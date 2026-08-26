@@ -4,6 +4,7 @@ description: "Guides agents using Pydantic AI CLI entry points, clai chat, clai 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # CLI and Apps

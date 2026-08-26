@@ -4,6 +4,7 @@ description: "Define and run W&B hyperparameter sweeps and W&B Launch jobs, queu
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # W&B Sweeps and Launch

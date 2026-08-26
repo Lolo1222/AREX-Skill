@@ -4,6 +4,7 @@ description: "Use SaProt for structure-aware protein language modeling, AA+3Di s
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # SaProt Repo Skill

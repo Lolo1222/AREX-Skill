@@ -4,6 +4,7 @@ description: "Use W&B's Python SDK and CLI for experiment tracking, offline/loca
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # W&B Repo Skill

@@ -4,6 +4,7 @@ description: "Prune pySCENIC co-expression modules against cisTarget ranking dat
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: GPL 3.0
 ---
 
 # Motif Pruning and Regulons

@@ -4,6 +4,7 @@ description: "Maintain, debug, migrate, and write high-level AutoGen AgentChat a
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # AgentChat Workflows

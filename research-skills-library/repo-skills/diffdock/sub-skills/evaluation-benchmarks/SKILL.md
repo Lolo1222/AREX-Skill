@@ -4,6 +4,7 @@ description: "Plan and troubleshoot DiffDock benchmark evaluation runs, RMSD/con
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # DiffDock Evaluation Benchmarks

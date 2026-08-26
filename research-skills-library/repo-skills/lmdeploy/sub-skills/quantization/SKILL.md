@@ -4,6 +4,7 @@ description: "Plan LMDeploy Lite quantization, KV-cache quantization, and quanti
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Quantization

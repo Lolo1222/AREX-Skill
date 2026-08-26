@@ -4,6 +4,7 @@ description: "Guides agents using datamol to generate and manipulate molecular s
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Datamol Structure Generation

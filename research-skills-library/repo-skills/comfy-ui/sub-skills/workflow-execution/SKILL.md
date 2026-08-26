@@ -4,6 +4,7 @@ description: "Build, validate, debug, and reason about ComfyUI API prompt JSON, 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: GPL 3.0
 ---
 
 # Workflow Execution

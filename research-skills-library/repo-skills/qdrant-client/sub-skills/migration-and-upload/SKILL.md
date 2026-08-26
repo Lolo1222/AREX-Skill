@@ -4,6 +4,7 @@ description: "Use qdrant-client bulk upload and collection migration helpers for
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Migration and Upload

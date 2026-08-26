@@ -4,6 +4,7 @@ description: "Guides agents configuring CrewAI LLM providers, model strings, cre
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # LLM and Providers

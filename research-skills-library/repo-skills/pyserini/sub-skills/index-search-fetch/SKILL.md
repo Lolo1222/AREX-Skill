@@ -4,6 +4,7 @@ description: "Build, search, fetch, and inspect Pyserini Lucene indexes using CL
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Index, Search, and Fetch with Pyserini Lucene

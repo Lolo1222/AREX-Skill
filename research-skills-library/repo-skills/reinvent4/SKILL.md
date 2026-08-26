@@ -4,6 +4,7 @@ description: "Use REINVENT4 for molecular design CLI workflows: sampling, scorin
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # REINVENT4

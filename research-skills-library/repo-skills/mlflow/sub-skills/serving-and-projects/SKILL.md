@@ -4,6 +4,7 @@ description: "Use when working with MLflow CLI commands, tracking servers, auth/
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Serving And Projects

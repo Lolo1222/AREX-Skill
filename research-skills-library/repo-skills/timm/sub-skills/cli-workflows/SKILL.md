@@ -4,6 +4,7 @@ description: "Generate safe, correct train.py, validate.py, inference.py, and to
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # timm CLI Workflows

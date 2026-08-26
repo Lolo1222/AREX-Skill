@@ -4,6 +4,7 @@ description: "Choose and troubleshoot OpenMM force fields, model-building workfl
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT, GPL, LGPL
 ---
 
 # Force Fields and Modeling

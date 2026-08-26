@@ -4,6 +4,7 @@ description: "Make safe Nilearn checkout code, test, documentation, changelog, a
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: BSD 3-Clause
 ---
 
 # Nilearn Development Maintenance Skill

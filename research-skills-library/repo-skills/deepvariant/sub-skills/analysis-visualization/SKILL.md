@@ -4,6 +4,7 @@ description: "Plan and interpret DeepVariant VCF stats, runtime-by-region, show_
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: BSD 3-Clause
 ---
 
 # DeepVariant Analysis Visualization

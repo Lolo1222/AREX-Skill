@@ -4,6 +4,7 @@ description: "Use the Unstructured Python package to partition documents into el
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Unstructured

@@ -4,6 +4,7 @@ description: "Create and troubleshoot ProLIF visual outputs from completed finge
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Visualization

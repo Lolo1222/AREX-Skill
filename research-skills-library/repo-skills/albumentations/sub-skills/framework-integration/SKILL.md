@@ -4,6 +4,7 @@ description: "Integrate Albumentations with PyTorch-style datasets, tensor conve
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Framework Integration

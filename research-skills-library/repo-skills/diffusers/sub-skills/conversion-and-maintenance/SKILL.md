@@ -4,6 +4,7 @@ description: "Use Diffusers CLI helpers, checkpoint and format conversion script
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Conversion And Maintenance

@@ -4,6 +4,7 @@ description: "Work with InvokeAI workflow library records, default workflow JSON
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # Workflows Queues

@@ -4,6 +4,7 @@ description: "Build torchvision transforms.v2 pipelines for images, videos, mask
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: BSD 3-Clause
 ---
 
 # TorchVision Transforms and TVTensors

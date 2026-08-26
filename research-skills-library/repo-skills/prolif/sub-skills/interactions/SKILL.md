@@ -4,6 +4,7 @@ description: "Choose, parameterize, customize, and troubleshoot ProLIF interacti
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # ProLIF Interactions

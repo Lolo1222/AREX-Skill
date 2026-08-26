@@ -4,6 +4,7 @@ description: "Load ESM/ESM-2/MSA Transformer models, tokenize protein inputs, co
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Model Embeddings

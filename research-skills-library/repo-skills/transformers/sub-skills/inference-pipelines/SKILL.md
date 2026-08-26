@@ -4,6 +4,7 @@ description: "Use Transformers pipelines and AutoClass inference workflows acros
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Inference Pipelines

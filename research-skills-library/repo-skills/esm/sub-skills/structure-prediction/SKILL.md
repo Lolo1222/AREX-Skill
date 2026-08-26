@@ -4,6 +4,7 @@ description: "Predict protein structures from sequences or FASTA files with ESMF
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Structure Prediction

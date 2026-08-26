@@ -4,6 +4,7 @@ description: "Train and evaluate DeepChem models; choose metrics, model families
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # DeepChem Model Training

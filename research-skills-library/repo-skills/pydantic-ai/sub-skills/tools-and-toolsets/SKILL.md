@@ -4,6 +4,7 @@ description: "Guides agents that define, validate, organize, approve, defer, sea
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Tools and Toolsets

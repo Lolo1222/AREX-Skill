@@ -4,6 +4,7 @@ description: "Use txtai for semantic search, embeddings databases, RAG, LLM orch
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # txtai

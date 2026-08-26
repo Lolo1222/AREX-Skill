@@ -4,6 +4,7 @@ description: "Create and troubleshoot Dagster component-ready projects, componen
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Components Projects

@@ -4,6 +4,7 @@ description: "Combine AnnData objects in memory or on disk with concat, concat_o
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: BSD 3-Clause
 ---
 
 # Combining AnnData Objects and Files

@@ -4,6 +4,7 @@ description: "Prepare BEIR training pairs and triplets, build evaluators, select
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # BEIR Training

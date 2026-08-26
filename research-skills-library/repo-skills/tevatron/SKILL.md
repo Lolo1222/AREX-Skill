@@ -4,6 +4,7 @@ description: "Use Tevatron for neural retrieval workflows including data prepara
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Tevatron

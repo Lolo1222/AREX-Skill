@@ -4,6 +4,7 @@ description: "Modify and debug RAGFlow web frontend API integration, routes, ser
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Frontend Integration

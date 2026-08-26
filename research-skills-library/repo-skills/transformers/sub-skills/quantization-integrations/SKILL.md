@@ -4,6 +4,7 @@ description: "Choose and validate Transformers quantization methods, backend int
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Transformers Quantization Integrations

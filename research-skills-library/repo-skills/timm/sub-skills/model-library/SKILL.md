@@ -4,6 +4,7 @@ description: "Discover timm model names, instantiate models, load pretrained or 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Model Library

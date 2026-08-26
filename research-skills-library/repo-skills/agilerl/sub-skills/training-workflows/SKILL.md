@@ -4,6 +4,7 @@ description: "Use AgileRL classical single-agent training workflows for Gymnasiu
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # AgileRL Training Workflows

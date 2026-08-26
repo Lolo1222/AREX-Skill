@@ -4,6 +4,7 @@ description: "Choose DeePMD-kit model families/backends and draft, launch, resta
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: LGPL 3.0
 ---
 
 # DeePMD-kit Training Models

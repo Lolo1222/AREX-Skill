@@ -4,6 +4,7 @@ description: "Configure, validate, run, and troubleshoot CLAM attention heatmap 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: GPL 3.0
 ---
 
 # CLAM Heatmap Visualization

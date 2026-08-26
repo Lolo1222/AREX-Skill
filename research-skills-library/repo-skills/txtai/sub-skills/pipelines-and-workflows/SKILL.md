@@ -4,6 +4,7 @@ description: "Compose deterministic txtai pipelines and workflows for extraction
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Pipelines and Workflows

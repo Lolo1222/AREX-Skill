@@ -4,6 +4,7 @@ description: "Use when building or debugging CrewAI Flow graphs, stateful flow e
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # CrewAI Flows and Events

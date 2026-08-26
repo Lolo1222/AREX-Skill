@@ -4,6 +4,7 @@ description: "Operate Ray clusters, jobs, dashboard access, runtime environments
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Ray Cluster Operations

@@ -4,6 +4,7 @@ description: "Build, debug, and operate Hugging Face smolagents agents, tools, m
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # smolagents

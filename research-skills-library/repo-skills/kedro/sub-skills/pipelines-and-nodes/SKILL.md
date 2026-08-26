@@ -4,6 +4,7 @@ description: "Design, validate, refactor, namespace, tag, slice, inspect, and tr
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Kedro Pipelines and Nodes

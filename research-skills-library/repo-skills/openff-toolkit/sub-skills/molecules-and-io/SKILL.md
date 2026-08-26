@@ -4,6 +4,7 @@ description: "Build, inspect, convert, serialize, charge, conformer-generate, vi
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # OpenFF Molecules and IO

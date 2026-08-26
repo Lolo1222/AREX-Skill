@@ -4,6 +4,7 @@ description: "Run and integrate the local MarkItDown MCP server with safe STDIO,
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # MarkItDown MCP Server

@@ -4,6 +4,7 @@ description: "Use for Scanpy single-cell analysis workflows: AnnData IO, preproc
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: BSD 3-Clause
 ---
 
 # Scanpy Repo Skill

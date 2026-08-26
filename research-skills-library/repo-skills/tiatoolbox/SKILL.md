@@ -4,6 +4,7 @@ description: "Route TIAToolbox tasks for computational pathology image I/O, prep
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # TIAToolbox

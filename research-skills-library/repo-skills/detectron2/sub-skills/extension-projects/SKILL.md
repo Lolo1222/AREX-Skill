@@ -4,6 +4,7 @@ description: "Extend Detectron2 with registries, configurable model components, 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Detectron2 Extension Projects

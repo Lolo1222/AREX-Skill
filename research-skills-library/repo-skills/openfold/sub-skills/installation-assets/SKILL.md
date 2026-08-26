@@ -4,6 +4,7 @@ description: "Plan and troubleshoot OpenFold installation, package builds, runti
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # OpenFold Installation and Runtime Assets

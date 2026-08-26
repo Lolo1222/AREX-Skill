@@ -4,6 +4,7 @@ description: "Core OmicVerse AnnData IO, datasets, preprocessing, plotting, repo
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: GPL 3.0
 ---
 
 # Core Analysis

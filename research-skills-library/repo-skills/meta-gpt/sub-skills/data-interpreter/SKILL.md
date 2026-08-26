@@ -4,6 +4,7 @@ description: "Use MetaGPT Data Interpreter and RoleZero workflows for data analy
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Data Interpreter

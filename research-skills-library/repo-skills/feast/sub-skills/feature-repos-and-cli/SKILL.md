@@ -4,6 +4,7 @@ description: "Create and operate Feast feature repositories with feature_store.y
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Feast Feature Repos and CLI

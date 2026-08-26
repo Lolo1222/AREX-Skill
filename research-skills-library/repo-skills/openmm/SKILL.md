@@ -4,6 +4,7 @@ description: "Use OpenMM for molecular simulation workflows, force-field/model p
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT, GPL, LGPL
 ---
 
 # OpenMM

@@ -4,6 +4,7 @@ description: "Use Squidpy for spatial omics data loading, graph statistics, imag
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: BSD 3-Clause
 ---
 
 # Squidpy

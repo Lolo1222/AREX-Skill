@@ -4,6 +4,7 @@ description: "Inspect SPLADE model, data, index, and inference APIs plus validat
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # SPLADE Model/Data API

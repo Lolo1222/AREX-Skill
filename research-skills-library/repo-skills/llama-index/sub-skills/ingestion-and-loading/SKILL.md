@@ -4,6 +4,7 @@ description: "Load local files or raw text into LlamaIndex Documents, split them
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Ingestion and Loading

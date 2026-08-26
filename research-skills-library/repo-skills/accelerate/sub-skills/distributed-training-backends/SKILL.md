@@ -4,6 +4,7 @@ description: "Select, configure, and diagnose Accelerate distributed training ba
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Distributed Training Backends

@@ -4,6 +4,7 @@ description: "Use for Feast feature store tasks: feature repositories, definitio
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Feast

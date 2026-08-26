@@ -4,6 +4,7 @@ description: "Use when selecting Sentence Transformers inference backends or exp
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Backend Export Optimization

@@ -4,6 +4,7 @@ description: "Use GroundingDINO for single-image open-vocabulary detection, Pyth
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # GroundingDINO Inference

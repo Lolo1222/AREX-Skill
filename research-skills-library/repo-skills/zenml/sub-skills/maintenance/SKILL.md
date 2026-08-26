@@ -4,6 +4,7 @@ description: "Maintain the ZenML repository safely with AGENTS guidance, targete
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # ZenML Maintenance

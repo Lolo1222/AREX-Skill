@@ -4,6 +4,7 @@ description: "Build and diagnose GraphRAG lower-level package extensions: custom
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # GraphRAG Package Extensions

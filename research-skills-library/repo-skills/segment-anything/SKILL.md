@@ -4,6 +4,7 @@ description: "Use Meta Segment Anything (SAM) for prompt-based segmentation, aut
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Segment Anything

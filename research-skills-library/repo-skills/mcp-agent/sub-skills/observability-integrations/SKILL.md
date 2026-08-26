@@ -4,6 +4,7 @@ description: "Configure mcp-agent logging, OpenTelemetry tracing, token accounti
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # observability-integrations

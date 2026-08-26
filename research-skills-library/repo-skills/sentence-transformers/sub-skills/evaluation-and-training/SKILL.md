@@ -4,6 +4,7 @@ description: "Route sentence-transformers evaluation and training tasks across S
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Evaluation and Training

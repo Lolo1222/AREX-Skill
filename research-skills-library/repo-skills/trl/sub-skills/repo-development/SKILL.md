@@ -4,6 +4,7 @@ description: "Modify the TRL repository safely as a contributor or maintainer, i
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # TRL Repo Development

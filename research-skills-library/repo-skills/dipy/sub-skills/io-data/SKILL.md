@@ -4,6 +4,7 @@ description: "Load, validate, convert, and save Dipy diffusion images, gradients
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # Dipy IO And Data

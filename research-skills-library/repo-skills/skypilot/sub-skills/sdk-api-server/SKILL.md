@@ -4,6 +4,7 @@ description: "Use SkyPilot's Python SDK, async SDK, API server lifecycle command
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # SDK API Server

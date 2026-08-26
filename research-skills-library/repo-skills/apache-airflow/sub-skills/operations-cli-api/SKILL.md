@@ -4,6 +4,7 @@ description: "Operate Apache Airflow locally and remotely through installation, 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 <!-- SPDX-License-Identifier: Apache-2.0 -->

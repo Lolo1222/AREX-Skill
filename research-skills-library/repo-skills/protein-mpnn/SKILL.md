@@ -4,6 +4,7 @@ description: "Use ProteinMPNN to design protein sequences from backbones, prepar
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # ProteinMPNN

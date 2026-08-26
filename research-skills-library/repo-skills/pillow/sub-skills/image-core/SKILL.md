@@ -4,6 +4,7 @@ description: "Create, open, inspect, transform, composite, resize, crop, convert
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # Image Core

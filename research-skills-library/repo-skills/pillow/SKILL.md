@@ -4,6 +4,7 @@ description: "Use this repo skill when working with Pillow (PIL fork) image proc
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # Pillow

@@ -4,6 +4,7 @@ description: "Configure smolagents CodeAgent execution safely: local imports, ex
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Execution and Safety

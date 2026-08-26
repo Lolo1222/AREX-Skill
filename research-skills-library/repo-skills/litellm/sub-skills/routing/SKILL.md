@@ -4,6 +4,7 @@ description: "Use this when configuring, validating, or debugging LiteLLM Router
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # LiteLLM Routing

@@ -4,6 +4,7 @@ description: "Use LangGraph Python SDK clients, API resource clients, auth heade
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # sdk-clients

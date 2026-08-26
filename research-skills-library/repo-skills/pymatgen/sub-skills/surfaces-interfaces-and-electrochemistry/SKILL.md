@@ -4,6 +4,7 @@ description: "Use pymatgen surface, interface, Pourbaix, Wulff-shape, work-funct
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # Surfaces, Interfaces, and Electrochemistry

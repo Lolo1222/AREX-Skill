@@ -4,6 +4,7 @@ description: "Understand and manipulate Unstructured Element classes, metadata, 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Elements and Metadata

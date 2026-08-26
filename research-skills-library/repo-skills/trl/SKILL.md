@@ -4,6 +4,7 @@ description: "Use and modify TRL, the Hugging Face Transformers Reinforcement Le
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # TRL Repo Skill

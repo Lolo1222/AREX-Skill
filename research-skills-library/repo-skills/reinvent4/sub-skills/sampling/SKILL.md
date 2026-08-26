@@ -4,6 +4,7 @@ description: "Configure and troubleshoot REINVENT4 sampling runs for Reinvent, L
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Sampling

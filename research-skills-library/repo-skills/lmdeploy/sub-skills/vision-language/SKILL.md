@@ -4,6 +4,7 @@ description: "Use LMDeploy vision-language and multimodal APIs for media loading
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Vision Language

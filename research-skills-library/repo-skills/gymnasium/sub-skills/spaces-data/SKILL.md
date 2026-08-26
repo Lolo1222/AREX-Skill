@@ -4,6 +4,7 @@ description: "Design Gymnasium action and observation spaces, validate samples, 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Gymnasium Spaces and Data Contracts

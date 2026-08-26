@@ -4,6 +4,7 @@ description: "Routes agents working with Axolotl config-driven LLM fine-tuning, 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Axolotl

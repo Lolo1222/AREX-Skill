@@ -4,6 +4,7 @@ description: "Use the MTEB console script for safe CLI workflows, shell automati
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # MTEB CLI And Automation

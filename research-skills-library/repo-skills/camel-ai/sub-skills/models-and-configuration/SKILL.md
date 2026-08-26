@@ -4,6 +4,7 @@ description: "Choose, configure, inspect, and troubleshoot CAMEL model backends,
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Models and Configuration

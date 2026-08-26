@@ -4,6 +4,7 @@ description: "Use ColBERT/colbert-ai for late-interaction retrieval: prepare dat
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # ColBERT Repo Skill

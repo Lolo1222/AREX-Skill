@@ -4,6 +4,7 @@ description: "Use W&B CLI and local workflows safely: login, init, status, offli
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # W&B CLI and Local Workflows

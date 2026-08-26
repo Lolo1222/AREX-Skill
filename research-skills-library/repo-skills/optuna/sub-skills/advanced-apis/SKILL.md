@@ -4,6 +4,7 @@ description: "Advanced Optuna support APIs for terminator stopping, search-space
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # Optuna Advanced APIs

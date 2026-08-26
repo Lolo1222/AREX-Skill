@@ -4,6 +4,7 @@ description: "Use DeepChem for molecular machine learning, data loading, featuri
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # DeepChem

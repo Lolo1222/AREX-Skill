@@ -4,6 +4,7 @@ description: "Route DeePMD-kit package workflows for installation, data/config p
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: LGPL 3.0
 ---
 
 # DeePMD-kit Repo Skill

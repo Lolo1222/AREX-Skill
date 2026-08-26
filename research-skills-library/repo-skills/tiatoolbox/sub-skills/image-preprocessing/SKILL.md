@@ -4,6 +4,7 @@ description: "Use TIAToolbox for tissue masking, stain normalization/extraction/
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # Image Preprocessing

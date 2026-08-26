@@ -4,6 +4,7 @@ description: "Use when configuring LiteLLM for MCP tools, A2A agents, Claude Cod
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # Agent Tools

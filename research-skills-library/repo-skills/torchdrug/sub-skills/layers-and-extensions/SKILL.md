@@ -4,6 +4,7 @@ description: "Choose TorchDrug graph neural network layers/models, readouts, var
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # TorchDrug Layers & Extensions

@@ -4,6 +4,7 @@ description: "Use ColabFold for protein structure prediction workflows: validate
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # ColabFold

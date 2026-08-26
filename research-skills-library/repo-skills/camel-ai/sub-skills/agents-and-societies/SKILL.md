@@ -4,6 +4,7 @@ description: "Build CAMEL ChatAgent workflows, BaseMessage setup, role-playing s
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Agents and Societies

@@ -4,6 +4,7 @@ description: "Use for RDKit reaction SMARTS/RXN workflows, product sanitization,
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: BSD 3-Clause
 ---
 
 # RDKit Reactions and Standardization

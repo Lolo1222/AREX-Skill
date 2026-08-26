@@ -4,6 +4,7 @@ description: "Create and run GX ValidationDefinitions, pass batch and suite para
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Validations and Results

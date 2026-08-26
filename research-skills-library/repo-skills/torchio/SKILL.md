@@ -4,6 +4,7 @@ description: "Use TorchIO 2.0 for medical image loading, preprocessing, augmenta
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # TorchIO

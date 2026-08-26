@@ -4,6 +4,7 @@ description: "Guides agents using datamol to compute molecular fingerprints and 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Datamol Fingerprints and Similarity

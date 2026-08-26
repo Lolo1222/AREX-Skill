@@ -4,6 +4,7 @@ description: "Generate synthetic BEIR queries, qrels, and passage expansions wit
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # BEIR Generation

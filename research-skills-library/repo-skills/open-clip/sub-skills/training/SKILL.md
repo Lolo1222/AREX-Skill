@@ -4,6 +4,7 @@ description: "Construct and debug OpenCLIP task-era and legacy training commands
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # Training

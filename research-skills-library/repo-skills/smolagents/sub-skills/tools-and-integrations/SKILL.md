@@ -4,6 +4,7 @@ description: "Use this sub-skill when defining, validating, sharing, loading, or
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Tools and Integrations

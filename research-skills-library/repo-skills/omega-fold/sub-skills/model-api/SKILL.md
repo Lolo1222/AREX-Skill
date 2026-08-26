@@ -4,6 +4,7 @@ description: "Use OmegaFold programmatically: configs, model construction, forwa
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # OmegaFold Model API

@@ -4,6 +4,7 @@ description: "Develop, run, deploy, configure, update, lint, and troubleshoot Ra
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Ray Serve Deployments

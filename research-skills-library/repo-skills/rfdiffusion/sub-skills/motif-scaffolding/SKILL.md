@@ -4,6 +4,7 @@ description: "Design scaffolds around fixed motifs or active sites with RFdiffus
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # Motif Scaffolding

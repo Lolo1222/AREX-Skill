@@ -4,6 +4,7 @@ description: "Use when mapping LiteLLM provider/model prefixes, selecting SDK or
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # LiteLLM Providers And Endpoints

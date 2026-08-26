@@ -4,6 +4,7 @@ description: "Contribute safely to the Apache Airflow monorepo with repo-specifi
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 <!-- SPDX-License-Identifier: Apache-2.0 -->

@@ -4,6 +4,7 @@ description: "Guides agents building Pydantic Evals datasets, evaluators, report
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Evals and Graph

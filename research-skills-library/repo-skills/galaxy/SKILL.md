@@ -4,6 +4,7 @@ description: "Use Galaxy repository guidance for server configuration, APIs, too
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # Galaxy Repo Skill

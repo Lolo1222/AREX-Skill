@@ -4,6 +4,7 @@ description: "Use for Feast RAG, vector search, vector-indexed fields, vector on
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Feast RAG And Vector Search

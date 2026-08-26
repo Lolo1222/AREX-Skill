@@ -4,6 +4,7 @@ description: "Use Langflow's visual AI workflow builder, FastAPI backend, LFX ex
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Langflow

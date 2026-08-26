@@ -4,6 +4,7 @@ description: "Understand, validate, summarize, compare, and safely route lm-eval
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Result Logging

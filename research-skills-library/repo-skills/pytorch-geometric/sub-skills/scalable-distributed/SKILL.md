@@ -4,6 +4,7 @@ description: "Scale PyTorch Geometric workloads with large-graph neighbor sampli
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # PyTorch Geometric Scalable and Distributed Workflows

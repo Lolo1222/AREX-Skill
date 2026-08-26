@@ -4,6 +4,7 @@ description: "Compute scikit-bio community diversity metrics and prepare BIOM-st
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: BSD 3-Clause
 ---
 
 # Diversity Tables

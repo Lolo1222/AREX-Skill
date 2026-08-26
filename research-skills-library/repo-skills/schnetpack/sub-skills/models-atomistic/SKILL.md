@@ -4,6 +4,7 @@ description: "Build, inspect, customize, and troubleshoot SchNetPack atomistic n
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # SchNetPack Models and Atomistic Components

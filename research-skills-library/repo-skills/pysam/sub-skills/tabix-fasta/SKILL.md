@@ -4,6 +4,7 @@ description: "Guides agents using pysam for tabix compression, tabix indexing, i
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # tabix-fasta

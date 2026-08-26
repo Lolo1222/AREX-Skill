@@ -4,6 +4,7 @@ description: "Core Optuna study and trial workflows: create/load/copy/delete stu
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # Optuna Optimization Workflows

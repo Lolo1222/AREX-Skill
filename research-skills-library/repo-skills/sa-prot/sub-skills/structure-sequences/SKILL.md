@@ -4,6 +4,7 @@ description: "Convert protein structures into SaProt structure-aware amino-acid 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Structure Sequences

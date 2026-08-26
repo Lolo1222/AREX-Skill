@@ -4,6 +4,7 @@ description: "Generate ColabFold MSAs using the public server, local MMseqs2 dat
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # MSA Search

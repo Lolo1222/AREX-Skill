@@ -4,6 +4,7 @@ description: "Route advanced Chemprop workflows for uncertainty estimation, cali
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # Chemprop Uncertainty and Advanced Workflows

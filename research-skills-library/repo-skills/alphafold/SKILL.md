@@ -4,6 +4,7 @@ description: "Route AlphaFold protein structure prediction setup, data preparati
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # AlphaFold Repo Skill

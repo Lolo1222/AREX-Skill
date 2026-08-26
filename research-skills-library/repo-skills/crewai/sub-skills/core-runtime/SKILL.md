@@ -4,6 +4,7 @@ description: "Guides agents working with CrewAI core runtime objects, including 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Core Runtime

@@ -4,6 +4,7 @@ description: "Use LMDeploy to run offline LLM/VLM inference, serve OpenAI-compat
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # LMDeploy Repo Skill

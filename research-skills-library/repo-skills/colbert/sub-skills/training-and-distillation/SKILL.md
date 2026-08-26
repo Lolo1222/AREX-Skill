@@ -4,6 +4,7 @@ description: "Train or fine-tune ColBERT models, prepare and validate triples, u
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # ColBERT Training And Distillation

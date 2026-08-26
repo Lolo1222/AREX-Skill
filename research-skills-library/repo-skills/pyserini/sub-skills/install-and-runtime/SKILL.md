@@ -4,6 +4,7 @@ description: "Install Pyserini, select Python/Java/Torch/Faiss/runtime options, 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Pyserini Install And Runtime

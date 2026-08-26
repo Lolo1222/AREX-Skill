@@ -4,6 +4,7 @@ description: "Run MDAnalysis analysis classes, custom AnalysisBase workflows, nu
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # MDAnalysis Analysis Workflows

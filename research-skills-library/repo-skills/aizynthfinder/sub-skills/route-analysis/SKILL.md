@@ -4,6 +4,7 @@ description: "Inspect AiZynthFinder output files, route collections, reaction tr
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Route Analysis

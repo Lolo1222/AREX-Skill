@@ -4,6 +4,7 @@ description: "Use OmegaFold for protein structure prediction from FASTA to PDB, 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # OmegaFold

@@ -4,6 +4,7 @@ description: "Install, inspect, and troubleshoot verl environments and accelerat
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # setup-and-backends

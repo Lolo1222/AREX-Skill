@@ -4,6 +4,7 @@ description: "Build CLIP zero-shot class prompts, tokenizer-safe templates, and 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Prompt Engineering

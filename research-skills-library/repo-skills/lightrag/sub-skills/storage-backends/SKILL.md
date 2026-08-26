@@ -4,6 +4,7 @@ description: "Configure and troubleshoot LightRAG storage backends, workspace is
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # LightRAG Storage Backends

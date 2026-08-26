@@ -4,6 +4,7 @@ description: "Connect GX Core data sources, data assets, batch definitions, and 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Datasources and Assets

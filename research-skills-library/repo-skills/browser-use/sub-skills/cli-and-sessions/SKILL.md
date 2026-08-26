@@ -4,6 +4,7 @@ description: "Use the persistent browser-use/bu CLI for browser automation, name
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # CLI and Sessions

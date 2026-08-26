@@ -4,6 +4,7 @@ description: "Modify and debug RAGFlow backend API routes, service layers, auth,
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Backend API Services

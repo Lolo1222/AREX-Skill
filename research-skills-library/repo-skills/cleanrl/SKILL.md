@@ -4,6 +4,7 @@ description: "Use CleanRL's single-file reinforcement learning scripts, evaluati
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # CleanRL Repo Skill

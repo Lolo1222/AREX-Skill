@@ -4,6 +4,7 @@ description: "Write, migrate, debug, and review Airflow 3 Dag authoring code usi
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 <!-- SPDX-License-Identifier: Apache-2.0 -->

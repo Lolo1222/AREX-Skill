@@ -4,6 +4,7 @@ description: "Work on Langflow FastAPI backend routes, graph execution, services
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Backend Runtime

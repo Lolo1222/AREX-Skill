@@ -4,6 +4,7 @@ description: "Choose, run, validate, and troubleshoot DeepChem featurizers for m
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # DeepChem Featurization

@@ -4,6 +4,7 @@ description: "Use for LlamaFactory experimental v1 flows selected with USE_V1=1,
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # V1 Experimental

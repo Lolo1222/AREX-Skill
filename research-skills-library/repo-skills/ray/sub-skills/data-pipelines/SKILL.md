@@ -4,6 +4,7 @@ description: "Build and troubleshoot Ray Data pipelines for loading, transformin
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Ray Data Pipelines

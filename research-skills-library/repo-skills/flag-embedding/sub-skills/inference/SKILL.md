@@ -4,6 +4,7 @@ description: "Load and smoke-check FlagEmbedding embedders, M3 models, and reran
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Inference

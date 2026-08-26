@@ -4,6 +4,7 @@ description: "Use RAGatouille RAGPretrainedModel for pretrained checkpoint loadi
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Pretrained Indexing Search

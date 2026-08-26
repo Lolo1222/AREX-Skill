@@ -4,6 +4,7 @@ description: "Route Acme reinforcement-learning framework tasks across core loop
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Acme Repo Skill

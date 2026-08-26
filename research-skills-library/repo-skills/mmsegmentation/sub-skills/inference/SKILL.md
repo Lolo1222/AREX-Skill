@@ -4,6 +4,7 @@ description: "Run MMSegmentation semantic segmentation and depth inference from 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Inference

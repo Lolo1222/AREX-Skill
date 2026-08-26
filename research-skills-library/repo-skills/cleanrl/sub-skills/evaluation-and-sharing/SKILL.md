@@ -4,6 +4,7 @@ description: "Evaluate CleanRL saved models, inspect local artifacts, and safely
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # Evaluation And Sharing

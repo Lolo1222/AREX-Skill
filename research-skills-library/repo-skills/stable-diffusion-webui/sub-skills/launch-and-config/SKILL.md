@@ -4,6 +4,7 @@ description: "Launch Stable Diffusion WebUI safely in UI, API, and API-only mode
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: AGPL 3.0
 ---
 
 # Launch and Config

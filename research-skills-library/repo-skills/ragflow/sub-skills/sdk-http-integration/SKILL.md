@@ -4,6 +4,7 @@ description: "Use RAGFlow public HTTP APIs, the Python SDK, OpenAI-compatible ch
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # SDK and HTTP Integration

@@ -4,6 +4,7 @@ description: "Use Protenix for biomolecular structure prediction, input JSON aut
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Protenix

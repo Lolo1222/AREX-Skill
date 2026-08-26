@@ -1,0 +1,21 @@
+{
+  "schema_version": "2.0",
+  "repo_id": "Acly/krita-ai-diffusion",
+  "skill_id": "krita-ai-diffusion",
+  "taxonomy_sha256": "b2c4f99cbae303c887f58de2d72096ef6719fcff74b1c0173705cc085eb249ab",
+  "routing_status": "classified",
+  "assignments": [
+    {
+      "area": "Computer Vision",
+      "family": "Image Restoration"
+    },
+    {
+      "area": "Generative Media",
+      "family": "Media Generation Applications"
+    },
+    {
+      "area": "Generative Media",
+      "family": "Image Editing"
+    }
+  ]
+}

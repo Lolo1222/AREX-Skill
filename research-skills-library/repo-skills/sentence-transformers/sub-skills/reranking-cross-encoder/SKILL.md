@@ -4,6 +4,7 @@ description: "Use for sentence-transformers CrossEncoder pair scoring, reranking
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Reranking Cross Encoder

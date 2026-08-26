@@ -4,6 +4,7 @@ description: "Dense SentenceTransformer embedding and similarity workflows for t
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Embeddings and Similarity

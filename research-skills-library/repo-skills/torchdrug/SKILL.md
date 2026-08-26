@@ -4,6 +4,7 @@ description: "Route TorchDrug graph learning, drug discovery, molecular ML, prot
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # TorchDrug

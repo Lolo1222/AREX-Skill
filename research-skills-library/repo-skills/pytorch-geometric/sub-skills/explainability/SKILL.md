@@ -4,6 +4,7 @@ description: "Configure PyTorch Geometric Explainer workflows, explanation algor
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Explainability

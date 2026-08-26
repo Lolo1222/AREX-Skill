@@ -4,6 +4,7 @@ description: "Launch, secure, connect, operate, and troubleshoot Unsloth Studio 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # Studio Runtime

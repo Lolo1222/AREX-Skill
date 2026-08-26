@@ -4,6 +4,7 @@ description: "Load, modify, inspect, serialize, label, and apply SMIRNOFF OFFXML
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # SMIRNOFF Force Fields

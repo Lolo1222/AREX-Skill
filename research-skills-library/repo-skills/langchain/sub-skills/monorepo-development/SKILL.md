@@ -4,6 +4,7 @@ description: "Navigate LangChain's Python monorepo packages, package-local uv wo
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # LangChain Monorepo Development

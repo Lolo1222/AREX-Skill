@@ -4,6 +4,7 @@ description: "Choose and use bitsandbytes optimizers in PyTorch training loops, 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Optimizers Training

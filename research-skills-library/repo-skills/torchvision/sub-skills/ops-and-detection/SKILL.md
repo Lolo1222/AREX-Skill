@@ -4,6 +4,7 @@ description: "Use torchvision.ops for boxes, NMS, ROI pooling/alignment, detecti
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: BSD 3-Clause
 ---
 
 # TorchVision Ops And Detection

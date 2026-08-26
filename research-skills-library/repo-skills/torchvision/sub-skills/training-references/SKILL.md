@@ -4,6 +4,7 @@ description: "Use when planning or auditing TorchVision reference training/evalu
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: BSD 3-Clause
 ---
 
 # TorchVision Training References

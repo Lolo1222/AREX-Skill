@@ -4,6 +4,7 @@ description: "Use UniLM vision, vision-language, OCR, webpage, and document-AI w
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Vision Document AI

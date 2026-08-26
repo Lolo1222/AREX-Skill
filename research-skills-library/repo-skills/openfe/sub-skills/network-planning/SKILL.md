@@ -4,6 +4,7 @@ description: "Plan OpenFE components, atom mappings, ligand networks, and RBFE/R
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Network Planning

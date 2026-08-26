@@ -4,6 +4,7 @@ description: "Use LMDeploy pipeline APIs and chat CLI for offline text LLM infer
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Pipeline Inference

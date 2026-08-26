@@ -4,6 +4,7 @@ description: "Migrate raw PyTorch training and evaluation loops to Hugging Face 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Training Loop Integration

@@ -4,6 +4,7 @@ description: "Use MMCV 2.2.0 for computer-vision media utilities, transform pipe
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # MMCV Repo Skill

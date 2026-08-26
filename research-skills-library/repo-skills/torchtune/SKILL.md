@@ -4,6 +4,7 @@ description: "Use torchtune for PyTorch-native LLM post-training, recipe/config 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: BSD 3-Clause
 ---
 
 # torchtune

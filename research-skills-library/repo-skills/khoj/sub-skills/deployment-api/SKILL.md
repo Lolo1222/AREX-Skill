@@ -4,6 +4,7 @@ description: "Install, configure, start, deploy, and troubleshoot the Khoj Pytho
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: AGPL 3.0
 ---
 
 # Khoj Deployment and API

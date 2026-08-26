@@ -4,6 +4,7 @@ description: "Integrate Python and non-Python external processes with Dagster us
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Pipes External Processes

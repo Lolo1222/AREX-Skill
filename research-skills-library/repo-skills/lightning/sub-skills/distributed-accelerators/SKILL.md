@@ -4,6 +4,7 @@ description: "Choose, configure, validate, and troubleshoot Lightning Trainer an
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Lightning Distributed Accelerators

@@ -4,6 +4,7 @@ description: "Create, read, write, inspect, clone, index, compare, and validate 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # ANTsPy Image Core

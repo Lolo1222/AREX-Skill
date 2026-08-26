@@ -4,6 +4,7 @@ description: "Build LlamaIndex agents and workflows with tools, memory, chat eng
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # LlamaIndex Agents And Workflows

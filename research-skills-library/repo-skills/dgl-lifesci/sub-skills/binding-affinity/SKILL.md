@@ -4,6 +4,7 @@ description: "Plan DGL-LifeSci protein-ligand binding affinity workflows with PD
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Binding Affinity

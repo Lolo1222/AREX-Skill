@@ -4,6 +4,7 @@ description: "Use ADK CLI commands, agent/app discovery, YAML configuration, loc
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # ADK CLI, Configuration, and Deployment

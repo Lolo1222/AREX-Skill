@@ -4,6 +4,7 @@ description: "Plan and troubleshoot UniLM language sequence-to-sequence fine-tun
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # language-seq2seq

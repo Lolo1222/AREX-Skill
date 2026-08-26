@@ -4,6 +4,7 @@ description: "Use and troubleshoot the markitdown-ocr LLM Vision plugin for OCR 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # MarkItDown OCR Plugin

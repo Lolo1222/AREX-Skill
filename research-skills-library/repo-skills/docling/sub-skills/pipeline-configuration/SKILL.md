@@ -4,6 +4,7 @@ description: "Configure Docling's standard PDF pipeline options, OCR engines, ta
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Pipeline Configuration

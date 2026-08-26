@@ -4,6 +4,7 @@ description: "Reason about Apache Airflow deployments with the official Helm cha
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 <!-- SPDX-License-Identifier: Apache-2.0 -->

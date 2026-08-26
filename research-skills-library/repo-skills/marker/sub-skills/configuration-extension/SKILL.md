@@ -4,6 +4,7 @@ description: "Configure and extend Marker pipelines with ConfigParser, class pat
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # Marker Configuration And Extension

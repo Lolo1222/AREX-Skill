@@ -4,6 +4,7 @@ description: "Validate AlphaFold FASTA, MSA, template, notebook, and data-pipeli
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # AlphaFold Input Data and Formats

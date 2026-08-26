@@ -4,6 +4,7 @@ description: "Create, validate, run, containerize, and troubleshoot LangGraph ap
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # LangGraph CLI Deployment

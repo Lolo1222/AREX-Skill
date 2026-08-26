@@ -4,6 +4,7 @@ description: "Build stochastic minibatch, DGL dataloading, and GraphBolt pipelin
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # DGL Dataloading and GraphBolt

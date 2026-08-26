@@ -1,0 +1,21 @@
+{
+  "schema_version": "2.0",
+  "repo_id": "NVIDIA/Megatron-LM",
+  "skill_id": "megatron-lm",
+  "taxonomy_sha256": "b2c4f99cbae303c887f58de2d72096ef6719fcff74b1c0173705cc085eb249ab",
+  "routing_status": "classified",
+  "assignments": [
+    {
+      "area": "LLM Models, Training, and Alignment",
+      "family": "Pretraining"
+    },
+    {
+      "area": "Training Infrastructure",
+      "family": "Distributed Training Systems"
+    },
+    {
+      "area": "Training Infrastructure",
+      "family": "Neural Network Components"
+    }
+  ]
+}

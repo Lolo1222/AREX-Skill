@@ -4,6 +4,7 @@ description: "Prepare CLAM dataset CSVs and splits, train CLAM or MIL models, ev
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: GPL 3.0
 ---
 
 # CLAM Training and Evaluation

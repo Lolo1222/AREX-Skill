@@ -4,6 +4,7 @@ description: "Model Feast entities, fields, data sources, feature views, on-dema
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Feature Definitions

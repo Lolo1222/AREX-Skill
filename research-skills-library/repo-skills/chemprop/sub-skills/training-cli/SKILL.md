@@ -4,6 +4,7 @@ description: "Build, validate, and troubleshoot Chemprop CLI training commands, 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # Chemprop Training CLI

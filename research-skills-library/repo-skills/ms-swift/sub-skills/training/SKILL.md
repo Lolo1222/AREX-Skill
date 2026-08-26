@@ -4,6 +4,7 @@ description: "Build, debug, and explain ms-swift pre-training and supervised fin
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # ms-swift Training

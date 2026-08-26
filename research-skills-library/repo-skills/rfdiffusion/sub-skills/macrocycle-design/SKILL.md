@@ -4,6 +4,7 @@ description: "Build RFpeptides macrocyclic peptide monomer and binder RFdiffusio
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # Macrocycle Design

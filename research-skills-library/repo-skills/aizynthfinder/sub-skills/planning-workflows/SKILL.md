@@ -4,6 +4,7 @@ description: "Run AiZynthFinder retrosynthesis planning and one-step expansion t
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Planning Workflows

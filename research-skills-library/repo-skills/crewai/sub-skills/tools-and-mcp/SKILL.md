@@ -4,6 +4,7 @@ description: "Guides agents using CrewAI tools, crewai_tools exports, custom Bas
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Tools and MCP

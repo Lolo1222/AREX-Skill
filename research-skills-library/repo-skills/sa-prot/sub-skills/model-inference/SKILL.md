@@ -4,6 +4,7 @@ description: "Load local SaProt checkpoints, tokenize structure-aware sequences,
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # SaProt Model Inference

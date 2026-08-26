@@ -4,6 +4,7 @@ description: "Advanced scvi-tools operations: Ray/autotune, MLflow, optional ext
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: BSD 3-Clause
 ---
 
 # advanced-operations

@@ -4,6 +4,7 @@ description: "Choose and configure session memory, server-managed continuation, 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Sessions and Memory

@@ -4,6 +4,7 @@ description: "Use Stable-Baselines3 for PyTorch reinforcement learning: train al
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Stable-Baselines3

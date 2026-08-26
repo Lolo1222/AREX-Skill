@@ -1,27 +1,21 @@
 {
-  "skills": {
-    "antspy": {
-      "scenarios": [
-        {
-          "id": "medical-imaging-and-segmentation-workflows",
-          "title": "Medical Imaging and Segmentation Workflows",
-          "when_to_read": "Medical image IO, ANTsImage objects, preprocessing, registration, transforms, segmentation, labels, visualization, and ANTsPy helper utilities.",
-          "role": "Provides repo-specific guidance for the ANTsPy/antspyx Python package and its ANTs/ITK-backed medical image workflows.",
-          "read_when": "User mentions ANTsPy, antspyx, import ants, ANTsImage, ANTs registration, apply_transforms, Atropos, kmeans_segmentation, iMath, medical image registration, or ANTsPy plotting/label workflows.",
-          "best_for": "Python ANTsPy package usage: image metadata, image operations, registration, transform application, segmentation/label analysis, plotting, interop, and learning helper utilities.",
-          "avoid_when": "Use MONAI/nnU-Net/TorchIO skills for model training, bundle workflows, patch samplers, or deep learning frameworks not centered on ANTsPy; use generic Python maintenance skills for unrelated repo editing.",
-          "useful_entry_points": [
-            "antspy/SKILL.md",
-            "antspy/sub-skills/image-core/SKILL.md",
-            "antspy/sub-skills/image-ops-math/SKILL.md",
-            "antspy/sub-skills/registration-transforms/SKILL.md",
-            "antspy/sub-skills/segmentation-labels/SKILL.md",
-            "antspy/sub-skills/visualization-interop/SKILL.md",
-            "antspy/sub-skills/learning-deeplearn/SKILL.md"
-          ],
-          "selection_guidance": "Choose `antspy` when the task is explicitly about ANTsPy/antspyx or ANTs-style Python image registration/segmentation APIs. Choose adjacent medical imaging skills only when the named package or workflow is MONAI, nnU-Net, TorchIO, TotalSegmentator, SimpleITK, or a neural-network training/inference pipeline rather than ANTsPy usage."
-        }
-      ]
+  "schema_version": "2.0",
+  "repo_id": "ANTsX/ANTsPy",
+  "skill_id": "antspy",
+  "taxonomy_sha256": "b2c4f99cbae303c887f58de2d72096ef6719fcff74b1c0173705cc085eb249ab",
+  "routing_status": "classified",
+  "assignments": [
+    {
+      "area": "Biomedical AI",
+      "family": "Medical Segmentation"
+    },
+    {
+      "area": "Biomedical AI",
+      "family": "Medical Image Registration"
+    },
+    {
+      "area": "Biomedical AI",
+      "family": "Medical Imaging Toolkits"
     }
-  }
+  ]
 }

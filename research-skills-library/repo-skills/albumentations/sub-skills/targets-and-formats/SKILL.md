@@ -4,6 +4,7 @@ description: "Apply Albumentations pipelines safely to images, masks, bboxes, ke
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Targets and Formats

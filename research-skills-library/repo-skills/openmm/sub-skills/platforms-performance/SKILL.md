@@ -4,6 +4,7 @@ description: "Select and diagnose OpenMM runtime platforms, platformProperties, 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT, GPL, LGPL
 ---
 
 # Platforms and Performance

@@ -4,6 +4,7 @@ description: "Use Boltz prediction workflows: CLI runs, YAML/FASTA inputs, MSA h
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Boltz Prediction

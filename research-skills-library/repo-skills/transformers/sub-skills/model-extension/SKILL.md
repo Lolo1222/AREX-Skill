@@ -4,6 +4,7 @@ description: "Add or modify Transformers models, tokenizers, processors, pipelin
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Model Extension

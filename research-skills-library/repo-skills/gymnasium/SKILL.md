@@ -4,6 +4,7 @@ description: "Use Gymnasium for reinforcement-learning environment loops, spaces
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Gymnasium

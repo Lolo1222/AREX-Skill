@@ -4,6 +4,7 @@ description: "Reslice Dipy images, configure affine and SyN registration, apply 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # Dipy Registration And Alignment

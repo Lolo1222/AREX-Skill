@@ -4,6 +4,7 @@ description: "Use OmicVerse specialist domains for genetics/post-GWAS, AIRR immu
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: GPL 3.0
 ---
 
 # OmicVerse Specialist Domains

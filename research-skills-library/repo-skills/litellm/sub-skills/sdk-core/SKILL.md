@@ -4,6 +4,7 @@ description: "Use for direct LiteLLM Python SDK work: chat/text completions, asy
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # LiteLLM SDK Core

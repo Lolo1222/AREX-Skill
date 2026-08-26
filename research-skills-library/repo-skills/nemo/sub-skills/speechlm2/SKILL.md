@@ -4,6 +4,7 @@ description: "Use for NeMo SpeechLM2/SALM/SALMAutomodel, duplex STT/S2S/EAR-TTS,
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # SpeechLM2

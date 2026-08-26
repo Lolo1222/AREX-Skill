@@ -4,6 +4,7 @@ description: "Download, validate, convert, classify, and merge LitGPT checkpoint
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # LitGPT Checkpoint Conversion

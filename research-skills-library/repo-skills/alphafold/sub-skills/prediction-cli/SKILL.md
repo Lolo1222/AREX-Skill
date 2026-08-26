@@ -4,6 +4,7 @@ description: "Guide local AlphaFold prediction CLI workflows, flags, presets, MS
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # AlphaFold Prediction CLI

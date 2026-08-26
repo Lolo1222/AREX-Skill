@@ -4,6 +4,7 @@ description: "Use for LiteLLM Python SDK, AI Gateway proxy, model routing, provi
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # LiteLLM

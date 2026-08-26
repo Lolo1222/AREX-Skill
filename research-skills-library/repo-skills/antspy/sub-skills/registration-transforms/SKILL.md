@@ -4,6 +4,7 @@ description: "Register ANTsPy images and manage transform application, transform
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # ANTsPy Registration and Transforms

@@ -4,6 +4,7 @@ description: "Export DoclingDocument content to Markdown, JSON, YAML, HTML, text
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Document Outputs

@@ -4,6 +4,7 @@ description: "Plan and validate TIAToolbox model inference with PatchPredictor, 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # Model Inference

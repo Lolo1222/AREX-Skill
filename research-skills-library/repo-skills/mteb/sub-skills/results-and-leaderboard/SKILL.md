@@ -4,6 +4,7 @@ description: "Load, inspect, validate, submit, and display MTEB result caches, B
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Results and Leaderboard

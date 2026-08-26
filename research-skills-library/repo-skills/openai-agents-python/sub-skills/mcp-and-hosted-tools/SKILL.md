@@ -4,6 +4,7 @@ description: "Integrate local and hosted MCP tools in openai-agents-python, incl
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # MCP and Hosted Tools

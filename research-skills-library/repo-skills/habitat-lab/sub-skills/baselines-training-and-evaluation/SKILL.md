@@ -4,6 +4,7 @@ description: "Use Habitat-Baselines training, evaluation, Hydra configs, trainer
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Habitat-Baselines Training And Evaluation

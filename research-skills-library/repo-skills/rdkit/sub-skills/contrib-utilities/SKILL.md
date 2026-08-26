@@ -4,6 +4,7 @@ description: "Use optional RDKit Contrib utilities safely: SA Score, NP Score, N
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: BSD 3-Clause
 ---
 
 # RDKit Contrib Utilities

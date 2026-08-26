@@ -4,6 +4,7 @@ description: "Use Pyserini for reproducible information retrieval: install/runti
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Pyserini Repo Skill

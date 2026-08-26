@@ -4,6 +4,7 @@ description: "Use TRL experimental trainers and environment-based GRPO integrati
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Experimental And Environments

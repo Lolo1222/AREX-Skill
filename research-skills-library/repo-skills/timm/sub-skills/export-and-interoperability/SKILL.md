@@ -4,6 +4,7 @@ description: "Build ONNX export and validation commands, package/load timm model
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Export and Interoperability

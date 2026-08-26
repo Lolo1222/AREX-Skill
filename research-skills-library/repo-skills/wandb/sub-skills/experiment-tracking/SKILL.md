@@ -4,6 +4,7 @@ description: "Add, debug, and validate W&B experiment tracking in Python scripts
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Experiment Tracking

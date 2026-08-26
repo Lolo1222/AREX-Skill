@@ -4,6 +4,7 @@ description: "Use for Feast feature servers, offline servers, registry servers, 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Feast Servers and Remote Stores

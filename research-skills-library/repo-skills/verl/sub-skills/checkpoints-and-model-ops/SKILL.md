@@ -4,6 +4,7 @@ description: "Operate verl checkpoints, model merging/export, LoRA checkpoint ha
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # checkpoints-and-model-ops

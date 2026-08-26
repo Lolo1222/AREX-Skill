@@ -4,6 +4,7 @@ description: "Route Boltz package tasks for biomolecular structure and affinity 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Boltz Repo Skill

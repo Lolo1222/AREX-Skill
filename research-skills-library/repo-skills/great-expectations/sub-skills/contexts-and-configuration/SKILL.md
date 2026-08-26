@@ -4,6 +4,7 @@ description: "Choose and configure Great Expectations Data Contexts, metadata st
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Contexts and Configuration

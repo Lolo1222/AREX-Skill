@@ -4,6 +4,7 @@ description: "Use Ray RLlib for AlgorithmConfig and PPOConfig workloads, Gymnasi
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Ray RLlib Workloads

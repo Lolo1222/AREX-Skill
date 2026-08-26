@@ -4,6 +4,7 @@ description: "Configure, inspect, validate, and troubleshoot Kedro DataCatalog d
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Data Catalog And Config

@@ -4,6 +4,7 @@ description: "Use this sub-skill for Dask delayed, task graph inspection, HighLe
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: BSD 3-Clause
 ---
 
 # Core Graphs and Schedulers

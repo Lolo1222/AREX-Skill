@@ -4,6 +4,7 @@ description: "Handle DeepChem protein-ligand docking, binding pocket discovery, 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # DeepChem Docking and Structure

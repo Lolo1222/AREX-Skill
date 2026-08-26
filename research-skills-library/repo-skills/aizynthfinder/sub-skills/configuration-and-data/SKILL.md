@@ -4,6 +4,7 @@ description: "Create, validate, and troubleshoot AiZynthFinder configuration fil
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Configuration and Data

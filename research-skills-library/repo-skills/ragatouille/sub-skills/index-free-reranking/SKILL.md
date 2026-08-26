@@ -4,6 +4,7 @@ description: "Use RAGatouille for index-free ColBERT reranking, in-memory docume
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Index-Free Reranking

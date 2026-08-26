@@ -4,6 +4,7 @@ description: "Use when selecting or configuring Feast optional stores, providers
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Feast Integrations and Extensibility

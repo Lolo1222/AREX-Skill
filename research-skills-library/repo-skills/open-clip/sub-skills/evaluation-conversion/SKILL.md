@@ -4,6 +4,7 @@ description: "Build OpenCLIP zero-shot and retrieval evaluation flows, diagnose 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # Evaluation and Conversion

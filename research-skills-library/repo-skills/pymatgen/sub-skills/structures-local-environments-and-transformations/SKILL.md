@@ -4,6 +4,7 @@ description: "Construct and analyze pymatgen structures, molecules, local enviro
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # Structures, Local Environments, and Transformations

@@ -4,6 +4,7 @@ description: "Route DGL graph learning tasks across graph APIs, datasets, messag
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # DGL Repo Skill

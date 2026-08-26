@@ -4,6 +4,7 @@ description: "Compose, customize, inspect, and troubleshoot MMCV dict-style data
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # MMCV Data Transforms

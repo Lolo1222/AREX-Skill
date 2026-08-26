@@ -4,6 +4,7 @@ description: "Use DGL-Go CLI workflows for generating configs, running recipes, 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # DGL-Go CLI

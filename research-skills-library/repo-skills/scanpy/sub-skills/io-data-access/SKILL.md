@@ -4,6 +4,7 @@ description: "Use when working with Scanpy input/output, AnnData persistence, 10
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: BSD 3-Clause
 ---
 
 # Scanpy IO and Data Access

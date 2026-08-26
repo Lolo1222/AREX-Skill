@@ -4,6 +4,7 @@ description: "Run lm-evaluation-harness evaluations through the lm-eval CLI, YAM
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Evaluation Runs

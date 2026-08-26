@@ -4,6 +4,7 @@ description: "Run, inspect, scale, and troubleshoot Snakemake workflows from the
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Execution CLI

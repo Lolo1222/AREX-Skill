@@ -4,6 +4,7 @@ description: "Apply, inspect, author, and troubleshoot Gymnasium single-environm
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Gymnasium Wrappers and Recording

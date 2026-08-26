@@ -4,6 +4,7 @@ description: "Dense semantic search utilities, retrieve-and-rerank orchestration
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Retrieval and Utilities

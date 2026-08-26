@@ -4,6 +4,7 @@ description: "Use Marker to convert documents, configure pipelines, run LLM extr
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # Marker Repo Skill

@@ -4,6 +4,7 @@ description: "Write and debug SGLang frontend language programs, runtime endpoin
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Frontend Programming

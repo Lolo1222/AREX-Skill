@@ -4,6 +4,7 @@ description: "Choose and verify LlamaIndex integration packages, namespace impor
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Integrations and Storage

@@ -4,6 +4,7 @@ description: "Configure and troubleshoot Browser Use Browser, BrowserSession, Br
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Browser Control

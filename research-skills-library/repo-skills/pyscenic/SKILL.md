@@ -4,6 +4,7 @@ description: "Use pySCENIC for single-cell SCENIC regulatory network inference, 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: GPL 3.0
 ---
 
 # pySCENIC

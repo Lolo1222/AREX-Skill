@@ -4,6 +4,7 @@ description: "Use fastMRI complex tensor math, centered FFT/IFFT, RSS coil combi
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # fastMRI MRI Operators

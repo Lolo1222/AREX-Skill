@@ -1,0 +1,21 @@
+{
+  "schema_version": "2.0",
+  "repo_id": "lucidrains/PaLM-rlhf-pytorch",
+  "skill_id": "palm-rlhf-pytorch",
+  "taxonomy_sha256": "b2c4f99cbae303c887f58de2d72096ef6719fcff74b1c0173705cc085eb249ab",
+  "routing_status": "classified",
+  "assignments": [
+    {
+      "area": "LLM Models, Training, and Alignment",
+      "family": "LLM Fine-Tuning"
+    },
+    {
+      "area": "LLM Models, Training, and Alignment",
+      "family": "Preference and Reinforcement Alignment"
+    },
+    {
+      "area": "LLM Models, Training, and Alignment",
+      "family": "Pretraining"
+    }
+  ]
+}

@@ -4,6 +4,7 @@ description: "Operate CleanRL experiment matrices, tracking, tuning, resume, plo
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # Experiment Operations

@@ -4,6 +4,7 @@ description: "Implement, inspect, test, and package ComfyUI custom nodes, includ
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: GPL 3.0
 ---
 
 # ComfyUI Custom Nodes

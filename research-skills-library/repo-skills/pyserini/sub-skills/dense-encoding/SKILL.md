@@ -4,6 +4,7 @@ description: "Use Pyserini dense encoders, Faiss search, Lucene dense/HNSW routi
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Dense Encoding

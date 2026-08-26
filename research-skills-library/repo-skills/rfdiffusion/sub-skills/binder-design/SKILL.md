@@ -4,6 +4,7 @@ description: "Design protein-protein binders with RFdiffusion, including target/
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # RFdiffusion Binder Design

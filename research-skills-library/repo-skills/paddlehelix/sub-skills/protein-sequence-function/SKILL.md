@@ -4,6 +4,7 @@ description: "Use for PaddleHelix protein sequence pretraining, prediction, prot
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # Protein Sequence Function

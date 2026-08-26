@@ -4,6 +4,7 @@ description: "Configure qdrant-client server and cloud connections, REST versus 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Connection and Transport

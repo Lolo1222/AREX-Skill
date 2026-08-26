@@ -4,6 +4,7 @@ description: "Use scikit-bio for bioinformatics sequences, alignments, phylogene
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: BSD 3-Clause
 ---
 
 # scikit-bio

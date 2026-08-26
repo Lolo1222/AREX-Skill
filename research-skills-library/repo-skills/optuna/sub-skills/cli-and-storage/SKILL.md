@@ -4,6 +4,7 @@ description: "Use this sub-skill for Optuna command-line workflows and persisten
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # Optuna CLI and Storage

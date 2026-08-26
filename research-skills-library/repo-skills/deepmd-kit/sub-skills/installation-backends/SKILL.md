@@ -4,6 +4,7 @@ description: "Install, build, verify, select, and troubleshoot DeePMD-kit backen
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: LGPL 3.0
 ---
 
 # DeePMD-kit Installation and Backends

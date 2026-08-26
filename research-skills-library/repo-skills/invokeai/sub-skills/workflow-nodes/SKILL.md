@@ -4,6 +4,7 @@ description: "Author and debug InvokeAI custom invocations, node packs, graph JS
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # Workflow Nodes

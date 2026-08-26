@@ -4,6 +4,7 @@ description: "Guide safe Docling repository edits across package layout, extras,
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Repo Maintenance

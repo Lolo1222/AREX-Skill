@@ -4,6 +4,7 @@ description: "Use vLLM from Python for local/offline LLM workflows with LLM, Sam
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Offline Inference

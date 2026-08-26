@@ -4,6 +4,7 @@ description: "Guides agents configuring CrewAI telemetry, tracing, observability
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # CrewAI Observability and Hooks

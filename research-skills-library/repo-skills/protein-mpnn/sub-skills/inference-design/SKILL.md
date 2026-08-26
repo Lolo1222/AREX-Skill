@@ -4,6 +4,7 @@ description: "Run and adapt ProteinMPNN inference/design workflows, including si
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # ProteinMPNN Inference Design

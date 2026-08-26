@@ -4,6 +4,7 @@ description: "Choose and configure OpenFE protocol classes, default settings, Pr
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # OpenFE Protocols

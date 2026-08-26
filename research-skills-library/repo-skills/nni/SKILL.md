@@ -4,6 +4,7 @@ description: "Use NNI for AutoML experiments, hyperparameter tuning, neural arch
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # NNI

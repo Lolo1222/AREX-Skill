@@ -4,6 +4,7 @@ description: "Integrate DeepSpeed training into PyTorch, author and validate con
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # DeepSpeed Training Config

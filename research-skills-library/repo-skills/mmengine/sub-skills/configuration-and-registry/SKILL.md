@@ -4,6 +4,7 @@ description: "Create, validate, merge, dump, and debug MMEngine Config/ConfigDic
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Configuration and Registry

@@ -4,6 +4,7 @@ description: "Select safe LangChain package verification commands, standard test
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # LangChain Testing and Profiles

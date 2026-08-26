@@ -4,6 +4,7 @@ description: "Plan DiffDock score/confidence training and prepare datasets, spli
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # DiffDock Training Data

@@ -4,6 +4,7 @@ description: "Use Biotite for computational molecular biology workflows: sequenc
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: BSD 3-Clause
 ---
 
 # Biotite

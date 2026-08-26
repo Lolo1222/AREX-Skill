@@ -4,6 +4,7 @@ description: "Use Google ADK Python to build agents, Workflow graphs, tools, run
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # ADK Python

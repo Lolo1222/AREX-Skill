@@ -4,6 +4,7 @@ description: "Use Chai Lab / Chai-1 for molecular structure prediction, input pr
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Chai Lab Repo Skill

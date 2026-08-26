@@ -4,6 +4,7 @@ description: "Transform map-style and iterable datasets with map/filter/batching
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Processing and Streaming

@@ -4,6 +4,7 @@ description: "Score pySCENIC regulon or gene-signature activity with AUCell, der
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: GPL 3.0
 ---
 
 # AUCell And Binarization

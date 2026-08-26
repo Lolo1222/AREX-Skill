@@ -4,6 +4,7 @@ description: "Use Transformers tokenizers, processors, image/audio/video process
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Tokenizers And Processors

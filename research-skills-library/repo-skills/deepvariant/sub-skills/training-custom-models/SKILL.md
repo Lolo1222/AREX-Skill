@@ -4,6 +4,7 @@ description: "Plan DeepVariant labeled-example generation, custom training, fine
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: BSD 3-Clause
 ---
 
 # DeepVariant Training And Custom Models

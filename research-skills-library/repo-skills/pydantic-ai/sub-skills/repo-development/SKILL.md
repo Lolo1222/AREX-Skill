@@ -4,6 +4,7 @@ description: "Guides maintainers through Pydantic AI repository development, con
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Repo Development

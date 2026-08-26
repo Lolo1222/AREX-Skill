@@ -4,6 +4,7 @@ description: "Use Hail VariantDataset sparse sequencing workflows: read, filter,
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Hail Variant Datasets

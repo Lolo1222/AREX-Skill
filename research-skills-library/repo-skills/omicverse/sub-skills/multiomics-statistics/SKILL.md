@@ -4,6 +4,7 @@ description: "Use for OmicVerse bulk RNA-seq, enrichment/signature scoring, meta
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: GPL 3.0
 ---
 
 # Multiomics Statistics

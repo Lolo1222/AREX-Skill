@@ -4,6 +4,7 @@ description: "Use ClearML Dataset, StorageManager, clearml-data CLI, storage bac
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # ClearML Data and Storage

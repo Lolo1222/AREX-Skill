@@ -4,6 +4,7 @@ description: "Configure and troubleshoot FlashRAG evaluation metrics, prediction
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # FlashRAG Evaluation and WebUI

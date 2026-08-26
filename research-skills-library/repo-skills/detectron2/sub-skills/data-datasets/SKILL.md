@@ -4,6 +4,7 @@ description: "Register and validate Detectron2 datasets, metadata, COCO helpers,
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Detectron2 Data & Datasets

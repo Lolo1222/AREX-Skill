@@ -4,6 +4,7 @@ description: "Read, write, choose, inspect, and troubleshoot AnnData H5AD/Zarr s
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: BSD 3-Clause
 ---
 
 # Storage I/O

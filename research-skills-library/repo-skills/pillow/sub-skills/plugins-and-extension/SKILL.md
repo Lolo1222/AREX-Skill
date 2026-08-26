@@ -4,6 +4,7 @@ description: "Extend Pillow with custom image plugins, diagnose plugin registrat
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # Pillow Plugins and Extension

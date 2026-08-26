@@ -4,6 +4,7 @@ description: "Create, validate, and debug lm-evaluation-harness YAML tasks, task
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Task Authoring

@@ -4,6 +4,7 @@ description: "Build DGL-LifeSci molecular property prediction workflows for cust
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Property Prediction

@@ -4,6 +4,7 @@ description: "Use trained scvi-tools models for latent embeddings, normalized ex
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: BSD 3-Clause
 ---
 
 # downstream-analysis

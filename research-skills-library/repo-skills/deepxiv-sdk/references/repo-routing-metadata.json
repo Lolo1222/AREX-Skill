@@ -1,0 +1,33 @@
+{
+  "schema_version": "2.0",
+  "repo_id": "DeepXiv/deepxiv_sdk",
+  "skill_id": "deepxiv-sdk",
+  "taxonomy_sha256": "b2c4f99cbae303c887f58de2d72096ef6719fcff74b1c0173705cc085eb249ab",
+  "routing_status": "classified",
+  "assignments": [
+    {
+      "area": "LLM Applications",
+      "family": "Agent SDKs"
+    },
+    {
+      "area": "LLM Applications",
+      "family": "RAG Frameworks"
+    },
+    {
+      "area": "LLM Applications",
+      "family": "Agent Tools and Skills"
+    },
+    {
+      "area": "LLM Applications",
+      "family": "Chat and Knowledge Applications"
+    },
+    {
+      "area": "LLM Applications",
+      "family": "Autonomous Agent Applications"
+    },
+    {
+      "area": "Information Retrieval",
+      "family": "First-Stage Retrieval"
+    }
+  ]
+}

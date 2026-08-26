@@ -4,6 +4,7 @@ description: "Apply SimpleITK filters for smoothing, thresholding, morphology, s
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # SimpleITK Filtering and Segmentation

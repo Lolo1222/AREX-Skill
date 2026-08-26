@@ -4,6 +4,7 @@ description: "Use rag_retrieval Reranker inference APIs to score query-document 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # rag-retrieval inference

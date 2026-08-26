@@ -4,6 +4,7 @@ description: "Guides agents configuring Axolotl GRPO, EBFT, custom reward functi
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # RL and Rewards

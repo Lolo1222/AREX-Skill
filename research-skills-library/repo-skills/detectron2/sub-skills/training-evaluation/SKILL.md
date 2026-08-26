@@ -4,6 +4,7 @@ description: "Train, evaluate, checkpoint, and troubleshoot Detectron2 models wi
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Detectron2 Training & Evaluation

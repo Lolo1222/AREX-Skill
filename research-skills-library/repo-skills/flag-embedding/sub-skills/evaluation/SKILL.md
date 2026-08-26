@@ -4,6 +4,7 @@ description: "Evaluate FlagEmbedding embedders and optional rerankers on local r
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # FlagEmbedding Evaluation

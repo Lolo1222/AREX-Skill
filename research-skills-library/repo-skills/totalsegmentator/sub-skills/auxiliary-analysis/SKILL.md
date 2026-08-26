@@ -4,6 +4,7 @@ description: "Use TotalSegmentator auxiliary analysis CLIs for contrast phase, C
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Auxiliary Analysis

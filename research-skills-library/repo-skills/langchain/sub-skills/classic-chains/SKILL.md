@@ -4,6 +4,7 @@ description: "Maintain and migrate langchain-classic legacy chains, retrievers, 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Classic Chains

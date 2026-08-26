@@ -4,6 +4,7 @@ description: "Prepare CLAM whole-slide-image masks, coordinate patch bags, proce
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: GPL 3.0
 ---
 
 # WSI Preprocessing

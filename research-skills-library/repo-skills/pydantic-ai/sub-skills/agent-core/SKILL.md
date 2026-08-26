@@ -4,6 +4,7 @@ description: "Guides agents building, running, streaming, testing, and composing
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Agent Core

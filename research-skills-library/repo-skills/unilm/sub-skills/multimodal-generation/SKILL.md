@@ -4,6 +4,7 @@ description: "Use UniLM Kosmos, TextDiffuser, WavLM, BEATs, SpeechT5, SpeechLM, 
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: MIT
 ---
 
 # Multimodal Generation

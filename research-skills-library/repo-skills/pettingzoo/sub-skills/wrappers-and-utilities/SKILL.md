@@ -4,6 +4,7 @@ description: "Use PettingZoo conversion wrappers, utility wrappers, AgentSelecto
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: NOASSERTION
 ---
 
 # Wrappers And Utilities

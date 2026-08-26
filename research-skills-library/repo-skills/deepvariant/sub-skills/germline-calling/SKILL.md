@@ -4,6 +4,7 @@ description: "Plan, validate, and adapt standard DeepVariant germline run_deepva
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: BSD 3-Clause
 ---
 
 # DeepVariant Germline Calling

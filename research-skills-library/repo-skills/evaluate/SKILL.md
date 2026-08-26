@@ -4,6 +4,7 @@ description: "Use Hugging Face Evaluate to load metrics, comparisons, and measur
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Hugging Face Evaluate

@@ -4,6 +4,7 @@ description: "Use and extend Hugging Face Transformers for inference, generation
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Transformers

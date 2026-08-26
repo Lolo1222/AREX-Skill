@@ -4,6 +4,7 @@ description: "Configure and operate SkyPilot SkyServe services, replicas, readin
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # SkyServe Serving

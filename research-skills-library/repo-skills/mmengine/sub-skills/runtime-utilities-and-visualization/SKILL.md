@@ -4,6 +4,7 @@ description: "Use MMEngine logging, message hubs, visualizer backends, distribut
 disable-model-invocation: true
 metadata:
   disco-role: operating
+license: Apache 2.0
 ---
 
 # Runtime Utilities and Visualization
