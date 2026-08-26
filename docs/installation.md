@@ -95,11 +95,11 @@ change.**
 ```bash
 git clone https://github.com/VectorSpaceLab/AREX-Skill.git
 cd AREX-Skill
-mkdir -p ~/.disco/agent/skills
+mkdir -p ~/.disco/agent/skills/repositories
 cp -R \
-  research-skills-library/repo-skills \
-  research-skills-library/repo-skills-router \
-  ~/.disco/agent/skills/
+  skills/repositories/repo-skills \
+  skills/repositories/repo-skills-router \
+  ~/.disco/agent/skills/repositories/
 ```
 
 Running `disco repo-skills install` later can adopt an unchanged manual copy
@@ -115,5 +115,5 @@ agent (Claude Code, Codex, or project-local agents), follow
 
 For router behavior, third-party skill packages, and deployment-scope details,
 see [DisCo Workflows](disco-workflows.md), the
-[Research Skills Library guide](../research-skills-library/README.md), and the
+[AREX-Skill Library guide](../skills/README.md), and the
 [DisCo CLI README](../cli/README.md).

@@ -26,7 +26,7 @@ Researcher 任务执行、Creator 技能构造流程、部署范围和跨 Agent 
 `shared` 只用于确实适合两种模式的 utilities。它不会授权 Creator 执行最终研究
 任务，也不会授权 Researcher 执行 Creator 的构造工作。package 安装者可以用
 `disco install <source> --for creator|researcher|both|default` 覆盖同一 package
-全部资源的可见性；详见 [package 指南](../src/docs/packages.md#mode-targeting)。
+全部资源的可见性；详见 [package 指南](../cli/docs/packages.md#mode-targeting)。
 
 ## Researcher 工作流
 
@@ -53,10 +53,11 @@ skills。官方 skill 的本地修改会被报告为 drift；必须显式使用 
 disco --agent-mode researcher -p "在这台机器上使用相同模型和工作负载评测 vLLM 与 SGLang。在相同硬件和显存约束下分别调优两套服务，报告各自经过验证的最佳吞吐量，并保留复现实验所需的命令和测量结果。"
 ```
 
-对于与仓库知识相关的请求，DisCo 会读取 `repo-skills-router`，只打开一个匹配
-的场景页面，再读取 `vllm/SKILL.md`、`sglang/SKILL.md` 等被选中的技能。随后
-它会用常规的文件、命令和实验工具执行并验证任务，而不会把所有仓库技能的
-描述和正文一次性放入初始上下文。
+对于与仓库知识相关的请求，DisCo 会读取 `repo-skills-router`，先打开一个或
+两个可能相关的 area 页面，再比较匹配的 family 页面，最后读取
+`vllm/SKILL.md`、`sglang/SKILL.md` 等被选中的技能。随后它会用常规的文件、
+命令和实验工具执行并验证任务，而不会把所有仓库技能的描述和正文一次性放入
+初始上下文。
 
 router 默认参与自动 skill 选择。如果希望保留 collection，但不让 router 出现
 在 model-visible skill discovery 中，可以运行：
@@ -153,7 +154,7 @@ disco --agent-mode creator -p "为 /path/to/repo 创建仓库技能，自动决�
 再交给 DisCo：
 
 ```bash
-cp src/packages/coding-agent/src/disco/skills/create-paper-skills/assets/distiller-run-config-template.toml \
+cp cli/packages/coding-agent/src/disco/skills/create-paper-skills/assets/distiller-run-config-template.toml \
   /path/to/distiller_run_config.toml
 disco --agent-mode creator -p "使用 Distiller 为该配置中的每项运行生成并验证用于论文复现的技能。config_path: /path/to/distiller_run_config.toml"
 ```
@@ -209,14 +210,14 @@ disco --agent-mode creator -p "/skill:import-repo-skills-to-agent import vllm an
 ```
 
 导入后请重启目标 Agent。[Research Skills Library
-说明](../research-skills-library/README.zh-CN.md)介绍了源码布局和 DisCo 安装
+说明](../skills/README.md)介绍了源码布局和 DisCo 安装
 方式；[`import-repo-skills-to-agent`
-工作流](../src/packages/coding-agent/src/disco/skills/import-repo-skills-to-agent/SKILL.md)
+工作流](../cli/packages/coding-agent/src/disco/skills/import-repo-skills-to-agent/SKILL.md)
 则定义了目标目录布局、覆盖策略和路由器调用约定。
 
 ## 参考文档
 
 - [架构说明](architecture.zh.md)
-- [内置技能参考](../src/packages/coding-agent/src/disco/skills/README.md)
-- [Research Skills Library](../research-skills-library/README.zh-CN.md)
+- [内置技能参考](../cli/packages/coding-agent/src/disco/skills/README.md)
+- [Research Skills Library](../skills/README.md)
 - [给其他 Agent 的 Meta Skills](meta-skills-for-other-agents.zh.md)

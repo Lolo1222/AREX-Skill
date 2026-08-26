@@ -10,9 +10,9 @@
 </p>
 
 <p align="center">
-  <a href="research-skills-library/README.zh-CN.md"><img src="https://img.shields.io/badge/Research_Skills_Library-5000%2B_skills-0E9B9B?style=for-the-badge" alt="Research Skills Library：5000+ skills"></a>
-  <a href="research-skills-library/repo-skills/"><img src="https://img.shields.io/badge/ML_Repositories-1000-5865F2?style=for-the-badge" alt="1000 个 ML 仓库"></a>
-  <a href="https://www.npmjs.com/package/@auto-ml-skills/disco"><img src="https://img.shields.io/badge/CLI-disco-D22128?style=for-the-badge&logo=npm&logoColor=white" alt="DisCo CLI"></a>
+  <a href="skills/README.md"><img src="https://img.shields.io/badge/AREX--Skill_Library-5000%2B_skills-0E9B9B?style=for-the-badge" alt="AREX-Skill Library：5000+ skills"></a>
+  <a href="skills/repositories/repo-skills/"><img src="https://img.shields.io/badge/ML_Repositories-1000-5865F2?style=for-the-badge" alt="1000 个 ML 仓库"></a>
+  <a href="https://www.npmjs.com/package/@auto-ml-skills/disco"><img src="https://img.shields.io/badge/CLI-disco%20v0.2.0-D22128?style=for-the-badge&logo=npm&logoColor=white" alt="DisCo CLI v0.2.0"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-Apache_2.0-lightgrey?style=for-the-badge&logo=apache&logoColor=white" alt="License: Apache 2.0"></a>
 </p>
 
@@ -26,7 +26,7 @@ flowchart LR
         direction TB
         s0["🌐 数万个<br>ML 仓库"] == "精选" ==> s1["⭐ 1,000 个最高价值仓库<br>+ 📄 论文 · ✍️ 博客"]
     end
-    subgraph CRE["🤖 Creator Agent"]
+    subgraph CRE["🤖 DisCo Creator Agent"]
         direction TB
         c1["🔍 发掘<br><i>仓库能力</i>"] --> c2["🧠 蒸馏<br><i>写成技能</i>"] --> c3["🧪 验证<br><i>真实执行</i>"]
         c3 -. 精化 .-> c2
@@ -49,18 +49,39 @@ flowchart LR
 
 ---
 
-## 📣 动态
+## 🧭 目录 <a id="table-of-contents"></a>
+
+- [动态](#news)
+- [为什么需要 AREX-Skill](#why-arex-skill)
+- [从知识到技能](#from-knowledge-to-skills)
+- [AREX Skill 是什么](#what-is-an-arex-skill)
+- [AREX-Skill 的构建方式：DisCo](#how-arex-builds-skills)
+- [接入你现有的 Coding Agent](#works-with-your-coding-agent)
+- [技能库规模](#library-scale)
+- [技能一览](#skill-gallery)
+- [技能真的能让 Agent 更会做研究吗](#do-skills-make-agents-better-researchers)
+- [快速开始](#quick-start)
+- [更大的图景](#the-bigger-vision)
+- [参与贡献](#contributing)
+- [文档](#documentation)
+- [致谢](#acknowledgement)
+- [许可证](#license)
+- [引用](#citation)
+
+---
+
+## 📣 动态 <a id="news"></a>
 
 - **2026-08**：技能库扩展到 **1,000 个仓库、5,000+ 技能**，路由器重建后
   覆盖全部仓库。技术报告即将发布，包含 MLE-bench、PaperBench、
   Frontier-CS、PassNet 的完整评测结果。
 - **2026-08-03**：AREX-Skill 首发，包含 DisCo 的 Creator / Researcher
-  工作流，以及面向 170 个常用仓库、超过 1,000 个操作技能的 Research
-  Skills Library。
+  工作流，以及首个 AREX-Skill Library 版本：面向 170 个常用仓库、超过
+  1,000 个操作技能。
 
 ---
 
-## 为什么需要 AREX-Skill？
+## 💡 为什么需要 AREX-Skill <a id="why-arex-skill"></a>
 
 **研究知识无处不在，但 Agent 仍然用不好它。**
 
@@ -78,7 +99,7 @@ flowchart LR
 
 ---
 
-## 从知识到技能
+## 🧠 从知识到技能 <a id="from-knowledge-to-skills"></a>
 
 > **我们不做仓库摘要。我们把仓库编译成 Agent 可以执行的技能。**
 
@@ -102,32 +123,58 @@ flowchart TB
 
 ---
 
-## AREX Skill 是什么？
+## 🧩 AREX Skill 是什么 <a id="what-is-an-arex-skill"></a>
 
-每个仓库都会变成一张**操作知识技能图**，由三部分组成：
+AREX Skill 是一个自包含、可被 Agent 直接阅读的操作知识单元。它遵循开放的
+[Agent Skills](https://github.com/agentskills/agentskills) 格式，以
+`SKILL.md` 为核心，并可按需包含配套资源：
 
 ```text
 AREX Skill
 │
-├── 🧭 Skill Router        库级统一入口，最先加载；
-│                          把任务路由到正确的技能图
+├── 🧭 SKILL.md：入口与 Router
+│   ├── 适用范围
+│   ├── 任务路由
+│   ├── 操作工作流
+│   └── 验证与故障排查
 │
-├── 📖 Skill Instructions  何时使用 · 如何使用 · 预期行为
-│                          · 验证步骤 · 故障恢复
+├── 📖 references/：专题指令
+│   ├── 安装与配置
+│   ├── 详细工作流
+│   └── 故障排查与 provenance
 │
-└── 🛠 Tools               脚本 · CLI · 可复用实现
-                           在 Agent 环境中直接可执行
+└── 🛠 scripts/：可执行辅助工具
+    ├── 诊断与 smoke test
+    ├── 工作流工具
+    └── 兼容性与可复用 helper
 ```
 
-**结构化、可执行、Agent-ready。** 技能通过渐进披露加载：Agent 首先只看到
-路由器，打开匹配的技能图，再只读取任务需要的子技能——用上下文里的几个文件，
-承载 1,000 个仓库的操作知识。
+`SKILL.md` 是 skill 的入口，负责说明适用范围、操作指令，并在需要时进行
+任务路由。`references/` 和 `scripts/` 是可选的：references 提供专题指导
+与 provenance，scripts 则提供用于诊断、工作流和可重复检查的可执行辅助工具。
+
+如果一个仓库覆盖多个工作流，可以将其中的 skills 组织成 repository skill
+graph，由 root skill 把任务路由到面向具体能力的 sub-skills：
+
+```text
+Repository Skill Graph
+│
+├── root SKILL.md：入口与 Router
+└── sub-skills/
+    ├── inference/SKILL.md
+    ├── training/SKILL.md
+    └── evaluation/SKILL.md
+```
+
+每个 sub-skill 本身也是一个独立的 AREX Skill，可以有自己的 references 和
+scripts。root 与 sub-skills 之间的链接构成 **skill graph**——这是
+AREX-Skill 为支持渐进披露而增加的扩展，使 Agent 只读取任务需要的分支。
 
 ---
 
-## AREX 如何构建技能
+## ⚗️ AREX-Skill 的构建方式：DisCo <a id="how-arex-builds-skills"></a>
 
-**技能是自动发掘、蒸馏和验证出来的。**
+**AREX-Skill Library 通过 DisCo 的“发掘—蒸馏—验证”工作流构建。**
 
 ```mermaid
 flowchart LR
@@ -139,14 +186,14 @@ flowchart LR
     E --> B
 ```
 
-普通的 repo-to-doc 工具止步于 `仓库 → 文档`。AREX 的 Creator agent 跑的是
+普通的 repo-to-doc 工具止步于 `仓库 → 文档`。DisCo 的 Creator agent 跑的是
 完整的实验闭环——基于证据的探索、技能图生成，以及**带精化的验证**：生成的
 检查和原生示例会被真正执行，失败会被修复，循环持续到技能图通过检验或预算
 耗尽。技能只有通过了自己的测试才会发布。
 
 ---
 
-## 接入你现有的 Coding Agent
+## 🤖 接入你现有的 Coding Agent <a id="works-with-your-coding-agent"></a>
 
 **不需要新 Agent，不需要新工作流。**
 
@@ -166,7 +213,7 @@ flowchart LR
 
 ---
 
-## 规模
+## 📊 技能库规模 <a id="library-scale"></a>
 
 <table align="center">
   <tr>
@@ -185,25 +232,25 @@ commit 和覆盖范围。
 
 ---
 
-## 技能一览
+## 🖼️ 技能一览 <a id="skill-gallery"></a>
 
 技能在实践中长什么样——来源 → 技能 → 一句 prompt：
 
 | | 来源 | 技能 | 对你的 Agent 说 |
 |---|---|---|---|
-| 🔍 | [FAISS](research-skills-library/repo-skills/faiss/) | 向量检索与索引组合 | *「在 recall ≥ 0.95 的前提下优化这个 FAISS 索引的延迟。」* |
-| ⚡ | [vLLM](research-skills-library/repo-skills/vllm/) | 高吞吐 LLM 服务 | *「在这台机器上对比 vLLM 和 SGLang，报告可验证的吞吐量。」* |
-| 🧠 | [Unsloth](research-skills-library/repo-skills/unsloth/) | 高效 LLM 微调 | *「在 24 GB 显存内用这份数据微调 Llama。」* |
-| 🔥 | [Diffusers](research-skills-library/repo-skills/diffusers/) | 扩散模型训练与推理 | *「为这种风格训练一个 LoRA 并验证输出。」* |
-| 🦾 | [LeRobot](research-skills-library/repo-skills/lerobot/) | 机器人学习工作流 | *「在这个操作数据集上训练并评估 ACT 策略。」* |
-| 🧬 | [AlphaFold2](research-skills-library/repo-skills/alphafold2/) | 蛋白质结构预测 | *「折叠这些序列并检查置信度指标。」* |
+| 🔍 | [FAISS](skills/repositories/repo-skills/faiss/) | 向量检索与索引组合 | *「在 recall ≥ 0.95 的前提下优化这个 FAISS 索引的延迟。」* |
+| ⚡ | [vLLM](skills/repositories/repo-skills/vllm/) | 高吞吐 LLM 服务 | *「在这台机器上对比 vLLM 和 SGLang，报告可验证的吞吐量。」* |
+| 🧠 | [Unsloth](skills/repositories/repo-skills/unsloth/) | 高效 LLM 微调 | *「在 24 GB 显存内用这份数据微调 Llama。」* |
+| 🔥 | [Diffusers](skills/repositories/repo-skills/diffusers/) | 扩散模型训练与推理 | *「为这种风格训练一个 LoRA 并验证输出。」* |
+| 🦾 | [LeRobot](skills/repositories/repo-skills/lerobot/) | 机器人学习工作流 | *「在这个操作数据集上训练并评估 ACT 策略。」* |
+| 🧬 | [AlphaFold2](skills/repositories/repo-skills/alphafold2/) | 蛋白质结构预测 | *「折叠这些序列并检查置信度指标。」* |
 
 每张技能图遵循同一契约：一个可路由的入口技能、面向真实工作流（数据、训练、
 评估、服务、排障）的聚焦子技能，以及 Agent 真正可以运行的验证步骤。
 
 ---
 
-## 技能真的能让 Agent 更会做研究吗？
+## 📈 技能真的能让 Agent 更会做研究吗 <a id="do-skills-make-agents-better-researchers"></a>
 
 我们固定所有变量——**Codex harness、GPT-5.5（xhigh）backbone、相同的执行
 预算**——只改变一件事：Agent 是否拥有 AREX 蒸馏的技能。
@@ -239,7 +286,7 @@ PaperBench（复现得分，20 篇论文）
   token、步数和工具调用四个维度上 Pareto 优于榜单上的 Claude Code 条目，
   token 用量只有其约 1/3。
 
-### 为什么有效
+### 💡 为什么有效 <a id="why-it-helps"></a>
 
 ```text
 没有 AREX                       有 AREX
@@ -259,7 +306,7 @@ Stable-Baselines3 技能完成可审计的 RL 实验）。
 
 ---
 
-## 快速开始
+## 🚀 快速开始 <a id="quick-start"></a>
 
 三步得到一个技能驱动的研究 Agent：
 
@@ -303,8 +350,9 @@ Researcher 是默认模式；用 `--agent-mode creator|researcher` 或界面里�
   方式见 [Meta Skills For Other Agents](docs/meta-skills-for-other-agents.md)。
 - **管理**：`disco repo-skills status | update`，路由器开关
   `disco repo-skills router disable|enable`。
-- **手动安装**：把 `research-skills-library/repo-skills*` 复制到
-  `~/.disco/agent/skills/`。
+- **手动安装**：把 `skills/repositories/repo-skills` 和
+  `skills/repositories/repo-skills-router` 复制到
+  `~/.disco/agent/skills/repositories/`。
 - **源码构建**：clone 后执行 `bash scripts/build-from-source-link.sh`。
 
 完整的[安装指南](docs/installation.md)覆盖提供商配置、更新/备份语义、
@@ -314,7 +362,7 @@ Researcher 是默认模式；用 `--agent-mode creator|researcher` 或界面里�
 
 ---
 
-## 更大的图景
+## 🌐 更大的图景 <a id="the-bigger-vision"></a>
 
 **从仓库到技能，从技能到自主研究。**
 
@@ -334,52 +382,55 @@ flowchart LR
 ML 研究知识不应只以论文和仓库的形式存在，还应被编译为 AI 研究者可以直接
 调用的技能。
 
-> **命名说明：** AREX-Skill 是项目名，也是发布的 Research Skills Library。
+> **命名说明：** AREX-Skill 是项目名，也是发布的 AREX-Skill Library。
 > DisCo 是内置的技能驱动 CLI/runtime：Creator 模式创建技能，Researcher
 > 模式使用技能做研究。
 
 ---
 
-## 参与贡献
+## 🤝 参与贡献 <a id="contributing"></a>
 
 欢迎三类贡献——新的仓库技能、既有技能的更新，以及 DisCo CLI 的改进。技能
 PR 需附带来源信息（模型、源 commit、验证步骤）；完整清单见
 [CONTRIBUTING_CN.md](CONTRIBUTING_CN.md)。
 
-## 文档
+## 📚 文档 <a id="documentation"></a>
 
 | 页面 | 说明 |
 | --- | --- |
 | [安装指南](docs/installation.md) | CLI 与技能集合的完整安装、提供商配置、路由器开关、手动兜底方案。 |
 | [DisCo Workflows](docs/disco-workflows.md) | 模式与会话、Researcher 执行、Creator 构建、部署范围。 |
-| [Research Skills Library](research-skills-library/README.zh-CN.md) | 技能库模型、集合布局、安装方式。 |
+| [AREX-Skill Library](skills/README.md) | 技能库模型、集合布局、安装方式。 |
 | [Imported Repo Skills Catalog](docs/imported-repo-skills.md) | 全部已发布技能图及其上游基线。 |
+| [Repository Catalog](docs/repository-catalog.md) | 按 area -> family 组织的全部已发布仓库技能清单。 |
 | [Architecture](docs/architecture.zh.md) | 仓库分层、路由、创作流水线、部署范围。 |
 | [Examples](examples/) | 脱敏的端到端 Creator 与 Researcher 会话。 |
 | [Bundled Skills Reference](cli/packages/coding-agent/src/disco/skills/README.md) | Creator 元技能契约与产物布局。 |
 | [DisCo CLI README](cli/README.md) | CLI 使用、运行时技能路由、软件包。 |
 
-## 致谢
+## 🙏 致谢 <a id="acknowledgement"></a>
 
 DisCo 的 CLI 与 agent runtime 构建于
-[earendil-works/pi](https://github.com/earendil-works/pi) 之上。这个技能库
-的存在，得益于开源 ML 社区发布的大量高质量仓库——谢谢你们。
+[earendil-works/pi](https://github.com/earendil-works/pi) 之上。pi 是一个开源
+AI agent 工具包，提供统一的 LLM API、agent loop、终端界面和 coding-agent
+CLI。
 
-## 许可证
+AREX-Skill 同样离不开 GitHub 开源社区。这个库中的仓库技能建立在世界各地
+研究者和工程师公开发布的高质量 ML、agent、数据、生物/化学、视觉与基础设施
+项目之上。感谢所有让这些工作能够被社区使用并继续构建的人。
 
-仓库级材料与 [`research-skills-library/`](research-skills-library/) 下的
-技能采用 Apache-2.0 许可证。[`cli/`](cli/) 下独立发布的 DisCo npm 包采用
-MIT 许可证，上游署名见
+## 📄 许可证 <a id="license"></a>
+
+除非文件或组件另有说明，仓库级 AREX-Skill 材料采用 Apache-2.0 许可证。技能
+库中发布的每个 skill 都有独立的许可证。使用、复制、修改或再分发某个 skill
+前，请查看该 skill 的 `SKILL.md` 中的 `license` metadata 字段；该许可证是该
+skill 的权威声明，可能不同于本仓库的 Apache-2.0，并包含额外的条件或限制。
+用户应自行审查并遵守所使用的每个 skill 的许可证条款。
+
+[`cli/`](cli/) 下独立发布的 DisCo npm 包采用其自身的
+[MIT License](cli/LICENSE)，上游署名见
 [`cli/THIRD_PARTY_NOTICES.md`](cli/THIRD_PARTY_NOTICES.md)。
 
-## 引用
+## 📝 引用 <a id="citation"></a>
 
-```bibtex
-@article{arexskill2026,
-  title  = {AREX-Skill: Distilled Operational Knowledge For Advancing
-            Autonomous AI Research},
-  author = {{AREX-Skill Team}},
-  year   = {2026},
-  note   = {Technical report},
-}
-```
+TBA

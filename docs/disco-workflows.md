@@ -31,7 +31,7 @@ not authorize Creator to execute the final research task or Researcher to carry
 out Creator construction work. Package installers can override visibility for
 all resources in one package with `disco install <source> --for
 creator|researcher|both|default`; see the [package
-guide](../src/docs/packages.md#mode-targeting).
+guide](../cli/docs/packages.md#mode-targeting).
 
 ## Researcher Workflows
 
@@ -61,11 +61,11 @@ two inference systems under a controlled protocol:
 disco --agent-mode researcher -p "Benchmark vLLM and SGLang with the same model and workload on this machine. Tune each server under identical hardware and memory constraints, report the best verified throughput for each, and preserve the commands and measurements needed to reproduce the comparison."
 ```
 
-For a relevant request, DisCo reads `repo-skills-router`, opens one matching
-scenario page, and then reads selected skills such as `vllm/SKILL.md` and
-`sglang/SKILL.md`. It uses its normal file, command, and experiment tools to
-perform and verify the task. It does not inject all repository-skill
-descriptions or bodies into the initial context.
+For a relevant request, DisCo reads `repo-skills-router`, opens one or two
+likely area pages, compares the matching family pages, and then reads selected
+skills such as `vllm/SKILL.md` and `sglang/SKILL.md`. It uses its normal file,
+command, and experiment tools to perform and verify the task. It does not
+inject all repository-skill descriptions or bodies into the initial context.
 
 The router participates in automatic skill selection by default. To remove it
 from model-visible skill discovery without uninstalling the collection, run:
@@ -171,7 +171,7 @@ For repeatable runs that generate and verify skills for paper replication, copy
 and fill the bundled run configuration, then pass it to DisCo:
 
 ```bash
-cp src/packages/coding-agent/src/disco/skills/create-paper-skills/assets/distiller-run-config-template.toml \
+cp cli/packages/coding-agent/src/disco/skills/create-paper-skills/assets/distiller-run-config-template.toml \
   /path/to/distiller_run_config.toml
 disco --agent-mode creator -p "Use Distiller to generate and verify paper-replication skills for each run in this config. config_path: /path/to/distiller_run_config.toml"
 ```
@@ -232,14 +232,14 @@ disco --agent-mode creator -p "/skill:import-repo-skills-to-agent import vllm an
 ```
 
 Restart the target agent after import. The [Research Skills Library
-guide](../research-skills-library/README.md) documents the source layout and
+guide](../skills/README.md) documents the source layout and
 DisCo installation, while the
-[`import-repo-skills-to-agent` workflow](../src/packages/coding-agent/src/disco/skills/import-repo-skills-to-agent/SKILL.md)
+[`import-repo-skills-to-agent` workflow](../cli/packages/coding-agent/src/disco/skills/import-repo-skills-to-agent/SKILL.md)
 defines target layouts, overwrite policy, and router invocation conventions.
 
 ## Reference
 
 - [Architecture](architecture.md)
-- [Bundled Skills Reference](../src/packages/coding-agent/src/disco/skills/README.md)
-- [Research Skills Library](../research-skills-library/README.md)
+- [Bundled Skills Reference](../cli/packages/coding-agent/src/disco/skills/README.md)
+- [Research Skills Library](../skills/README.md)
 - [Meta Skills For Other Agents](meta-skills-for-other-agents.md)

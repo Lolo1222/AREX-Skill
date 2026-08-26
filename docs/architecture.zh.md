@@ -1,39 +1,39 @@
 # 架构说明
 
-Auto-ML-Skills 把已发布技能库与负责路由、使用、创建和维护它的 DisCo runtime
+AREX-Skill 把已发布技能库与负责路由、使用、创建和维护它的 DisCo runtime
 分开。
 
 ## 当前仓库快照
 
 ```text
-Auto-ML-Skills/
+AREX-Skill/
   README.md
   README.zh-CN.md
   CONTRIBUTING.md
   CONTRIBUTING_CN.md
   docs/
-  research-skills-library/
+  skills/
     README.md
-    README.zh-CN.md
-    repo-skills/
-    repo-skills-router/
+    repositories/
+      repo-skills/
+      repo-skills-router/
   scripts/
-  src/
+  cli/
 ```
 
 当前 checkout 同时包含已发布的 skill library 和 DisCo TypeScript 源码树。
-更广义的 library 边界是 `research-skills-library/`；当前 checkout 的
-repository skill collection 位于 `research-skills-library/repo-skills/`，同级
-还有 `research-skills-library/repo-skills-router/`。bundled 与 portable DisCo
+更广义的 library 边界是 `skills/`；当前 checkout 的
+repository skill collection 位于 `skills/repositories/repo-skills/`，同级
+还有 `skills/repositories/repo-skills-router/`。bundled 与 portable DisCo
 workflows 的唯一 source of truth 位于
-`src/packages/coding-agent/src/disco/skills/`。
+`cli/packages/coding-agent/src/disco/skills/`。
 
 ## 源码布局
 
-DisCo 源码树位于 `src/`：
+DisCo 源码树位于 `cli/`：
 
 ```text
-src/
+cli/
   package.json
   npm-shrinkwrap.json
   docs/
@@ -51,14 +51,14 @@ src/
 
 | 路径 | 职责 |
 | --- | --- |
-| `src/package.json` | 唯一可发布的 npm package `@auto-ml-skills/disco`，暴露 `disco` CLI 和 SDK。 |
-| `src/packages/coding-agent/src` | DisCo copy 并修改的 Pi coding-agent runtime，包含 interactive/print modes、project trust、sessions、tools、skill discovery、workflow skills 和 dynamic orchestration。 |
-| `src/packages/coding-agent/test` | 从 upstream 保留的测试和 DisCo regression contracts。 |
-| `src/docs` 与 `src/examples` | 随 npm package 发布的文档和示例。 |
-| `src/scripts` | asset copying、upstream provenance verification 和 package-content verification。 |
+| `cli/package.json` | 唯一可发布的 npm package `@auto-ml-skills/disco`，暴露 `disco` CLI 和 SDK。 |
+| `cli/packages/coding-agent/src` | DisCo copy 并修改的 Pi coding-agent runtime，包含 interactive/print modes、project trust、sessions、tools、skill discovery、workflow skills 和 dynamic orchestration。 |
+| `cli/packages/coding-agent/test` | 从 upstream 保留的测试和 DisCo regression contracts。 |
+| `cli/docs` 与 `cli/examples` | 随 npm package 发布的文档和示例。 |
+| `cli/scripts` | asset copying、upstream provenance verification 和 package-content verification。 |
 
-`src/package.json` 是 standalone public package 的版本与发布入口。
-`src/packages/coding-agent/` 是带 provenance 的 source subtree，不是嵌套 npm
+`cli/package.json` 是 standalone public package 的版本与发布入口。
+`cli/packages/coding-agent/` 是带 provenance 的 source subtree，不是嵌套 npm
 workspace。DisCo 不依赖 `@earendil-works/pi-coding-agent`；它自行维护 copied
 coding-agent runtime，并把固定版本的 `@earendil-works/pi-agent-core`、
 `@earendil-works/pi-ai` 和 `@earendil-works/pi-tui` 作为普通依赖。用户另行安装
@@ -85,17 +85,17 @@ repo-skill roots 使用 `disable-model-invocation: true`，因此仍会注册用
 `/skill:<name>` 调用，但不会出现在 model-visible skill list 中。
 启动页 `Skills` 区域只报告这个 model-visible 集合，不展开全部已注册 skills；
 显式 skill command completion 仍使用完整集合。`repo-skills-router` 默认保持
-model-visible，并提供两层 progressive disclosure：
+model-visible，并提供 area-family progressive disclosure：
 
-1. 读取 router 并选择一个 practical usage scenario。
-2. 只读取该 scenario page，比较候选 repo skills。
+1. 读取 router 并选择一个或两个可能相关的 taxonomy area。
+2. 只读取相关 area 页面，再比较匹配的 family 页面。
 3. 通过 `../repo-skills/<skill-id>/SKILL.md` 解析选中的 repository skill。
 4. 只读取任务需要的 sub-skills、references 或 scripts。
 5. 根据当前 checkout 和环境执行并验证任务。
 
-`~/.disco/agent/skills/repo-skills-router/` 中的 live router 优先于 bundled
+`~/.disco/agent/skills/repositories/repo-skills-router/` 中的 live router 优先于 bundled
 fallback template。它的 repository collection 是同级的
-`~/.disco/agent/skills/repo-skills/`；updater 不会扫描 Creator meta skills 或
+`~/.disco/agent/skills/repositories/repo-skills/`；updater 不会扫描 Creator meta skills 或
 无关的 user skills。选中的指导需要根据 provenance、当前源码、installed
 version 和实际 command results 做检查。
 
@@ -166,7 +166,7 @@ DisCo 目前内置了针对 package/repo 与 paper 的专门构造流程。
 评估单一流程和组合流程的覆盖情况，并选择 `direct`、`reuse-existing` 或
 `design-reusable`。`design-meta-skill` 消费经过验证且会重复出现的 gap handoff
 并设计 reusable bundle，不会重新分类请求。所有
-bundled workflow skills 的源码都位于 `src/packages/coding-agent/src/disco/skills/`。
+bundled workflow skills 的源码都位于 `cli/packages/coding-agent/src/disco/skills/`。
 
 ### 软件包/仓库流程
 
@@ -182,8 +182,9 @@ bundled workflow skills 的源码都位于 `src/packages/coding-agent/src/disco/
 7. 生成并集成自包含 runtime guidance。
 8. 运行内置 verification workflow。
 9. 把获批的 repo graph 导入
-   `~/.disco/agent/skills/repo-skills/<skill-id>/`。
-10. 在锁内重建 routing metadata 和 router scenario pages。
+   `~/.disco/agent/skills/repositories/repo-skills/<skill-id>/`。
+10. 按固定 area-family taxonomy 完成分类，写入外部 routing decision 和最小 v2
+    metadata，并在 import lock 内重建受影响的 area/family router views。
 
 create flow 不把 verification 当作可选收尾步骤。`create-repo-skill` 会在
 skill 准备导入或发布前，把集成后的 draft 交给 `verify-repo-skill`。
@@ -221,7 +222,7 @@ paper-to-skill flow 用于生成并验证可复用的论文复现技能。它是
 Creator workflow。当前源码树包含：
 
 ```text
-src/packages/coding-agent/src/disco/skills/
+cli/packages/coding-agent/src/disco/skills/
   create-paper-skills/
   paper-skills-distiller/
   plan-paper-skill-modules/
@@ -355,19 +356,21 @@ generated repo skills 预期包含：
 repo-skills router 是 skill library 的生成/维护索引：
 
 ```text
-research-skills-library/
-  repo-skills/
-    <repo-skill-id>/
-  repo-skills-router/
-    SKILL.md
-    references/
-      usage-scenarios.md
-      maintenance.md
-      scenarios/
+skills/
+  repositories/
+    repo-skills/
+      <repo-skill-id>/
+    repo-skills-router/
+      SKILL.md
+      references/
+        areas/
+        families/
+        index/
+        maintenance.md
 ```
 
-它不是单个 skill 的替代品。它提供第一轮选择地图，并把 agent 指向合适的
-scenario 页面和候选 skill。
+它不是单个 skill 的替代品。它提供第一轮选择地图，再从精确的 family 页面把
+agent 指向候选 repository skill root。
 
 ## 部署范围与托管库
 
@@ -397,9 +400,10 @@ Repository graph 是高复用 managed scope 的特殊情况。它不使用通用
 ~/.disco/agent/skills/
   <meta-skill>/               # 仅 Creator 可见
   <reusable-operating-skill>/ # 仅 Researcher 可见
-  repo-skills/
-    <repo-skill-id>/
-  repo-skills-router/
+  repositories/
+    repo-skills/
+      <repo-skill-id>/
+    repo-skills-router/
 ```
 
 repository import transaction 会复制 runtime graph，验证
@@ -420,11 +424,11 @@ Codex 不使用 `disable-model-invocation` frontmatter 字段表达这个 policy
 
 source-of-truth 规则：
 
-- 更广义的 library 位于 `research-skills-library/`；repository skills 位于
-  `research-skills-library/repo-skills/`，router 位于同级的
-  `research-skills-library/repo-skills-router/`。
+- 更广义的 library 位于 `skills/`；repository skills 位于
+  `skills/repositories/repo-skills/`，router 位于同级的
+  `skills/repositories/repo-skills-router/`。
 - Bundled 与 portable external-agent workflow skills 只有一个 source of
-  truth：`src/packages/coding-agent/src/disco/skills/`。
+  truth：`cli/packages/coding-agent/src/disco/skills/`。
 - 在该 source directory 中编辑 workflow skills，然后 rebuild DisCo；不要维护
   第二份需要手工同步的 mirror。
 - Verification 和 review artifacts 位于 runtime skill directories 之外，通常

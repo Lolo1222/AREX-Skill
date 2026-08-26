@@ -3,7 +3,7 @@
 DisCo bundles a set of construction workflows for **Creator mode**. They are
 portable Agent Skills, so an agent that does not run the DisCo CLI can still
 follow the same evidence, review, and handoff process. This is a different
-installation path from the [Research Skills Library](../research-skills-library/README.md):
+installation path from the [Research Skills Library](../skills/README.md):
 the library contains Researcher-facing operating skills, while these skills
 teach an agent how to construct or maintain them.
 
@@ -19,7 +19,7 @@ the target agent must follow the role and approval rules in the skill text.
 ## Bundled Meta Skills
 
 The source of truth is
-`src/packages/coding-agent/src/disco/skills/`. The current Creator corpus has
+`cli/packages/coding-agent/src/disco/skills/`. The current Creator corpus has
 these 15 skills:
 
 | Skill | Purpose |
@@ -48,11 +48,11 @@ this installation.
 
 The current Codex user-level convention is `~/.agents/skills`. The command
 below copies only the 15 meta-skill directories; it does not copy the router,
-the 170 repository graphs and their 1,000+ operating skills, or any README:
+the 1,000 repository skill graphs and their generated sub-skills, or any README:
 
 ```bash
-git clone https://github.com/VectorSpaceLab/Auto-ML-Skills.git
-cd Auto-ML-Skills
+git clone https://github.com/VectorSpaceLab/AREX-Skill.git
+cd AREX-Skill
 mkdir -p ~/.agents/skills
 for skill in \
   analyze-paper-recovery \
@@ -70,7 +70,7 @@ for skill in \
   recover-paper-result \
   refresh-repo-skill \
   verify-repo-skill; do
-  cp -R "src/packages/coding-agent/src/disco/skills/$skill" ~/.agents/skills/
+  cp -R "cli/packages/coding-agent/src/disco/skills/$skill" ~/.agents/skills/
 done
 ```
 
@@ -101,7 +101,7 @@ for skill in \
   recover-paper-result \
   refresh-repo-skill \
   verify-repo-skill; do
-  cp -R "src/packages/coding-agent/src/disco/skills/$skill" ~/.claude/skills/
+  cp -R "cli/packages/coding-agent/src/disco/skills/$skill" ~/.claude/skills/
 done
 ```
 
@@ -141,5 +141,5 @@ approval before expensive setup, generated-skill import, or overwrites as
 required by the workflow text.
 
 For the full runtime with Creator/Researcher isolation, install the
-[`disco` CLI](../src/README.md) and then install the
-[Research Skills Library](../research-skills-library/README.md) separately.
+[`disco` CLI](../cli/README.md) and then install the
+[Research Skills Library](../skills/README.md) separately.
