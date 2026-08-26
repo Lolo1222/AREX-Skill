@@ -102,6 +102,11 @@ function printInstallResult(result: RepoSkillsInstallResult): void {
 	console.log(`Official skills: ${result.managedSkills}`);
 	console.log(`Local skills preserved: ${result.localSkills}`);
 	console.log(`Total repo skills: ${result.totalSkills}`);
+	if (result.repositoryCount !== undefined) console.log(`Routed repositories: ${result.repositoryCount}`);
+	if (result.assignmentCount !== undefined) console.log(`Area-family assignments: ${result.assignmentCount}`);
+	if (result.areaCount !== undefined && result.familyCount !== undefined) {
+		console.log(`Router taxonomy: ${result.areaCount} areas, ${result.familyCount} families`);
+	}
 	if (result.routerEnabled !== undefined) {
 		console.log(`Router: ${result.routerEnabled ? "enabled" : "disabled"}`);
 	}
@@ -120,6 +125,11 @@ function printStatus(status: RepoSkillsLibraryStatus): void {
 	console.log(`Official skills: ${status.managedSkills}`);
 	console.log(`Local skills: ${status.localSkills}`);
 	console.log(`Total repo skills: ${status.totalSkills}`);
+	if (status.repositoryCount !== undefined) console.log(`Routed repositories: ${status.repositoryCount}`);
+	if (status.assignmentCount !== undefined) console.log(`Area-family assignments: ${status.assignmentCount}`);
+	if (status.areaCount !== undefined && status.familyCount !== undefined) {
+		console.log(`Router taxonomy: ${status.areaCount} areas, ${status.familyCount} families`);
+	}
 	console.log(`Files: ${status.totalFiles}`);
 	console.log(
 		`Router: ${status.routerPresent ? (status.routerEnabled ? "enabled" : "disabled") : "not installed"}`,

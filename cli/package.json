@@ -1,6 +1,6 @@
 {
   "name": "@auto-ml-skills/disco",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Skill-powered research agent with Creator and Researcher modes",
   "type": "module",
   "discoConfig": {
@@ -93,8 +93,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/VectorSpaceLab/Auto-ML-Skills.git",
-    "directory": "src"
+    "url": "git+https://github.com/VectorSpaceLab/AREX-Skill.git",
+    "directory": "cli"
   },
   "keywords": [
     "research-agent",
@@ -104,7 +104,7 @@
     "tui",
     "llm"
   ],
-  "author": "Auto-ML-Skills contributors",
+  "author": "AREX-Skill contributors",
   "license": "MIT",
   "engines": {
     "node": ">=22.19.0"

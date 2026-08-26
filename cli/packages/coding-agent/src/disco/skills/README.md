@@ -135,7 +135,7 @@ Package workflow defaults:
   `$DISCO_CODING_AGENT_DIR/envs/<chosen-skill-id>-inspection` when that variable
   is set, otherwise `~/.disco/agent/envs/<chosen-skill-id>-inspection`.
 - Verification is required before import. Approved imports write to
-  `~/.disco/agent/skills/repo-skills/<skill-id>/` and rebuild the sibling live
+  `~/.disco/agent/skills/repositories/repo-skills/<skill-id>/` and rebuild the sibling live
   router inside the same global import lock. Repo output is the high-reuse
   managed special case and never uses the generic operating-graph importer.
 
@@ -190,15 +190,15 @@ Creator mode sees the bundled and imported
 meta skills instead and cannot register this operating corpus.
 
 For an ordinary software or research task, DisCo reads the router only when a
-repository-specific skill may help, reads one relevant scenario page, selects
-the best matching repo skill, and then reads that skill's `SKILL.md` and only
-the references needed for the task. It uses the selected guidance with its
+repository-specific skill may help, reads one relevant area page and then the
+matching family page, selects the best matching repo skill, and then reads that
+skill's `SKILL.md` and only the references needed for the task. It uses the selected guidance with its
 normal file and command tools to complete and verify the requested work. Users
 can also invoke any registered skill explicitly with `/skill:<name>`.
 
 The bundled router is a fallback template. Approved or auto-authorized imports
 create or update the primary live router at
-`~/.disco/agent/skills/repo-skills-router/SKILL.md`. The dedicated repo-skill
+`~/.disco/agent/skills/repositories/repo-skills-router/SKILL.md`. The dedicated repo-skill
 importer stages and validates the runtime tree, runs the skill replacement and
 router rebuild under one global lock, and restores both on failure. The imported
 skill is then directly available to DisCo Researcher; exporting it to another
@@ -206,7 +206,7 @@ agent is optional and separate.
 
 The public collection uses the same live layout and lock through
 `disco repo-skills install|update|status`. Its manifest owns only official skill
-IDs, so Creator/user additions under `repo-skills/` survive collection updates.
+IDs, so Creator/user additions under `skills/repositories/repo-skills/` survive collection updates.
 `disco repo-skills router disable|enable` changes only automatic invocation;
 router rebuilds preserve the live choice, while canonical and external-agent
 router output remains enabled.
@@ -298,8 +298,8 @@ Typical create flow:
    directory, not the review/test artifacts, to
    `verify-repo-skill/scripts/import_repo_skill.mjs`. The importer stages and
    recursively validates the runtime tree, installs it at
-   `~/.disco/agent/skills/repo-skills/<skill-id>/`, consumes
-   `references/repo-routing-metadata.json`, and rebuilds the sibling live
+   `~/.disco/agent/skills/repositories/repo-skills/<skill-id>/`, consumes
+   the v2 `references/repo-routing-metadata.json` plus its external routing handoff, and rebuilds the sibling live
    `repo-skills-router` under the same global lock. If any step fails, it
    restores both the previous skill and router. After a successful import,
    DisCo Researcher can use the repo skill in a new session; exporting it to
@@ -375,12 +375,12 @@ does not duplicate shell-copy commands.
 
 Edit workflow skills only in this source directory:
 
-- `src/packages/coding-agent/src/disco/skills/`
+- `cli/packages/coding-agent/src/disco/skills/`
 
 Build output is regenerated from the source copy:
 
-- npm/dist resources: `src/packages/coding-agent/dist/disco-resources/skills/`
-- binary resources: `src/packages/coding-agent/dist/disco-skills/`
+- npm/dist resources: `cli/packages/coding-agent/dist/disco-resources/skills/`
+- binary resources: `cli/packages/coding-agent/dist/disco-skills/`
 
 Do not edit generated resource directories directly for source changes. Edit
 the source copy and rebuild DisCo.

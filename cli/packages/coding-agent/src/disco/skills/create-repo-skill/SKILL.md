@@ -14,7 +14,7 @@ DisCo Researcher. The managed DisCo copy is the primary runtime destination; a
 user may separately export it to Claude Code, Codex, or another compatible
 agent, but export is not required for DisCo to use it.
 
-Repo/package guidance is intentionally treated as a high-reuse operating graph: a self-contained skill for a versioned public package can support the same repository across many checkouts, projects, and research tasks. Its approved live destination is therefore the managed repo collection at `~/.disco/agent/skills/repo-skills/<skill-id>/`, not the current project's `.agents/skills/`. This is a specialized managed deployment: the import must also rebuild the sibling `repo-skills-router` in the same locked transaction, so never send repo output through the generic operating-graph importer.
+Repo/package guidance is intentionally treated as a high-reuse operating graph: a self-contained skill for a versioned public package can support the same repository across many checkouts, projects, and research tasks. Its approved live destination is therefore the managed repo collection at `~/.disco/agent/skills/repositories/repo-skills/<skill-id>/`, not the current project's `.agents/skills/`. This is a specialized managed deployment: the import must also rebuild the sibling `repo-skills-router` in the same locked transaction, so never send repo output through the generic operating-graph importer.
 
 If the user does not provide a repository path, use the current working
 directory as the target repository.
@@ -95,7 +95,25 @@ checklist in the conversation.
    When running in DisCo, use the built-in `workflow` tool to coordinate generation. Write the workflow so each planned sub-skill id appears in the relevant phase and in each `agent()` call's `subSkill` option, making progress visible while subagents write and revise sub-skills. In other agents, use the same process with whatever task, subagent, or manual sequencing tools are available. Each subagent prompt must include a complete scope-specific brief from the structure plan: target sub-skill id, exact `sub-skills/<id>/` output subtree, frontmatter name requirement, responsibility, included and excluded capabilities, evidence files to inspect, installed-package facts to verify, required references/scripts, source scripts to copy/adapt/wrap or explicitly exclude, troubleshooting failure modes to cover, links to create, related native test/example candidates, and the acceptance rubric. Do not delegate with a short generic request. The workflow should generate sub-skills in parallel when possible, with one or more subagents extracting each planned sub-skill from its assigned evidence. Each drafting or revision subagent must write its assigned runtime files directly under the final generated skill subtree, including `SKILL.md`, bundled `references/`, and bundled `scripts/` as applicable. Do not design the workflow so subagents return full sub-skill Markdown, scripts, or JSON drafts for the main agent to write into the skill directory later. The main agent reviews and evaluates the files the subagent wrote against repo-specific rubrics, sends concrete feedback back to the relevant subagent or revision pass when a sub-skill is thin, inaccurate, poorly routed, not self-contained, incorrectly named, missing useful bundled script imports/adaptations, or missing troubleshooting coverage, and repeats until each sub-skill passes review. Each subagent or revision pass should hand back only its covered capabilities, files created or updated, evidence used, related native test/example candidates, source scripts imported/adapted/excluded with reasons, troubleshooting coverage, checks performed, intentional omissions, and uncertainties for integration notes under the review/test artifact directory.
 6. Whole-skill integration and coverage reconciliation:
    After all sub-skills pass main-agent review, the main agent writes the outer `SKILL.md`, repo-level `references/`, and repo-level `scripts/`, then performs a dedicated whole-skill integration pass before verification. Reconcile the subagent outputs into one coverage/depth matrix, one native test/example candidate map, one backend verification plan, one source script import map, one troubleshooting coverage map, and one long-tail gap register under the review/test artifact directory's `reports/integration/` subtree. Recheck backend criticality whenever integration adds, removes, or changes a capability; if the minimum environment set is no longer sufficient, return to `prepare-repo-skill-env` before final native verification. Check root routing, sub-skill boundaries, cross-references, terminology, duplicate content, bundled reference/script ownership, source-repo dependency leaks, whether useful repo scripts were copied/adapted/wrapped into the appropriate root or sub-skill `scripts/` location, whether primary workflows have actionable troubleshooting guidance, and whether every user-facing repo capability has an owner or an explicit gap. Also plan one or two integrated difficult usability cases that exercise multiple sub-skills or root-plus-sub-skill routing; prefer adapting real repo tests/examples from the native candidate map, and create synthetic cases only when repo evidence has no suitable integrated candidate. If integration finds a thin, inconsistent, or missing area, send it back to the responsible subagent or run a focused revision pass before proceeding.
-7. Content-level self-refine and usability verification:
+7. Routing decision preparation:
+   After the whole skill graph is integrated and before handing it to
+   `verify-repo-skill`, classify the original repository against the exact
+   fixed taxonomy using the repository checkout as the primary evidence source
+   and the generated skill only as navigation context. Assign zero or more
+   exact area -> family paths; every assignment needs its own rationale and at
+   least one non-generated repository evidence item. Reject keyword-only,
+   dependency-only, optional-integration, example-only, and context-collision
+   matches. If no exact family is supported, record `unclassified` with a
+   bounded reason rather than inventing a weak assignment. Interrupted or
+   inaccessible inspection is `blocked` or `failed`, not a guess. Write
+   `skills/disco/routing_decision/classification.json` and
+   `skills/disco/routing_decision/evidence.md` outside the runtime skill graph,
+   then write the candidate minimal v2
+   `references/repo-routing-metadata.json` from the same decision. Do not put
+   evidence, rationale, confidence, source checkout paths, or scenario fields
+   in the runtime JSON; `verify-repo-skill` remains the final authority and may
+   repair or reject the candidate before import.
+8. Content-level self-refine and usability verification:
    After the runtime skill directory, root `SKILL.md`, sub-skills, bundled references, bundled scripts, repo provenance, coverage/depth matrix, integration notes, long-tail gap register, backend verification plan, native test/example candidate map, and subagent review notes are complete, use `../verify-repo-skill/SKILL.md` for the final assertion-backed usability test cases, content-level self-refine, native repo test/example verification, static verification, final coverage report, review package, and import-readiness handoff. Pass it the generated skill directory, artifact directory, repo evidence summary, sub-skill plan, review rubrics, integration artifacts, environment-preparation handoff, backend verification plan, native candidate map, delegated `importAfterVerification` policy, and any user verification focus. Do not generate usability test cases or verification reports directly in this skill.
 
 ## Non-Negotiables
@@ -123,13 +141,15 @@ checklist in the conversation.
 - Do not run the original repository's native examples, tests, notebooks, or scripts as final ground-truth checks until all sub-skills have been generated, reviewed, and integrated into one coherent runtime skill. Before that point, discover and classify native candidates only.
 - Prefer verified package facts over guesses. Use docs, examples, and tests for intent; use source code and installed-package inspection to confirm API and runtime claims.
 - Every generated repo skill must include `references/repo-provenance.md` with the source commit, branch or tag when available, dirty state, package version, and relative evidence paths so future agents can detect staleness.
-- Every generated repo skill must include `references/repo-routing-metadata.json`
-  with structured `repo-skills-router` scenario placement, role, read-when
-  signals, best-fit tasks, avoid-when notes, useful entry points, and selection
-  guidance. This file is consumed by
-  `verify-repo-skill/scripts/import_repo_skill.mjs`, which invokes the
-  lower-level router updater inside the locked import transaction; do not rely
-  on free-form Markdown router edits as the import mechanism.
+- Every generated repo skill must include a minimal v2
+  `references/repo-routing-metadata.json` containing only `schema_version`,
+  canonical `owner/repository` `repo_id`, `skill_id`, the current taxonomy hash,
+  `routing_status`, exact `area`/`family` assignments, and an
+  `unclassified_reason` only for an unclassified result. Do not put evidence,
+  rationale, confidence, source checkout paths, or scenario fields in this
+  runtime JSON. The detailed decision belongs in the external
+  `skills/disco/routing_decision/` artifact and is validated by
+  `verify-repo-skill` before import.
 - Every generated root and sub-skill `SKILL.md` frontmatter must double-quote
   `description`, declare `metadata.disco-role: operating`, and include
   `disable-model-invocation: true` so imported repo skills are available only
@@ -143,7 +163,7 @@ checklist in the conversation.
 - Every generated package repo skill should include troubleshooting guidance for install/import, optional dependencies, data/config validation, CLI/API misuse, and workflow-specific failure modes when those surfaces exist. Put cross-cutting package issues in root `references/troubleshooting.md` and workflow-specific failures in the nearest sub-skill `references/troubleshooting.md`.
 - Every generated sub-skill directory basename, `SKILL.md` frontmatter `name`, workflow `subSkill` option, coverage/depth matrix output location, and usability target id must use the same canonical lowercase-hyphen sub-skill id. Do not add the repo name to sub-skill ids unless it is truly needed to disambiguate two sibling sub-skills, because the root skill already names the repository.
 - Keep generated root and sub-skill `SKILL.md` files router-like. Move API tables, workflow depth, CLI catalogs, model lists, data schemas, long examples, and troubleshooting matrices into the nearest bundled `references/`.
-- After verification, follow `verify-repo-skill`'s locked import protocol: use `ask_user_question` when import approval is still set to `ask`; when the user explicitly delegated `auto-import`, import without asking again only after successful verification with no partial handoff or unresolved `BLOCKED_REQUIRED_BACKEND`. In both cases, run `verify-repo-skill/scripts/import_repo_skill.mjs` with the verified runtime skill directory. That helper stages and recursively validates the runtime tree, installs it under `~/.disco/agent/skills/repo-skills/<skill-id>/`, rebuilds the sibling live DisCo `repo-skills-router` under the global lock, and restores both the previous skill and router if the transaction fails. Pass `--overwrite` only after approval to replace that exact existing repo skill. Do not hand-edit router Markdown or manually combine a copy command with the router updater. Do not synchronize into other agent tools during this workflow; use `import-repo-skills-to-agent` only when the user explicitly asks to export DisCo's managed skill library.
+- After verification, follow `verify-repo-skill`'s locked import protocol: use `ask_user_question` when import approval is still set to `ask`; when the user explicitly delegated `auto-import`, import without asking again only after successful verification with no partial handoff or unresolved `BLOCKED_REQUIRED_BACKEND`. In both cases, run `verify-repo-skill/scripts/import_repo_skill.mjs` with the verified runtime skill directory and its external routing handoff. That helper stages and recursively validates the runtime tree, installs it under `~/.disco/agent/skills/repositories/repo-skills/<skill-id>/`, rebuilds the sibling live DisCo `repo-skills-router` under the global lock, and restores the previous skill, repository index, and router if the transaction fails. Pass `--overwrite` only after approval to replace that exact existing repo skill. Do not hand-edit router Markdown or manually combine a copy command with the router updater. Do not synchronize into other agent tools during this workflow; use `import-repo-skills-to-agent` only when the user explicitly asks to export DisCo's managed skill library.
 - Do not reinterpret repo-to-skills output as ordinary project-scoped output merely because construction ran inside one checkout. Its self-contained, versioned package contract is the evidence for high reuse; if a candidate is actually bound to private project state and cannot satisfy that contract, it is not import-ready for this repo library.
 
 ## Output Summary
@@ -158,4 +178,4 @@ By the end, the user should have:
   environment-preparation handoff when the Python inspection environment had
   to be created automatically.
 - A handoff to `verify-repo-skill` that distinguishes public skill content, artifact location, repo evidence used, generated sub-skills, integration artifacts, coverage/depth matrix, native test/example candidates, long-tail gaps, and review rubrics.
-- After `verify-repo-skill` completes and import is approved by the user or safely authorized by `auto-import` with no required-backend block, a DisCo user import under `~/.disco/agent/skills/repo-skills/<skill-id>/` plus an updated sibling live `repo-skills-router` entry that DisCo Researcher can use in a new session without any cross-agent export.
+- After `verify-repo-skill` completes and import is approved by the user or safely authorized by `auto-import` with no required-backend block, a DisCo user import under `~/.disco/agent/skills/repositories/repo-skills/<skill-id>/` plus an updated sibling live `repo-skills-router` entry that DisCo Researcher can use in a new session without any cross-agent export.

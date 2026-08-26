@@ -31,7 +31,7 @@ available in Researcher mode and excluded from Creator mode.
 
 Edit in place only when the resolved tree is a source directory outside the live
 DisCo skills root. If the starting point was
-`<agent-dir>/skills/repo-skills/<skill-id>/`, edit its external working copy and
+`<agent-dir>/skills/repositories/repo-skills/<skill-id>/`, edit its external working copy and
 leave the live tree unchanged until the dedicated importer replaces it under the
 global lock.
 

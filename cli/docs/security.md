@@ -55,7 +55,7 @@ If you bind-mount a host workspace read/write, writes from inside the container 
 ## Reporting Security Issues
 
 Report a vulnerability through the private security-reporting channel for the
-[DisCo repository](https://github.com/VectorSpaceLab/Auto-ML-Skills/security),
+[DisCo repository](https://github.com/VectorSpaceLab/AREX-Skill/security),
 when available, or contact the package maintainers privately through the
 repository owner. Do not open a public issue containing exploit details,
 credentials, session data, or other security-sensitive material.

@@ -25,7 +25,7 @@ function statusResult(overrides: Partial<RepoSkillsLibraryStatus> = {}): RepoSki
 	return {
 		installed: true,
 		managed: true,
-		sourceRepository: "https://github.com/VectorSpaceLab/Auto-ML-Skills.git",
+		sourceRepository: "https://github.com/VectorSpaceLab/AREX-Skill.git",
 		commit: "a".repeat(40),
 		managedSkills: 170,
 		localSkills: 2,

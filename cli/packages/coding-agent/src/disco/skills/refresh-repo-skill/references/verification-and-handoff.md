@@ -124,6 +124,35 @@ If verification reports critical or high failures:
 Warnings require judgment. Fix warnings that indicate stale claims, missing
 links, shallow current guidance, weak tests, or likely trigger issues.
 
+## Managed Import
+
+After verification passes, keep the runtime tree outside the live DisCo skills
+root and follow `verify-repo-skill`'s structured approval policy. For an
+approved refresh of the exact managed skill, run:
+
+```bash
+node <verify-repo-skill>/scripts/import_repo_skill.mjs \
+  --agent-dir <agent-dir> \
+  --routing-entry <repo-path>/skills/disco/routing_decision/classification.json \
+  --overwrite \
+  <verified-runtime-skill-dir>
+```
+
+Use `--overwrite` only after approval to replace that exact managed skill. A
+normal classified import requires the external routing entry even when the
+area-family assignments did not change. The handoff must match the runtime v2
+metadata and final skill content digest, provide an existing absolute
+`source_checkout`, and use repository-relative evidence paths and valid line
+ranges under that checkout. When capability scope and taxonomy are unchanged,
+the refresh may retain the existing assignments, but it must refresh or verify
+the handoff against the current checkout and final runtime graph. If capability
+scope or taxonomy changed, reclassify before import. Do not hand-edit router
+Markdown or let the importer infer or backfill routing metadata.
+Every retained or changed classified assignment in the handoff must include
+`confidence` (`high`, `medium`, or `low`), `rationale`, and repository evidence.
+Confidence is a central-index audit field and does not belong in the runtime
+v2 metadata fragment.
+
 ## Final Handoff
 
 Report:
@@ -135,6 +164,10 @@ Report:
 - Stale claims removed or updated.
 - New or revised usability test cases.
 - Verification status and review package path under `reports/`.
+- External routing decision path and whether assignments were retained or
+  reclassified.
+- Managed import path and status, or a clear statement that the verified
+  runtime tree remains staged.
 - Remaining unknowns or accepted warnings.
 
 Keep the handoff concise, and clearly distinguish public runtime skill content

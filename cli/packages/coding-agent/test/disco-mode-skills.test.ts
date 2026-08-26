@@ -118,4 +118,31 @@ describe("mode-aware skill loading", () => {
 		}
 	});
 
+	it("keeps a 1,000-repository managed collection registered but out of the Researcher prompt", () => {
+		const root = mkdtempSync(join(tmpdir(), "disco-repository-skills-scale-"));
+		cleanupPaths.push(root);
+		const agentDir = join(root, "agent");
+		const cwd = join(root, "project");
+		const repositoriesRoot = join(agentDir, "skills", "repositories");
+		const repoSkillsRoot = join(repositoriesRoot, "repo-skills");
+		mkdirSync(cwd, { recursive: true });
+
+		for (let index = 0; index < 1_000; index += 1) {
+			const id = `repository-${String(index).padStart(4, "0")}`;
+			writeSkill(repoSkillsRoot, id, id, "operating", true);
+		}
+		writeSkill(repositoriesRoot, "repo-skills-router", "repo-skills-router", "operating");
+
+		const startedAt = performance.now();
+		const result = loadSkills({ agentDir, cwd, skillPaths: [], includeDefaults: true, discoMode: "researcher" });
+		const elapsedMs = performance.now() - startedAt;
+		const visible = getModelVisibleSkills(result.skills);
+
+		expect(result.skills).toHaveLength(1_001);
+		expect(result.diagnostics).toEqual([]);
+		expect(visible.map((skill) => skill.name)).toEqual(["repo-skills-router"]);
+		expect(result.skills.filter((skill) => skill.disableModelInvocation)).toHaveLength(1_000);
+		expect(elapsedMs).toBeLessThan(15_000);
+	});
+
 });

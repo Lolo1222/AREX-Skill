@@ -84,14 +84,28 @@ new import, run:
 ```bash
 node <verify-repo-skill>/scripts/import_repo_skill.mjs \
   --agent-dir <agent-dir> \
+  --routing-entry <repo-path>/skills/disco/routing_decision/classification.json \
   <verified-runtime-skill-dir>
 ```
 
 For an approved replacement of that exact managed repo skill, add
 `--overwrite`. The importer validates the complete runtime tree, installs it
-under `<agent-dir>/skills/repo-skills/<skill-id>/`, rebuilds the sibling live
+under `<agent-dir>/skills/repositories/repo-skills/<skill-id>/`, rebuilds the sibling live
 `repo-skills-router`, and restores both the prior skill and router on failure.
 Do not edit the live tree or manually combine copy and updater commands.
+
+The routing entry is mandatory for a normal classified import. It must match
+the runtime v2 metadata exactly and include an existing absolute
+`source_checkout`; every assignment's repository-relative evidence path and
+line range must resolve under that checkout. Keep the full routing decision
+outside the runtime skill. If the extension did not change repository
+capability scope or taxonomy hash, reuse the previously verified decision only
+after confirming that its identity, runtime content digest, and evidence still
+match the edited skill. Never let the importer infer or backfill routing.
+Every classified assignment in a new or retained handoff must include
+assignment-level `confidence` (`high`, `medium`, or `low`) in addition to its
+rationale and evidence. This field is written to the central assignment index
+only; do not add it to the compact runtime v2 metadata.
 
 After success, the extended skill is available to DisCo Researcher in a new
 session without cross-agent export. Use `import-repo-skills-to-agent` only when

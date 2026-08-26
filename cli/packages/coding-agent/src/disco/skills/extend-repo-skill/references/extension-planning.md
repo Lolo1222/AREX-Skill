@@ -54,7 +54,7 @@ Inspect:
 Use the current skill to avoid duplicate content. If a capability already exists
 but is shallow, deepen it in the resolved source or external working copy instead
 of creating a parallel section. Never use this rule to edit a live managed copy
-under `<agent-dir>/skills/repo-skills/` outside the importer transaction.
+under `<agent-dir>/skills/repositories/repo-skills/` outside the importer transaction.
 
 ## Gather Targeted Repository Evidence
 

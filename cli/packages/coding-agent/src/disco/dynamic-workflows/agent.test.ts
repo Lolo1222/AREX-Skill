@@ -337,8 +337,8 @@ describe("create-repo-skill authoring constraints", () => {
 		expect(skill).toContain("Every generated package repo skill should include troubleshooting guidance");
 		expect(skill).toContain("references/repo-routing-metadata.json");
 		expect(skill).toContain("import_repo_skill.mjs");
-		expect(skill).toContain("lower-level router updater");
-		expect(skill).not.toContain("update_repo_skills_router.mjs");
+		expect(skill).toContain("repo-skills-router");
+		expect(skill).toContain("import_repo_skill.mjs");
 		expect(planning).toContain("troubleshooting coverage map");
 		expect(planning).toContain("Troubleshooting references should be actionable");
 		expect(planning).toContain("Troubleshooting failure");
@@ -448,30 +448,25 @@ describe("repo skills router and export workflow-skill constraints", () => {
 		return readFileSync(join(process.cwd(), "packages/coding-agent/src/disco/skills/import-repo-skills-to-agent", relativePath), "utf-8");
 	}
 
-	it("defines repo-skills-router as a two-layer usage-scenario router", () => {
+	it("defines repo-skills-router as a fixed area/family progressive-disclosure router", () => {
 		const skill = readRepoRouter("SKILL.md");
-		const scenarios = readRepoRouter("references/usage-scenarios.md");
 		const maintenance = readRepoRouter("references/maintenance.md");
 
 		expect(skill).toContain("name: repo-skills-router");
-		expect(skill).toContain("two-layer progressive disclosure");
-		expect(skill).toContain("Usage Scenario Quick Map");
-		expect(skill).toContain("references/scenarios/<scenario>.md");
-		expect(skill).toContain("how similar repo skills differ");
-		expect(skill).toContain("selection guideline");
+		expect(skill).toContain("progressive disclosure");
+		expect(skill).toContain("area pages");
+		expect(skill).toContain("family page");
+		expect(skill).toContain("../repo-skills/<skill-id>/SKILL.md");
+		expect(skill).toContain("no exact family fits");
 		expect(skill).toContain("DisCo Researcher");
 		expect(skill).toContain("export is not required for DisCo");
-		expect(skill).toContain("import_repo_skill.mjs");
-		expect(skill).not.toContain("copy the runtime skill into");
-		expect(scenarios).toContain("Repo Skill Options");
-		expect(scenarios).toContain("## How To Choose");
-		expect(scenarios).toContain("import_repo_skill.mjs");
-		expect(scenarios).toContain("Do not create a separate third layer for");
-		expect(scenarios).toContain("similar-skill differences");
+		expect(skill).not.toContain("Usage Scenario Quick Map");
+		expect(skill).not.toContain("references/scenarios/");
 		expect(maintenance).toContain("scripts/update_repo_skills_router.mjs");
 		expect(maintenance).toContain("scripts/import_repo_skill.mjs");
 		expect(maintenance).toContain("restores both the previous skill and router");
 		expect(maintenance).toContain("references/repo-routing-metadata.json");
+		expect(maintenance).toContain("exact taxonomy");
 		expect(maintenance).toContain("Do not hand-edit router Markdown as the import mechanism");
 	});
 
@@ -487,8 +482,8 @@ describe("repo skills router and export workflow-skill constraints", () => {
 		expect(skill).toContain("default to the current standard user-level");
 		expect(skill).toContain("`~/.agents/skills/`");
 		expect(skill).toContain("do not choose `~/.codex/skills` by default");
-		expect(skill).toContain("<target-skills-root>/repo-skills/<skill-id>/");
-		expect(skill).toContain("<target-skills-root>/repo-skills-router/");
+		expect(skill).toContain("<target-skills-root>/repositories/repo-skills/<skill-id>/");
+		expect(skill).toContain("<target-skills-root>/repositories/repo-skills-router/");
 		expect(skill).toContain("Ask the user whether to overwrite the target copy");
 		expect(skill).toContain("Never silently overwrite a non-router skill");
 		expect(skill).toContain("If the target already");
@@ -498,9 +493,9 @@ describe("repo skills router and export workflow-skill constraints", () => {
 		expect(skill).toContain("--output-router-dir <temp-dir>/repo-skills-router");
 		expect(skill).toContain("Do not copy");
 		expect(skill).toContain("directly for a subset import");
-		expect(skill).toContain("Preserve target-only scenario rows and scenario pages");
+		expect(skill).toContain("preserving unrelated target skills and their exact assignments");
 		expect(skill).toContain("the target router does not gain entries for unselected DisCo source");
-		expect(skill).toContain("Keep the two-layer structure");
+		expect(skill).toContain("generated area/family index");
 		expect(skill).toContain("Treat the target as Codex");
 		expect(skill).toContain("scripts/apply_codex_openai_policy.py");
 		expect(skill).toContain("policy.allow_implicit_invocation: false");

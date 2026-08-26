@@ -84,7 +84,7 @@ When useful, also read sibling workflow-skill references:
    path. If the user does not specify an artifact directory, default to
    `<repository-path>/skills/tests/<skill-id>/`, with usability cases under
    `test-cases/` and review reports under `reports/`. If the existing skill is
-   the live managed copy under `<agent-dir>/skills/repo-skills/<skill-id>/`, copy
+   the live managed copy under `<agent-dir>/skills/repositories/repo-skills/<skill-id>/`, copy
    only its runtime tree to a temporary working directory outside
    `<agent-dir>/skills/` before editing. Keep that working copy until the
    dedicated importer succeeds; never edit the live managed copy in place.
@@ -108,6 +108,14 @@ When useful, also read sibling workflow-skill references:
    resolved runtime working copy in place. Preserve root and sub-skill identities unless the
    user explicitly asks for a rename or the current name is invalid. Add or
    update `references/repo-provenance.md` with the refreshed source snapshot.
+   Preserve the canonical `repo_id` and `skill_id` by default. Treat the
+   existing area-family assignments as the routing baseline: keep them when
+   the repository's capability scope is unchanged, but do not keep them
+   blindly when the refresh adds, removes, or materially changes a capability.
+   If the capability scope changed, the taxonomy hash changed, or the user
+   requests reclassification, produce a new external area-family routing
+   handoff and matching minimal v2 metadata before import. Do not hand-edit
+   generated router Markdown or silently change assignments in prose.
 6. Update usability test cases under the review/test artifact directory's
    `test-cases/` subtree so at least one case proves refreshed behavior and at
    least one case guards a pre-existing workflow that should remain valid.
@@ -119,11 +127,15 @@ When useful, also read sibling workflow-skill references:
 8. After verification passes, follow `verify-repo-skill`'s structured import
    policy: use `ask_user_question` when approval is still required, then run the
    approved or auto-authorized refresh through
-   `verify-repo-skill/scripts/import_repo_skill.mjs` with `--overwrite` and the
-   refreshed runtime skill directory. Use `--overwrite` only because this workflow
-   is updating that exact approved repo skill. The helper installs the refreshed
-   runtime tree under `~/.disco/agent/skills/repo-skills/<skill-id>/`, rebuilds
-   the sibling live DisCo `repo-skills-router` under the global lock, and restores
+   `verify-repo-skill/scripts/import_repo_skill.mjs` with `--overwrite`, the
+   refreshed runtime skill directory, and `--routing-entry
+   <repo-path>/skills/disco/routing_decision/classification.json`. The external
+   handoff is mandatory for a normal classified import, even when the existing
+   area-family assignments are retained. Use `--overwrite` only because this
+   workflow is updating that exact approved repo skill. The helper installs the
+   refreshed runtime tree under
+   `~/.disco/agent/skills/repositories/repo-skills/<skill-id>/`, rebuilds the
+   sibling live DisCo `repo-skills-router` under the global lock, and restores
    both on failure. Do not hand-edit router Markdown or manually combine copy
    and updater commands. The refreshed skill is directly available to DisCo
    Researcher in a new session; use `import-repo-skills-to-agent` only when the
@@ -136,11 +148,18 @@ When useful, also read sibling workflow-skill references:
 - Do not regenerate a replacement skill from scratch unless the user explicitly
   asks or the old skill is so structurally invalid that in-place repair would be
   misleading.
-- Do not edit a live skill under `<agent-dir>/skills/repo-skills/` before the
+- Do not edit a live skill under `<agent-dir>/skills/repositories/repo-skills/` before the
   global import lock is held. Refresh an external working copy, then let
   `verify-repo-skill/scripts/import_repo_skill.mjs` replace the live target.
 - Do not finish a refresh without `references/repo-provenance.md`; if the old
   skill lacks it, create it from the current repository snapshot.
+- Do not silently change a repository's `repo_id` or `skill_id` during a
+  refresh. A rename is a separate identity migration and must update the
+  central repository index and all router references together.
+- Do not silently change area-family assignments. Preserve the prior routing
+  when capability scope is unchanged; otherwise use the verified external
+  routing handoff and minimal v2 metadata, then let the locked importer update
+  the router and indexes atomically.
 - Do not change the skill's public purpose to cover unrelated new repository
   areas unless those areas replace or materially affect existing guidance.
 - Do not add claims about APIs, CLIs, configs, data formats, dependency
@@ -178,5 +197,7 @@ By the end, the user should have:
   old skill was stale.
 - Verification evidence showing the public skill no longer depends on outdated
   repo facts.
+- A routing handoff stating whether prior area-family assignments were
+  preserved or reclassified, with the reason and evidence for any change.
 - A final handoff that distinguishes refreshed public skill content, review/test
   artifacts, evidence used, and any accepted uncertainty.

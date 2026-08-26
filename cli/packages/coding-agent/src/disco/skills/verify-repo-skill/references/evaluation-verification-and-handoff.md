@@ -409,7 +409,7 @@ Before finishing, confirm:
 - The final handoff includes a short verification report covering repo evidence used, generated sub-skills, usability test case coverage, native verification results, final coverage report path, verification results, and self-refine revisions.
 - Safe import/signature checks were run in the provided Python environment for APIs mentioned in the skill, then translated into public package facts.
 - Stale placeholders, speculative claims, and unnecessary empty directories were removed.
-- A repo skill routing update is ready for `repo-skills-router` if import is approved or auto-authorized, including usage-scenario placement plus in-scenario repo role, difference, and selection guidance when relevant.
+- A repo skill routing update is ready for `repo-skills-router` if import is approved or auto-authorized, including exact area-family placement and assignment-specific repository evidence when relevant.
 
 ## Final Skill Coverage Report
 
@@ -511,7 +511,7 @@ Repo-to-skills is the high-reuse managed special case in the general operating-
 graph deployment policy. A verified repo skill is self-contained, versioned,
 provenance-backed guidance intended to work across checkouts, projects, and
 research tasks. Import it to
-`~/.disco/agent/skills/repo-skills/<skill-id>/` and maintain the sibling router;
+`~/.disco/agent/skills/repositories/repo-skills/<skill-id>/` and maintain the sibling router;
 do not place it in one project's `.agents/skills/` and do not pass its
 `repo-routing-metadata.json` through the generic operating-graph importer. If a
 candidate still depends on private or transient checkout state, it has not met
@@ -523,7 +523,7 @@ policy from the calling workflow. If the policy is missing, default to
 
 When `importAfterVerification` is `ask`, use `ask_user_question` when available
 to ask whether to import it into DisCo's user skills directory at
-`~/.disco/agent/skills/repo-skills/<skill-id>/`. Present the verified runtime skill directory, the
+`~/.disco/agent/skills/repositories/repo-skills/<skill-id>/`. Present the verified runtime skill directory, the
 review/test artifact directory, and a concise verification summary so the user
 can make an informed decision. Do not only ask in a normal assistant message and
 stop when the structured question tool is available.
@@ -546,19 +546,20 @@ If the user approves import or import is auto-authorized, use the dedicated
 importer rather than manually composing a copy and router update:
 
 ```bash
-node scripts/import_repo_skill.mjs --agent-dir <agent-dir> [--overwrite] <runtime-skill-dir>
+node scripts/import_repo_skill.mjs --agent-dir <agent-dir> --routing-entry <classification.json> [--overwrite] <runtime-skill-dir>
 ```
 
 Omit `--overwrite` for a new import. Pass it only after approval to update that
 exact existing repo skill. The importer resolves `<agent-dir>` from the explicit
 option, `DISCO_CODING_AGENT_DIR`, or `~/.disco/agent`; acquires the shared global
 lock at `<agent-dir>/locks/repo-skills-import.lockdir`; and holds it across the
-complete mutation of `<agent-dir>/skills/`.
+complete mutation of `<agent-dir>/skills/repositories/`.
 
 Inside that transaction, the importer:
 
-1. Re-reads the current `<agent-dir>/skills/repo-skills/<skill-id>/` and sibling
-   `<agent-dir>/skills/repo-skills-router/` after acquiring the lock.
+1. Re-reads the current `<agent-dir>/skills/repositories/repo-skills/<skill-id>/`
+   and sibling `<agent-dir>/skills/repositories/repo-skills-router/` after
+   acquiring the lock.
 2. Re-checks overwrite safety. A same-name target fails unless `--overwrite`
    was supplied after approval for that exact skill.
 3. Copies only the verified runtime skill directory into a private staging
@@ -567,31 +568,29 @@ Inside that transaction, the importer:
 4. Recursively verifies every staged `SKILL.md` has a canonical name matching
    its directory, a double-quoted non-empty description,
    `disable-model-invocation: true`, and `metadata.disco-role: operating`.
-5. Requires and parses
-   `<runtime-skill-dir>/references/repo-routing-metadata.json`. This JSON is the
-   source of truth for router scenario placement, role, read-when signals,
-   best-fit tasks, avoid-when notes, useful entry points, and selection guidance.
+5. Requires and parses the v2
+   `<runtime-skill-dir>/references/repo-routing-metadata.json`. This JSON is a
+   minimal projection containing identity, taxonomy hash, routing status, and
+   exact area/family assignments; it is not an evidence or rationale ledger.
 6. Atomically installs the staged skill, preserving any approved previous copy
    for rollback.
-7. Checks that the routing metadata uses a canonical scenario ID or alias from
-   `<agent-dir>/skills/repo-skills-router/references/scenario-registry.json` when the
-   registry exists. If the metadata introduces a new scenario, it must include a
-   top-level `scenarios.<id>` entry with `allow_new: true`,
-   `why_not_existing`, and `expected_future_reuse`; otherwise the updater should
-   reject the import.
-   Also lint metadata fields before import: field values must not include
-   rendered labels such as `Read when`, `Avoid when`, `Best for`, or `Role`, role
-   text must not start with numeric artifacts, and `useful_entry_points` must not
-   contain generated count placeholders such as `1 more sub-skills`.
-8. Runs `scripts/update_repo_skills_router.mjs --agent-dir <agent-dir>
-   --already-locked` inside the same locked process. The updater re-reads live
-   skills and the live router,
-   creates the router from the bundled template when missing, rebuilds the root
-   quick map, `references/usage-scenarios.md`,
-   `references/maintenance.md`, `references/scenario-registry.json`, and every
-   `references/scenarios/<scenario>.md` page, removes legacy side-channel router
-   files, normalizes aliases through the scenario registry, and validates
-   coverage and links before returning success.
+7. Requires the external verified `classification.json` handoff for normal
+   managed imports. It must use the same canonical `repo_id`, `skill_id`,
+   taxonomy hash, routing status, and exact assignments. It must also carry
+   `repo_name`, canonical `source_url`, the 40-hex `source_commit`, the final
+   `skill_root`, and the `sha256:<digest>` content hash of the portable runtime
+   skill tree. Every classified assignment must include assignment-specific
+   rationale and at least one non-generated repository-local evidence item.
+   Full evidence remains outside the generated runtime skill. A classified
+   handoff must provide `source_checkout` as an existing absolute directory;
+   the importer checks that every evidence path exists under that checkout and
+   that every declared line range is valid. The field is not optional for a
+   normal classified import.
+8. Runs `scripts/update_repo_skills_router.mjs --library-root
+   <agent-dir>/skills/repositories --router-visibility preserve --already-locked`
+   inside the same locked process. The updater rebuilds the area quick map,
+   populated area pages, family comparison pages, machine-readable indexes,
+   and maintenance page from the fixed taxonomy and v2 fragments.
 9. Treats a non-zero updater exit or failed post-update existence check as an
    import failure, then restores both the previous skill and previous router
    before releasing the lock.
@@ -602,7 +601,7 @@ DisCo Researcher in a new session; cross-agent export is a separate optional
 operation.
 
 Do not treat `auto-import` as permission to overwrite an unrelated existing
-managed skill. If `~/.disco/agent/skills/repo-skills/<skill-id>/` already exists and
+managed skill. If `~/.disco/agent/skills/repositories/repo-skills/<skill-id>/` already exists and
 this workflow is not explicitly updating that exact skill, ask before replacing
 it or choose a non-conflicting import name when that is consistent with the
 generated skill id policy.
@@ -613,73 +612,54 @@ DisCo user copy is authoritative for the primary import. If it does not
 exist yet, create it from the bundled `repo-skills-router` template, then apply
 the routing update.
 
-Prepare the `repo-skills-router` update as structured progressive routing
-metadata for future agent routing. It should name the repo or project, identify
-practical usage scenarios, place the skill on one or more canonical scenario
-pages, and explain how to choose among overlapping imported repo skills inside
-those scenario pages. Store that metadata in
-`references/repo-routing-metadata.json` in the runtime skill before import. A
-minimal metadata file can look like:
+Prepare the `repo-skills-router` update as a structured progressive
+area/family routing decision. Classify the original repository against the
+exact taxonomy after verifying the generated skill. Store the full decision
+outside the runtime skill, preferably under
+`<repo-path>/skills/disco/routing_decision/`, as `classification.json` and
+`evidence.md`. The runtime `references/repo-routing-metadata.json` contains only
+the minimal v2 projection:
 
 ```json
 {
-  "skills": {
-    "flag-embedding": {
-      "scenarios": [
-        {
-          "id": "embedding-retrieval-workflows",
-          "title": "Embedding Retrieval Workflows",
-          "when_to_read": "Embedding, reranking, vector search, retrieval training, and corpus indexing tasks.",
-          "role": "Guides FlagEmbedding and BGE embedding, reranking, and retrieval workflows.",
-          "read_when": "The request names FlagEmbedding or BGE, or asks for embedding, reranking, retrieval training, vector search, or BGE-style model workflows.",
-          "best_for": "Embedding model setup, inference, fine-tuning, reranking, and retrieval evaluation.",
-          "avoid_when": "The request is about a different retrieval framework or a non-embedding model family.",
-          "useful_entry_points": ["flag-embedding/SKILL.md"],
-          "selection_guidance": "Choose `flag-embedding` for BGE/FlagEmbedding setup, inference, fine-tuning, reranking, retrieval evaluation, and related API or config troubleshooting."
-        }
-      ]
+  "schema_version": "2.0",
+  "repo_id": "owner/repository",
+  "skill_id": "flag-embedding",
+  "taxonomy_sha256": "<current-taxonomy-sha256>",
+  "routing_status": "classified",
+  "assignments": [
+    {
+      "area": "Information Retrieval",
+      "family": "Text Embeddings"
     }
-  }
+  ]
 }
 ```
 
-Metadata must route from task evidence, not only package-name mentions. Package
-names, repo names, and imports are strong signals, but `read_when` and
-`selection_guidance` must also include the workflows, data/model formats,
-API/CLI surfaces, configs, artifacts, and error modes that imply this repo skill
-when the user describes a need without naming the package. Do not write
-ambiguous `Choose this skill` or `Choose it` wording; name the concrete skill id
-or package. Metadata values are not rendered Markdown rows: do not start them
-with labels like `Read when`, `Avoid when`, `Best for`, or `Role`; do not start
-`role` with numeric artifacts such as `0 for` or `1 workflows`; and do not use
-non-path `useful_entry_points` placeholders such as `1 more sub-skills`.
+The external handoff is also the provenance patch for the central router
+index. Do not leave its source URL, source commit, skill root, or content hash
+out of the handoff and expect the updater to infer them from a repository name.
+Every classified assignment in that external handoff must also include
+assignment-level `confidence` (`high`, `medium`, or `low`), alongside its
+rationale and evidence. Confidence is retained in the central assignment
+index for audit and selection review; it is not added to the compact runtime
+`repo-routing-metadata.json` projection.
 
-Use these checks before approving import or publication:
-
-```bash
-rg -n '"role"\s*:\s*"(Role\b|[0-9]+\b)|"read_when"\s*:\s*"Read when\b|"avoid_when"\s*:\s*"Avoid when\b|"best_for"\s*:\s*"Best for\b|"useful_entry_points"\s*:\s*\[[^\]]*"[0-9]+ more sub-skills"' \
-  <repo-skills-root>/*/references/repo-routing-metadata.json
-```
-
-After rebuilding the router, also check rendered Markdown:
-
-```bash
-rg -n '^(Role|Read when|Best for|Avoid when|Useful entry points):\s*(Role|Read when|Best for|Avoid when|Useful entry points)\b|^Role:\s*[0-9]+\b' \
-  <library-root>/repo-skills-router
-```
+The repository checkout is the primary evidence source. Assign zero or more
+exact area -> family paths; each assignment requires its own rationale and at
+least one non-generated repository evidence item. Reject keyword-only,
+dependency-only, optional-integration, example-only, and context-collision
+matches. If no exact family is justified, use `unclassified`, ask the user
+whether to import it, and require approval/correction of a taxonomy-extension
+proposal before changing the taxonomy. Use `blocked` or `failed` for interrupted
+or inaccessible processing rather than guessing.
 
 When import is approved or auto-authorized, update the DisCo user
 `repo-skills-router` only through `scripts/import_repo_skill.mjs`; that helper
-calls the lower-level updater inside the global import lock. The generated router
-keeps its root quick map compact, updates `references/usage-scenarios.md`, and updates each relevant
-`references/scenarios/<scenario>.md` page with the repo skill's role, read-when
-signals, best-fit tasks, avoid-when notes, useful entry points, and selection
-guideline. It also preserves `references/scenario-registry.json`, normalizes
-alias scenario IDs to canonical pages, and rejects unknown scenarios unless the
-metadata includes explicit new-scenario rationale. If the imported skill
-overlaps with existing repo skills, put the comparison in the same scenario page
-under `How To Choose` through the structured metadata. Do not create or depend
-on a separate similar-skill comparison file.
+calls the lower-level area/family updater inside the global import lock. The
+generated router updates `references/index/`, populated area pages, and family
+comparison pages deterministically. Do not hand-edit generated router Markdown
+or put evidence into the runtime metadata fragment.
 
 Do not automatically synchronize the runtime skill or router into other agent
 tools as part of this verification/import workflow. If the user explicitly asks

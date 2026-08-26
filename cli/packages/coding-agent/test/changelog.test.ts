@@ -19,10 +19,10 @@ describe("normalizeChangelogLinks", () => {
 
 		expect(normalizeChangelogLinks(markdown, entry)).toBe(
 			[
-				"[Project Trust](https://github.com/VectorSpaceLab/Auto-ML-Skills/blob/v0.1.1/src/README.md#project-trust)",
-				"[Extensions](https://github.com/VectorSpaceLab/Auto-ML-Skills/blob/v0.1.1/src/docs/extensions.md#project_trust)",
-				"[Examples](https://github.com/VectorSpaceLab/Auto-ML-Skills/tree/v0.1.1/src/examples/extensions/)",
-				"[Root README](https://github.com/VectorSpaceLab/Auto-ML-Skills/blob/v0.1.1/README.md#supply-chain-hardening)",
+				"[Project Trust](https://github.com/VectorSpaceLab/AREX-Skill/blob/v0.1.1/cli/README.md#project-trust)",
+				"[Extensions](https://github.com/VectorSpaceLab/AREX-Skill/blob/v0.1.1/cli/docs/extensions.md#project_trust)",
+				"[Examples](https://github.com/VectorSpaceLab/AREX-Skill/tree/v0.1.1/cli/examples/extensions/)",
+				"[Root README](https://github.com/VectorSpaceLab/AREX-Skill/blob/v0.1.1/README.md#supply-chain-hardening)",
 			].join("\n"),
 		);
 	});
@@ -31,7 +31,7 @@ describe("normalizeChangelogLinks", () => {
 		const markdown = [
 			"[#5167](https://github.com/earendil-works/pi-mono/pull/5167)",
 			"[#4163](https://github.com/badlogic/pi-mono/issues/4163)",
-			"[DisCo README](https://github.com/VectorSpaceLab/Auto-ML-Skills/blob/main/src/README.md)",
+			"[DisCo README](https://github.com/VectorSpaceLab/AREX-Skill/blob/main/cli/README.md)",
 			"[External](https://example.com/docs)",
 			"[Local anchor](#settings)",
 		].join("\n");
@@ -40,7 +40,7 @@ describe("normalizeChangelogLinks", () => {
 			[
 				"[#5167](https://github.com/earendil-works/pi-mono/pull/5167)",
 				"[#4163](https://github.com/badlogic/pi-mono/issues/4163)",
-				"[DisCo README](https://github.com/VectorSpaceLab/Auto-ML-Skills/blob/v0.1.1/src/README.md)",
+				"[DisCo README](https://github.com/VectorSpaceLab/AREX-Skill/blob/v0.1.1/cli/README.md)",
 				"[External](https://example.com/docs)",
 				"[Local anchor](#settings)",
 			].join("\n"),

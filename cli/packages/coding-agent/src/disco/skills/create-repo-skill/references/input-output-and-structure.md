@@ -237,7 +237,7 @@ generated skill directory.
 | Data formats, schemas, expected columns, dataset layouts | Nearest `references/data-formats.md` |
 | Model catalogs, benchmark tables, supported backends, compatibility matrices | Nearest `references/model-overview.md`, `benchmarks.md`, or `compatibility.md` |
 | Errors, confusing behavior, debugging steps, operational pitfalls | Nearest `references/troubleshooting.md` |
-| Structured usage-scenario metadata for managed `repo-skills-router` import | Root `references/repo-routing-metadata.json` |
+| Minimal v2 area/family routing projection for managed `repo-skills-router` import | Root `references/repo-routing-metadata.json` |
 | Reusable environment checks, API inspection, smoke tests, repo example wrappers | Nearest `scripts/` directory |
 | Cross-cutting checks used by several sub-skills | Root `scripts/` |
 | Usability test case directories, fixtures, and case index | Artifact root `test-cases/`, default `<repository-path>/skills/tests/<chosen-skill-id>/test-cases/` |
@@ -255,65 +255,92 @@ source repo state without leaking local checkout paths or environment paths.
 `references/repo-routing-metadata.json` is required for every generated repo
 skill. It is consumed by
 `verify-repo-skill/scripts/import_repo_skill.mjs`, which invokes the lower-level
-router updater inside the locked import transaction so the live
+area/family router updater inside the locked import transaction so the live
 `repo-skills-router` can be rebuilt deterministically and rolled back with the
 skill if necessary. Keep it concise and structured; do not put generated router
-Markdown here.
+Markdown, evidence, rationale, confidence, or source checkout paths here.
 
-Before choosing an `id`, read the live or bundled
-`repo-skills-router/references/scenario-registry.json` when available. Prefer an
-existing canonical scenario ID or one of its aliases. A new scenario ID is
-allowed only when every existing canonical scenario would be misleading; then
-add a top-level `scenarios.<id>` entry with `allow_new: true`,
-`why_not_existing`, and `expected_future_reuse` so the updater can preserve the
-organizational decision.
-
-Use this shape:
+Use this minimal v2 shape:
 
 ```json
 {
-  "skills": {
-    "<skill-id>": {
-      "scenarios": [
-        {
-          "id": "<lowercase-hyphen-usage-scenario>",
-          "title": "<Human Scenario Title>",
-          "when_to_read": "<task family that should route to this scenario>",
-          "role": "<one-sentence role for this repo skill in this scenario>",
-          "read_when": "<task intents, data/model/workflow signals, repo names, API/CLI/config/error signals>",
-          "best_for": "<specific workflows this skill handles well>",
-          "avoid_when": "<clear non-fit or better scenario/skill>",
-          "useful_entry_points": ["<skill-id>/SKILL.md"],
-          "selection_guidance": "<how to choose `<skill-id>` among overlapping skills>"
-        }
-      ]
+  "schema_version": "2.0",
+  "repo_id": "owner/repository",
+  "skill_id": "<skill-id>",
+  "taxonomy_sha256": "<current-taxonomy-sha256>",
+  "routing_status": "classified",
+  "assignments": [
+    {
+      "area": "<exact taxonomy area>",
+      "family": "<exact family under that area>"
     }
-  }
+  ]
 }
 ```
 
-The top-level skill id must match the generated skill directory basename. A
-skill may list multiple scenarios only when it has real, useful coverage in each
-scenario. Use entry point paths relative to the `repo-skills/` collection root,
-such as `<skill-id>/SKILL.md` or `<skill-id>/sub-skills/<sub-skill-id>/`.
+The top-level `skill_id` must match the generated skill directory basename and
+the root `SKILL.md` frontmatter. A repository may have multiple assignments,
+but each assignment must be supported by its own evidence in the external
+classification decision artifact. If no exact family is justified, write:
 
-Write router metadata so it works even when the user describes a task without
-naming the package. Package and repo names are strong signals, but every
-`read_when` and `selection_guidance` must also include task, data format, model
-family, API/CLI, config, artifact, error, or workflow signals that imply this
-skill. Do not write ambiguous phrases such as "Choose this skill" or "Choose it"
-in metadata; name the concrete skill id or package, for example
-`Choose <skill-id> when ...`.
+```json
+{
+  "schema_version": "2.0",
+  "repo_id": "owner/repository",
+  "skill_id": "<skill-id>",
+  "taxonomy_sha256": "<current-taxonomy-sha256>",
+  "routing_status": "unclassified",
+  "assignments": [],
+  "unclassified_reason": "<bounded evidence-first reason>"
+}
+```
 
-Metadata field values are data, not rendered router Markdown lines. Do not
-prefix values with their output labels:
+Evidence and rationale belong outside the generated skill, preferably under
+`<repo-path>/skills/disco/routing_decision/`. The normal import handoff is a
+machine-readable `classification.json` plus a human-readable `evidence.md`.
+The importer verifies that the handoff and this compact projection agree.
 
-- Write `"read_when": "The task names ..."` rather than
-  `"read_when": "Read when the task names ..."`.
-- Write `"avoid_when": "The task is only ..."` rather than
-  `"avoid_when": "Avoid when the task is only ..."`.
-- Do not start `role` with `Role`, an index, or a count such as
-  `"1 workflows"`; write a sentence such as
-  `"Guides <package> workflows for ..."`.
-- Every `useful_entry_points` item must be a concrete path or URL. Do not write
-  placeholders such as `"1 more sub-skills"`.
+The machine-readable handoff must contain the provenance needed to update the
+central repository index, not only the area/family assignments:
+
+```json
+{
+  "schema_version": 1,
+  "repo_id": "owner/repository",
+  "repo_name": "repository",
+  "source_url": "https://github.com/owner/repository",
+  "source_commit": "<40-hex-commit>",
+  "skill_id": "<skill-id>",
+  "skill_root": "repo-skills/<skill-id>",
+  "skill_content_sha256": "sha256:<64-hex-digest>",
+  "taxonomy_sha256": "<current-taxonomy-sha256>",
+  "status": "classified",
+  "assignments": [
+    {
+      "area": "<exact taxonomy area>",
+      "family": "<exact taxonomy family>",
+      "confidence": "high",
+      "rationale": "<assignment-specific explanation>",
+      "evidence": [
+        {
+          "path": "README.md",
+          "description": "<repository-local evidence>",
+          "line_start": 1,
+          "line_end": 20
+        }
+      ]
+    }
+  ]
+}
+```
+
+`skill_content_sha256` is computed over the portable runtime skill tree and is
+checked again during import. `confidence` is required for every classified
+assignment in the external handoff and belongs to the central assignment
+index; it is deliberately not copied into the runtime v2 metadata. Every
+classified assignment needs at least one non-generated repository evidence
+item; generated-skill prose can corroborate an assignment but cannot be its
+only support. Use `status: "unclassified"`,
+an empty assignment list, and a bounded `unclassified_reason` when no exact
+family is justified. `blocked` and `failed` are processing outcomes and are
+never importable runtime routing statuses.
