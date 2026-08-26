@@ -1,388 +1,406 @@
 <h1 align="center">AREX-Skill</h1>
 
 <p align="center">
-  <strong>DisCo: A skill-powered research agent with task-related operating knowledge</strong>
+  <strong>Turn Repos & Papers into Skills for Autonomous ML Research</strong>
 </p>
 
 <p align="center">
-  <a href="research-skills-library/README.md"><img src="https://img.shields.io/badge/Research_Skills_Library-1000%2B_skills-0E9B9B?style=for-the-badge" alt="Research Skills Library: 1000+ skills"></a>
-  <a href="https://www.npmjs.com/package/@auto-ml-skills/disco"><img src="https://img.shields.io/badge/CLI-disco%20v0.1.1-5865F2?style=for-the-badge&logo=npm&logoColor=white" alt="DisCo CLI v0.1.1"></a>
-  <a href="CONTRIBUTING.md"><img src="https://img.shields.io/badge/Contributing-Guide-0E9B9B?style=for-the-badge" alt="Contributing Guide"></a>
-  <a href="LICENSE"><img src="https://img.shields.io/badge/License-Apache_2.0-D22128?style=for-the-badge&logo=apache&logoColor=white" alt="License: Apache 2.0"></a>
+  An open library of <b>5,000+ verified, executable skills</b> distilled from
+  <b>1,000 ML repositories</b> — and the agent that builds them.
+</p>
+
+<p align="center">
+  <a href="research-skills-library/README.md"><img src="https://img.shields.io/badge/Research_Skills_Library-5000%2B_skills-0E9B9B?style=for-the-badge" alt="Research Skills Library: 5000+ skills"></a>
+  <a href="research-skills-library/repo-skills/"><img src="https://img.shields.io/badge/ML_Repositories-1000-5865F2?style=for-the-badge" alt="1000 ML repositories"></a>
+  <a href="https://www.npmjs.com/package/@auto-ml-skills/disco"><img src="https://img.shields.io/badge/CLI-disco-D22128?style=for-the-badge&logo=npm&logoColor=white" alt="DisCo CLI"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-Apache_2.0-lightgrey?style=for-the-badge&logo=apache&logoColor=white" alt="License: Apache 2.0"></a>
 </p>
 
 <p align="center">
   <b>English</b> | <a href="README.zh-CN.md">简体中文</a>
 </p>
 
-<p align="center">
-  <img src="assets/intro.png" alt="Auto-ML-Skills overview: skill-guided research, library composition, and evaluation results">
-</p>
+```mermaid
+flowchart LR
+    subgraph SRC["📚 Sources"]
+        direction TB
+        s0["🌐 Tens of thousands<br>of ML repos"] == "curate" ==> s1["⭐ 1,000 top repos<br>+ 📄 papers · ✍️ blogs"]
+    end
+    subgraph CRE["🤖 Creator Agent"]
+        direction TB
+        c1["🔍 Discover<br><i>capabilities</i>"] --> c2["🧠 Distill<br><i>into skills</i>"] --> c3["🧪 Verify<br><i>by execution</i>"]
+        c3 -. refine .-> c2
+    end
+    subgraph LIB["🧠 AREX Skill Library"]
+        direction TB
+        l1["🧭 One router<br><i>routes any ML task</i>"] ~~~ l2["📖 5,000+ verified skills<br><i>20 areas · 178 families</i>"] ~~~ l3["🛠 Task-oriented skills<br><i>built per task</i>"]
+    end
+    subgraph FIN["🧑‍💻 Your Agent — unchanged"]
+        direction TB
+        u["Claude Code · Codex · DisCo<br><i>loads only what<br>the task needs</i>"] --> r["🔬 <b>Autonomous<br>ML research</b><br>🔓 new abilities<br>🏆 better results<br>⚡ fewer tokens"]
+    end
+    SRC ==> CRE ==> LIB ==> FIN
+```
 
-Auto-ML-Skills specializes what a research agent knows to consider without
-prescribing how it must research. Relevant methods, procedures, checks, and
-recovery actions are scattered across an LLM's parametric prior, repositories,
-papers, benchmark resources, and other knowledge sources. DisCo reorganizes
-source-grounded evidence into operating-knowledge skill graphs. In Creator
-mode it constructs and verifies those graphs; in Researcher mode it loads the
-task-relevant portion through progressive disclosure and uses code, tools, and
-experiments to complete the research task.
+> **Same agent. Same budget. 2.3× the wins.**
+> MLE-bench sets agents loose on 75 Kaggle ML competitions. With AREX skills,
+> vanilla Codex goes from winning medals in **31%** of them to **73%** —
+> outscoring every public leaderboard entry. Skills, not agent engineering.
 
-The **Research Skills Library** is the growing collection of these reusable
-skill graphs. It has two parts: task-agnostic skills distilled from widely
-used ML repositories, and task-oriented skills constructed around specific
-research tasks rather than general package usage.
-This public checkout currently ships the task-agnostic repository collection:
-**more than 1,000 operating skills organized into graphs for 170 widely used
-ML and research repositories across 14 families and four broad areas**, plus a
-library-level router. This repository collection is a first scale point for the
-library, not its boundary.
+---
 
-> **Naming note:** Auto-ML-Skills is the repository name. DisCo is the
-> user-facing CLI/runtime, and the Research Skills Library is the published
-> reusable skill collection.
+## 📣 News
 
-## 🧭 Table Of Contents <a id="table-of-contents"></a>
-
-- [📣 News](#news)
-- [💡 Why Auto-ML-Skills](#why-auto-ml-skills)
-- [🧰 What Is Included](#what-is-included)
-- [🗂️ Library Coverage](#library-coverage)
-- [⚙️ Installation](#installation)
-- [🚀 Quick Start](#quick-start)
-- [🛠️ Creator Meta Skills](#creator-meta-skills)
-- [🤝 Contributing](#contributing)
-- [📚 Documentation](#documentation)
-- [🙏 Acknowledgement](#acknowledgement)
-- [📄 License](#license)
-- [📝 Citation](#citation)
-
-## 📣 News <a id="news"></a>
-
-- **2026-08-03**: Auto-ML-Skills brings together DisCo's Creator and Researcher
-  workflows and a Research Skills Library with 1,000+ operating skills for 170
+- **2026-08**: The library scales to **1,000 repositories and 5,000+ skills**,
+  with a rebuilt router covering every repo. Technical report coming soon,
+  with full benchmark results on MLE-bench, PaperBench, Frontier-CS, and
+  PassNet.
+- **2026-08-03**: AREX-Skill launches with DisCo's Creator and Researcher
+  workflows and a Research Skills Library of 1,000+ operating skills for 170
   widely used repositories.
 
-## 💡 Why Auto-ML-Skills <a id="why-auto-ml-skills"></a>
+---
 
-Research agents can propose methods, write code, run experiments, and iterate
-on solutions. On a concrete ML research task, however, their success also
-depends on whether they can identify and apply the right existing knowledge
-within the same limited execution budget used to produce the final result.
+## Why AREX-Skill?
 
-- **Task-relevant knowledge is dispersed.** Applicable methods, tools,
-  procedures, validation checks, and recovery actions may be split across the
-  model's prior, source repositories, papers, task assets, and web resources.
-- **Raw sources are not operating context.** An agent still needs to determine
-  when a source applies, which evidence matters, how to execute it, what it
-  should observe, and how to detect and recover from failure.
-- **Reconstruction competes with research.** Re-reading and reconciling sources
-  during every task consumes context, tool calls, compute, and experiment
-  budget that could otherwise improve the research outcome.
-- **Harnesses and skills specialize different things.** A harness governs how
-  an agent plans, searches, critiques, and executes. Skills organize what the
-  agent knows to consider, without forcing a fixed research trajectory.
+**Research knowledge is everywhere. Agents still can't use it well.**
 
-We call this task-related body of methods, procedures, checks, and recovery
-actions **operating knowledge**. DisCo turns source-oriented knowledge into an
-operating-knowledge skill graph whose skills declare use conditions, execution
-behavior, supporting evidence, validation steps, and failure handling. Creator
-mode performs this ML knowledge distillation through evidence-backed
-exploration, skill-graph generation, and verification with refinement.
-Researcher mode then loads only the relevant graph fragment as its operating
-context and applies it to the task.
+| 📄 **Papers** | 💻 **Codebases** | 🤖 **Agents** |
+|:---:|:---:|:---:|
+| Explain *why* things work | Contain *working* implementations | Still have to *rediscover everything* |
 
-## 🧰 What Is Included <a id="what-is-included"></a>
+Papers, repositories, and blogs hold nearly all of the field's know-how — but
+they are written for human readers. They are loose, heterogeneous, and expose
+no interface an agent can call. So on every task, an agent burns its context
+window and execution budget searching, reading, and trial-and-erroring its way
+back to knowledge the field already wrote down.
 
-| Component | Purpose |
-| --- | --- |
-| [DisCo](src/) | The TypeScript research-agent CLI. Creator constructs and maintains skill graphs; Researcher uses operating skills with code, tools, and experiments. |
-| [Research Skills Library](research-skills-library/) | The reusable operating-knowledge layer. This checkout publishes the task-agnostic repository collection: more than 1,000 skills organized into graphs for 170 widely used repositories, plus their sibling `repo-skills-router`. DisCo can also construct task-oriented skills around a specific research task's source constraints, evaluation protocol, and verification conditions. |
-| [Examples](examples/) | Sanitized end-to-end sessions showing Creator building a FlagEmbedding skill graph and Researcher applying Gymnasium and Stable-Baselines3 skills to an auditable battery-dispatch experiment. |
-| [Documentation](docs/) | Workflow, architecture, catalog, deployment, and portability guides. The 15 bundled Creator meta skills remain part of DisCo rather than a separate manual installation. |
+We call the missing layer **operating knowledge**: the know-how that separates
+*knowing a method* from *making it work*. AREX-Skill pre-compiles it, once, into
+skills.
 
-Each session exposes a mode-specific skill inventory:
+---
 
-| Mode | Visible skills | Responsibility |
-| --- | --- | --- |
-| **Researcher** (default) | `operating` skills and user skills without `metadata.disco-role` | Use routed operating knowledge, code, tools, and experiments to complete an ML research task. |
-| **Creator** | Skills explicitly marked `metadata.disco-role: meta` | Start with `distill-ml-knowledge`, choose `direct`, `reuse-existing` (one workflow or a bounded composition), or `design-reusable`, and send only a verified recurring construction gap to `design-meta-skill`. |
+## From Knowledge to Skills
 
-Use `--agent-mode creator|researcher` in non-interactive sessions, or
-`/creator` and `/researcher` in the interactive UI. Switching opens a new
-session with a clean context. See [DisCo Workflows](docs/disco-workflows.md) for
-session/export behavior, detailed workflows, and deployment rules.
+> **We don't summarize repositories. We compile them into skills agents can execute.**
 
-## 🗂️ Library Coverage <a id="library-coverage"></a>
+```mermaid
+flowchart TB
+    subgraph D["📚 Descriptive Knowledge — written for humans"]
+        direction LR
+        d1["📄 <b>Papers</b><br><i>methods & why they work —<br>but no runnable path</i>"] ~~~ d2["💻 <b>Repos</b><br><i>working code —<br>but usage stays implicit</i>"] ~~~ d3["✍️ <b>Blogs</b><br><i>tricks & pitfalls —<br>scattered, unverified</i>"]
+    end
+    D == "⚗️ <b>Skill Distillation</b> — extract · operationalize · verify" ==> O
+    subgraph O["🛠 Operational Knowledge — built for agents"]
+        direction LR
+        o1["🎯 <b>When to use</b><br><i>applicability conditions<br>the router can match</i>"] ~~~ o2["📋 <b>How to use</b><br><i>step-by-step workflows<br>with expected behavior</i>"] ~~~ o3["▶️ <b>What to run</b><br><i>commands, scripts,<br>ready-made tools</i>"]
+        o4["✅ <b>How to validate</b><br><i>checks & expected<br>observations</i>"] ~~~ o5["🚑 <b>How to recover</b><br><i>known failures with<br>fixes attached</i>"] ~~~ o6["📎 <b>What to trust</b><br><i>evidence linked back<br>to the source</i>"]
+    end
+```
 
-The public repository collection spans 14 families and four broad areas. It is
-built from a curated set of 170 widely used ML and research
-repositories, producing 1,060 root and focused skills with broad coverage of
-training, data, evaluation, agents, retrieval, vision, generation, ML
-operations, and scientific computing.
+The output is not a summary and not a RAG index. It is **Knowledge →
+Capability**: a skill declares its use conditions, execution behavior,
+supporting evidence, validation steps, and failure handling — everything an
+agent needs to act, verify, and recover without re-deriving the source.
 
-DisCo's Creator CLI and bundled meta skills provide repeatable workflows for
-creating, verifying, maintaining, and importing new skill graphs. A
-library-level router and progressive disclosure let the task-agnostic
-collection scale to more repositories, domains, software stacks, and languages
-while loading only the repository skills relevant to the current task.
+---
 
-Beyond general package usage, DisCo can construct task-oriented skills for
-specific research settings. In that path, the skill graph is organized around
-the operating knowledge required by the task's source constraints, evaluation
-protocol, and verification conditions rather than around one reusable package
-workflow.
+## What Is an AREX Skill?
 
-![Overview of the Auto-ML-Skills Library](assets/library.png)
+Each repository becomes an **operating-knowledge skill graph** with three parts:
 
-The [Imported Repo Skills Catalog](docs/imported-repo-skills.md) lists every
-published graph with its upstream repository, update date, package version,
-source commit, and intended workflow coverage.
+```text
+AREX Skill
+│
+├── 🧭 Skill Router        one library-level index, loaded first;
+│                          routes the task to the right skill graph
+│
+├── 📖 Skill Instructions  when to use · how to use · expected behavior
+│                          · validation steps · failure recovery
+│
+└── 🛠 Tools               scripts · CLIs · reusable implementations
+                           ready to execute in the agent's environment
+```
 
-## ⚙️ Installation <a id="installation"></a>
+**Structured. Executable. Agent-ready.** Skills load through progressive
+disclosure: the agent first sees only the router, opens the matching graph,
+and reads just the sub-skill the task needs — operating knowledge for 1,000
+repositories at the cost of a few files in context.
 
-Using DisCo with the collection published in this repository requires both of
-the following installation steps, in order:
+---
 
-1. Install the `disco` CLI.
-2. Install the public repository-skill collection into DisCo's managed skill
-   directory.
+## How AREX Builds Skills
 
-Installing portable Creator meta skills into another agent is optional. DisCo
-already bundles them.
+**Skills are discovered, distilled, and verified — automatically.**
 
-### Install DisCo
+```mermaid
+flowchart LR
+    S["📦 repo · paper · blog"] --> A["🔍 <b>Discover</b><br><i>map what the source<br>can actually do</i>"]
+    A --> B["🧠 <b>Distill</b><br><i>write skills with evidence,<br>checks & recovery paths</i>"]
+    B --> C["🧪 <b>Validate</b><br><i>execute examples & tests<br>in a real environment</i>"]
+    C == "✅ passed" ==> L["📚 <b>Ship</b><br><i>into the library</i>"]
+    C -- "❌ failed" --> E["🔁 <b>Evolve</b><br><i>repair & refine</i>"]
+    E --> B
+```
 
-Install the DisCo CLI from npm:
+An ordinary repo-to-doc tool stops at `Repo → Documentation`. AREX's Creator
+agent runs a full experimental loop — evidence-backed exploration, skill-graph
+generation, then **verification with refinement**: generated checks and native
+examples are executed, failures are repaired, and the loop repeats until the
+graph passes or the budget is spent. Skills ship only after they survive their
+own tests.
+
+---
+
+## Works With Your Coding Agent
+
+**No new agent. No new workflow.**
+
+```mermaid
+flowchart LR
+    S["🧠 <b>AREX Skills</b><br><i>plain SKILL.md graphs<br>+ one library router</i>"] ==> G
+    subgraph G["your existing agents — workflow unchanged"]
+        direction LR
+        A["<b>Claude Code</b><br><i>drop into skills dir</i>"] ~~~ B["<b>Codex</b><br><i>our benchmark harness</i>"] ~~~ C["<b>DisCo</b><br><i>bundled CLI:<br>install · route · update</i>"]
+    end
+```
+
+Skills are plain `SKILL.md` graphs in the emerging agent-skills format. Drop
+them into the coding agent you already use — no proprietary runtime, no new
+research platform to migrate to. The bundled [DisCo CLI](cli/) manages
+installation, routing, and updates, and our benchmark results below use
+unmodified Codex as the harness.
+
+---
+
+## Scale
+
+<table align="center">
+  <tr>
+    <td align="center"><h2>1,000</h2>widely used<br>ML repositories</td>
+    <td align="center"><h2>5,000+</h2>autonomously distilled<br>& verified skills</td>
+    <td align="center"><h2>20</h2>research areas,<br>178 task families</td>
+  </tr>
+</table>
+
+<p align="center">Sources: GitHub · Papers · Technical Blogs</p>
+
+This is not a demo. It is the first scale point of a growing **Machine
+Learning Research Skill Library** — from training infrastructure, LLM
+alignment, and inference serving to robotics, genomics, and scientific
+computing. The [catalog](docs/imported-repo-skills.md) lists every graph with
+its upstream repository, source commit, and coverage.
+
+---
+
+## Skill Gallery
+
+What a skill looks like in practice — source → skill → one prompt:
+
+| | Source | Skill | Ask your agent |
+|---|---|---|---|
+| 🔍 | [FAISS](research-skills-library/repo-skills/faiss/) | Vector search & index composition | *"Optimize this FAISS index for lower latency at recall ≥ 0.95."* |
+| ⚡ | [vLLM](research-skills-library/repo-skills/vllm/) | High-throughput LLM serving | *"Benchmark vLLM vs SGLang on this model and report verified throughput."* |
+| 🧠 | [Unsloth](research-skills-library/repo-skills/unsloth/) | Efficient LLM fine-tuning | *"Fine-tune Llama on this dataset within 24 GB VRAM."* |
+| 🔥 | [Diffusers](research-skills-library/repo-skills/diffusers/) | Diffusion training & inference | *"Train a LoRA for this style and validate outputs."* |
+| 🦾 | [LeRobot](research-skills-library/repo-skills/lerobot/) | Robot learning workflows | *"Train and evaluate an ACT policy on this manipulation dataset."* |
+| 🧬 | [AlphaFold2](research-skills-library/repo-skills/alphafold2/) | Protein structure prediction | *"Fold these sequences and check confidence metrics."* |
+
+Every graph follows the same contract: a routed entry skill, focused
+sub-skills for real workflows (data, training, evaluation, serving,
+troubleshooting), and validation steps the agent can actually run.
+
+---
+
+## Do Skills Make Agents Better Researchers?
+
+We hold everything fixed — **Codex harness, GPT-5.5 (xhigh) backbone, same
+execution budget** — and change exactly one thing: whether the agent has
+AREX-distilled skills.
+
+```text
+MLE-bench (medal rate across 75 Kaggle competitions)
+  without skills   ███████░░░░░░░░░░░░░░░░  31.1%
+  with skills      █████████████████░░░░░░  72.9%   (+134% relative)
+
+PaperBench (replication score, 20 papers)
+  without skills   ███████░░░░░░░░░░░░░░░░  29.5
+  with skills      █████████░░░░░░░░░░░░░░  39.6    (+34% relative)
+```
+
+| Benchmark | Metric | Codex | Codex + AREX-Skill | Δ |
+| --- | --- | ---: | ---: | ---: |
+| **MLE-bench** (full, 75 tasks) | Medal rate (Any Medal) % | 31.11 | **72.89** | **+41.78** |
+| **PaperBench** (full, 20 papers) | Replication score | 29.45 | **39.59** | **+10.14** |
+| **Frontier-CS** (Agent Track, 188 tasks) | Score | 70.63 | **77.14** | **+6.51** |
+| **PassNet** (200 samples) | AS Score | 1.343 | **1.531** | **+14.0%** |
+
+Highlights from the technical report (release coming soon):
+
+- **Beyond agent engineering.** Vanilla Codex + skills tops the strongest
+  public MLE-bench entries (72.89 vs 64.44) — no custom harness, no modified
+  control loop, only distilled operating knowledge.
+- **The advantage grows with difficulty.** On MLE-bench High-tier tasks the
+  score rises from 13.3% to 62.2% (4.7×); skills matter most exactly where
+  unguided trial-and-error is most expensive.
+- **Recovery, not just polish.** The largest gains land on tasks where the
+  no-skill agent nearly fails (PaperBench `rice`: 7.9 → 48.5; Frontier-CS
+  tasks scoring <50 gain +26.6 on average).
+- **Efficiency, not brute force.** On Frontier-CS, Codex + AREX-Skill
+  Pareto-dominates the leaderboard's Claude Code entries on score, tokens,
+  steps, and tool calls, using ~3× fewer tokens.
+
+### Why it helps
+
+```text
+Without AREX                    With AREX
+────────────                    ─────────
+Search the web                  Route to skill
+Inspect the repo                Execute known workflow
+Guess an approach               Validate against checks
+Debug from scratch              Optimize the target metric
+Retry, repeat…
+```
+
+Benchmarks show *that* performance improves; the operating pattern shows
+*why*: the agent enters a productive region of the solution space early and
+spends its budget on the choices that move the metric. See a full
+[Creator session](examples/creator/) building a FlagEmbedding graph and a
+[Researcher session](examples/researcher/) applying Gymnasium +
+Stable-Baselines3 skills to an auditable RL experiment.
+
+---
+
+## Quick Start
+
+Three steps to a skill-powered research agent:
 
 ```bash
+# 1. Install the DisCo CLI (Node.js >= 22.19)
 npm install -g @auto-ml-skills/disco
-disco
-```
 
-DisCo requires Node.js `>=22.19.0` and builds on
-[Pi](https://github.com/earendil-works/pi)'s multi-provider model layer.
-The npm package includes its own DisCo-modified coding-agent source and uses
-pinned `@earendil-works/pi-agent-core`, `@earendil-works/pi-ai`, and
-`@earendil-works/pi-tui` packages as dependencies. It does not depend on
-`@earendil-works/pi-coding-agent`, discover `.pi` resources, or share a
-globally installed Pi dependency tree.
-
-Configure at least one provider in the startup flow with `/login`, or use
-environment variables such as
-`OPENAI_API_KEY`, `ANTHROPIC_API_KEY`, `GEMINI_API_KEY`, `OPENROUTER_API_KEY`,
-or `MISTRAL_API_KEY`.
-
-<details>
-<summary>Build from source for local development</summary>
-
-```bash
-git clone https://github.com/VectorSpaceLab/Auto-ML-Skills.git
-cd Auto-ML-Skills
-# If model catalog fetching fails behind an HTTP(S) proxy, use: NODE_USE_ENV_PROXY=1 bash scripts/build-from-source-link.sh
-bash scripts/build-from-source-link.sh
-```
-
-The script installs the standalone package dependencies from the checked-in
-shrinkwrap, builds DisCo, and links the `disco` command globally for local use.
-
-</details>
-
-### Install The Published Repository Collection
-
-Install the official collection and its router with DisCo:
-
-```bash
+# 2. Install the skill library (1,000 repos + router)
 disco repo-skills install
+
+# 3. Research with skills
+disco -p "Use the installed skills to benchmark vLLM and SGLang \
+on this machine and report verified throughput for each."
 ```
 
-The command uses a shallow checkout of the official repository, installs only
-the published runtime collection, and records its source commit. Git must be
-available locally. Later, inspect or update the managed collection with:
-
-```bash
-disco repo-skills status
-disco repo-skills update
-```
-
-`status` is local-only: it checks managed digests, router presence and current
-skill coverage without contacting GitHub. Run `update` when you want to check
-and apply the latest official commit.
-
-Updates replace only official managed skill IDs. Repo skills created or
-imported locally by Creator are preserved. If an official skill was modified
-locally or collides with an unmanaged skill, the command stops; an explicit
-`--force` update first keeps a recoverable backup.
-
-DisCo registers the managed collection, but its repository roots and focused
-sub-skills use `disable-model-invocation: true` and are omitted from the initial
-model context. By default, `repo-skills-router` remains visible, routes to one
-practical scenario, and then points DisCo to the selected skill under its
-sibling `repo-skills/` collection. Automatic router selection can be disabled
-and restored without uninstalling the collection:
-
-```bash
-disco repo-skills router disable
-disco repo-skills router enable
-```
-
-When disabled, the router is omitted from automatic model selection but remains
-registered for explicit `/skill:repo-skills-router` invocation. Start a new
-Researcher session after an install, update, or router setting change.
+Configure a model provider on first run with `/login` or environment variables
+(`ANTHROPIC_API_KEY`, `OPENAI_API_KEY`, `GEMINI_API_KEY`, …).
 
 <details>
-<summary>Manual installation fallback</summary>
+<summary><b>Create your own skills (Creator mode)</b></summary>
 
-```bash
-git clone https://github.com/VectorSpaceLab/Auto-ML-Skills.git
-cd Auto-ML-Skills
-mkdir -p ~/.disco/agent/skills
-cp -R \
-  research-skills-library/repo-skills \
-  research-skills-library/repo-skills-router \
-  ~/.disco/agent/skills/
-```
-
-Running `disco repo-skills install` later can adopt an unchanged manual copy and
-preserve additional local skill IDs.
-
-</details>
-
-For router behavior, third-party skill packages, and deployment-scope details,
-see [DisCo Workflows](docs/disco-workflows.md), the
-[Research Skills Library guide](research-skills-library/README.md), and the
-[DisCo CLI README](src/README.md).
-
-### Portable Meta Skills For Another Agent (Optional)
-
-DisCo already bundles its Creator workflows. To run them in another compatible
-agent, follow [Meta Skills For Other Agents](docs/meta-skills-for-other-agents.md).
-
-## 🚀 Quick Start <a id="quick-start"></a>
-
-Researcher is the default. After completing both installation steps, ask for a
-concrete research outcome; relevant repository skills are selected through the
-router and opened progressively:
-
-```bash
-disco --agent-mode researcher -p "Benchmark vLLM and SGLang with the same model and workload on this machine. Tune each server under identical hardware and memory constraints, report the best verified throughput for each, and preserve the commands and measurements needed to reproduce the comparison."
-```
-
-Use Creator when the task needs a new or updated operating-skill graph. It
-starts with `distill-ml-knowledge`, which normalizes the task and selects
-`direct`, `reuse-existing`, or `design-reusable`. Direct distillation builds a
-task-conditioned graph; `reuse-existing` invokes one adequate workflow or a
-bounded composition; `design-reusable` hands an evidence-backed recurring
-construction gap to `design-meta-skill`.
-
-**Create skills for a specific repository.** The bundled repository workflow
-already covers source inspection, environment preparation, skill generation,
-verification, and import. `distill-ml-knowledge` therefore selects
-`reuse-existing` with `reuse mode: single` and hands this request to
-`create-repo-skill`:
+DisCo's Creator mode distills new skill graphs from any repository or paper,
+then verifies them before import:
 
 ```bash
 git clone https://github.com/FlagOpen/FlagEmbedding.git
 disco --agent-mode creator -p \
-  "/skill:distill-ml-knowledge Create and verify a repository skill graph for the local FlagEmbedding checkout at ./FlagEmbedding. Use its documentation, examples, tests, and runtime APIs to cover embedding inference and evaluation. Prepare the CPU/GPU environments required by the confirmed scope, then ask before importing the verified graph."
+  "/skill:distill-ml-knowledge Create and verify a repository skill graph \
+for ./FlagEmbedding covering embedding inference and evaluation."
 ```
 
-**Create one task-related skill directly.** Use `direct` when an approved
-knowledge-source directory can support the current task immediately and no new
-reusable construction workflow is needed. This example distills guidance for
-the classic Kaggle Home Credit Default Risk problem into one runtime
-`SKILL.md`:
+Researcher is the default mode; switch with `--agent-mode creator|researcher`
+or `/creator` · `/researcher` in the UI. See
+[DisCo Workflows](docs/disco-workflows.md) for the 15 bundled Creator meta
+skills, verification gates, and maintenance workflows.
 
-```bash
-disco --agent-mode creator -p \
-  "/skill:distill-ml-knowledge Use the direct path to create a task-related skill for Kaggle Home Credit Default Risk. The task description is at /path/to/home-credit-task/description.md, and the deep-research materials are in /path/to/home-credit-deep-research/. Output a single SKILL.md, verify it, and ask before importing it to .agents/skills/home-credit-default-risk/."
+</details>
+
+<details>
+<summary><b>Use the skills in another agent, manage the collection, build from source</b></summary>
+
+- **Other agents**: skills are standard `SKILL.md` graphs; see
+  [Meta Skills For Other Agents](docs/meta-skills-for-other-agents.md) for
+  Claude Code / Codex installation.
+- **Manage**: `disco repo-skills status | update`, router toggle with
+  `disco repo-skills router disable|enable`.
+- **Manual install**: copy `research-skills-library/repo-skills*` into
+  `~/.disco/agent/skills/`.
+- **From source**: `bash scripts/build-from-source-link.sh` after cloning.
+
+The full [Installation Guide](docs/installation.md) covers provider setup,
+update/backup semantics, router behavior, and every fallback path.
+
+</details>
+
+---
+
+## The Bigger Vision
+
+**From repositories to skills. From skills to autonomous research.**
+
+> Today's research knowledge is written for humans.
+> AREX turns it into operating knowledge for AI researchers.
+
+```mermaid
+flowchart LR
+    A["📦 <b>Repos + Papers</b><br><i>written for humans</i>"] --> B["🧠 <b>Research Skills</b><br><i>distilled once, verified</i>"]
+    B --> C["🌐 <b>Skill Ecosystem</b><br><i>shared & inherited</i>"]
+    C --> D["🤖 <b>Autonomous Agents</b><br><i>start where the field left off</i>"]
+    D --> E["⚙️ <b>Automated<br>ML R&D</b>"]
 ```
 
-Creator validates and stages every output for approval. The repository graph
-uses DisCo's managed repo collection, while the task-bound competition skill
-defaults to the current project's `.agents/skills/`; each is imported only
-after its own verification and approval, then used in a new Researcher session.
-The full [DisCo Workflows guide](docs/disco-workflows.md) covers explicit skill
-invocation, task-specific graphs, repository and paper construction,
-verification, maintenance, export, deployment scopes, and mode-switch behavior.
+Every skill distilled once is inherited by every agent afterward. As the
+library grows — more repositories, more papers, more task families — each
+research task starts a little further from zero. We believe ML research
+knowledge should exist not only as papers and repos, but as skills that AI
+researchers can directly call.
 
-## 🛠️ Creator Meta Skills <a id="creator-meta-skills"></a>
+> **Naming note:** AREX-Skill is the project and the published Research Skills
+> Library. DisCo is the bundled skill-powered CLI/runtime that creates skills
+> (Creator) and researches with them (Researcher).
 
-DisCo bundles 15 Creator-only meta skills for adequacy assessment, workflow
-design, repository and paper distillation, verification, maintenance, and
-cross-agent export. The canonical `distill-ml-knowledge` entry point owns task
-normalization, adequacy/composition assessment, and path selection;
-`design-meta-skill` only designs the reusable bundle after receiving a verified
-`design-reusable` handoff. Each declares `metadata.disco-role: meta`;
-Researcher does not see them. The [Bundled Skills Reference](src/packages/coding-agent/src/disco/skills/README.md)
-is the source of truth for the full inventory and contracts. To run these
-workflows outside DisCo, see
-[Meta Skills For Other Agents](docs/meta-skills-for-other-agents.md).
+---
 
-## 🤝 Contributing <a id="contributing"></a>
+## Contributing
 
-We welcome contributions in three main areas:
+We welcome three kinds of contributions — new repo skills, refreshes of
+existing skills, and DisCo CLI improvements. Skill PRs should include
+provenance (model, source commit, verification steps); see
+[CONTRIBUTING.md](CONTRIBUTING.md) for the checklist and
+[Contributing docs](CONTRIBUTING.md) for the repo-skill layout and router
+update workflow.
 
-1. **Contribute generated repo skills.** Add a publishable runtime skill under
-   `research-skills-library/repo-skills/<skill-id>/`, include provenance and
-   routing metadata, and update the sibling
-   `research-skills-library/repo-skills-router/` so agents can discover it.
-2. **Extend or refresh existing repo skills.** Improve stale, incomplete, or
-   unclear skills with source-grounded changes. Update provenance or routing
-   metadata when the upstream baseline or coverage changes.
-3. **Improve the DisCo CLI source.** Changes to the TypeScript CLI under
-   `src/` are welcome, including package/repo and paper-to-skill workflows.
-   Run focused checks and document behavior changes. Repo-skill workflow
-   changes should preserve the create/verify split, review/test artifact
-   layout, import-readiness gates, and locked router-update transaction.
-   Updates to the integrated Paper2Skills workflow should preserve its
-   source-resolution, modularization, generated-skill validation, recovery,
-   analysis, and final-report contracts.
-
-For repo-skill PRs, list the model, provider, reasoning or thinking level,
-source repository commit, and verification steps used to produce or revise the
-skill. For DisCo CLI changes that touch paper-to-skill behavior, include the
-paper source, run config, recovery mode, validation artifacts, and final report
-path when applicable. See [CONTRIBUTING.md](CONTRIBUTING.md) for the full
-checklist.
-
-## 📚 Documentation <a id="documentation"></a>
+## Documentation
 
 | Page | Description |
 | --- | --- |
-| [DisCo Workflows](docs/disco-workflows.md) | Mode and session behavior, Researcher execution, Creator construction and maintenance, deployment scopes, and cross-agent export. |
-| [Examples](examples/) | Sanitized Creator and Researcher session exports, including FlagEmbedding skill construction and Gymnasium/Stable-Baselines3 battery dispatch. |
-| [Imported Repo Skills Catalog](docs/imported-repo-skills.md) | Public catalog of included runtime repo skills, organized by repository-skill family with upstream baselines. |
-| [Research Skills Library](research-skills-library/README.md) | Broader library model, current repository-skill collection, canonical layout, and DisCo installation command. |
-| [Architecture](docs/architecture.md) | Repository layers, mode boundaries, runtime routing, source layout, authoring pipelines, project/managed deployment scopes, and the managed repository library. |
-| [Bundled Skills Reference](src/packages/coding-agent/src/disco/skills/README.md) | Role metadata, Creator meta-skill contracts, Researcher routing, and construction artifact layouts. |
-| [Meta Skills For Other Agents](docs/meta-skills-for-other-agents.md) | Portable Creator-only workflow installation for Codex, Claude Code, and project-local agents. |
-| [DisCo CLI README](src/README.md) | General task execution, runtime skill routing, package installation, and skill authoring workflows. |
-| [Contributing](CONTRIBUTING.md) | Contribution rules for generated repo skills, router/catalog updates, workflow skills, documentation, and CLI source. |
+| [Installation Guide](docs/installation.md) | Full CLI and skill-collection installation, provider setup, router toggle, manual fallback. |
+| [DisCo Workflows](docs/disco-workflows.md) | Modes, sessions, Researcher execution, Creator construction, deployment scopes. |
+| [Research Skills Library](research-skills-library/README.md) | Library model, collection layout, installation. |
+| [Imported Repo Skills Catalog](docs/imported-repo-skills.md) | Every published graph with upstream baselines. |
+| [Architecture](docs/architecture.md) | Repository layers, routing, authoring pipelines, deployment scopes. |
+| [Examples](examples/) | Sanitized end-to-end Creator and Researcher sessions. |
+| [Bundled Skills Reference](cli/packages/coding-agent/src/disco/skills/README.md) | Creator meta-skill contracts and artifact layouts. |
+| [DisCo CLI README](cli/README.md) | CLI usage, runtime skill routing, packages. |
 
-## 🙏 Acknowledgement <a id="acknowledgement"></a>
+## Acknowledgement
 
-DisCo's CLI and agent runtime are built on the foundation of
-[earendil-works/pi](https://github.com/earendil-works/pi), an open-source AI
-agent toolkit with a unified LLM API, agent loop, terminal UI, and coding-agent
-CLI.
+DisCo's CLI and agent runtime build on
+[earendil-works/pi](https://github.com/earendil-works/pi). The library exists
+because the open-source ML community released the high-quality repositories it
+distills — thank you.
 
-Auto-ML-Skills is also made possible by the GitHub open-source community. The
-repo skills in this library exist because many researchers and engineers have
-released high-quality ML, agent, data, bio/chem, vision, and infrastructure
-projects for the community to build on.
+## License
 
-## 📄 License <a id="license"></a>
+Repository materials and the skills under
+[`research-skills-library/`](research-skills-library/) are Apache-2.0. The
+standalone DisCo npm package under [`cli/`](cli/) is MIT with upstream
+attribution in [`cli/THIRD_PARTY_NOTICES.md`](cli/THIRD_PARTY_NOTICES.md).
 
-The repository-level Auto-ML-Skills materials and the open-sourced runtime repo
-skills under [`research-skills-library/`](research-skills-library/) are
-released under the Apache License 2.0 unless a file states otherwise. The
-standalone DisCo npm package under [`src/`](src/) is distributed under its own
-[MIT License](src/LICENSE), with upstream attribution and third-party terms in
-[`src/THIRD_PARTY_NOTICES.md`](src/THIRD_PARTY_NOTICES.md).
+## Citation
 
-See [LICENSE](LICENSE) for the repository-level Apache-2.0 text.
-
-## 📝 Citation <a id="citation"></a>
-
-TBA
+```bibtex
+@article{arexskill2026,
+  title  = {AREX-Skill: Distilled Operational Knowledge For Advancing
+            Autonomous AI Research},
+  author = {{AREX-Skill Team}},
+  year   = {2026},
+  note   = {Technical report},
+}
+```
