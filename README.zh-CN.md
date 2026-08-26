@@ -22,15 +22,30 @@
 
 ```mermaid
 flowchart LR
-    A["📦 仓库<br>📄 论文<br>✍️ 博客"] ==> B["🤖 <b>Creator Agent</b><br><i>发掘 · 蒸馏 · 验证</i>"]
-    B ==> C["🧠 <b>AREX Research Skills</b><br>可路由 · 已验证 · 可执行"]
-    C ==> D["🧑‍💻 <b>你的 coding agent</b><br>Claude Code · Codex · DisCo"]
-    D ==> E["🔬 <b>自主 ML 研究</b>"]
+    subgraph SRC["📚 知识来源"]
+        direction TB
+        s0["🌐 数万个<br>ML 仓库"] == "精选" ==> s1["⭐ 1,000 个最高价值仓库<br>+ 📄 论文 · ✍️ 博客"]
+    end
+    subgraph CRE["🤖 Creator Agent"]
+        direction TB
+        c1["🔍 发掘<br><i>仓库能力</i>"] --> c2["🧠 蒸馏<br><i>写成技能</i>"] --> c3["🧪 验证<br><i>真实执行</i>"]
+        c3 -. 精化 .-> c2
+    end
+    subgraph LIB["🧠 AREX 技能库"]
+        direction TB
+        l1["🧭 一个路由器<br><i>路由任意 ML 任务</i>"] ~~~ l2["📖 5,000+ 已验证技能<br><i>20 领域 · 178 任务族</i>"] ~~~ l3["🛠 面向任务的技能<br><i>按任务构建</i>"]
+    end
+    subgraph FIN["🧑‍💻 你的 Agent——无需改变"]
+        direction TB
+        u["Claude Code · Codex · DisCo<br><i>只加载任务<br>所需的技能</i>"] --> r["🔬 <b>自主 ML 研究</b><br>🔓 解锁新能力<br>🏆 结果更好<br>⚡ 更省 token"]
+    end
+    SRC ==> CRE ==> LIB ==> FIN
 ```
 
-> **同一个 Agent，同样的预算，MLE-bench 相对提升 +134%。**
-> 装上 AREX 技能后，原生 Codex 的 Any-Medal 从 **31% 跃升到 73%**——超过
-> 全部公开榜单条目。靠的是技能，不是 agent engineering。
+> **同一个 Agent，同样的预算，胜率 2.3 倍。**
+> MLE-bench 让 Agent 独立完成 75 个 Kaggle 机器学习竞赛。装上 AREX 技能后，
+> 原生 Codex 的夺牌比例从 **31% 跃升到 73%**——超过全部公开榜单条目。
+> 靠的是技能，不是 agent engineering。
 
 ---
 
@@ -68,21 +83,16 @@ flowchart LR
 > **我们不做仓库摘要。我们把仓库编译成 Agent 可以执行的技能。**
 
 ```mermaid
-flowchart LR
+flowchart TB
     subgraph D["📚 描述性知识——写给人类"]
-        direction TB
-        d1["📄 论文<br><i>方法与原理</i>"]
-        d2["💻 仓库<br><i>代码、配置、示例</i>"]
-        d3["✍️ 博客<br><i>技巧与坑</i>"]
+        direction LR
+        d1["📄 <b>论文</b><br><i>讲方法与原理——<br>但没有可执行路径</i>"] ~~~ d2["💻 <b>仓库</b><br><i>代码能跑——<br>但用法藏在细节里</i>"] ~~~ d3["✍️ <b>博客</b><br><i>技巧与坑——<br>零散且未经验证</i>"]
     end
-    D == "⚗️ 技能蒸馏" ==> O
+    D == "⚗️ <b>技能蒸馏</b>——提取 · 操作化 · 验证" ==> O
     subgraph O["🛠 操作性知识——为 Agent 而建"]
-        direction TB
-        o1["🎯 何时使用"]
-        o2["📋 如何使用"]
-        o3["▶️ 该运行什么"]
-        o4["✅ 如何验证结果"]
-        o5["🚑 失败如何恢复"]
+        direction LR
+        o1["🎯 <b>何时使用</b><br><i>路由器可匹配的<br>适用条件</i>"] ~~~ o2["📋 <b>如何使用</b><br><i>带预期行为的<br>分步工作流</i>"] ~~~ o3["▶️ <b>该运行什么</b><br><i>命令、脚本、<br>现成工具</i>"]
+        o4["✅ <b>如何验证</b><br><i>检查项与<br>预期观测</i>"] ~~~ o5["🚑 <b>如何恢复</b><br><i>已知故障附带<br>修复方案</i>"] ~~~ o6["📎 <b>依据是什么</b><br><i>证据回链<br>到来源</i>"]
     end
 ```
 
@@ -142,10 +152,11 @@ flowchart LR
 
 ```mermaid
 flowchart LR
-    S["🧠 <b>AREX Skills</b><br><i>标准 SKILL.md 技能图<br>+ 一个库级路由器</i>"]
-    S ==> A["<b>Claude Code</b><br><i>放进 skills 目录即可</i>"]
-    S ==> B["<b>Codex</b><br><i>benchmark 所用 harness</i>"]
-    S ==> C["<b>DisCo</b><br><i>内置 CLI——负责安装、<br>路由与更新</i>"]
+    S["🧠 <b>AREX Skills</b><br><i>标准 SKILL.md 技能图<br>+ 一个库级路由器</i>"] ==> G
+    subgraph G["你现有的 Agent——工作流不变"]
+        direction LR
+        A["<b>Claude Code</b><br><i>放进 skills 目录即可</i>"] ~~~ B["<b>Codex</b><br><i>benchmark 所用 harness</i>"] ~~~ C["<b>DisCo</b><br><i>内置 CLI：<br>安装 · 路由 · 更新</i>"]
+    end
 ```
 
 技能就是标准的 `SKILL.md` 技能图（agent-skills 格式）。把它们放进你正在用
@@ -198,7 +209,7 @@ commit 和覆盖范围。
 预算**——只改变一件事：Agent 是否拥有 AREX 蒸馏的技能。
 
 ```text
-MLE-bench（Any Medal，75 个竞赛）
+MLE-bench（75 个 Kaggle 竞赛中的夺牌比例）
   无技能    ███████░░░░░░░░░░░░░░░░  31.1%
   有技能    █████████████████░░░░░░  72.9%   （相对提升 +134%）
 
@@ -209,7 +220,7 @@ PaperBench（复现得分，20 篇论文）
 
 | Benchmark | 指标 | Codex | Codex + AREX-Skill | Δ |
 | --- | --- | ---: | ---: | ---: |
-| **MLE-bench**（全量 75 任务） | Any Medal % | 31.11 | **72.89** | **+41.78** |
+| **MLE-bench**（全量 75 任务） | 夺牌比例（Any Medal）% | 31.11 | **72.89** | **+41.78** |
 | **PaperBench**（全量 20 篇） | 复现得分 | 29.45 | **39.59** | **+10.14** |
 | **Frontier-CS**（Agent Track，188 任务） | Score | 70.63 | **77.14** | **+6.51** |
 | **PassNet**（200 样本） | AS Score | 1.343 | **1.531** | **+14.0%** |

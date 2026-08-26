@@ -22,14 +22,29 @@
 
 ```mermaid
 flowchart LR
-    A["📦 Repos<br>📄 Papers<br>✍️ Blogs"] ==> B["🤖 <b>Creator Agent</b><br><i>discover · distill · validate</i>"]
-    B ==> C["🧠 <b>AREX Research Skills</b><br>routed · verified · executable"]
-    C ==> D["🧑‍💻 <b>Your coding agent</b><br>Claude Code · Codex · DisCo"]
-    D ==> E["🔬 <b>Autonomous<br>ML Research</b>"]
+    subgraph SRC["📚 Sources"]
+        direction TB
+        s0["🌐 Tens of thousands<br>of ML repos"] == "curate" ==> s1["⭐ 1,000 top repos<br>+ 📄 papers · ✍️ blogs"]
+    end
+    subgraph CRE["🤖 Creator Agent"]
+        direction TB
+        c1["🔍 Discover<br><i>capabilities</i>"] --> c2["🧠 Distill<br><i>into skills</i>"] --> c3["🧪 Verify<br><i>by execution</i>"]
+        c3 -. refine .-> c2
+    end
+    subgraph LIB["🧠 AREX Skill Library"]
+        direction TB
+        l1["🧭 One router<br><i>routes any ML task</i>"] ~~~ l2["📖 5,000+ verified skills<br><i>20 areas · 178 families</i>"] ~~~ l3["🛠 Task-oriented skills<br><i>built per task</i>"]
+    end
+    subgraph FIN["🧑‍💻 Your Agent — unchanged"]
+        direction TB
+        u["Claude Code · Codex · DisCo<br><i>loads only what<br>the task needs</i>"] --> r["🔬 <b>Autonomous<br>ML research</b><br>🔓 new abilities<br>🏆 better results<br>⚡ fewer tokens"]
+    end
+    SRC ==> CRE ==> LIB ==> FIN
 ```
 
-> **Same agent. Same budget. +134% on MLE-bench.**
-> With AREX skills, vanilla Codex jumps from **31% → 73%** Any-Medal —
+> **Same agent. Same budget. 2.3× the wins.**
+> MLE-bench sets agents loose on 75 Kaggle ML competitions. With AREX skills,
+> vanilla Codex goes from winning medals in **31%** of them to **73%** —
 > outscoring every public leaderboard entry. Skills, not agent engineering.
 
 ---
@@ -71,21 +86,16 @@ skills.
 > **We don't summarize repositories. We compile them into skills agents can execute.**
 
 ```mermaid
-flowchart LR
+flowchart TB
     subgraph D["📚 Descriptive Knowledge — written for humans"]
-        direction TB
-        d1["📄 Papers<br><i>methods & why they work</i>"]
-        d2["💻 Repos<br><i>code, configs, examples</i>"]
-        d3["✍️ Blogs<br><i>tricks & pitfalls</i>"]
+        direction LR
+        d1["📄 <b>Papers</b><br><i>methods & why they work —<br>but no runnable path</i>"] ~~~ d2["💻 <b>Repos</b><br><i>working code —<br>but usage stays implicit</i>"] ~~~ d3["✍️ <b>Blogs</b><br><i>tricks & pitfalls —<br>scattered, unverified</i>"]
     end
-    D == "⚗️ Skill Distillation" ==> O
+    D == "⚗️ <b>Skill Distillation</b> — extract · operationalize · verify" ==> O
     subgraph O["🛠 Operational Knowledge — built for agents"]
-        direction TB
-        o1["🎯 when to use it"]
-        o2["📋 how to use it"]
-        o3["▶️ what to run"]
-        o4["✅ how to validate results"]
-        o5["🚑 how to recover from failure"]
+        direction LR
+        o1["🎯 <b>When to use</b><br><i>applicability conditions<br>the router can match</i>"] ~~~ o2["📋 <b>How to use</b><br><i>step-by-step workflows<br>with expected behavior</i>"] ~~~ o3["▶️ <b>What to run</b><br><i>commands, scripts,<br>ready-made tools</i>"]
+        o4["✅ <b>How to validate</b><br><i>checks & expected<br>observations</i>"] ~~~ o5["🚑 <b>How to recover</b><br><i>known failures with<br>fixes attached</i>"] ~~~ o6["📎 <b>What to trust</b><br><i>evidence linked back<br>to the source</i>"]
     end
 ```
 
@@ -149,10 +159,11 @@ own tests.
 
 ```mermaid
 flowchart LR
-    S["🧠 <b>AREX Skills</b><br><i>plain SKILL.md graphs<br>+ one library router</i>"]
-    S ==> A["<b>Claude Code</b><br><i>drop into your skills dir</i>"]
-    S ==> B["<b>Codex</b><br><i>the harness in our benchmarks</i>"]
-    S ==> C["<b>DisCo</b><br><i>bundled CLI — manages<br>install, routing & updates</i>"]
+    S["🧠 <b>AREX Skills</b><br><i>plain SKILL.md graphs<br>+ one library router</i>"] ==> G
+    subgraph G["your existing agents — workflow unchanged"]
+        direction LR
+        A["<b>Claude Code</b><br><i>drop into skills dir</i>"] ~~~ B["<b>Codex</b><br><i>our benchmark harness</i>"] ~~~ C["<b>DisCo</b><br><i>bundled CLI:<br>install · route · update</i>"]
+    end
 ```
 
 Skills are plain `SKILL.md` graphs in the emerging agent-skills format. Drop
@@ -209,7 +220,7 @@ execution budget** — and change exactly one thing: whether the agent has
 AREX-distilled skills.
 
 ```text
-MLE-bench (Any Medal, 75 competitions)
+MLE-bench (medal rate across 75 Kaggle competitions)
   without skills   ███████░░░░░░░░░░░░░░░░  31.1%
   with skills      █████████████████░░░░░░  72.9%   (+134% relative)
 
@@ -220,7 +231,7 @@ PaperBench (replication score, 20 papers)
 
 | Benchmark | Metric | Codex | Codex + AREX-Skill | Δ |
 | --- | --- | ---: | ---: | ---: |
-| **MLE-bench** (full, 75 tasks) | Any Medal % | 31.11 | **72.89** | **+41.78** |
+| **MLE-bench** (full, 75 tasks) | Medal rate (Any Medal) % | 31.11 | **72.89** | **+41.78** |
 | **PaperBench** (full, 20 papers) | Replication score | 29.45 | **39.59** | **+10.14** |
 | **Frontier-CS** (Agent Track, 188 tasks) | Score | 70.63 | **77.14** | **+6.51** |
 | **PassNet** (200 samples) | AS Score | 1.343 | **1.531** | **+14.0%** |
