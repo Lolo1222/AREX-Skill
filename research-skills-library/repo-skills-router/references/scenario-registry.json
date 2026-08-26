@@ -2,6 +2,12 @@
   "version": 1,
   "enforce_known_scenarios": true,
   "scenarios": {
+    "3d-scene-understanding": {
+      "title": "3D Scene Understanding",
+      "when_to_read": "Requests in the 3D Scene Understanding family of the Computer Vision area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on 3d scene understanding.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "split_guidance": "The 3D Scene Understanding taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity. Future imports classified under the 3D Scene Understanding family will route to this scenario."
+    },
     "agent-frameworks-tooling-and-sandboxed-llm-workflows": {
       "title": "Agent Frameworks, Tooling, and Sandboxed LLM Workflows",
       "when_to_read": "LLM agent frameworks, browser automation agents, tool calling, graph/state runtimes, hosted or sandbox execution, MCP, CLIs, and production agent operations.",
@@ -16,6 +22,24 @@
         "python-agent-frameworks"
       ],
       "split_guidance": "Keep agent SDKs, MCP-enabled apps, browser agents, and graph/state agent runtimes together unless a future cluster has several repos with a distinct operational surface."
+    },
+    "agent-platforms": {
+      "title": "Agent Platforms",
+      "when_to_read": "Requests in the Agent Platforms family of the LLM Applications area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on agent platforms.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "split_guidance": "The Agent Platforms taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity. Future imports classified under the Agent Platforms family will route to this scenario."
+    },
+    "agent-sdks": {
+      "title": "Agent SDKs",
+      "when_to_read": "Requests in the Agent SDKs family of the LLM Applications area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on agent sdks.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "split_guidance": "The Agent SDKs taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity. Future imports classified under the Agent SDKs family will route to this scenario."
+    },
+    "agent-tools-and-skills": {
+      "title": "Agent Tools and Skills",
+      "when_to_read": "Requests in the Agent Tools and Skills family of the LLM Applications area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on agent tools and skills.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "split_guidance": "The Agent Tools and Skills taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity. Future imports classified under the Agent Tools and Skills family will route to this scenario."
     },
     "ai-gateway-and-llm-provider-integration": {
       "title": "AI Gateway and LLM Provider Integration",
@@ -36,11 +60,47 @@
       "when_to_read": "Pipeline and workflow frameworks that combine embeddings, LLMs, agents, task chains, services, and RAG orchestration.",
       "how_to_choose": "Use this scenario when the package is primarily an end-to-end AI workflow system rather than only a retriever, vector database, or model-serving backend."
     },
+    "automl": {
+      "title": "AutoML",
+      "when_to_read": "Requests in the AutoML family of the MLOps area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on automl.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "split_guidance": "The AutoML taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity. Future imports classified under the AutoML family will route to this scenario."
+    },
+    "autonomous-agent-applications": {
+      "title": "Autonomous Agent Applications",
+      "when_to_read": "Requests in the Autonomous Agent Applications family of the LLM Applications area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on autonomous agent applications.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "split_guidance": "The Autonomous Agent Applications taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity. Future imports classified under the Autonomous Agent Applications family will route to this scenario."
+    },
+    "autonomous-driving-general": {
+      "title": "Autonomous Driving — General",
+      "when_to_read": "Autonomous Driving requests whose task family has no dedicated scenario: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for the smaller repository families in this area.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "split_guidance": "Smaller Autonomous Driving taxonomy families are grouped at the area level to keep the router index compact while remaining routable. Future imports in smaller Autonomous Driving families will route to this scenario until a family grows enough to warrant its own."
+    },
+    "biomedical-ai-general": {
+      "title": "Biomedical AI — General",
+      "when_to_read": "Biomedical AI requests whose task family has no dedicated scenario: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for the smaller repository families in this area.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "split_guidance": "Smaller Biomedical AI taxonomy families are grouped at the area level to keep the router index compact while remaining routable. Future imports in smaller Biomedical AI families will route to this scenario until a family grows enough to warrant its own."
+    },
     "bulk-rna-seq-differential-expression-analysis": {
       "title": "Bulk RNA-Seq Differential Expression Analysis",
       "when_to_read": "Bulk RNA-seq raw-count differential expression analysis, DESeq2-like Python workflows, count/metadata validation, contrasts, Wald tests, LFC shrinkage, VST, and PyDESeq2 troubleshooting.",
       "how_to_choose": "Use this scenario for package-specific bulk RNA-seq DEA workflows. Do not route general Scanpy/single-cell tasks here unless the user explicitly asks for PyDESeq2 or bulk count differential expression.",
       "split_guidance": "The existing single-cell omics scenario centers on AnnData/Scanpy/scvi single-cell workflows, while PyDESeq2 covers bulk RNA-seq DESeq2-like raw-count differential expression. The scientific-python data scenario is too broad and would hide domain-specific contrast, count-schema, and DEA result-routing needs. Other bulk RNA-seq DEA, DESeq2-wrapper, edgeR/limma-like Python workflow skills can share this scenario."
+    },
+    "chat-and-knowledge-applications": {
+      "title": "Chat and Knowledge Applications",
+      "when_to_read": "Requests in the Chat and Knowledge Applications family of the LLM Applications area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on chat and knowledge applications.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "split_guidance": "The Chat and Knowledge Applications taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity. Future imports classified under the Chat and Knowledge Applications family will route to this scenario."
+    },
+    "computer-vision-general": {
+      "title": "Computer Vision — General",
+      "when_to_read": "Computer Vision requests whose task family has no dedicated scenario: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for the smaller repository families in this area.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "split_guidance": "Smaller Computer Vision taxonomy families are grouped at the area level to keep the router index compact while remaining routable. Future imports in smaller Computer Vision families will route to this scenario until a family grows enough to warrant its own."
     },
     "computer-vision-modeling-and-augmentation": {
       "title": "Computer Vision Modeling and Augmentation",
@@ -54,6 +114,12 @@
         "vision-language-models",
         "vision-open-vocabulary-detection"
       ]
+    },
+    "data-integration": {
+      "title": "Data Integration",
+      "when_to_read": "Requests in the Data Integration family of the Data Science area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on data integration.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "split_guidance": "The Data Integration taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity. Future imports classified under the Data Integration family will route to this scenario."
     },
     "data-model-customization": {
       "title": "Data, Model, Registry, and Template Customization",
@@ -69,6 +135,18 @@
         "workflow-orchestration-platform",
         "workflow-orchestration-python"
       ]
+    },
+    "data-science-general": {
+      "title": "Data Science — General",
+      "when_to_read": "Data Science requests whose task family has no dedicated scenario: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for the smaller repository families in this area.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "split_guidance": "Smaller Data Science taxonomy families are grouped at the area level to keep the router index compact while remaining routable. Future imports in smaller Data Science families will route to this scenario until a family grows enough to warrant its own."
+    },
+    "data-visualization": {
+      "title": "Data Visualization",
+      "when_to_read": "Requests in the Data Visualization family of the Data Science area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on data visualization.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "split_guidance": "The Data Visualization taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity. Future imports classified under the Data Visualization family will route to this scenario."
     },
     "dataset-processing-evaluation-and-hub-workflows": {
       "title": "Dataset Processing, Evaluation, and Hub Workflows",
@@ -89,6 +167,18 @@
       "when_to_read": "Distributed training loops, launchers, DeepSpeed/FSDP/TPU backends, PyTorch Lightning/Fabric, scalable GNN training, checkpoints, and memory planning.",
       "how_to_choose": "Choose Accelerate for generic distributed loop migration and launch, DeepSpeed for ZeRO/DeepSpeed configs, Lightning for Lightning/Fabric, PyG for graph neural training, OpenRLHF/verl for RLHF-scale training stacks, and Optuna for hyperparameter optimization."
     },
+    "distributed-training-systems": {
+      "title": "Distributed Training Systems",
+      "when_to_read": "Requests in the Distributed Training Systems family of the Training Infrastructure area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on distributed training systems.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "split_guidance": "The Distributed Training Systems taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity. Future imports classified under the Distributed Training Systems family will route to this scenario."
+    },
+    "document-intelligence": {
+      "title": "Document Intelligence",
+      "when_to_read": "Requests in the Document Intelligence family of the LLM Applications area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on document intelligence.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "split_guidance": "The Document Intelligence taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity. Future imports classified under the Document Intelligence family will route to this scenario."
+    },
     "document-processing-unstructured-data-and-rag-preparation": {
       "title": "Document Processing, Unstructured Data, and RAG Preparation",
       "when_to_read": "Document conversion, partitioning, OCR/table pipelines, Markdown conversion, document elements, chunking, extraction, cleaning, staging, remote document services, and RAG-ready document preparation.",
@@ -98,6 +188,30 @@
         "document-to-markdown-conversion",
         "local-agent-tooling-and-mcp"
       ]
+    },
+    "document-vision": {
+      "title": "Document Vision",
+      "when_to_read": "Requests in the Document Vision family of the Computer Vision area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on document vision.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "split_guidance": "The Document Vision taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity. Future imports classified under the Document Vision family will route to this scenario."
+    },
+    "driving-perception": {
+      "title": "Driving Perception",
+      "when_to_read": "Requests in the Driving Perception family of the Autonomous Driving area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on driving perception.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "split_guidance": "The Driving Perception taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity. Future imports classified under the Driving Perception family will route to this scenario."
+    },
+    "driving-simulation-and-evaluation": {
+      "title": "Driving Simulation and Evaluation",
+      "when_to_read": "Requests in the Driving Simulation and Evaluation family of the Autonomous Driving area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on driving simulation and evaluation.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "split_guidance": "The Driving Simulation and Evaluation taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity. Future imports classified under the Driving Simulation and Evaluation family will route to this scenario."
+    },
+    "edge-deployment": {
+      "title": "Edge Deployment",
+      "when_to_read": "Requests in the Edge Deployment family of the Model Deployment and Optimization area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on edge deployment.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "split_guidance": "The Edge Deployment taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity. Future imports classified under the Edge Deployment family will route to this scenario."
     },
     "embedding-retrieval-rag-workflows": {
       "title": "Embedding Retrieval and RAG Workflows",
@@ -120,11 +234,47 @@
       "when_to_read": "Embodied AI simulation, navigation/rearrangement tasks, habitat-style configs, datasets, training, HITL apps, and simulator extension registries.",
       "how_to_choose": "Use this scenario for embodied AI simulation and training stacks rather than generic reinforcement learning algorithms or vision models."
     },
+    "first-stage-retrieval": {
+      "title": "First-Stage Retrieval",
+      "when_to_read": "Requests in the First-Stage Retrieval family of the Information Retrieval area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on first-stage retrieval.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "split_guidance": "The First-Stage Retrieval taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity. Future imports classified under the First-Stage Retrieval family will route to this scenario."
+    },
+    "forecasting": {
+      "title": "Forecasting",
+      "when_to_read": "Requests in the Forecasting family of the Time Series Analysis area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on forecasting.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "split_guidance": "The Forecasting taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity. Future imports classified under the Forecasting family will route to this scenario."
+    },
+    "generative-media-general": {
+      "title": "Generative Media — General",
+      "when_to_read": "Generative Media requests whose task family has no dedicated scenario: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for the smaller repository families in this area.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "split_guidance": "Smaller Generative Media taxonomy families are grouped at the area level to keep the router index compact while remaining routable. Future imports in smaller Generative Media families will route to this scenario until a family grows enough to warrant its own."
+    },
+    "generative-model-adaptation": {
+      "title": "Generative Model Adaptation",
+      "when_to_read": "Requests in the Generative Model Adaptation family of the Generative Media area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on generative model adaptation.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "split_guidance": "The Generative Model Adaptation taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity. Future imports classified under the Generative Model Adaptation family will route to this scenario."
+    },
     "genomics-hts-file-workflows": {
       "title": "Genomics HTS File Workflows",
       "when_to_read": "SAM/BAM/CRAM alignment files, VCF/BCF variant files, tabix-indexed genomic interval tables, FASTA/FASTQ sequence access, htslib/samtools/bcftools Python wrappers, and high-throughput sequencing file troubleshooting.",
       "how_to_choose": "Choose the repo skill whose package or API surface owns the requested genomics file workflow: pysam for Python htslib/samtools/bcftools bindings, alignment/variant/tabix/FASTA/FASTQ file APIs, and command-wrapper troubleshooting.",
       "split_guidance": "Existing scientific and molecular scenarios focus on generic scientific arrays, molecular simulation, chemistry, protein, materials, or omics analysis workflows; they do not capture high-throughput sequencing file formats, htslib index mechanics, samtools/bcftools wrappers, or genomic interval coordinate troubleshooting. Future skills for HTSlib bindings, BAM/CRAM/VCF utilities, genomic interval indexing, sequence-file APIs, or command wrappers around samtools, bcftools, tabix, bgzip, and faidx can share this scenario."
+    },
+    "geospatial-computing": {
+      "title": "Geospatial Computing",
+      "when_to_read": "Requests in the Geospatial Computing family of the Data Science area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on geospatial computing.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "split_guidance": "The Geospatial Computing taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity. Future imports classified under the Geospatial Computing family will route to this scenario."
+    },
+    "graph-learning-general": {
+      "title": "Graph Learning — General",
+      "when_to_read": "Graph Learning requests whose task family has no dedicated scenario: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for the smaller repository families in this area.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "split_guidance": "Smaller Graph Learning taxonomy families are grouped at the area level to keep the router index compact while remaining routable. Future imports in smaller Graph Learning families will route to this scenario until a family grows enough to warrant its own."
     },
     "graph-learning-workflows": {
       "title": "Graph Learning Workflows",
@@ -135,15 +285,87 @@
         "graph-data-pipelines"
       ]
     },
+    "image-classification": {
+      "title": "Image Classification",
+      "when_to_read": "Requests in the Image Classification family of the Computer Vision area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on image classification.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "split_guidance": "The Image Classification taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity. Future imports classified under the Image Classification family will route to this scenario."
+    },
+    "image-editing": {
+      "title": "Image Editing",
+      "when_to_read": "Requests in the Image Editing family of the Generative Media area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on image editing.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "split_guidance": "The Image Editing taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity. Future imports classified under the Image Editing family will route to this scenario."
+    },
     "image-generation-and-lora-training-workflows": {
       "title": "Image Generation and LoRA Training Workflows",
       "when_to_read": "Stable Diffusion or Diffusers pipelines, ComfyUI node graphs, image generation servers, diffusion schedulers/adapters, dataset TOML, LoRA training, and model utilities.",
       "how_to_choose": "Choose Diffusers for Python pipeline/model APIs, ComfyUI for graph nodes and server workflows, and sd-scripts for Stable Diffusion LoRA training scripts."
     },
+    "image-restoration": {
+      "title": "Image Restoration",
+      "when_to_read": "Requests in the Image Restoration family of the Computer Vision area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on image restoration.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "split_guidance": "The Image Restoration taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity. Future imports classified under the Image Restoration family will route to this scenario."
+    },
+    "image-segmentation": {
+      "title": "Image Segmentation",
+      "when_to_read": "Requests in the Image Segmentation family of the Computer Vision area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on image segmentation.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "split_guidance": "The Image Segmentation taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity. Future imports classified under the Image Segmentation family will route to this scenario."
+    },
+    "image-synthesis": {
+      "title": "Image Synthesis",
+      "when_to_read": "Requests in the Image Synthesis family of the Generative Media area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on image synthesis.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "split_guidance": "The Image Synthesis taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity. Future imports classified under the Image Synthesis family will route to this scenario."
+    },
+    "image-synthesis-toolkits": {
+      "title": "Image Synthesis Toolkits",
+      "when_to_read": "Requests in the Image Synthesis Toolkits family of the Generative Media area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on image synthesis toolkits.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "split_guidance": "The Image Synthesis Toolkits taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity. Future imports classified under the Image Synthesis Toolkits family will route to this scenario."
+    },
+    "inference-serving": {
+      "title": "Inference Serving",
+      "when_to_read": "Requests in the Inference Serving family of the Model Deployment and Optimization area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on inference serving.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "split_guidance": "The Inference Serving taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity. Future imports classified under the Inference Serving family will route to this scenario."
+    },
+    "information-extraction": {
+      "title": "Information Extraction",
+      "when_to_read": "Requests in the Information Extraction family of the Natural Language Processing area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on information extraction.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "split_guidance": "The Information Extraction taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity. Future imports classified under the Information Extraction family will route to this scenario."
+    },
+    "information-retrieval-general": {
+      "title": "Information Retrieval — General",
+      "when_to_read": "Information Retrieval requests whose task family has no dedicated scenario: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for the smaller repository families in this area.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "split_guidance": "Smaller Information Retrieval taxonomy families are grouped at the area level to keep the router index compact while remaining routable. Future imports in smaller Information Retrieval families will route to this scenario until a family grows enough to warrant its own."
+    },
+    "knowledge-graphs": {
+      "title": "Knowledge Graphs",
+      "when_to_read": "Requests in the Knowledge Graphs family of the Graph Learning area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on knowledge graphs.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "split_guidance": "The Knowledge Graphs taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity. Future imports classified under the Knowledge Graphs family will route to this scenario."
+    },
     "language-model-evaluation-workflows": {
       "title": "Language Model Evaluation Workflows",
       "when_to_read": "LLM benchmark configuration, evaluation harness runs, OpenCompass configs, task authoring, model backends, result summaries, decontamination, and judge-based evaluation.",
       "how_to_choose": "Choose by benchmark framework: lm-evaluation-harness for EleutherAI harness tasks, OpenCompass for OpenCompass configs/backends, and Evaluate for metric modules or evaluator utilities."
+    },
+    "llm-applications-general": {
+      "title": "LLM Applications — General",
+      "when_to_read": "LLM Applications requests whose task family has no dedicated scenario: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for the smaller repository families in this area.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "split_guidance": "Smaller LLM Applications taxonomy families are grouped at the area level to keep the router index compact while remaining routable. Future imports in smaller LLM Applications families will route to this scenario until a family grows enough to warrant its own."
+    },
+    "llm-fine-tuning": {
+      "title": "LLM Fine-Tuning",
+      "when_to_read": "Requests in the LLM Fine-Tuning family of the LLM Models, Training, and Alignment area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on llm fine-tuning.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "split_guidance": "The LLM Fine-Tuning taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity. Future imports classified under the LLM Fine-Tuning family will route to this scenario."
     },
     "llm-finetuning-training-serving-workflows": {
       "title": "LLM Fine-Tuning, Training, and Serving Workflows",
@@ -160,6 +382,12 @@
         "pytorch-quantization-memory-efficient-llm-workflows"
       ]
     },
+    "llm-models-training-and-alignment-general": {
+      "title": "LLM Models, Training, and Alignment — General",
+      "when_to_read": "LLM Models, Training, and Alignment requests whose task family has no dedicated scenario: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for the smaller repository families in this area.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "split_guidance": "Smaller LLM Models, Training, and Alignment taxonomy families are grouped at the area level to keep the router index compact while remaining routable. Future imports in smaller LLM Models, Training, and Alignment families will route to this scenario until a family grows enough to warrant its own."
+    },
     "llm-post-training-rlhf-workflows": {
       "title": "LLM Post-Training and RLHF Workflows",
       "when_to_read": "SFT, DPO, GRPO, PPO, reward models, RLHF data/rewards, rollout engines, post-training configs, LoRA merging, Ray/Megatron distributed RLHF, and preference optimization backends.",
@@ -168,16 +396,46 @@
         "rlhf-distributed-training"
       ]
     },
+    "llm-workflow-frameworks": {
+      "title": "LLM Workflow Frameworks",
+      "when_to_read": "Requests in the LLM Workflow Frameworks family of the LLM Applications area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on llm workflow frameworks.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "split_guidance": "The LLM Workflow Frameworks taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity. Future imports classified under the LLM Workflow Frameworks family will route to this scenario."
+    },
+    "manipulation": {
+      "title": "Manipulation",
+      "when_to_read": "Requests in the Manipulation family of the Robotics and Embodied AI area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on manipulation.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "split_guidance": "The Manipulation taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity. Future imports classified under the Manipulation family will route to this scenario."
+    },
     "materials-science-and-crystal-structure-workflows": {
       "title": "Materials Science and Crystal Structure Workflows",
       "when_to_read": "Computational materials, crystal structures, entries and phase stability, Materials Project data, surfaces/interfaces, diffraction/spectra, VASP-oriented pymatgen CLIs, and materials-analysis Python workflows.",
       "how_to_choose": "Use this scenario when the user names pymatgen or asks for materials-science structure, thermodynamics, external materials data, or crystallographic analysis rather than molecular drug-discovery chemistry or generic array/data workflows.",
       "split_guidance": "Existing molecular-ML chemistry scenarios focus on molecules, drug discovery, force fields, retrosynthesis, or trajectory analysis; scientific-python-data-workflows is too generic and does not capture pymatgen's crystal, phase-diagram, Materials Project, and VASP-oriented surfaces. Other computational materials repositories such as atomate, custodian, matminer, ASE-materials workflows, phonopy-adjacent materials tools, or crystal-analysis packages can route to the matching scenario."
     },
+    "mathematical-optimization": {
+      "title": "Mathematical Optimization",
+      "when_to_read": "Requests in the Mathematical Optimization family of the Scientific Computing area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on mathematical optimization.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "split_guidance": "The Mathematical Optimization taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity. Future imports classified under the Mathematical Optimization family will route to this scenario."
+    },
+    "media-generation-applications": {
+      "title": "Media Generation Applications",
+      "when_to_read": "Requests in the Media Generation Applications family of the Generative Media area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on media generation applications.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "split_guidance": "The Media Generation Applications taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity. Future imports classified under the Media Generation Applications family will route to this scenario."
+    },
     "medical-imaging-and-segmentation-workflows": {
       "title": "Medical Imaging and Segmentation Workflows",
       "when_to_read": "Medical image transforms, nnU-Net planning/training/inference, MONAI bundles, TorchIO patch workflows, healthcare segmentation, and 3D image augmentation.",
       "how_to_choose": "Choose by medical imaging package and workflow: MONAI for healthcare model/bundle workflows, nnU-Net for nnU-Net planning/training/inference, and TorchIO for 3D augmentation and patch sampling."
+    },
+    "memory-and-context": {
+      "title": "Memory and Context",
+      "when_to_read": "Requests in the Memory and Context family of the LLM Applications area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on memory and context.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "split_guidance": "The Memory and Context taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity. Future imports classified under the Memory and Context family will route to this scenario."
     },
     "ml-experiment-tracking-and-mlops-workflows": {
       "title": "ML Experiment Tracking and MLOps Workflows",
@@ -188,6 +446,30 @@
         "automl-experiment-management",
         "data-versioning-and-ml-pipelines"
       ]
+    },
+    "mlops-general": {
+      "title": "MLOps — General",
+      "when_to_read": "MLOps requests whose task family has no dedicated scenario: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for the smaller repository families in this area.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "split_guidance": "Smaller MLOps taxonomy families are grouped at the area level to keep the router index compact while remaining routable. Future imports in smaller MLOps families will route to this scenario until a family grows enough to warrant its own."
+    },
+    "model-compilation": {
+      "title": "Model Compilation",
+      "when_to_read": "Requests in the Model Compilation family of the Model Deployment and Optimization area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on model compilation.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "split_guidance": "The Model Compilation taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity. Future imports classified under the Model Compilation family will route to this scenario."
+    },
+    "model-compression": {
+      "title": "Model Compression",
+      "when_to_read": "Requests in the Model Compression family of the Model Deployment and Optimization area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on model compression.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "split_guidance": "The Model Compression taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity. Future imports classified under the Model Compression family will route to this scenario."
+    },
+    "model-evaluation-benchmarks": {
+      "title": "Model Evaluation Benchmarks",
+      "when_to_read": "Requests in the Model Evaluation Benchmarks family of the LLM Models, Training, and Alignment area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on model evaluation benchmarks.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "split_guidance": "The Model Evaluation Benchmarks taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity. Future imports classified under the Model Evaluation Benchmarks family will route to this scenario."
     },
     "molecular-ml-drug-discovery-and-chemistry-workflows": {
       "title": "Molecular ML, Drug Discovery, and Chemistry Workflows",
@@ -200,10 +482,94 @@
         "retrosynthesis-planning"
       ]
     },
+    "multi-agent-orchestration": {
+      "title": "Multi-Agent Orchestration",
+      "when_to_read": "Requests in the Multi-Agent Orchestration family of the LLM Applications area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on multi-agent orchestration.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "split_guidance": "The Multi-Agent Orchestration taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity. Future imports classified under the Multi-Agent Orchestration family will route to this scenario."
+    },
     "multimodal-training-audio-naflex": {
       "title": "Multimodal Training, Audio, and NaFlex Workflows",
       "when_to_read": "OpenCLIP training commands, open_clip_train, CSV/WebDataset data, task-era TrainingTask wrappers, FSDP, torch.compile, CLAP audio, NaFlex, GenLIP, or GenLAP.",
       "how_to_choose": "Use this scenario for OpenCLIP-specific training or multimodal audio/vision-language workflows that are not just model inference."
+    },
+    "natural-language-processing-general": {
+      "title": "Natural Language Processing — General",
+      "when_to_read": "Natural Language Processing requests whose task family has no dedicated scenario: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for the smaller repository families in this area.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "split_guidance": "Smaller Natural Language Processing taxonomy families are grouped at the area level to keep the router index compact while remaining routable. Future imports in smaller Natural Language Processing families will route to this scenario until a family grows enough to warrant its own."
+    },
+    "neural-network-components": {
+      "title": "Neural Network Components",
+      "when_to_read": "Requests in the Neural Network Components family of the Training Infrastructure area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on neural network components.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "split_guidance": "The Neural Network Components taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity. Future imports classified under the Neural Network Components family will route to this scenario."
+    },
+    "nlp-toolkit-suites": {
+      "title": "NLP Toolkit Suites",
+      "when_to_read": "Requests in the NLP Toolkit Suites family of the Natural Language Processing area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on nlp toolkit suites.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "split_guidance": "The NLP Toolkit Suites taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity. Future imports classified under the NLP Toolkit Suites family will route to this scenario."
+    },
+    "object-detection-models": {
+      "title": "Object Detection Models",
+      "when_to_read": "Requests in the Object Detection Models family of the Computer Vision area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on object detection models.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "split_guidance": "The Object Detection Models taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity. Future imports classified under the Object Detection Models family will route to this scenario."
+    },
+    "object-detection-toolkits": {
+      "title": "Object Detection Toolkits",
+      "when_to_read": "Requests in the Object Detection Toolkits family of the Computer Vision area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on object detection toolkits.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "split_guidance": "The Object Detection Toolkits taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity. Future imports classified under the Object Detection Toolkits family will route to this scenario."
+    },
+    "object-tracking": {
+      "title": "Object Tracking",
+      "when_to_read": "Requests in the Object Tracking family of the Computer Vision area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on object tracking.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "split_guidance": "The Object Tracking taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity. Future imports classified under the Object Tracking family will route to this scenario."
+    },
+    "open-weight-model-releases": {
+      "title": "Open-Weight Model Releases",
+      "when_to_read": "Requests in the Open-Weight Model Releases family of the LLM Models, Training, and Alignment area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on open-weight model releases.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "split_guidance": "The Open-Weight Model Releases taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity. Future imports classified under the Open-Weight Model Releases family will route to this scenario."
+    },
+    "pedagogical-ml-implementations": {
+      "title": "Pedagogical ML Implementations",
+      "when_to_read": "Requests in the Pedagogical ML Implementations family of the Training Infrastructure area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on pedagogical ml implementations.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "split_guidance": "The Pedagogical ML Implementations taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity. Future imports classified under the Pedagogical ML Implementations family will route to this scenario."
+    },
+    "pipeline-orchestration": {
+      "title": "Pipeline Orchestration",
+      "when_to_read": "Requests in the Pipeline Orchestration family of the MLOps area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on pipeline orchestration.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "split_guidance": "The Pipeline Orchestration taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity. Future imports classified under the Pipeline Orchestration family will route to this scenario."
+    },
+    "pose-estimation": {
+      "title": "Pose Estimation",
+      "when_to_read": "Requests in the Pose Estimation family of the Computer Vision area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on pose estimation.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "split_guidance": "The Pose Estimation taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity. Future imports classified under the Pose Estimation family will route to this scenario."
+    },
+    "preference-and-reinforcement-alignment": {
+      "title": "Preference and Reinforcement Alignment",
+      "when_to_read": "Requests in the Preference and Reinforcement Alignment family of the LLM Models, Training, and Alignment area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on preference and reinforcement alignment.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "split_guidance": "The Preference and Reinforcement Alignment taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity. Future imports classified under the Preference and Reinforcement Alignment family will route to this scenario."
+    },
+    "pretraining": {
+      "title": "Pretraining",
+      "when_to_read": "Requests in the Pretraining family of the LLM Models, Training, and Alignment area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on pretraining.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "split_guidance": "The Pretraining taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity. Future imports classified under the Pretraining family will route to this scenario."
+    },
+    "probabilistic-and-causal-modeling-general": {
+      "title": "Probabilistic and Causal Modeling — General",
+      "when_to_read": "Probabilistic and Causal Modeling requests whose task family has no dedicated scenario: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for the smaller repository families in this area.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "split_guidance": "Smaller Probabilistic and Causal Modeling taxonomy families are grouped at the area level to keep the router index compact while remaining routable. Future imports in smaller Probabilistic and Causal Modeling families will route to this scenario until a family grows enough to warrant its own."
     },
     "protein-structure-prediction-and-design-workflows": {
       "title": "Protein Structure Prediction and Design Workflows",
@@ -230,6 +596,18 @@
         "repository-development"
       ]
     },
+    "rag-frameworks": {
+      "title": "RAG Frameworks",
+      "when_to_read": "Requests in the RAG Frameworks family of the LLM Applications area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on rag frameworks.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "split_guidance": "The RAG Frameworks taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity. Future imports classified under the RAG Frameworks family will route to this scenario."
+    },
+    "reinforcement-learning-general": {
+      "title": "Reinforcement Learning — General",
+      "when_to_read": "Reinforcement Learning requests whose task family has no dedicated scenario: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for the smaller repository families in this area.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "split_guidance": "Smaller Reinforcement Learning taxonomy families are grouped at the area level to keep the router index compact while remaining routable. Future imports in smaller Reinforcement Learning families will route to this scenario until a family grows enough to warrant its own."
+    },
     "reinforcement-learning-workflows": {
       "title": "Reinforcement Learning Workflows",
       "when_to_read": "Gymnasium environments, Stable-Baselines3 algorithms, RL vectorization, policies, evaluation, experiment scripts, replay buffers, collectors, action masks, multi-agent RL environments, and PPO-family rollout-agent training.",
@@ -242,6 +620,54 @@
         "rl-data-and-environments",
         "rl-experiment-operations"
       ]
+    },
+    "responsible-ai-general": {
+      "title": "Responsible AI — General",
+      "when_to_read": "Responsible AI requests whose task family has no dedicated scenario: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for the smaller repository families in this area.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "split_guidance": "Smaller Responsible AI taxonomy families are grouped at the area level to keep the router index compact while remaining routable. Future imports in smaller Responsible AI families will route to this scenario until a family grows enough to warrant its own."
+    },
+    "rl-algorithm-implementations": {
+      "title": "RL Algorithm Implementations",
+      "when_to_read": "Requests in the RL Algorithm Implementations family of the Reinforcement Learning area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on rl algorithm implementations.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "split_guidance": "The RL Algorithm Implementations taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity. Future imports classified under the RL Algorithm Implementations family will route to this scenario."
+    },
+    "rl-environments": {
+      "title": "RL Environments",
+      "when_to_read": "Requests in the RL Environments family of the Reinforcement Learning area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on rl environments.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "split_guidance": "The RL Environments taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity. Future imports classified under the RL Environments family will route to this scenario."
+    },
+    "rl-training-frameworks": {
+      "title": "RL Training Frameworks",
+      "when_to_read": "Requests in the RL Training Frameworks family of the Reinforcement Learning area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on rl training frameworks.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "split_guidance": "The RL Training Frameworks taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity. Future imports classified under the RL Training Frameworks family will route to this scenario."
+    },
+    "robot-learning-frameworks": {
+      "title": "Robot Learning Frameworks",
+      "when_to_read": "Requests in the Robot Learning Frameworks family of the Robotics and Embodied AI area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on robot learning frameworks.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "split_guidance": "The Robot Learning Frameworks taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity. Future imports classified under the Robot Learning Frameworks family will route to this scenario."
+    },
+    "robot-simulation": {
+      "title": "Robot Simulation",
+      "when_to_read": "Requests in the Robot Simulation family of the Robotics and Embodied AI area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on robot simulation.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "split_guidance": "The Robot Simulation taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity. Future imports classified under the Robot Simulation family will route to this scenario."
+    },
+    "robotics-and-embodied-ai-general": {
+      "title": "Robotics and Embodied AI — General",
+      "when_to_read": "Robotics and Embodied AI requests whose task family has no dedicated scenario: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for the smaller repository families in this area.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "split_guidance": "Smaller Robotics and Embodied AI taxonomy families are grouped at the area level to keep the router index compact while remaining routable. Future imports in smaller Robotics and Embodied AI families will route to this scenario until a family grows enough to warrant its own."
+    },
+    "scientific-computing-general": {
+      "title": "Scientific Computing — General",
+      "when_to_read": "Scientific Computing requests whose task family has no dedicated scenario: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for the smaller repository families in this area.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "split_guidance": "Smaller Scientific Computing taxonomy families are grouped at the area level to keep the router index compact while remaining routable. Future imports in smaller Scientific Computing families will route to this scenario until a family grows enough to warrant its own."
     },
     "scientific-python-data-workflows": {
       "title": "Scientific Python Data Workflows",
@@ -258,6 +684,90 @@
       "when_to_read": "Speech AI tasks involving ASR, transcription, TTS, vocoders, G2P, speaker diarization, VAD, forced alignment, audio enhancement/restoration, speech language models, voice agents, speech manifests, or speech-model repository maintenance.",
       "how_to_choose": "Choose the repo skill whose speech/audio framework, model family, data format, runtime, or repository workflow most directly matches the request; use package names, checkpoint formats, manifest fields, and task terms such as ASR, TTS, diarization, VAD, forced alignment, SpeechLM, voice-agent, or audio enhancement as strong signals.",
       "split_guidance": "Existing scenarios cover generic LLM training, multimodal/audio contrastive training, dataset processing, and MLOps, but none routes speech-specific ASR, TTS, diarization, audio-to-audio, SpeechLM2, voice-agent, manifest, checkpoint, and NeMo repository-development workflows together. Using an LLM or dataset scenario would hide the speech-domain model, data, and troubleshooting boundaries this skill provides. Future skills for speech recognition, TTS, diarization, audio enhancement, voice-agent, or speech-language-model repositories can share this scenario and compare by framework, model family, data format, and runtime surface."
+    },
+    "speech-and-audio-general": {
+      "title": "Speech and Audio — General",
+      "when_to_read": "Speech and Audio requests whose task family has no dedicated scenario: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for the smaller repository families in this area.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "split_guidance": "Smaller Speech and Audio taxonomy families are grouped at the area level to keep the router index compact while remaining routable. Future imports in smaller Speech and Audio families will route to this scenario until a family grows enough to warrant its own."
+    },
+    "speech-and-audio-toolkits": {
+      "title": "Speech and Audio Toolkits",
+      "when_to_read": "Requests in the Speech and Audio Toolkits family of the Speech and Audio area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on speech and audio toolkits.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "split_guidance": "The Speech and Audio Toolkits taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity. Future imports classified under the Speech and Audio Toolkits family will route to this scenario."
+    },
+    "speech-recognition": {
+      "title": "Speech Recognition",
+      "when_to_read": "Requests in the Speech Recognition family of the Speech and Audio area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on speech recognition.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "split_guidance": "The Speech Recognition taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity. Future imports classified under the Speech Recognition family will route to this scenario."
+    },
+    "speech-synthesis": {
+      "title": "Speech Synthesis",
+      "when_to_read": "Requests in the Speech Synthesis family of the Speech and Audio area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on speech synthesis.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "split_guidance": "The Speech Synthesis taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity. Future imports classified under the Speech Synthesis family will route to this scenario."
+    },
+    "tabular-modeling": {
+      "title": "Tabular Modeling",
+      "when_to_read": "Requests in the Tabular Modeling family of the Data Science area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on tabular modeling.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "split_guidance": "The Tabular Modeling taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity. Future imports classified under the Tabular Modeling family will route to this scenario."
+    },
+    "text-classification": {
+      "title": "Text Classification",
+      "when_to_read": "Requests in the Text Classification family of the Natural Language Processing area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on text classification.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "split_guidance": "The Text Classification taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity. Future imports classified under the Text Classification family will route to this scenario."
+    },
+    "time-series-analysis-general": {
+      "title": "Time Series Analysis — General",
+      "when_to_read": "Time Series Analysis requests whose task family has no dedicated scenario: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for the smaller repository families in this area.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "split_guidance": "Smaller Time Series Analysis taxonomy families are grouped at the area level to keep the router index compact while remaining routable. Future imports in smaller Time Series Analysis families will route to this scenario until a family grows enough to warrant its own."
+    },
+    "time-series-toolkits": {
+      "title": "Time-Series Toolkits",
+      "when_to_read": "Requests in the Time-Series Toolkits family of the Time Series Analysis area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on time-series toolkits.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "split_guidance": "The Time-Series Toolkits taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity. Future imports classified under the Time-Series Toolkits family will route to this scenario."
+    },
+    "training-data-pipelines": {
+      "title": "Training Data Pipelines",
+      "when_to_read": "Requests in the Training Data Pipelines family of the Training Infrastructure area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on training data pipelines.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "split_guidance": "The Training Data Pipelines taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity. Future imports classified under the Training Data Pipelines family will route to this scenario."
+    },
+    "training-infrastructure-general": {
+      "title": "Training Infrastructure — General",
+      "when_to_read": "Training Infrastructure requests whose task family has no dedicated scenario: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for the smaller repository families in this area.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "split_guidance": "Smaller Training Infrastructure taxonomy families are grouped at the area level to keep the router index compact while remaining routable. Future imports in smaller Training Infrastructure families will route to this scenario until a family grows enough to warrant its own."
+    },
+    "training-loop-toolkits": {
+      "title": "Training Loop Toolkits",
+      "when_to_read": "Requests in the Training Loop Toolkits family of the Training Infrastructure area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on training loop toolkits.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "split_guidance": "The Training Loop Toolkits taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity. Future imports classified under the Training Loop Toolkits family will route to this scenario."
+    },
+    "vector-search": {
+      "title": "Vector Search",
+      "when_to_read": "Requests in the Vector Search family of the Information Retrieval area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on vector search.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "split_guidance": "The Vector Search taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity. Future imports classified under the Vector Search family will route to this scenario."
+    },
+    "video-synthesis": {
+      "title": "Video Synthesis",
+      "when_to_read": "Requests in the Video Synthesis family of the Generative Media area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on video synthesis.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "split_guidance": "The Video Synthesis taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity. Future imports classified under the Video Synthesis family will route to this scenario."
+    },
+    "vision-language-understanding": {
+      "title": "Vision-Language Understanding",
+      "when_to_read": "Requests in the Vision-Language Understanding family of the Computer Vision area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on vision-language understanding.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "split_guidance": "The Vision-Language Understanding taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity. Future imports classified under the Vision-Language Understanding family will route to this scenario."
     }
   }
 }

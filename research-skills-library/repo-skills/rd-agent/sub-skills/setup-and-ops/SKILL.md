@@ -1,6 +1,7 @@
 ---
 name: setup-and-ops
 description: "Install, inspect, configure, and safely operate the RD-Agent package and its CLI, UI, logs, and environment checks."
+disable-model-invocation: true
 metadata:
   disco-role: operating
   parent-skill: rd-agent

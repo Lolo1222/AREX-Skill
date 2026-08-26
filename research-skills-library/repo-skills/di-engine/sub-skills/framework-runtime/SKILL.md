@@ -1,9 +1,9 @@
 ---
 name: framework-runtime
 description: "Routes DI-engine task/middleware, Parallel, Supervisor, and modern example workflows."
+disable-model-invocation: true
 metadata:
   disco-role: operating
-  disable-model-invocation: true
 license: Apache 2.0
 ---
 

@@ -27,4 +27,4 @@ Useful entry points: `torchdrug/SKILL.md`, `torchdrug/sub-skills/training-engine
 
 ## How To Choose
 
-Use this scenario for framework engine internals such as MMEngine; choose model-family scenarios when the request is about a concrete model workflow. Choose `mmengine` for generic MMEngine engine-layer work. If a task also names a downstream OpenMMLab repository, use `mmengine` for shared engine contracts and the downstream repo skill for task-specific components. Choose torchdrug when the training engine question names TorchDrug abstractions or combines graph drug-discovery tasks with core.Engine; otherwise choose the framework owning the active training loop.
+Use this scenario for framework engine internals such as MMEngine; choose model-family scenarios when the request is about a concrete model workflow.

@@ -1,9 +1,9 @@
 ---
 name: env-integration
 description: "Routes DI-engine environment wrappers, env managers, and DIZoo environment onboarding."
+disable-model-invocation: true
 metadata:
   disco-role: operating
-  disable-model-invocation: true
 license: Apache 2.0
 ---
 

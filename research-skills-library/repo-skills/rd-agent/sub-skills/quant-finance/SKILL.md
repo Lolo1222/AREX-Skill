@@ -1,6 +1,7 @@
 ---
 name: quant-finance
 description: "Run and troubleshoot RD-Agent quantitative-finance factor and model workflows backed by Qlib, including factor-report and co-optimization loops."
+disable-model-invocation: true
 metadata:
   disco-role: operating
   parent-skill: rd-agent

@@ -1,6 +1,7 @@
 ---
 name: rl-post-training
 description: "Run and troubleshoot RD-Agent RL post-training and AutoRL-Bench experiments with explicit model, benchmark, workspace, grading, and backend evidence."
+disable-model-invocation: true
 metadata:
   disco-role: operating
   parent-skill: rd-agent

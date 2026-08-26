@@ -27,4 +27,4 @@ Useful entry points: `pydeseq2/SKILL.md`, `pydeseq2/sub-skills/data-io-validatio
 
 ## How To Choose
 
-Use this scenario for package-specific bulk RNA-seq DEA workflows. Do not route general Scanpy/single-cell tasks here unless the user explicitly asks for PyDESeq2 or bulk count differential expression. Choose `omicverse` for bulk/enrichment tasks written with `ov.bulk` or OmicVerse table workflows; choose `pydeseq2` for direct PyDESeq2 object modeling and low-level DESeq2 troubleshooting. Choose `pydeseq2` when the user is using PyDESeq2 or asks for DESeq2-like bulk RNA-seq analysis in Python. Start at the root router, then pick data I/O before model construction, DEA workflows for fitting, statistics/results after fitting, or model-fitting internals for staged normalization/VST/debugging.
+Use this scenario for package-specific bulk RNA-seq DEA workflows. Do not route general Scanpy/single-cell tasks here unless the user explicitly asks for PyDESeq2 or bulk count differential expression.

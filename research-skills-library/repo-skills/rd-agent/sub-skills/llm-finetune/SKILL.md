@@ -1,6 +1,7 @@
 ---
 name: llm-finetune
 description: "Operate RD-Agent FT-Agent workflows for benchmark-driven LLM data processing, fine-tuning, merge, evaluation, and feedback loops."
+disable-model-invocation: true
 metadata:
   disco-role: operating
   parent-skill: rd-agent

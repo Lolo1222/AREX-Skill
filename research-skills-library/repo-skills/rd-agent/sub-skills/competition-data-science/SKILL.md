@@ -1,6 +1,7 @@
 ---
 name: competition-data-science
 description: "Prepare datasets and operate RD-Agent data-science/Kaggle workflows with reproducible debug, validation, submission, and grading artifacts."
+disable-model-invocation: true
 metadata:
   disco-role: operating
   parent-skill: rd-agent

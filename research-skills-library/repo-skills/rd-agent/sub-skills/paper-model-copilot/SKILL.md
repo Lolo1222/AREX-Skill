@@ -1,6 +1,7 @@
 ---
 name: paper-model-copilot
 description: "Use RD-Agent's general model copilot to turn a paper/report PDF into a structured model experiment and iteratively developed PyTorch implementation."
+disable-model-invocation: true
 metadata:
   disco-role: operating
   parent-skill: rd-agent

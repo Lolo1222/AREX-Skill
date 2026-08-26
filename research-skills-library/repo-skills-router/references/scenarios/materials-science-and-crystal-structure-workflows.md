@@ -19,4 +19,4 @@ Useful entry points: `pymatgen/SKILL.md`, `pymatgen/sub-skills/structures-local-
 
 ## How To Choose
 
-Use this scenario when the user names pymatgen or asks for materials-science structure, thermodynamics, external materials data, or crystallographic analysis rather than molecular drug-discovery chemistry or generic array/data workflows. Choose `pymatgen` when the request names pymatgen or materials/crystal/phase/stability terms. Use the external-data sub-skill before live API calls, the CLI/config sub-skill before persistent settings or POTCAR operations, and the domain sub-skill that owns the resulting analysis.
+Use this scenario when the user names pymatgen or asks for materials-science structure, thermodynamics, external materials data, or crystallographic analysis rather than molecular drug-discovery chemistry or generic array/data workflows.

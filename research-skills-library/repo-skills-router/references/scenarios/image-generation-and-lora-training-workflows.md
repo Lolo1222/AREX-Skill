@@ -31,14 +31,6 @@ Best for: adapters and loaders, conversion and maintenance, modular pipelines, p
 Avoid when: another repo skill in this scenario matches the user's task, package, model family, data format, serving backend, or workflow more directly.
 Useful entry points: `diffusers/SKILL.md`, `diffusers/sub-skills/adapters-and-loaders/`, `diffusers/sub-skills/conversion-and-maintenance/`, `diffusers/sub-skills/modular-pipelines/`, `diffusers/sub-skills/pipelines-and-inference/`, `diffusers/sub-skills/schedulers/`, `diffusers/sub-skills/training-recipes/`.
 
-### `generative-models`
-
-Role: Use generative-models for Stability AI's sgm package, SDXL inference APIs, SVD/SV3D/SV4D video sampling scripts, config-driven diffusion training, demos, and watermark interpretation.
-Read when: Task mentions generative-models, sgm, SamplingPipeline, SamplingParams, SDXL base/refiner, stable-diffusion-xl, SVD, SVD-XT, SV3D, SV4D, SV4D2, simple_video_sample, main.py --base, instantiate_from_config, DiffusionEngine, AutoencodingEngine, Streamlit/Gradio demo controls, or invisible watermark bit matches.
-Best for: Planning and troubleshooting SDXL API inference, checkpoint/config naming, video and 4D sampling commands, training YAML adaptation, static config validation, demo-to-API translation, and watermark threshold classification.
-Avoid when: Use a Diffusers skill for Hugging Face Diffusers pipelines not using sgm; use a generic PyTorch Lightning skill for framework-only trainer questions; use computer-vision or serving skills for deployment tasks outside this repository.
-Useful entry points: `generative-models/SKILL.md`, `generative-models/sub-skills/inference-api/SKILL.md`, `generative-models/sub-skills/video-sampling/SKILL.md`, `generative-models/sub-skills/training-and-configs/SKILL.md`, `generative-models/sub-skills/demos-and-watermarking/SKILL.md`.
-
 ### `invokeai`
 
 Role: Use `invokeai` for InvokeAI-specific server configuration, node workflows, workflow queues, and model-management diagnostics.
@@ -75,4 +67,4 @@ Useful entry points: `unilm/SKILL.md`, `unilm/sub-skills/multimodal-generation/S
 
 ## How To Choose
 
-Choose Diffusers for Python pipeline/model APIs, ComfyUI for graph nodes and server workflows, and sd-scripts for Stable Diffusion LoRA training scripts. Choose `comfy-ui` when the request names `comfy-ui`, centers on Use ComfyUI as a modular AI content-creation engine: launch and automate the server, submit API workflows, validate graph JSON, author custom nodes, and configure model paths/backends, uses its APIs or CLIs, references its configs/artifacts/errors, or asks for repository workflows in image generation and lora training workflows. Choose `control-net` when the request depends on this repository's ControlNet 1.0 scripts, configs, detector wrappers, training tutorials, or checkpoint utilities; choose Diffusers or other image-generation repo skills for generic Stable Diffusion pipelines or unrelated LoRA training frameworks. Choose `diffusers` when the request names `diffusers`, centers on Hugging Face Diffusers tasks: pipeline inference, schedulers, adapters/loaders, training recipes, modular pipelines, conversion helpers, CLI checks, and repo maintenance, uses its APIs or CLIs, references its configs/artifacts/errors, or asks for repository workflows in image generation and lora training workflows. Prefer more specialized sibling skills only when the user asks for another package's API surface rather than this repository.
+Choose Diffusers for Python pipeline/model APIs, ComfyUI for graph nodes and server workflows, and sd-scripts for Stable Diffusion LoRA training scripts.

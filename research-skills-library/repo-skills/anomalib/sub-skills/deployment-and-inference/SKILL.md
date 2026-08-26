@@ -1,6 +1,7 @@
 ---
 name: deployment-and-inference
 description: "Export trained anomalib models and run runtime inference with Engine.predict, export helpers, TorchInferencer, and OpenVINOInferencer."
+disable-model-invocation: true
 metadata:
   disco-role: operating
 license: Apache 2.0

@@ -1,0 +1,5782 @@
+{
+  "skills": {
+    "3d-resnets-pytorch": {
+      "scenarios": [
+        "computer-vision-general"
+      ]
+    },
+    "3ddfa": {
+      "scenarios": [
+        "computer-vision-general",
+        "pose-estimation"
+      ]
+    },
+    "3ddfa-v2": {
+      "scenarios": [
+        "computer-vision-general",
+        "pose-estimation",
+        "object-tracking"
+      ]
+    },
+    "ab3dmot": {
+      "scenarios": [
+        "object-tracking"
+      ]
+    },
+    "act-plus-plus": {
+      "scenarios": [
+        "robot-simulation",
+        "manipulation",
+        "robot-learning-frameworks"
+      ]
+    },
+    "adalflow": {
+      "scenarios": [
+        "agent-sdks",
+        "llm-workflow-frameworks",
+        "rag-frameworks"
+      ]
+    },
+    "adelai-det": {
+      "scenarios": [
+        "object-detection-toolkits",
+        "image-segmentation",
+        "document-vision"
+      ]
+    },
+    "adversarial-robustness-toolbox": {
+      "scenarios": [
+        "responsible-ai-general"
+      ]
+    },
+    "agent-lightning": {
+      "scenarios": [
+        "llm-applications-general",
+        "preference-and-reinforcement-alignment",
+        "rl-training-frameworks"
+      ]
+    },
+    "agent-starter-pack": {
+      "scenarios": [
+        "agent-platforms",
+        "llm-applications-general",
+        "mlops-general"
+      ]
+    },
+    "agentscope": {
+      "scenarios": [
+        "multi-agent-orchestration",
+        "agent-sdks",
+        "agent-platforms"
+      ]
+    },
+    "agibot-x1-train": {
+      "scenarios": [
+        "rl-training-frameworks",
+        "robot-simulation",
+        "robotics-and-embodied-ai-general"
+      ]
+    },
+    "agriculture-knowledge-graph": {
+      "scenarios": [
+        "text-classification",
+        "information-extraction",
+        "knowledge-graphs"
+      ]
+    },
+    "ai-data-science-team": {
+      "scenarios": [
+        "multi-agent-orchestration",
+        "data-visualization",
+        "data-science-general"
+      ]
+    },
+    "ai-optimizer": {
+      "scenarios": [
+        "rl-algorithm-implementations",
+        "reinforcement-learning-general"
+      ]
+    },
+    "aif360": {
+      "scenarios": [
+        "responsible-ai-general"
+      ]
+    },
+    "aim": {
+      "scenarios": [
+        "mlops-general"
+      ]
+    },
+    "aimet": {
+      "scenarios": [
+        "model-compression"
+      ]
+    },
+    "airweave": {
+      "scenarios": [
+        "agent-tools-and-skills",
+        "vector-search",
+        "data-integration"
+      ]
+    },
+    "aix360": {
+      "scenarios": [
+        "responsible-ai-general"
+      ]
+    },
+    "alae": {
+      "scenarios": [
+        "image-synthesis",
+        "image-editing"
+      ]
+    },
+    "alibi": {
+      "scenarios": [
+        "responsible-ai-general"
+      ]
+    },
+    "align-anything": {
+      "scenarios": [
+        "llm-fine-tuning",
+        "preference-and-reinforcement-alignment",
+        "model-evaluation-benchmarks"
+      ]
+    },
+    "alpamayo-r1": {
+      "scenarios": [
+        "autonomous-driving-general"
+      ]
+    },
+    "alpasim": {
+      "scenarios": [
+        "autonomous-driving-general",
+        "driving-simulation-and-evaluation"
+      ]
+    },
+    "alpha-gpt": {
+      "scenarios": [
+        "mathematical-optimization",
+        "data-science-general",
+        "data-integration"
+      ]
+    },
+    "alphafold2": {
+      "scenarios": [
+        "scientific-computing-general"
+      ]
+    },
+    "alphafold3-pytorch": {
+      "scenarios": [
+        "training-loop-toolkits",
+        "training-data-pipelines",
+        "scientific-computing-general"
+      ]
+    },
+    "anomalib": {
+      "scenarios": [
+        "computer-vision-general"
+      ]
+    },
+    "any-door": {
+      "scenarios": [
+        "image-synthesis",
+        "image-editing",
+        "generative-model-adaptation"
+      ]
+    },
+    "any4lerobot": {
+      "scenarios": [
+        "mlops-general"
+      ]
+    },
+    "anylabeling": {
+      "scenarios": [
+        "image-segmentation",
+        "mlops-general"
+      ]
+    },
+    "apod-api": {
+      "scenarios": [
+        "scientific-computing-general"
+      ]
+    },
+    "app-agent": {
+      "scenarios": [
+        "agent-sdks",
+        "autonomous-agent-applications"
+      ]
+    },
+    "arcgis-python-api": {
+      "scenarios": [
+        "knowledge-graphs",
+        "scientific-computing-general",
+        "geospatial-computing"
+      ]
+    },
+    "areal": {
+      "scenarios": [
+        "preference-and-reinforcement-alignment",
+        "llm-models-training-and-alignment-general",
+        "distributed-training-systems"
+      ]
+    },
+    "argilla": {
+      "scenarios": [
+        "mlops-general"
+      ]
+    },
+    "argos-translate": {
+      "scenarios": [
+        "natural-language-processing-general"
+      ]
+    },
+    "aris": {
+      "scenarios": [
+        "memory-and-context",
+        "agent-tools-and-skills",
+        "autonomous-agent-applications"
+      ]
+    },
+    "asap": {
+      "scenarios": [
+        "robot-simulation",
+        "robotics-and-embodied-ai-general",
+        "robot-learning-frameworks"
+      ]
+    },
+    "asrt-speech-recognition": {
+      "scenarios": [
+        "speech-recognition",
+        "natural-language-processing-general"
+      ]
+    },
+    "asteroid": {
+      "scenarios": [
+        "speech-and-audio-general",
+        "speech-and-audio-toolkits"
+      ]
+    },
+    "astropy": {
+      "scenarios": [
+        "scientific-computing-general"
+      ]
+    },
+    "atomic-agents": {
+      "scenarios": [
+        "agent-sdks",
+        "memory-and-context",
+        "agent-tools-and-skills"
+      ]
+    },
+    "attention-gated-networks": {
+      "scenarios": [
+        "image-classification",
+        "biomedical-ai-general"
+      ]
+    },
+    "attention-is-all-you-need-pytorch": {
+      "scenarios": [
+        "natural-language-processing-general",
+        "neural-network-components",
+        "pedagogical-ml-implementations"
+      ]
+    },
+    "audio-diffusion-pytorch": {
+      "scenarios": [
+        "generative-media-general"
+      ]
+    },
+    "augmentor": {
+      "scenarios": [
+        "computer-vision-general"
+      ]
+    },
+    "auto-pytorch": {
+      "scenarios": [
+        "automl",
+        "tabular-modeling",
+        "forecasting"
+      ]
+    },
+    "auto-sklearn": {
+      "scenarios": [
+        "automl"
+      ]
+    },
+    "autodistill": {
+      "scenarios": [
+        "mlops-general",
+        "model-compression"
+      ]
+    },
+    "autogpt": {
+      "scenarios": [
+        "agent-sdks",
+        "agent-platforms",
+        "autonomous-agent-applications"
+      ]
+    },
+    "autograd": {
+      "scenarios": [
+        "training-infrastructure-general"
+      ]
+    },
+    "autokeras": {
+      "scenarios": [
+        "image-classification",
+        "text-classification",
+        "automl"
+      ]
+    },
+    "automl-gs": {
+      "scenarios": [
+        "automl",
+        "tabular-modeling"
+      ]
+    },
+    "autotrain-advanced": {
+      "scenarios": [
+        "image-classification",
+        "text-classification",
+        "llm-fine-tuning"
+      ]
+    },
+    "autoviz": {
+      "scenarios": [
+        "mlops-general",
+        "data-science-general",
+        "data-visualization"
+      ]
+    },
+    "aws-sdk-pandas": {
+      "scenarios": [
+        "data-science-general",
+        "data-integration"
+      ]
+    },
+    "axlearn": {
+      "scenarios": [
+        "training-infrastructure-general",
+        "distributed-training-systems"
+      ]
+    },
+    "background-matting-v2": {
+      "scenarios": [
+        "image-segmentation"
+      ]
+    },
+    "baichuan-7b": {
+      "scenarios": [
+        "pretraining",
+        "model-evaluation-benchmarks",
+        "open-weight-model-releases"
+      ]
+    },
+    "baichuan2": {
+      "scenarios": [
+        "llm-fine-tuning",
+        "open-weight-model-releases"
+      ]
+    },
+    "basic-ts": {
+      "scenarios": [
+        "training-loop-toolkits",
+        "time-series-toolkits"
+      ]
+    },
+    "bayesian-optimization": {
+      "scenarios": [
+        "automl",
+        "mathematical-optimization"
+      ]
+    },
+    "behavior-1k": {
+      "scenarios": [
+        "rl-environments",
+        "robot-simulation"
+      ]
+    },
+    "bert-pytorch": {
+      "scenarios": [
+        "natural-language-processing-general",
+        "pretraining"
+      ]
+    },
+    "bertopic": {
+      "scenarios": [
+        "natural-language-processing-general",
+        "data-visualization"
+      ]
+    },
+    "bertviz": {
+      "scenarios": [
+        "responsible-ai-general"
+      ]
+    },
+    "bev-former": {
+      "scenarios": [
+        "object-detection-models",
+        "driving-perception"
+      ]
+    },
+    "bi-ref-net": {
+      "scenarios": [
+        "image-segmentation"
+      ]
+    },
+    "big-sleep": {
+      "scenarios": [
+        "image-synthesis",
+        "media-generation-applications"
+      ]
+    },
+    "biggan-pytorch": {
+      "scenarios": [
+        "image-synthesis",
+        "image-synthesis-toolkits",
+        "generative-model-adaptation"
+      ]
+    },
+    "bindcraft": {
+      "scenarios": [
+        "scientific-computing-general"
+      ]
+    },
+    "bindu": {
+      "scenarios": [
+        "multi-agent-orchestration",
+        "agent-platforms",
+        "agent-tools-and-skills"
+      ]
+    },
+    "biopython": {
+      "scenarios": [
+        "scientific-computing-general",
+        "data-integration"
+      ]
+    },
+    "bisheng": {
+      "scenarios": [
+        "agent-platforms",
+        "llm-workflow-frameworks",
+        "rag-frameworks"
+      ]
+    },
+    "blender-gis": {
+      "scenarios": [
+        "geospatial-computing"
+      ]
+    },
+    "bm25s": {
+      "scenarios": [
+        "first-stage-retrieval"
+      ]
+    },
+    "boxmot": {
+      "scenarios": [
+        "computer-vision-general",
+        "object-tracking"
+      ]
+    },
+    "braindecode": {
+      "scenarios": [
+        "biomedical-ai-general"
+      ]
+    },
+    "brian2": {
+      "scenarios": [
+        "scientific-computing-general"
+      ]
+    },
+    "causalml": {
+      "scenarios": [
+        "data-science-general",
+        "probabilistic-and-causal-modeling-general"
+      ]
+    },
+    "causalnex": {
+      "scenarios": [
+        "probabilistic-and-causal-modeling-general"
+      ]
+    },
+    "centernet": {
+      "scenarios": [
+        "object-detection-models"
+      ]
+    },
+    "chainer": {
+      "scenarios": [
+        "model-compilation",
+        "training-infrastructure-general",
+        "distributed-training-systems"
+      ]
+    },
+    "chartify": {
+      "scenarios": [
+        "data-visualization"
+      ]
+    },
+    "chatglm2-6b": {
+      "scenarios": [
+        "llm-fine-tuning",
+        "open-weight-model-releases",
+        "inference-serving"
+      ]
+    },
+    "chatterbot": {
+      "scenarios": [
+        "natural-language-processing-general"
+      ]
+    },
+    "chinese-bert-wwm": {
+      "scenarios": [
+        "natural-language-processing-general",
+        "open-weight-model-releases"
+      ]
+    },
+    "chinese-llama-alpaca": {
+      "scenarios": [
+        "llm-fine-tuning",
+        "pretraining",
+        "open-weight-model-releases"
+      ]
+    },
+    "chinese-llama-alpaca-2": {
+      "scenarios": [
+        "llm-fine-tuning",
+        "pretraining",
+        "open-weight-model-releases"
+      ]
+    },
+    "chonkie": {
+      "scenarios": [
+        "natural-language-processing-general",
+        "document-intelligence",
+        "vector-search"
+      ]
+    },
+    "chronos-forecasting": {
+      "scenarios": [
+        "forecasting"
+      ]
+    },
+    "cirq": {
+      "scenarios": [
+        "scientific-computing-general"
+      ]
+    },
+    "city2graph": {
+      "scenarios": [
+        "geospatial-computing",
+        "data-integration"
+      ]
+    },
+    "clawbio": {
+      "scenarios": [
+        "agent-tools-and-skills",
+        "autonomous-agent-applications",
+        "scientific-computing-general"
+      ]
+    },
+    "cleanlab": {
+      "scenarios": [
+        "mlops-general"
+      ]
+    },
+    "clearer-voice-studio": {
+      "scenarios": [
+        "speech-and-audio-general",
+        "speech-and-audio-toolkits"
+      ]
+    },
+    "clip-as-service": {
+      "scenarios": [
+        "natural-language-processing-general",
+        "information-retrieval-general",
+        "vector-search"
+      ]
+    },
+    "clue-dataset-search": {
+      "scenarios": [
+        "data-science-general"
+      ]
+    },
+    "code-review-graph": {
+      "scenarios": [
+        "agent-tools-and-skills",
+        "knowledge-graphs"
+      ]
+    },
+    "cogdl": {
+      "scenarios": [
+        "graph-learning-general",
+        "knowledge-graphs"
+      ]
+    },
+    "cognee": {
+      "scenarios": [
+        "rag-frameworks",
+        "memory-and-context",
+        "knowledge-graphs"
+      ]
+    },
+    "colorization": {
+      "scenarios": [
+        "image-restoration"
+      ]
+    },
+    "colossal-ai": {
+      "scenarios": [
+        "preference-and-reinforcement-alignment",
+        "inference-serving",
+        "distributed-training-systems"
+      ]
+    },
+    "comfyui-ltxvideo": {
+      "scenarios": [
+        "media-generation-applications",
+        "video-synthesis",
+        "generative-media-general"
+      ]
+    },
+    "comfyui-to-python-extension": {
+      "scenarios": [
+        "media-generation-applications",
+        "model-compilation"
+      ]
+    },
+    "composer": {
+      "scenarios": [
+        "model-compilation",
+        "training-loop-toolkits",
+        "distributed-training-systems"
+      ]
+    },
+    "contrastive-unpaired-translation": {
+      "scenarios": [
+        "image-synthesis-toolkits",
+        "image-editing"
+      ]
+    },
+    "cookiecutter-data-science": {
+      "scenarios": [
+        "mlops-general"
+      ]
+    },
+    "coremltools": {
+      "scenarios": [
+        "model-compilation",
+        "model-compression",
+        "edge-deployment"
+      ]
+    },
+    "coronavirus": {
+      "scenarios": [
+        "scientific-computing-general"
+      ]
+    },
+    "cream": {
+      "scenarios": [
+        "computer-vision-general",
+        "automl",
+        "model-compression"
+      ]
+    },
+    "cs230-code-examples": {
+      "scenarios": [
+        "image-classification",
+        "information-extraction"
+      ]
+    },
+    "cube-studio": {
+      "scenarios": [
+        "pipeline-orchestration",
+        "mlops-general"
+      ]
+    },
+    "cuml": {
+      "scenarios": [
+        "tabular-modeling",
+        "data-science-general"
+      ]
+    },
+    "curobo": {
+      "scenarios": [
+        "pose-estimation",
+        "reinforcement-learning-general",
+        "manipulation"
+      ]
+    },
+    "custom-diffusion": {
+      "scenarios": [
+        "image-synthesis",
+        "generative-model-adaptation"
+      ]
+    },
+    "cvat": {
+      "scenarios": [
+        "mlops-general"
+      ]
+    },
+    "cvnets": {
+      "scenarios": [
+        "image-classification",
+        "object-detection-toolkits",
+        "image-segmentation"
+      ]
+    },
+    "d-fine": {
+      "scenarios": [
+        "object-detection-models"
+      ]
+    },
+    "dalle-pytorch": {
+      "scenarios": [
+        "image-synthesis",
+        "generative-media-general"
+      ]
+    },
+    "dalle2-pytorch": {
+      "scenarios": [
+        "image-synthesis",
+        "image-synthesis-toolkits"
+      ]
+    },
+    "damo-yolo": {
+      "scenarios": [
+        "object-detection-models",
+        "model-compilation",
+        "model-compression"
+      ]
+    },
+    "darkflow": {
+      "scenarios": [
+        "object-detection-models"
+      ]
+    },
+    "dash": {
+      "scenarios": [
+        "data-visualization"
+      ]
+    },
+    "data-designer-repo-skill": {
+      "scenarios": [
+        "mlops-general"
+      ]
+    },
+    "data-juicer": {
+      "scenarios": [
+        "mlops-general",
+        "training-data-pipelines",
+        "data-science-general"
+      ]
+    },
+    "data-science-python": {
+      "scenarios": [
+        "pedagogical-ml-implementations",
+        "tabular-modeling",
+        "data-science-general"
+      ]
+    },
+    "datachain": {
+      "scenarios": [
+        "agent-tools-and-skills",
+        "mlops-general",
+        "data-integration"
+      ]
+    },
+    "dataflow": {
+      "scenarios": [
+        "llm-workflow-frameworks",
+        "document-intelligence",
+        "training-data-pipelines"
+      ]
+    },
+    "deblur-gan": {
+      "scenarios": [
+        "image-restoration"
+      ]
+    },
+    "deep-analyze": {
+      "scenarios": [
+        "autonomous-agent-applications",
+        "llm-models-training-and-alignment-general",
+        "open-weight-model-releases"
+      ]
+    },
+    "deep-ctr-torch": {
+      "scenarios": [
+        "data-science-general"
+      ]
+    },
+    "deep-danbooru": {
+      "scenarios": [
+        "image-classification"
+      ]
+    },
+    "deep-daze": {
+      "scenarios": [
+        "image-synthesis",
+        "media-generation-applications"
+      ]
+    },
+    "deep-filter-net": {
+      "scenarios": [
+        "speech-and-audio-general",
+        "edge-deployment",
+        "training-data-pipelines"
+      ]
+    },
+    "deep-gcns-torch": {
+      "scenarios": [
+        "3d-scene-understanding",
+        "graph-learning-general"
+      ]
+    },
+    "deep-motion-editing": {
+      "scenarios": [
+        "generative-media-general"
+      ]
+    },
+    "deep-person-reid": {
+      "scenarios": [
+        "computer-vision-general"
+      ]
+    },
+    "deep-reinforcement-learning-with-pytorch": {
+      "scenarios": [
+        "pedagogical-ml-implementations",
+        "rl-algorithm-implementations"
+      ]
+    },
+    "deep-research": {
+      "scenarios": [
+        "autonomous-agent-applications",
+        "model-evaluation-benchmarks",
+        "open-weight-model-releases"
+      ]
+    },
+    "deep-searcher": {
+      "scenarios": [
+        "rag-frameworks",
+        "document-intelligence",
+        "vector-search"
+      ]
+    },
+    "deepchecks": {
+      "scenarios": [
+        "mlops-general"
+      ]
+    },
+    "deepctr": {
+      "scenarios": [
+        "data-science-general"
+      ]
+    },
+    "deepface": {
+      "scenarios": [
+        "computer-vision-general"
+      ]
+    },
+    "deepjazz": {
+      "scenarios": [
+        "generative-media-general"
+      ]
+    },
+    "deepke": {
+      "scenarios": [
+        "information-extraction",
+        "llm-fine-tuning",
+        "knowledge-graphs"
+      ]
+    },
+    "deeplabcut": {
+      "scenarios": [
+        "pose-estimation",
+        "object-tracking"
+      ]
+    },
+    "deepmedic": {
+      "scenarios": [
+        "biomedical-ai-general"
+      ]
+    },
+    "deeppavlov": {
+      "scenarios": [
+        "text-classification",
+        "nlp-toolkit-suites",
+        "information-extraction"
+      ]
+    },
+    "deepstream-yolo": {
+      "scenarios": [
+        "object-detection-toolkits"
+      ]
+    },
+    "deepxde": {
+      "scenarios": [
+        "training-infrastructure-general",
+        "scientific-computing-general"
+      ]
+    },
+    "deepxiv-sdk": {
+      "scenarios": [
+        "agent-sdks",
+        "rag-frameworks",
+        "agent-tools-and-skills",
+        "chat-and-knowledge-applications",
+        "autonomous-agent-applications",
+        "first-stage-retrieval"
+      ]
+    },
+    "denoising-diffusion-pytorch": {
+      "scenarios": [
+        "image-synthesis",
+        "image-synthesis-toolkits",
+        "generative-media-general"
+      ]
+    },
+    "det3d": {
+      "scenarios": [
+        "object-detection-toolkits",
+        "3d-scene-understanding",
+        "driving-perception"
+      ]
+    },
+    "detikzify": {
+      "scenarios": [
+        "llm-applications-general",
+        "llm-fine-tuning",
+        "preference-and-reinforcement-alignment"
+      ]
+    },
+    "detrex": {
+      "scenarios": [
+        "object-detection-toolkits",
+        "image-segmentation",
+        "object-tracking"
+      ]
+    },
+    "dexbotic": {
+      "scenarios": [
+        "llm-fine-tuning",
+        "inference-serving",
+        "robot-learning-frameworks"
+      ]
+    },
+    "di-engine": {
+      "scenarios": [
+        "rl-training-frameworks",
+        "rl-algorithm-implementations",
+        "rl-environments"
+      ]
+    },
+    "diffusion-planner": {
+      "scenarios": [
+        "autonomous-driving-general",
+        "driving-simulation-and-evaluation"
+      ]
+    },
+    "diffusion-policy": {
+      "scenarios": [
+        "robot-simulation",
+        "manipulation",
+        "robot-learning-frameworks"
+      ]
+    },
+    "dino": {
+      "scenarios": [
+        "object-detection-models"
+      ]
+    },
+    "discoart": {
+      "scenarios": [
+        "media-generation-applications",
+        "inference-serving"
+      ]
+    },
+    "distil-whisper": {
+      "scenarios": [
+        "speech-recognition",
+        "model-compression"
+      ]
+    },
+    "dive-into-graphs": {
+      "scenarios": [
+        "graph-learning-general",
+        "scientific-computing-general"
+      ]
+    },
+    "django-rest-framework-gis": {
+      "scenarios": [
+        "geospatial-computing"
+      ]
+    },
+    "dltk": {
+      "scenarios": [
+        "image-classification",
+        "biomedical-ai-general"
+      ]
+    },
+    "dm-control": {
+      "scenarios": [
+        "rl-environments",
+        "robot-simulation",
+        "manipulation"
+      ]
+    },
+    "dm-haiku": {
+      "scenarios": [
+        "neural-network-components"
+      ]
+    },
+    "docarray": {
+      "scenarios": [
+        "vector-search",
+        "data-integration"
+      ]
+    },
+    "doccano": {
+      "scenarios": [
+        "mlops-general"
+      ]
+    },
+    "docs-gpt": {
+      "scenarios": [
+        "agent-platforms",
+        "document-intelligence",
+        "chat-and-knowledge-applications"
+      ]
+    },
+    "doctr": {
+      "scenarios": [
+        "document-vision"
+      ]
+    },
+    "donut": {
+      "scenarios": [
+        "document-vision",
+        "vision-language-understanding",
+        "computer-vision-general"
+      ]
+    },
+    "dowhy": {
+      "scenarios": [
+        "probabilistic-and-causal-modeling-general"
+      ]
+    },
+    "dpm-solver": {
+      "scenarios": [
+        "generative-media-general"
+      ]
+    },
+    "dream-textures": {
+      "scenarios": [
+        "media-generation-applications",
+        "image-editing",
+        "generative-media-general"
+      ]
+    },
+    "dreamcraft3d": {
+      "scenarios": [
+        "generative-media-general"
+      ]
+    },
+    "dreamerv2": {
+      "scenarios": [
+        "rl-algorithm-implementations",
+        "reinforcement-learning-general"
+      ]
+    },
+    "dreamerv3": {
+      "scenarios": [
+        "rl-training-frameworks",
+        "rl-algorithm-implementations",
+        "reinforcement-learning-general"
+      ]
+    },
+    "dreamomni2": {
+      "scenarios": [
+        "image-synthesis",
+        "media-generation-applications",
+        "image-editing"
+      ]
+    },
+    "drl-pytorch": {
+      "scenarios": [
+        "rl-training-frameworks",
+        "rl-algorithm-implementations"
+      ]
+    },
+    "drl-robot-navigation": {
+      "scenarios": [
+        "rl-algorithm-implementations",
+        "robot-simulation",
+        "robotics-and-embodied-ai-general"
+      ]
+    },
+    "earth2studio": {
+      "scenarios": [
+        "inference-serving",
+        "scientific-computing-general",
+        "data-integration"
+      ]
+    },
+    "easy-r1": {
+      "scenarios": [
+        "llm-fine-tuning",
+        "preference-and-reinforcement-alignment",
+        "distributed-training-systems"
+      ]
+    },
+    "easy12306": {
+      "scenarios": [
+        "image-classification",
+        "document-vision"
+      ]
+    },
+    "easycv": {
+      "scenarios": [
+        "image-classification",
+        "object-detection-toolkits",
+        "image-segmentation"
+      ]
+    },
+    "easyocr": {
+      "scenarios": [
+        "document-vision"
+      ]
+    },
+    "eccv2022-rife": {
+      "scenarios": [
+        "video-synthesis"
+      ]
+    },
+    "edge-connect": {
+      "scenarios": [
+        "image-editing"
+      ]
+    },
+    "einops": {
+      "scenarios": [
+        "training-infrastructure-general",
+        "neural-network-components"
+      ]
+    },
+    "elasticsearch-py": {
+      "scenarios": [
+        "vector-search"
+      ]
+    },
+    "electricitymaps-contrib": {
+      "scenarios": [
+        "data-integration"
+      ]
+    },
+    "equinox": {
+      "scenarios": [
+        "training-infrastructure-general",
+        "neural-network-components"
+      ]
+    },
+    "espnet": {
+      "scenarios": [
+        "speech-recognition",
+        "speech-synthesis",
+        "speech-and-audio-toolkits"
+      ]
+    },
+    "everos": {
+      "scenarios": [
+        {
+          "id": "memory-and-context",
+          "role": "Use the `everos` skill for EverOS local-first Markdown memory service setup, HTTP memory and knowledge APIs, cascade/OME operations, and observability integration."
+        },
+        {
+          "id": "document-intelligence",
+          "role": "Use the `everos` skill for EverOS local-first Markdown memory service setup, HTTP memory and knowledge APIs, cascade/OME operations, and observability integration."
+        },
+        {
+          "id": "vector-search",
+          "role": "Use the `everos` skill for EverOS local-first Markdown memory service setup, HTTP memory and knowledge APIs, cascade/OME operations, and observability integration."
+        }
+      ]
+    },
+    "evo": {
+      "scenarios": [
+        "robotics-and-embodied-ai-general",
+        "data-visualization"
+      ]
+    },
+    "executorch": {
+      "scenarios": [
+        "model-compilation",
+        "model-compression",
+        "edge-deployment"
+      ]
+    },
+    "face-alignment": {
+      "scenarios": [
+        "computer-vision-general",
+        "pose-estimation"
+      ]
+    },
+    "face-evolve": {
+      "scenarios": [
+        "computer-vision-general",
+        "pose-estimation"
+      ]
+    },
+    "face-recognition": {
+      "scenarios": [
+        "computer-vision-general",
+        "pose-estimation"
+      ]
+    },
+    "facenet": {
+      "scenarios": [
+        "computer-vision-general"
+      ]
+    },
+    "fairlearn": {
+      "scenarios": [
+        "responsible-ai-general"
+      ]
+    },
+    "faiss": {
+      "scenarios": [
+        "vector-search"
+      ]
+    },
+    "fast-reid": {
+      "scenarios": [
+        "image-classification",
+        "computer-vision-general"
+      ]
+    },
+    "fast-style-transfer": {
+      "scenarios": [
+        "image-editing",
+        "generative-model-adaptation"
+      ]
+    },
+    "fastdup": {
+      "scenarios": [
+        "computer-vision-general",
+        "mlops-general",
+        "data-science-general"
+      ]
+    },
+    "faster-whisper": {
+      "scenarios": [
+        "speech-recognition"
+      ]
+    },
+    "fastvideo": {
+      "scenarios": [
+        "video-synthesis",
+        "generative-model-adaptation",
+        "inference-serving"
+      ]
+    },
+    "fate": {
+      "scenarios": [
+        "distributed-training-systems",
+        "responsible-ai-general"
+      ]
+    },
+    "fcos": {
+      "scenarios": [
+        "object-detection-models",
+        "object-detection-toolkits"
+      ]
+    },
+    "featuretools": {
+      "scenarios": [
+        "data-science-general"
+      ]
+    },
+    "fedml": {
+      "scenarios": [
+        "pipeline-orchestration",
+        "inference-serving",
+        "distributed-training-systems"
+      ]
+    },
+    "fengshenbang-lm": {
+      "scenarios": [
+        "llm-fine-tuning",
+        "pretraining",
+        "distributed-training-systems"
+      ]
+    },
+    "ffcv": {
+      "scenarios": [
+        "computer-vision-general",
+        "training-data-pipelines"
+      ]
+    },
+    "fg-data-profiling": {
+      "scenarios": [
+        "data-science-general"
+      ]
+    },
+    "figures4papers": {
+      "scenarios": [
+        "data-visualization"
+      ]
+    },
+    "fiona": {
+      "scenarios": [
+        "geospatial-computing"
+      ]
+    },
+    "flair": {
+      "scenarios": [
+        "natural-language-processing-general",
+        "nlp-toolkit-suites",
+        "information-extraction"
+      ]
+    },
+    "flash-linear-attention": {
+      "scenarios": [
+        "distributed-training-systems",
+        "neural-network-components"
+      ]
+    },
+    "flashtext": {
+      "scenarios": [
+        "information-extraction"
+      ]
+    },
+    "flashvsr": {
+      "scenarios": [
+        "image-restoration"
+      ]
+    },
+    "flow-forecast": {
+      "scenarios": [
+        "forecasting",
+        "time-series-analysis-general",
+        "time-series-toolkits"
+      ]
+    },
+    "flower": {
+      "scenarios": [
+        "distributed-training-systems",
+        "responsible-ai-general"
+      ]
+    },
+    "folium": {
+      "scenarios": [
+        "data-visualization",
+        "geospatial-computing"
+      ]
+    },
+    "foolbox": {
+      "scenarios": [
+        "responsible-ai-general"
+      ]
+    },
+    "frustum-pointnets": {
+      "scenarios": [
+        "3d-scene-understanding"
+      ]
+    },
+    "fugue": {
+      "scenarios": [
+        "pipeline-orchestration",
+        "data-science-general"
+      ]
+    },
+    "funasr": {
+      "scenarios": [
+        "speech-recognition",
+        "speech-and-audio-toolkits",
+        "inference-serving"
+      ]
+    },
+    "funclip": {
+      "scenarios": [
+        "computer-vision-general",
+        "speech-recognition",
+        "speech-and-audio-general"
+      ]
+    },
+    "gaussian-slam": {
+      "scenarios": [
+        "computer-vision-general",
+        "generative-media-general",
+        "robotics-and-embodied-ai-general"
+      ]
+    },
+    "gaussian-splatting": {
+      "scenarios": [
+        "generative-media-general"
+      ]
+    },
+    "geemap": {
+      "scenarios": [
+        "scientific-computing-general",
+        "data-visualization",
+        "geospatial-computing"
+      ]
+    },
+    "gempy": {
+      "scenarios": [
+        "scientific-computing-general"
+      ]
+    },
+    "genai-processors": {
+      "scenarios": [
+        "speech-and-audio-toolkits",
+        "agent-sdks",
+        "llm-workflow-frameworks"
+      ]
+    },
+    "gensim": {
+      "scenarios": [
+        "natural-language-processing-general",
+        "first-stage-retrieval"
+      ]
+    },
+    "geoai": {
+      "scenarios": [
+        "image-segmentation",
+        "scientific-computing-general",
+        "geospatial-computing"
+      ]
+    },
+    "geonode": {
+      "scenarios": [
+        "geospatial-computing",
+        "data-science-general"
+      ]
+    },
+    "geopandas": {
+      "scenarios": [
+        "geospatial-computing"
+      ]
+    },
+    "geoparquet": {
+      "scenarios": [
+        "geospatial-computing"
+      ]
+    },
+    "geoseg": {
+      "scenarios": [
+        "image-segmentation"
+      ]
+    },
+    "gerev": {
+      "scenarios": [
+        "first-stage-retrieval",
+        "information-retrieval-general",
+        "vector-search"
+      ]
+    },
+    "gfpgan": {
+      "scenarios": [
+        "image-restoration"
+      ]
+    },
+    "gget": {
+      "scenarios": [
+        "scientific-computing-general"
+      ]
+    },
+    "gimp-ml": {
+      "scenarios": [
+        "image-segmentation",
+        "image-restoration",
+        "image-editing"
+      ]
+    },
+    "giskard-oss": {
+      "scenarios": [
+        "llm-workflow-frameworks",
+        "llm-applications-general"
+      ]
+    },
+    "gluon-cv": {
+      "scenarios": [
+        "object-detection-toolkits",
+        "image-segmentation",
+        "computer-vision-general"
+      ]
+    },
+    "gluonts": {
+      "scenarios": [
+        "forecasting"
+      ]
+    },
+    "go2-omniverse": {
+      "scenarios": [
+        "robot-simulation",
+        "robotics-and-embodied-ai-general"
+      ]
+    },
+    "google-agents-cli": {
+      "scenarios": [
+        "agent-platforms",
+        "agent-tools-and-skills",
+        "llm-applications-general"
+      ]
+    },
+    "gpt-academic": {
+      "scenarios": [
+        "document-intelligence",
+        "chat-and-knowledge-applications",
+        "llm-applications-general"
+      ]
+    },
+    "gpt-image-cli": {
+      "scenarios": [
+        "media-generation-applications",
+        "image-editing"
+      ]
+    },
+    "gpt2-chinese": {
+      "scenarios": [
+        "pretraining"
+      ]
+    },
+    "gptme": {
+      "scenarios": [
+        "agent-sdks",
+        "agent-tools-and-skills",
+        "autonomous-agent-applications"
+      ]
+    },
+    "gradslam": {
+      "scenarios": [
+        "robotics-and-embodied-ai-general"
+      ]
+    },
+    "graph-nets": {
+      "scenarios": [
+        "graph-learning-general"
+      ]
+    },
+    "graphify": {
+      "scenarios": [
+        "agent-tools-and-skills",
+        "knowledge-graphs"
+      ]
+    },
+    "graphiti": {
+      "scenarios": [
+        "memory-and-context",
+        "agent-tools-and-skills",
+        "knowledge-graphs"
+      ]
+    },
+    "graphormer": {
+      "scenarios": [
+        "graph-learning-general",
+        "scientific-computing-general"
+      ]
+    },
+    "gym-pybullet-drones": {
+      "scenarios": [
+        "rl-environments",
+        "robot-simulation"
+      ]
+    },
+    "h2o-llmstudio": {
+      "scenarios": [
+        "llm-fine-tuning",
+        "preference-and-reinforcement-alignment",
+        "mlops-general"
+      ]
+    },
+    "h3-py": {
+      "scenarios": [
+        "geospatial-computing"
+      ]
+    },
+    "hanlp": {
+      "scenarios": [
+        "nlp-toolkit-suites",
+        "information-extraction",
+        "natural-language-processing-general"
+      ]
+    },
+    "harbor": {
+      "scenarios": [
+        "llm-applications-general",
+        "model-evaluation-benchmarks"
+      ]
+    },
+    "headroom": {
+      "scenarios": [
+        "memory-and-context",
+        "agent-tools-and-skills",
+        "llm-applications-general"
+      ]
+    },
+    "helios": {
+      "scenarios": [
+        "video-synthesis",
+        "generative-model-adaptation",
+        "generative-media-general"
+      ]
+    },
+    "hierarchical-localization": {
+      "scenarios": [
+        "computer-vision-general"
+      ]
+    },
+    "hifi-gan": {
+      "scenarios": [
+        "speech-synthesis"
+      ]
+    },
+    "highway-env": {
+      "scenarios": [
+        "rl-environments",
+        "driving-simulation-and-evaluation"
+      ]
+    },
+    "hivemind": {
+      "scenarios": [
+        "inference-serving",
+        "distributed-training-systems"
+      ]
+    },
+    "hls4ml": {
+      "scenarios": [
+        "model-compilation",
+        "model-compression",
+        "edge-deployment"
+      ]
+    },
+    "hnswlib": {
+      "scenarios": [
+        "vector-search"
+      ]
+    },
+    "honcho": {
+      "scenarios": [
+        "memory-and-context",
+        "agent-tools-and-skills",
+        "vector-search"
+      ]
+    },
+    "hrm": {
+      "scenarios": [
+        "pedagogical-ml-implementations"
+      ]
+    },
+    "huatuo-llama-med-chinese": {
+      "scenarios": [
+        "llm-fine-tuning",
+        "model-evaluation-benchmarks",
+        "open-weight-model-releases"
+      ]
+    },
+    "humanoid-gym": {
+      "scenarios": [
+        "robot-simulation",
+        "robotics-and-embodied-ai-general",
+        "robot-learning-frameworks"
+      ]
+    },
+    "hummingbird": {
+      "scenarios": [
+        "model-compilation"
+      ]
+    },
+    "hunyuan-image-3-0": {
+      "scenarios": [
+        "image-synthesis",
+        "image-editing",
+        "inference-serving"
+      ]
+    },
+    "hunyuan-video": {
+      "scenarios": [
+        "media-generation-applications",
+        "video-synthesis"
+      ]
+    },
+    "hunyuan3d-2": {
+      "scenarios": [
+        "generative-media-general"
+      ]
+    },
+    "hunyuanvideo-i2v": {
+      "scenarios": [
+        "video-synthesis",
+        "generative-model-adaptation"
+      ]
+    },
+    "hypertools": {
+      "scenarios": [
+        "data-visualization",
+        "data-science-general",
+        "forecasting"
+      ]
+    },
+    "i-gan": {
+      "scenarios": [
+        "image-synthesis",
+        "image-synthesis-toolkits",
+        "media-generation-applications"
+      ]
+    },
+    "ic-edit": {
+      "scenarios": [
+        "image-editing",
+        "generative-model-adaptation"
+      ]
+    },
+    "igel": {
+      "scenarios": [
+        "automl",
+        "inference-serving",
+        "tabular-modeling"
+      ]
+    },
+    "ignite": {
+      "scenarios": [
+        "training-loop-toolkits",
+        "distributed-training-systems"
+      ]
+    },
+    "ikpy": {
+      "scenarios": [
+        "manipulation"
+      ]
+    },
+    "image-ai": {
+      "scenarios": [
+        "image-classification",
+        "object-detection-toolkits"
+      ]
+    },
+    "image-super-resolution-via-iterative-refinement": {
+      "scenarios": [
+        "image-restoration",
+        "image-synthesis"
+      ]
+    },
+    "imagededup": {
+      "scenarios": [
+        "image-classification"
+      ]
+    },
+    "imagen-pytorch": {
+      "scenarios": [
+        "image-synthesis",
+        "image-synthesis-toolkits",
+        "video-synthesis"
+      ]
+    },
+    "imbalanced-learn": {
+      "scenarios": [
+        "tabular-modeling",
+        "data-science-general"
+      ]
+    },
+    "img2dataset": {
+      "scenarios": [
+        "computer-vision-general",
+        "training-data-pipelines",
+        "data-integration"
+      ]
+    },
+    "img2img-turbo": {
+      "scenarios": [
+        "image-editing",
+        "generative-model-adaptation"
+      ]
+    },
+    "imgaug": {
+      "scenarios": [
+        "computer-vision-general"
+      ]
+    },
+    "imgclsmob": {
+      "scenarios": [
+        "image-classification",
+        "image-segmentation",
+        "pose-estimation"
+      ]
+    },
+    "infinite-you": {
+      "scenarios": [
+        "image-synthesis",
+        "media-generation-applications",
+        "image-editing"
+      ]
+    },
+    "informer2020": {
+      "scenarios": [
+        "forecasting"
+      ]
+    },
+    "instill-core": {
+      "scenarios": [
+        "pipeline-orchestration",
+        "mlops-general"
+      ]
+    },
+    "interactive-deep-colorization": {
+      "scenarios": [
+        "image-restoration"
+      ]
+    },
+    "intern-gpt": {
+      "scenarios": [
+        "vision-language-understanding",
+        "media-generation-applications",
+        "image-editing"
+      ]
+    },
+    "intern-image": {
+      "scenarios": [
+        "object-detection-toolkits",
+        "image-segmentation",
+        "computer-vision-general"
+      ]
+    },
+    "intern-video": {
+      "scenarios": [
+        "computer-vision-general",
+        "vision-language-understanding"
+      ]
+    },
+    "internlm-xcomposer": {
+      "scenarios": [
+        "computer-vision-general",
+        "vision-language-understanding",
+        "preference-and-reinforcement-alignment"
+      ]
+    },
+    "ir-sim": {
+      "scenarios": [
+        "robot-simulation",
+        "robotics-and-embodied-ai-general"
+      ]
+    },
+    "isaaclab": {
+      "scenarios": [
+        "rl-environments",
+        "robot-simulation",
+        "robot-learning-frameworks"
+      ]
+    },
+    "janus": {
+      "scenarios": [
+        "vision-language-understanding",
+        "image-synthesis",
+        "open-weight-model-releases"
+      ]
+    },
+    "jarvis": {
+      "scenarios": [
+        "autonomous-agent-applications",
+        "model-evaluation-benchmarks"
+      ]
+    },
+    "jina-serve": {
+      "scenarios": [
+        "pipeline-orchestration",
+        "inference-serving"
+      ]
+    },
+    "jionlp": {
+      "scenarios": [
+        "nlp-toolkit-suites",
+        "information-extraction",
+        "natural-language-processing-general"
+      ]
+    },
+    "jittor": {
+      "scenarios": [
+        "computer-vision-general",
+        "training-infrastructure-general"
+      ]
+    },
+    "kag": {
+      "scenarios": [
+        "rag-frameworks",
+        "llm-applications-general",
+        "knowledge-graphs"
+      ]
+    },
+    "kair": {
+      "scenarios": [
+        "image-restoration"
+      ]
+    },
+    "kaolin": {
+      "scenarios": [
+        "generative-media-general",
+        "scientific-computing-general"
+      ]
+    },
+    "keras-attention": {
+      "scenarios": [
+        "neural-network-components"
+      ]
+    },
+    "keras-gan": {
+      "scenarios": [
+        "image-restoration",
+        "image-synthesis-toolkits",
+        "image-editing"
+      ]
+    },
+    "keras-rl": {
+      "scenarios": [
+        "rl-training-frameworks",
+        "rl-algorithm-implementations"
+      ]
+    },
+    "keras-tuner": {
+      "scenarios": [
+        "automl"
+      ]
+    },
+    "keras-vis": {
+      "scenarios": [
+        "responsible-ai-general"
+      ]
+    },
+    "kiln": {
+      "scenarios": [
+        "rag-frameworks",
+        "llm-applications-general",
+        "llm-fine-tuning"
+      ]
+    },
+    "knowledge-storm": {
+      "scenarios": [
+        "multi-agent-orchestration",
+        "rag-frameworks",
+        "chat-and-knowledge-applications"
+      ]
+    },
+    "koalas": {
+      "scenarios": [
+        "data-science-general",
+        "data-integration"
+      ]
+    },
+    "kornia": {
+      "scenarios": [
+        "computer-vision-general"
+      ]
+    },
+    "krita-ai-diffusion": {
+      "scenarios": [
+        "image-restoration",
+        "media-generation-applications",
+        "image-editing"
+      ]
+    },
+    "kubeflow-pipelines": {
+      "scenarios": [
+        "mlops-general",
+        "pipeline-orchestration"
+      ]
+    },
+    "la-vague": {
+      "scenarios": [
+        "agent-sdks",
+        "autonomous-agent-applications",
+        "llm-applications-general"
+      ]
+    },
+    "labelme": {
+      "scenarios": [
+        "mlops-general"
+      ]
+    },
+    "labml": {
+      "scenarios": [
+        "mlops-general",
+        "training-loop-toolkits"
+      ]
+    },
+    "lanenet-lane-detection": {
+      "scenarios": [
+        "image-segmentation",
+        "edge-deployment",
+        "driving-perception"
+      ]
+    },
+    "langbot": {
+      "scenarios": [
+        "agent-platforms",
+        "agent-tools-and-skills",
+        "chat-and-knowledge-applications"
+      ]
+    },
+    "langchain-chatchat": {
+      "scenarios": [
+        "chat-and-knowledge-applications"
+      ]
+    },
+    "langextract": {
+      "scenarios": [
+        "information-extraction",
+        "document-intelligence",
+        "llm-applications-general"
+      ]
+    },
+    "langroid": {
+      "scenarios": [
+        "multi-agent-orchestration",
+        "agent-sdks",
+        "rag-frameworks"
+      ]
+    },
+    "latent-sync": {
+      "scenarios": [
+        "video-synthesis",
+        "generative-model-adaptation",
+        "generative-media-general"
+      ]
+    },
+    "latex-ocr": {
+      "scenarios": [
+        "document-vision",
+        "llm-applications-general"
+      ]
+    },
+    "layout-parser": {
+      "scenarios": [
+        "document-vision"
+      ]
+    },
+    "lazy-llm": {
+      "scenarios": [
+        "agent-platforms",
+        "llm-workflow-frameworks",
+        "rag-frameworks"
+      ]
+    },
+    "lazypredict": {
+      "scenarios": [
+        "automl",
+        "tabular-modeling",
+        "forecasting"
+      ]
+    },
+    "leafmap": {
+      "scenarios": [
+        "geospatial-computing"
+      ]
+    },
+    "leann": {
+      "scenarios": [
+        "rag-frameworks",
+        "agent-tools-and-skills",
+        "vector-search"
+      ]
+    },
+    "learning-to-learn": {
+      "scenarios": [
+        "training-infrastructure-general",
+        "pedagogical-ml-implementations"
+      ]
+    },
+    "leptonai": {
+      "scenarios": [
+        "agent-tools-and-skills",
+        "mlops-general",
+        "inference-serving"
+      ]
+    },
+    "lerobot": {
+      "scenarios": [
+        "mlops-general",
+        "inference-serving",
+        "training-data-pipelines",
+        "rl-training-frameworks",
+        "robot-simulation",
+        "manipulation",
+        "robot-learning-frameworks"
+      ]
+    },
+    "libmtl": {
+      "scenarios": [
+        "training-infrastructure-general"
+      ]
+    },
+    "libra": {
+      "scenarios": [
+        "image-classification",
+        "text-classification",
+        "tabular-modeling"
+      ]
+    },
+    "light-x2v": {
+      "scenarios": [
+        "image-synthesis-toolkits",
+        "media-generation-applications",
+        "video-synthesis"
+      ]
+    },
+    "lightfm": {
+      "scenarios": [
+        "data-science-general"
+      ]
+    },
+    "lightglue": {
+      "scenarios": [
+        "computer-vision-general"
+      ]
+    },
+    "lightllm": {
+      "scenarios": [
+        "llm-applications-general",
+        "inference-serving",
+        "model-compression"
+      ]
+    },
+    "lightly": {
+      "scenarios": [
+        "image-classification",
+        "training-loop-toolkits",
+        "neural-network-components"
+      ]
+    },
+    "lightning-hydra-template": {
+      "scenarios": [
+        "mlops-general",
+        "training-loop-toolkits"
+      ]
+    },
+    "limi-x": {
+      "scenarios": [
+        "tabular-modeling"
+      ]
+    },
+    "litserve": {
+      "scenarios": [
+        "agent-tools-and-skills",
+        "inference-serving"
+      ]
+    },
+    "llamagen": {
+      "scenarios": [
+        "image-synthesis",
+        "generative-media-general"
+      ]
+    },
+    "llava": {
+      "scenarios": [
+        "vision-language-understanding",
+        "llm-fine-tuning",
+        "inference-serving"
+      ]
+    },
+    "llm-foundry": {
+      "scenarios": [
+        "llm-fine-tuning",
+        "pretraining",
+        "model-evaluation-benchmarks"
+      ]
+    },
+    "llm-rl-visualized": {
+      "scenarios": [
+        "preference-and-reinforcement-alignment",
+        "rl-algorithm-implementations"
+      ]
+    },
+    "llm4decompile": {
+      "scenarios": [
+        "llm-applications-general",
+        "llm-fine-tuning",
+        "model-evaluation-benchmarks"
+      ]
+    },
+    "lmflow": {
+      "scenarios": [
+        "llm-fine-tuning",
+        "preference-and-reinforcement-alignment",
+        "llm-models-training-and-alignment-general"
+      ]
+    },
+    "lmms-eval": {
+      "scenarios": [
+        "model-evaluation-benchmarks"
+      ]
+    },
+    "lmops": {
+      "scenarios": [
+        "llm-applications-general",
+        "preference-and-reinforcement-alignment",
+        "first-stage-retrieval"
+      ]
+    },
+    "logparser": {
+      "scenarios": [
+        "information-extraction"
+      ]
+    },
+    "lora": {
+      "scenarios": [
+        "llm-fine-tuning"
+      ]
+    },
+    "ltp": {
+      "scenarios": [
+        "nlp-toolkit-suites",
+        "natural-language-processing-general"
+      ]
+    },
+    "ltsf-linear": {
+      "scenarios": [
+        "forecasting"
+      ]
+    },
+    "ltx-2": {
+      "scenarios": [
+        "video-synthesis",
+        "generative-media-general",
+        "generative-model-adaptation"
+      ]
+    },
+    "ltx-video": {
+      "scenarios": [
+        "video-synthesis",
+        "generative-media-general"
+      ]
+    },
+    "ludwig": {
+      "scenarios": [
+        "llm-fine-tuning",
+        "preference-and-reinforcement-alignment",
+        "training-infrastructure-general"
+      ]
+    },
+    "lumina-t2x": {
+      "scenarios": [
+        "image-synthesis",
+        "generative-media-general",
+        "generative-model-adaptation"
+      ]
+    },
+    "luminoth": {
+      "scenarios": [
+        "object-detection-toolkits"
+      ]
+    },
+    "lux": {
+      "scenarios": [
+        "data-science-general",
+        "data-visualization"
+      ]
+    },
+    "m-flow": {
+      "scenarios": [
+        "rag-frameworks",
+        "memory-and-context",
+        "knowledge-graphs"
+      ]
+    },
+    "m2cgen": {
+      "scenarios": [
+        "model-compilation"
+      ]
+    },
+    "maante": {
+      "scenarios": [
+        "computer-vision-general",
+        "speech-and-audio-general"
+      ]
+    },
+    "maestro": {
+      "scenarios": [
+        "llm-fine-tuning",
+        "training-loop-toolkits"
+      ]
+    },
+    "mage-ai": {
+      "scenarios": [
+        "pipeline-orchestration",
+        "data-integration"
+      ]
+    },
+    "magi-1": {
+      "scenarios": [
+        "media-generation-applications",
+        "video-synthesis"
+      ]
+    },
+    "make-it-3d": {
+      "scenarios": [
+        "generative-media-general"
+      ]
+    },
+    "mambavision": {
+      "scenarios": [
+        "image-classification",
+        "image-segmentation",
+        "computer-vision-general"
+      ]
+    },
+    "mani-skill": {
+      "scenarios": [
+        "rl-training-frameworks",
+        "robot-simulation",
+        "manipulation"
+      ]
+    },
+    "manim-ml": {
+      "scenarios": [
+        "pedagogical-ml-implementations",
+        "data-visualization",
+        "probabilistic-and-causal-modeling-general"
+      ]
+    },
+    "map": {
+      "scenarios": [
+        "computer-vision-general"
+      ]
+    },
+    "maptr": {
+      "scenarios": [
+        "driving-perception"
+      ]
+    },
+    "marqo": {
+      "scenarios": [
+        "first-stage-retrieval",
+        "vector-search",
+        "inference-serving"
+      ]
+    },
+    "mars": {
+      "scenarios": [
+        "training-infrastructure-general",
+        "data-science-general"
+      ]
+    },
+    "mask-rcnn": {
+      "scenarios": [
+        "object-detection-models",
+        "image-segmentation"
+      ]
+    },
+    "mast3r-slam": {
+      "scenarios": [
+        "computer-vision-general",
+        "robotics-and-embodied-ai-general"
+      ]
+    },
+    "mattergen": {
+      "scenarios": [
+        "scientific-computing-general"
+      ]
+    },
+    "maxkb": {
+      "scenarios": [
+        "agent-platforms",
+        "llm-workflow-frameworks",
+        "chat-and-knowledge-applications"
+      ]
+    },
+    "mcp-context-forge": {
+      "scenarios": [
+        "agent-platforms",
+        "agent-tools-and-skills",
+        "llm-applications-general"
+      ]
+    },
+    "mctx": {
+      "scenarios": [
+        "rl-algorithm-implementations",
+        "reinforcement-learning-general"
+      ]
+    },
+    "medical-detection-toolkit": {
+      "scenarios": [
+        "object-detection-toolkits",
+        "biomedical-ai-general"
+      ]
+    },
+    "medical-research-skills": {
+      "scenarios": [
+        "agent-tools-and-skills"
+      ]
+    },
+    "medical-sam-adapter": {
+      "scenarios": [
+        "biomedical-ai-general",
+        "training-infrastructure-general"
+      ]
+    },
+    "medical-zoo-pytorch": {
+      "scenarios": [
+        "biomedical-ai-general"
+      ]
+    },
+    "medmnist": {
+      "scenarios": [
+        "biomedical-ai-general"
+      ]
+    },
+    "medrax": {
+      "scenarios": [
+        "biomedical-ai-general",
+        "autonomous-agent-applications"
+      ]
+    },
+    "medsegdiff": {
+      "scenarios": [
+        "biomedical-ai-general"
+      ]
+    },
+    "megatron-lm": {
+      "scenarios": [
+        "pretraining",
+        "distributed-training-systems",
+        "neural-network-components"
+      ]
+    },
+    "mellea": {
+      "scenarios": [
+        "llm-workflow-frameworks",
+        "llm-applications-general",
+        "inference-serving"
+      ]
+    },
+    "mem-machine": {
+      "scenarios": [
+        "memory-and-context",
+        "agent-tools-and-skills"
+      ]
+    },
+    "memori": {
+      "scenarios": [
+        "memory-and-context",
+        "agent-tools-and-skills",
+        "vector-search"
+      ]
+    },
+    "mergekit": {
+      "scenarios": [
+        "mathematical-optimization"
+      ]
+    },
+    "mesa": {
+      "scenarios": [
+        "scientific-computing-general",
+        "data-visualization"
+      ]
+    },
+    "meshroom": {
+      "scenarios": [
+        "pipeline-orchestration"
+      ]
+    },
+    "metaflow": {
+      "scenarios": [
+        "mlops-general",
+        "pipeline-orchestration"
+      ]
+    },
+    "mimic-kit": {
+      "scenarios": [
+        "robot-simulation",
+        "robotics-and-embodied-ai-general",
+        "robot-learning-frameworks"
+      ]
+    },
+    "mimicmotion": {
+      "scenarios": [
+        "pose-estimation",
+        "video-synthesis"
+      ]
+    },
+    "min-dalle": {
+      "scenarios": [
+        "image-synthesis"
+      ]
+    },
+    "minecontext": {
+      "scenarios": [
+        "memory-and-context",
+        "document-intelligence",
+        "chat-and-knowledge-applications"
+      ]
+    },
+    "minimal-rl": {
+      "scenarios": [
+        "rl-algorithm-implementations"
+      ]
+    },
+    "minimind": {
+      "scenarios": [
+        "preference-and-reinforcement-alignment",
+        "llm-models-training-and-alignment-general",
+        "pretraining"
+      ]
+    },
+    "minimind-v": {
+      "scenarios": [
+        "vision-language-understanding",
+        "llm-fine-tuning",
+        "llm-models-training-and-alignment-general"
+      ]
+    },
+    "minkowski-engine": {
+      "scenarios": [
+        "3d-scene-understanding",
+        "training-infrastructure-general",
+        "neural-network-components"
+      ]
+    },
+    "mirofish": {
+      "scenarios": [
+        "knowledge-graphs",
+        "scientific-computing-general"
+      ]
+    },
+    "missingno": {
+      "scenarios": [
+        "data-science-general",
+        "data-visualization"
+      ]
+    },
+    "mixtral-offloading": {
+      "scenarios": [
+        "open-weight-model-releases",
+        "model-compression"
+      ]
+    },
+    "mjlab": {
+      "scenarios": [
+        "robot-simulation",
+        "robotics-and-embodied-ai-general",
+        "robot-learning-frameworks"
+      ]
+    },
+    "ml-algorithms": {
+      "scenarios": [
+        {
+          "id": "pedagogical-ml-implementations",
+          "role": "Use the `ml-algorithms` skill for MLAlgorithms (`mla`) educational machine-learning implementations: classical estimators, clustering/reduction, metrics, NeuralNet building blocks, and DQN examples."
+        },
+        {
+          "id": "rl-algorithm-implementations",
+          "role": "Use the `ml-algorithms` skill for MLAlgorithms (`mla`) educational machine-learning implementations: classical estimators, clustering/reduction, metrics, NeuralNet building blocks, and DQN examples."
+        },
+        {
+          "id": "tabular-modeling",
+          "role": "Use the `ml-algorithms` skill for MLAlgorithms (`mla`) educational machine-learning implementations: classical estimators, clustering/reduction, metrics, NeuralNet building blocks, and DQN examples."
+        }
+      ]
+    },
+    "ml-from-scratch": {
+      "scenarios": [
+        "image-synthesis",
+        "pedagogical-ml-implementations",
+        "rl-algorithm-implementations"
+      ]
+    },
+    "ml-glossary": {
+      "scenarios": [
+        "pedagogical-ml-implementations"
+      ]
+    },
+    "mljar-supervised": {
+      "scenarios": [
+        "automl",
+        "tabular-modeling",
+        "responsible-ai-general"
+      ]
+    },
+    "mlx-audio": {
+      "scenarios": [
+        "speech-recognition",
+        "speech-synthesis",
+        "speech-and-audio-toolkits"
+      ]
+    },
+    "mlxtend": {
+      "scenarios": [
+        "data-visualization",
+        "tabular-modeling",
+        "data-science-general"
+      ]
+    },
+    "mmaction2": {
+      "scenarios": [
+        "computer-vision-general"
+      ]
+    },
+    "mmaudio": {
+      "scenarios": [
+        "generative-media-general",
+        "generative-model-adaptation"
+      ]
+    },
+    "mmdeploy": {
+      "scenarios": [
+        "model-compilation",
+        "model-compression",
+        "edge-deployment"
+      ]
+    },
+    "mmdetection3d": {
+      "scenarios": [
+        "object-detection-toolkits",
+        "3d-scene-understanding"
+      ]
+    },
+    "mmgeneration": {
+      "scenarios": [
+        "image-synthesis-toolkits",
+        "generative-media-general"
+      ]
+    },
+    "mmocr": {
+      "scenarios": [
+        "document-vision"
+      ]
+    },
+    "mmpretrain": {
+      "scenarios": [
+        "image-classification",
+        "computer-vision-general",
+        "vision-language-understanding"
+      ]
+    },
+    "mmskeleton": {
+      "scenarios": [
+        "pose-estimation",
+        "computer-vision-general"
+      ]
+    },
+    "mmyolo": {
+      "scenarios": [
+        "object-detection-toolkits",
+        "image-segmentation",
+        "model-compilation"
+      ]
+    },
+    "mne-python": {
+      "scenarios": [
+        "biomedical-ai-general",
+        "time-series-analysis-general"
+      ]
+    },
+    "moabb": {
+      "scenarios": [
+        "biomedical-ai-general",
+        "data-visualization",
+        "data-science-general"
+      ]
+    },
+    "mobile-agent": {
+      "scenarios": [
+        "vision-language-understanding",
+        "multi-agent-orchestration",
+        "autonomous-agent-applications"
+      ]
+    },
+    "modal": {
+      "scenarios": [
+        "mlops-general",
+        "mathematical-optimization"
+      ]
+    },
+    "modelscope": {
+      "scenarios": [
+        "mlops-general",
+        "training-loop-toolkits",
+        "training-infrastructure-general"
+      ]
+    },
+    "modin": {
+      "scenarios": [
+        "data-science-general",
+        "data-integration"
+      ]
+    },
+    "molecularnodes": {
+      "scenarios": [
+        "scientific-computing-general"
+      ]
+    },
+    "mono-gs": {
+      "scenarios": [
+        "generative-media-general",
+        "robotics-and-embodied-ai-general"
+      ]
+    },
+    "moss": {
+      "scenarios": [
+        "chat-and-knowledge-applications",
+        "llm-fine-tuning",
+        "open-weight-model-releases"
+      ]
+    },
+    "moss-tts": {
+      "scenarios": [
+        "generative-media-general",
+        "generative-model-adaptation",
+        "speech-synthesis"
+      ]
+    },
+    "motus": {
+      "scenarios": [
+        "video-synthesis",
+        "manipulation",
+        "robot-learning-frameworks"
+      ]
+    },
+    "mujoco-menagerie": {
+      "scenarios": [
+        "robot-simulation"
+      ]
+    },
+    "multidiffusion-upscaler-for-automatic1111": {
+      "scenarios": [
+        "image-restoration",
+        "media-generation-applications"
+      ]
+    },
+    "munit": {
+      "scenarios": [
+        "image-synthesis",
+        "image-editing"
+      ]
+    },
+    "muzero-general": {
+      "scenarios": [
+        "rl-training-frameworks",
+        "rl-algorithm-implementations",
+        "reinforcement-learning-general"
+      ]
+    },
+    "muzic": {
+      "scenarios": [
+        "generative-media-general",
+        "speech-and-audio-general",
+        "autonomous-agent-applications"
+      ]
+    },
+    "mycodo": {
+      "scenarios": [
+        "data-visualization"
+      ]
+    },
+    "myosuite": {
+      "scenarios": [
+        "rl-environments",
+        "robot-simulation",
+        "manipulation"
+      ]
+    },
+    "nannyml": {
+      "scenarios": [
+        "mlops-general"
+      ]
+    },
+    "nano-graphrag": {
+      "scenarios": [
+        "rag-frameworks",
+        "knowledge-graphs"
+      ]
+    },
+    "nano-vllm": {
+      "scenarios": [
+        "inference-serving"
+      ]
+    },
+    "nanodet": {
+      "scenarios": [
+        "object-detection-models",
+        "object-detection-toolkits"
+      ]
+    },
+    "navsim": {
+      "scenarios": [
+        "autonomous-driving-general",
+        "driving-simulation-and-evaluation"
+      ]
+    },
+    "ncbi-genome-download": {
+      "scenarios": [
+        "scientific-computing-general"
+      ]
+    },
+    "nemoguardrails": {
+      "scenarios": [
+        "llm-applications-general"
+      ]
+    },
+    "nerfstudio": {
+      "scenarios": [
+        "generative-media-general"
+      ]
+    },
+    "nesa": {
+      "scenarios": [
+        "text-classification",
+        "responsible-ai-general"
+      ]
+    },
+    "neural-prophet": {
+      "scenarios": [
+        "forecasting"
+      ]
+    },
+    "neural-style-tf": {
+      "scenarios": [
+        "image-editing"
+      ]
+    },
+    "neuralangelo": {
+      "scenarios": [
+        "computer-vision-general"
+      ]
+    },
+    "neuralforecast": {
+      "scenarios": [
+        "automl",
+        "forecasting"
+      ]
+    },
+    "neuromancer": {
+      "scenarios": [
+        "reinforcement-learning-general",
+        "scientific-computing-general",
+        "mathematical-optimization"
+      ]
+    },
+    "newton": {
+      "scenarios": [
+        "robot-simulation",
+        "scientific-computing-general"
+      ]
+    },
+    "nexent": {
+      "scenarios": [
+        "multi-agent-orchestration",
+        "agent-sdks",
+        "agent-platforms"
+      ]
+    },
+    "nitrain": {
+      "scenarios": [
+        "biomedical-ai-general"
+      ]
+    },
+    "nlp-progress": {
+      "scenarios": [
+        "model-evaluation-benchmarks",
+        "data-science-general"
+      ]
+    },
+    "nltk": {
+      "scenarios": [
+        "text-classification",
+        "nlp-toolkit-suites",
+        "natural-language-processing-general"
+      ]
+    },
+    "norfair": {
+      "scenarios": [
+        "object-tracking"
+      ]
+    },
+    "numpy-ml": {
+      "scenarios": [
+        "neural-network-components",
+        "rl-algorithm-implementations",
+        "tabular-modeling"
+      ]
+    },
+    "numpyro": {
+      "scenarios": [
+        "probabilistic-and-causal-modeling-general"
+      ]
+    },
+    "nunchaku": {
+      "scenarios": [
+        "generative-model-adaptation",
+        "model-compression"
+      ]
+    },
+    "nupic-legacy": {
+      "scenarios": [
+        "data-science-general",
+        "forecasting",
+        "time-series-analysis-general"
+      ]
+    },
+    "nuplan-devkit": {
+      "scenarios": [
+        "training-data-pipelines",
+        "autonomous-driving-general",
+        "driving-simulation-and-evaluation"
+      ]
+    },
+    "nvidia-skills-catalog-maintenance": {
+      "scenarios": [
+        "agent-tools-and-skills"
+      ]
+    },
+    "oasis": {
+      "scenarios": [
+        "scientific-computing-general",
+        "data-visualization",
+        "data-science-general"
+      ]
+    },
+    "object-detection-metrics": {
+      "scenarios": [
+        "computer-vision-general"
+      ]
+    },
+    "observal": {
+      "scenarios": [
+        "agent-platforms",
+        "agent-tools-and-skills",
+        "llm-applications-general"
+      ]
+    },
+    "obspy": {
+      "scenarios": [
+        "scientific-computing-general"
+      ]
+    },
+    "ods": {
+      "scenarios": [
+        "agent-platforms",
+        "chat-and-knowledge-applications",
+        "inference-serving"
+      ]
+    },
+    "ofa": {
+      "scenarios": [
+        "vision-language-understanding",
+        "image-synthesis",
+        "speech-recognition"
+      ]
+    },
+    "ogb": {
+      "scenarios": [
+        "graph-learning-general"
+      ]
+    },
+    "once-for-all": {
+      "scenarios": [
+        "image-classification",
+        "automl",
+        "model-compression"
+      ]
+    },
+    "onnx": {
+      "scenarios": [
+        "model-compilation"
+      ]
+    },
+    "onnxsim": {
+      "scenarios": [
+        "model-compilation",
+        "edge-deployment",
+        "training-infrastructure-general"
+      ]
+    },
+    "onyx": {
+      "scenarios": [
+        "agent-platforms",
+        "agent-tools-and-skills",
+        "chat-and-knowledge-applications"
+      ]
+    },
+    "open-assistant": {
+      "scenarios": [
+        "chat-and-knowledge-applications",
+        "llm-fine-tuning",
+        "preference-and-reinforcement-alignment"
+      ]
+    },
+    "open-flamingo": {
+      "scenarios": [
+        "vision-language-understanding",
+        "pretraining",
+        "model-evaluation-benchmarks"
+      ]
+    },
+    "open-interface": {
+      "scenarios": [
+        "autonomous-agent-applications"
+      ]
+    },
+    "open-wearables": {
+      "scenarios": [
+        "agent-tools-and-skills",
+        "data-integration"
+      ]
+    },
+    "open-webui": {
+      "scenarios": [
+        "agent-platforms",
+        "agent-tools-and-skills",
+        "chat-and-knowledge-applications"
+      ]
+    },
+    "open3d-ml": {
+      "scenarios": [
+        "3d-scene-understanding"
+      ]
+    },
+    "opencda": {
+      "scenarios": [
+        "driving-perception",
+        "autonomous-driving-general",
+        "driving-simulation-and-evaluation"
+      ]
+    },
+    "openchat": {
+      "scenarios": [
+        "llm-fine-tuning",
+        "model-evaluation-benchmarks",
+        "inference-serving"
+      ]
+    },
+    "openfermion": {
+      "scenarios": [
+        "scientific-computing-general"
+      ]
+    },
+    "openfreemap": {
+      "scenarios": [
+        "geospatial-computing"
+      ]
+    },
+    "opengvlab-draggan": {
+      "scenarios": [
+        "image-synthesis",
+        "image-editing"
+      ]
+    },
+    "openllm": {
+      "scenarios": [
+        "mlops-general",
+        "inference-serving"
+      ]
+    },
+    "openllmetry": {
+      "scenarios": [
+        "llm-applications-general"
+      ]
+    },
+    "openmc": {
+      "scenarios": [
+        "scientific-computing-general"
+      ]
+    },
+    "openmed": {
+      "scenarios": [
+        "information-extraction",
+        "edge-deployment",
+        "responsible-ai-general"
+      ]
+    },
+    "opennmt-py": {
+      "scenarios": [
+        "natural-language-processing-general",
+        "llm-fine-tuning",
+        "inference-serving"
+      ]
+    },
+    "openpcdet": {
+      "scenarios": [
+        "object-detection-toolkits",
+        "3d-scene-understanding",
+        "driving-perception"
+      ]
+    },
+    "openpilot": {
+      "scenarios": [
+        "driving-perception",
+        "autonomous-driving-general",
+        "driving-simulation-and-evaluation"
+      ]
+    },
+    "openprompt": {
+      "scenarios": [
+        "text-classification",
+        "natural-language-processing-general",
+        "llm-applications-general"
+      ]
+    },
+    "openqasm": {
+      "scenarios": [
+        "scientific-computing-general"
+      ]
+    },
+    "opensquilla": {
+      "scenarios": [
+        "memory-and-context",
+        "agent-tools-and-skills",
+        "autonomous-agent-applications"
+      ]
+    },
+    "optax": {
+      "scenarios": [
+        "training-infrastructure-general"
+      ]
+    },
+    "optillm": {
+      "scenarios": [
+        "llm-applications-general",
+        "inference-serving"
+      ]
+    },
+    "optimate": {
+      "scenarios": [
+        "preference-and-reinforcement-alignment",
+        "model-compilation",
+        "model-compression"
+      ]
+    },
+    "optimum": {
+      "scenarios": [
+        "model-compilation",
+        "model-compression"
+      ]
+    },
+    "opyrator": {
+      "scenarios": [
+        "inference-serving"
+      ]
+    },
+    "orange3": {
+      "scenarios": [
+        "automl"
+      ]
+    },
+    "orbit-ml": {
+      "scenarios": [
+        "forecasting",
+        "probabilistic-and-causal-modeling-general"
+      ]
+    },
+    "osmnx": {
+      "scenarios": [
+        "data-visualization",
+        "geospatial-computing"
+      ]
+    },
+    "otter": {
+      "scenarios": [
+        "vision-language-understanding",
+        "llm-fine-tuning",
+        "open-weight-model-releases"
+      ]
+    },
+    "outlines": {
+      "scenarios": [
+        "llm-applications-general"
+      ]
+    },
+    "owl": {
+      "scenarios": [
+        "multi-agent-orchestration",
+        "agent-tools-and-skills",
+        "document-intelligence"
+      ]
+    },
+    "paddle-detection": {
+      "scenarios": [
+        "object-detection-toolkits",
+        "pose-estimation",
+        "object-tracking"
+      ]
+    },
+    "paddle-gan": {
+      "scenarios": [
+        "image-restoration",
+        "image-synthesis-toolkits",
+        "video-synthesis"
+      ]
+    },
+    "paddlecv": {
+      "scenarios": [
+        "document-vision",
+        "training-infrastructure-general"
+      ]
+    },
+    "paddleocr": {
+      "scenarios": [
+        "document-vision",
+        "document-intelligence",
+        "model-compilation"
+      ]
+    },
+    "paddlespeech": {
+      "scenarios": [
+        "speech-recognition",
+        "speech-synthesis",
+        "speech-and-audio-toolkits"
+      ]
+    },
+    "paddlevit": {
+      "scenarios": [
+        "image-classification",
+        "object-detection-toolkits",
+        "image-segmentation"
+      ]
+    },
+    "paddlex": {
+      "scenarios": [
+        "document-vision",
+        "training-infrastructure-general",
+        "time-series-toolkits"
+      ]
+    },
+    "page-index": {
+      "scenarios": [
+        "rag-frameworks",
+        "document-intelligence"
+      ]
+    },
+    "palm-rlhf-pytorch": {
+      "scenarios": [
+        "llm-fine-tuning",
+        "preference-and-reinforcement-alignment",
+        "pretraining"
+      ]
+    },
+    "pandasai": {
+      "scenarios": [
+        "agent-sdks",
+        "chat-and-knowledge-applications",
+        "data-visualization"
+      ]
+    },
+    "paper-qa": {
+      "scenarios": [
+        "rag-frameworks",
+        "document-intelligence",
+        "chat-and-knowledge-applications"
+      ]
+    },
+    "paperai": {
+      "scenarios": [
+        "rag-frameworks",
+        "chat-and-knowledge-applications",
+        "vector-search"
+      ]
+    },
+    "papers-in-100-lines-of-code": {
+      "scenarios": [
+        "image-synthesis",
+        "generative-media-general",
+        "pedagogical-ml-implementations"
+      ]
+    },
+    "parl": {
+      "scenarios": [
+        "distributed-training-systems",
+        "rl-training-frameworks",
+        "rl-algorithm-implementations"
+      ]
+    },
+    "pdebench": {
+      "scenarios": [
+        "scientific-computing-general"
+      ]
+    },
+    "pennylane": {
+      "scenarios": [
+        "scientific-computing-general"
+      ]
+    },
+    "perceptual-similarity": {
+      "scenarios": [
+        "image-classification"
+      ]
+    },
+    "petals": {
+      "scenarios": [
+        "llm-fine-tuning",
+        "inference-serving",
+        "distributed-training-systems"
+      ]
+    },
+    "petastorm": {
+      "scenarios": [
+        "training-data-pipelines"
+      ]
+    },
+    "pfllib": {
+      "scenarios": [
+        "distributed-training-systems",
+        "training-infrastructure-general",
+        "pedagogical-ml-implementations"
+      ]
+    },
+    "pgmpy": {
+      "scenarios": [
+        "probabilistic-and-causal-modeling-general"
+      ]
+    },
+    "phi-flow": {
+      "scenarios": [
+        "scientific-computing-general"
+      ]
+    },
+    "photo2cartoon": {
+      "scenarios": [
+        "image-editing",
+        "generative-model-adaptation"
+      ]
+    },
+    "physicsnemo": {
+      "scenarios": [
+        "training-data-pipelines",
+        "distributed-training-systems",
+        "scientific-computing-general"
+      ]
+    },
+    "physo": {
+      "scenarios": [
+        "scientific-computing-general",
+        "mathematical-optimization"
+      ]
+    },
+    "pinto-model-zoo": {
+      "scenarios": [
+        "model-compilation",
+        "model-compression",
+        "training-infrastructure-general"
+      ]
+    },
+    "pix2code": {
+      "scenarios": [
+        "llm-applications-general"
+      ]
+    },
+    "pix2pix-hd": {
+      "scenarios": [
+        "image-synthesis",
+        "image-editing"
+      ]
+    },
+    "pixelrag": {
+      "scenarios": [
+        "llm-fine-tuning",
+        "first-stage-retrieval",
+        "vector-search"
+      ]
+    },
+    "plexe": {
+      "scenarios": [
+        "automl",
+        "data-visualization",
+        "tabular-modeling"
+      ]
+    },
+    "pmdarima": {
+      "scenarios": [
+        "forecasting",
+        "time-series-toolkits"
+      ]
+    },
+    "pocket-flow": {
+      "scenarios": [
+        "automl",
+        "model-compression",
+        "edge-deployment"
+      ]
+    },
+    "pocketflow": {
+      "scenarios": [
+        "multi-agent-orchestration",
+        "llm-workflow-frameworks",
+        "rag-frameworks"
+      ]
+    },
+    "point-cnn": {
+      "scenarios": [
+        "3d-scene-understanding"
+      ]
+    },
+    "pointllm": {
+      "scenarios": [
+        "3d-scene-understanding",
+        "llm-models-training-and-alignment-general",
+        "model-evaluation-benchmarks"
+      ]
+    },
+    "pointnet2": {
+      "scenarios": [
+        "3d-scene-understanding"
+      ]
+    },
+    "pomegranate": {
+      "scenarios": [
+        "probabilistic-and-causal-modeling-general"
+      ]
+    },
+    "porcupine": {
+      "scenarios": [
+        "speech-recognition"
+      ]
+    },
+    "pot": {
+      "scenarios": [
+        "training-infrastructure-general",
+        "mathematical-optimization"
+      ]
+    },
+    "potpie": {
+      "scenarios": [
+        "memory-and-context",
+        "agent-tools-and-skills",
+        "knowledge-graphs"
+      ]
+    },
+    "ppo-pytorch": {
+      "scenarios": [
+        "rl-training-frameworks",
+        "rl-algorithm-implementations"
+      ]
+    },
+    "prediction-market-analysis": {
+      "scenarios": [
+        "data-visualization",
+        "data-science-general",
+        "data-integration"
+      ]
+    },
+    "presidio": {
+      "scenarios": [
+        "document-vision",
+        "information-extraction",
+        "responsible-ai-general"
+      ]
+    },
+    "promptcraft-robotics": {
+      "scenarios": [
+        "llm-applications-general",
+        "robot-simulation",
+        "manipulation"
+      ]
+    },
+    "promptify": {
+      "scenarios": [
+        "nlp-toolkit-suites",
+        "llm-applications-general"
+      ]
+    },
+    "protomotions": {
+      "scenarios": [
+        {
+          "id": "generative-media-general",
+          "role": "Use the `protomotions` skill for ProtoMotions 3 humanoid simulation, motion-learning, retargeting, simulator-backend, training, inference, and deployment workflows."
+        },
+        {
+          "id": "robot-simulation",
+          "role": "Use the `protomotions` skill for ProtoMotions 3 humanoid simulation, motion-learning, retargeting, simulator-backend, training, inference, and deployment workflows."
+        },
+        {
+          "id": "robotics-and-embodied-ai-general",
+          "role": "Use the `protomotions` skill for ProtoMotions 3 humanoid simulation, motion-learning, retargeting, simulator-backend, training, inference, and deployment workflows."
+        }
+      ]
+    },
+    "py-audio-analysis": {
+      "scenarios": [
+        "speech-and-audio-general",
+        "speech-and-audio-toolkits"
+      ]
+    },
+    "py-syft": {
+      "scenarios": [
+        "responsible-ai-general"
+      ]
+    },
+    "py-torch-studio-gan": {
+      "scenarios": [
+        "image-synthesis-toolkits",
+        "generative-media-general"
+      ]
+    },
+    "pycaret": {
+      "scenarios": [
+        "automl",
+        "mlops-general",
+        "inference-serving"
+      ]
+    },
+    "pycirclize": {
+      "scenarios": [
+        "scientific-computing-general",
+        "data-visualization"
+      ]
+    },
+    "pyflux": {
+      "scenarios": [
+        "forecasting",
+        "time-series-toolkits",
+        "probabilistic-and-causal-modeling-general"
+      ]
+    },
+    "pygad": {
+      "scenarios": [
+        "mathematical-optimization"
+      ]
+    },
+    "pyhealth": {
+      "scenarios": [
+        "biomedical-ai-general"
+      ]
+    },
+    "pykitti": {
+      "scenarios": [
+        "driving-simulation-and-evaluation"
+      ]
+    },
+    "pymc": {
+      "scenarios": [
+        "probabilistic-and-causal-modeling-general"
+      ]
+    },
+    "pymoo": {
+      "scenarios": [
+        "mathematical-optimization"
+      ]
+    },
+    "pymupdf": {
+      "scenarios": [
+        "document-vision"
+      ]
+    },
+    "pyod": {
+      "scenarios": [
+        "automl",
+        "time-series-analysis-general"
+      ]
+    },
+    "pyomo": {
+      "scenarios": [
+        "mathematical-optimization"
+      ]
+    },
+    "pypose": {
+      "scenarios": [
+        "robotics-and-embodied-ai-general",
+        "mathematical-optimization"
+      ]
+    },
+    "pypots": {
+      "scenarios": [
+        "forecasting",
+        "time-series-analysis-general",
+        "time-series-toolkits"
+      ]
+    },
+    "pyproj": {
+      "scenarios": [
+        "geospatial-computing"
+      ]
+    },
+    "pypsa": {
+      "scenarios": [
+        "scientific-computing-general"
+      ]
+    },
+    "pyquil": {
+      "scenarios": [
+        "scientific-computing-general"
+      ]
+    },
+    "pyramid-flow": {
+      "scenarios": [
+        "video-synthesis",
+        "generative-media-general",
+        "generative-model-adaptation"
+      ]
+    },
+    "pyrit": {
+      "scenarios": [
+        "llm-applications-general",
+        "responsible-ai-general"
+      ]
+    },
+    "pyro": {
+      "scenarios": [
+        "probabilistic-and-causal-modeling-general"
+      ]
+    },
+    "pysot": {
+      "scenarios": [
+        "object-tracking"
+      ]
+    },
+    "pysr": {
+      "scenarios": [
+        "mathematical-optimization"
+      ]
+    },
+    "python-mini-project": {
+      "scenarios": [
+        "image-classification",
+        "object-detection-models",
+        "data-visualization"
+      ]
+    },
+    "pytorch-a2c-ppo-acktr-gail": {
+      "scenarios": [
+        "rl-training-frameworks",
+        "rl-algorithm-implementations",
+        "rl-environments"
+      ]
+    },
+    "pytorch-cifar100": {
+      "scenarios": [
+        "image-classification",
+        "computer-vision-general",
+        "pedagogical-ml-implementations"
+      ]
+    },
+    "pytorch-cycle-gan-and-pix2pix": {
+      "scenarios": [
+        "image-restoration",
+        "image-synthesis"
+      ]
+    },
+    "pytorch-fid": {
+      "scenarios": [
+        "generative-media-general"
+      ]
+    },
+    "pytorch-forecasting": {
+      "scenarios": [
+        "forecasting"
+      ]
+    },
+    "pytorch-geometric-temporal": {
+      "scenarios": [
+        "graph-learning-general",
+        "forecasting"
+      ]
+    },
+    "pytorch-grad-cam": {
+      "scenarios": [
+        "responsible-ai-general"
+      ]
+    },
+    "pytorch-metric-learning": {
+      "scenarios": [
+        "image-classification",
+        "information-retrieval-general",
+        "training-loop-toolkits"
+      ]
+    },
+    "pytorch-semseg": {
+      "scenarios": [
+        "image-segmentation"
+      ]
+    },
+    "pytorch-summary": {
+      "scenarios": [
+        "training-infrastructure-general"
+      ]
+    },
+    "pytorch-unet": {
+      "scenarios": [
+        "image-segmentation"
+      ]
+    },
+    "pytorch-vae": {
+      "scenarios": [
+        "generative-media-general"
+      ]
+    },
+    "pytorch-wildlife": {
+      "scenarios": [
+        "image-classification",
+        "object-detection-toolkits",
+        "speech-and-audio-general"
+      ]
+    },
+    "pytorch-yolo-v3": {
+      "scenarios": [
+        "object-detection-models"
+      ]
+    },
+    "pytracking": {
+      "scenarios": [
+        "image-segmentation",
+        "object-tracking",
+        "training-loop-toolkits"
+      ]
+    },
+    "pyts": {
+      "scenarios": [
+        "time-series-analysis-general",
+        "time-series-toolkits"
+      ]
+    },
+    "pywavelets": {
+      "scenarios": [
+        "time-series-analysis-general"
+      ]
+    },
+    "qiskit": {
+      "scenarios": [
+        "scientific-computing-general"
+      ]
+    },
+    "qiskit-machine-learning": {
+      "scenarios": [
+        "scientific-computing-general"
+      ]
+    },
+    "quality-scaler": {
+      "scenarios": [
+        "image-restoration"
+      ]
+    },
+    "quark0-darts": {
+      "scenarios": [
+        "image-classification",
+        "natural-language-processing-general",
+        "automl"
+      ]
+    },
+    "quip-miner": {
+      "scenarios": [
+        "scientific-computing-general"
+      ]
+    },
+    "quivr": {
+      "scenarios": [
+        "llm-workflow-frameworks",
+        "rag-frameworks",
+        "document-intelligence"
+      ]
+    },
+    "qutip": {
+      "scenarios": [
+        "scientific-computing-general"
+      ]
+    },
+    "qwen": {
+      "scenarios": [
+        "llm-fine-tuning",
+        "open-weight-model-releases",
+        "model-compression"
+      ]
+    },
+    "qwen-vl": {
+      "scenarios": [
+        "vision-language-understanding",
+        "llm-fine-tuning",
+        "model-evaluation-benchmarks"
+      ]
+    },
+    "qwen-vl-series-finetune": {
+      "scenarios": [
+        "image-classification",
+        "llm-fine-tuning",
+        "preference-and-reinforcement-alignment"
+      ]
+    },
+    "r2r": {
+      "scenarios": [
+        "rag-frameworks",
+        "document-intelligence",
+        "knowledge-graphs"
+      ]
+    },
+    "rags": {
+      "scenarios": [
+        "agent-platforms",
+        "rag-frameworks",
+        "chat-and-knowledge-applications"
+      ]
+    },
+    "rank-bm25": {
+      "scenarios": [
+        "first-stage-retrieval"
+      ]
+    },
+    "raster-vision": {
+      "scenarios": [
+        "image-classification",
+        "image-segmentation",
+        "scientific-computing-general"
+      ]
+    },
+    "rasterio": {
+      "scenarios": [
+        "geospatial-computing"
+      ]
+    },
+    "rd-agent": {
+      "scenarios": [
+        "multi-agent-orchestration",
+        "autonomous-agent-applications",
+        "llm-fine-tuning"
+      ]
+    },
+    "recbole": {
+      "scenarios": [
+        "data-science-general"
+      ]
+    },
+    "recommenders": {
+      "scenarios": [
+        "data-science-general"
+      ]
+    },
+    "reinforcement-learning": {
+      "scenarios": [
+        "pedagogical-ml-implementations",
+        "rl-algorithm-implementations"
+      ]
+    },
+    "repaint": {
+      "scenarios": [
+        "image-editing"
+      ]
+    },
+    "resnest": {
+      "scenarios": [
+        "image-classification",
+        "computer-vision-general"
+      ]
+    },
+    "rex-gym": {
+      "scenarios": [
+        "rl-environments",
+        "robot-simulation",
+        "robotics-and-embodied-ai-general"
+      ]
+    },
+    "rf-detr": {
+      "scenarios": [
+        "object-detection-models",
+        "image-segmentation",
+        "pose-estimation"
+      ]
+    },
+    "river": {
+      "scenarios": [
+        "data-science-general",
+        "forecasting"
+      ]
+    },
+    "rl-baselines3-zoo": {
+      "scenarios": [
+        "automl",
+        "rl-training-frameworks",
+        "rl-environments"
+      ]
+    },
+    "rl-mpc-locomotion": {
+      "scenarios": [
+        "reinforcement-learning-general",
+        "robot-simulation",
+        "robotics-and-embodied-ai-general"
+      ]
+    },
+    "rlinf": {
+      "scenarios": [
+        "distributed-training-systems",
+        "rl-training-frameworks",
+        "robot-learning-frameworks"
+      ]
+    },
+    "rllm": {
+      "scenarios": [
+        "llm-applications-general",
+        "preference-and-reinforcement-alignment",
+        "inference-serving"
+      ]
+    },
+    "robocasa": {
+      "scenarios": [
+        "robot-simulation",
+        "manipulation"
+      ]
+    },
+    "roboflow-inference": {
+      "scenarios": [
+        "pipeline-orchestration",
+        "inference-serving",
+        "training-infrastructure-general"
+      ]
+    },
+    "robosat": {
+      "scenarios": [
+        "image-segmentation",
+        "scientific-computing-general",
+        "geospatial-computing"
+      ]
+    },
+    "robosuite": {
+      "scenarios": [
+        "robot-simulation",
+        "manipulation"
+      ]
+    },
+    "robotwin": {
+      "scenarios": [
+        "robot-simulation",
+        "manipulation"
+      ]
+    },
+    "roboverse": {
+      "scenarios": [
+        "robot-simulation",
+        "manipulation",
+        "robot-learning-frameworks"
+      ]
+    },
+    "robust-video-matting": {
+      "scenarios": [
+        "image-segmentation"
+      ]
+    },
+    "rocketride-server": {
+      "scenarios": [
+        "multi-agent-orchestration",
+        "llm-workflow-frameworks",
+        "pipeline-orchestration"
+      ]
+    },
+    "rosa": {
+      "scenarios": [
+        "agent-sdks",
+        "autonomous-agent-applications"
+      ]
+    },
+    "rppg-toolbox": {
+      "scenarios": [
+        "biomedical-ai-general"
+      ]
+    },
+    "rwkv-lm": {
+      "scenarios": [
+        "llm-fine-tuning",
+        "pretraining",
+        "model-evaluation-benchmarks"
+      ]
+    },
+    "sacred": {
+      "scenarios": [
+        "mlops-general"
+      ]
+    },
+    "sagemaker-python-sdk": {
+      "scenarios": [
+        "pipeline-orchestration",
+        "mlops-general",
+        "inference-serving"
+      ]
+    },
+    "sahi": {
+      "scenarios": [
+        "image-segmentation",
+        "computer-vision-general"
+      ]
+    },
+    "sana": {
+      "scenarios": [
+        "image-synthesis",
+        "video-synthesis",
+        "generative-model-adaptation"
+      ]
+    },
+    "scaled-yolov4": {
+      "scenarios": [
+        "object-detection-models"
+      ]
+    },
+    "scenic": {
+      "scenarios": [
+        "training-loop-toolkits",
+        "training-data-pipelines",
+        "neural-network-components"
+      ]
+    },
+    "scientific-agent-skills": {
+      "scenarios": [
+        "scientific-computing-general"
+      ]
+    },
+    "scikit-image": {
+      "scenarios": [
+        "image-segmentation",
+        "image-restoration",
+        "computer-vision-general"
+      ]
+    },
+    "scikit-opt": {
+      "scenarios": [
+        "mathematical-optimization"
+      ]
+    },
+    "scikit-plot": {
+      "scenarios": [
+        "data-visualization"
+      ]
+    },
+    "scispacy": {
+      "scenarios": [
+        "nlp-toolkit-suites",
+        "information-extraction"
+      ]
+    },
+    "sdv": {
+      "scenarios": [
+        "mlops-general"
+      ]
+    },
+    "seaborn": {
+      "scenarios": [
+        "data-visualization"
+      ]
+    },
+    "second-pytorch": {
+      "scenarios": [
+        "driving-perception"
+      ]
+    },
+    "secretflow": {
+      "scenarios": [
+        "pipeline-orchestration",
+        "distributed-training-systems",
+        "responsible-ai-general"
+      ]
+    },
+    "segment-geospatial": {
+      "scenarios": [
+        "image-segmentation",
+        "scientific-computing-general",
+        "geospatial-computing"
+      ]
+    },
+    "segmentation-models": {
+      "scenarios": [
+        "image-segmentation"
+      ]
+    },
+    "semantra": {
+      "scenarios": [
+        "natural-language-processing-general",
+        "first-stage-retrieval",
+        "vector-search"
+      ]
+    },
+    "seq2seq-couplet": {
+      "scenarios": [
+        "natural-language-processing-general"
+      ]
+    },
+    "serenata-de-amor": {
+      "scenarios": [
+        "data-visualization",
+        "tabular-modeling"
+      ]
+    },
+    "siam-trackers": {
+      "scenarios": [
+        "image-segmentation",
+        "object-tracking"
+      ]
+    },
+    "siamese-triplet": {
+      "scenarios": [
+        "image-classification"
+      ]
+    },
+    "siammask": {
+      "scenarios": [
+        "image-segmentation",
+        "object-tracking"
+      ]
+    },
+    "simple-cv": {
+      "scenarios": [
+        "image-segmentation",
+        "object-tracking",
+        "computer-vision-general"
+      ]
+    },
+    "simple-tuner": {
+      "scenarios": [
+        "image-synthesis-toolkits",
+        "video-synthesis",
+        "generative-model-adaptation"
+      ]
+    },
+    "simpledet": {
+      "scenarios": [
+        "object-detection-toolkits",
+        "image-segmentation"
+      ]
+    },
+    "simpletransformers": {
+      "scenarios": [
+        "text-classification",
+        "nlp-toolkit-suites",
+        "first-stage-retrieval"
+      ]
+    },
+    "sketch-code": {
+      "scenarios": [
+        "llm-applications-general"
+      ]
+    },
+    "skrl": {
+      "scenarios": [
+        "rl-training-frameworks",
+        "rl-algorithm-implementations",
+        "reinforcement-learning-general"
+      ]
+    },
+    "sktime": {
+      "scenarios": [
+        "forecasting",
+        "time-series-analysis-general",
+        "time-series-toolkits"
+      ]
+    },
+    "skywork-r1v": {
+      "scenarios": [
+        "vision-language-understanding",
+        "model-evaluation-benchmarks",
+        "open-weight-model-releases"
+      ]
+    },
+    "smarts": {
+      "scenarios": [
+        "rl-environments",
+        "reinforcement-learning-general",
+        "driving-simulation-and-evaluation"
+      ]
+    },
+    "snips-nlu": {
+      "scenarios": [
+        "text-classification",
+        "information-extraction"
+      ]
+    },
+    "snntorch": {
+      "scenarios": [
+        "scientific-computing-general"
+      ]
+    },
+    "snorkel": {
+      "scenarios": [
+        "mlops-general",
+        "training-infrastructure-general"
+      ]
+    },
+    "software-agent-sdk": {
+      "scenarios": [
+        "multi-agent-orchestration",
+        "agent-sdks",
+        "agent-tools-and-skills"
+      ]
+    },
+    "solace-agent-mesh": {
+      "scenarios": [
+        "multi-agent-orchestration",
+        "agent-sdks",
+        "agent-platforms"
+      ]
+    },
+    "solo": {
+      "scenarios": [
+        "object-detection-toolkits",
+        "image-segmentation"
+      ]
+    },
+    "sonnet": {
+      "scenarios": [
+        "training-infrastructure-general",
+        "distributed-training-systems",
+        "neural-network-components"
+      ]
+    },
+    "spacy": {
+      "scenarios": [
+        "text-classification",
+        "nlp-toolkit-suites",
+        "information-extraction"
+      ]
+    },
+    "sparrow": {
+      "scenarios": [
+        "document-vision",
+        "agent-sdks",
+        "document-intelligence"
+      ]
+    },
+    "speech-recognition": {
+      "scenarios": [
+        "speech-recognition"
+      ]
+    },
+    "speech-to-speech": {
+      "scenarios": [
+        "speech-recognition",
+        "speech-synthesis",
+        "speech-and-audio-toolkits"
+      ]
+    },
+    "speechbrain": {
+      "scenarios": [
+        "speech-recognition",
+        "speech-synthesis",
+        "speech-and-audio-toolkits"
+      ]
+    },
+    "spektral": {
+      "scenarios": [
+        "graph-learning-general"
+      ]
+    },
+    "spikingjelly": {
+      "scenarios": [
+        "model-compilation",
+        "distributed-training-systems",
+        "scientific-computing-general"
+      ]
+    },
+    "splatam": {
+      "scenarios": [
+        "computer-vision-general",
+        "generative-media-general",
+        "robotics-and-embodied-ai-general"
+      ]
+    },
+    "spleeter": {
+      "scenarios": [
+        "speech-and-audio-general"
+      ]
+    },
+    "ssd-keras": {
+      "scenarios": [
+        "object-detection-models",
+        "computer-vision-general"
+      ]
+    },
+    "ssd-pytorch": {
+      "scenarios": [
+        "object-detection-models",
+        "computer-vision-general"
+      ]
+    },
+    "stability-ai-generative-models": {
+      "scenarios": [
+        "image-synthesis-toolkits",
+        "video-synthesis",
+        "generative-media-general"
+      ]
+    },
+    "stable-diffusion-videos": {
+      "scenarios": [
+        "image-synthesis",
+        "media-generation-applications",
+        "video-synthesis"
+      ]
+    },
+    "stanford-alpaca": {
+      "scenarios": [
+        "llm-fine-tuning",
+        "open-weight-model-releases"
+      ]
+    },
+    "stanza": {
+      "scenarios": [
+        "nlp-toolkit-suites",
+        "information-extraction",
+        "natural-language-processing-general"
+      ]
+    },
+    "star-vla": {
+      "scenarios": [
+        "inference-serving",
+        "training-data-pipelines",
+        "robot-learning-frameworks"
+      ]
+    },
+    "stardist": {
+      "scenarios": [
+        "object-detection-models",
+        "image-segmentation",
+        "biomedical-ai-general"
+      ]
+    },
+    "statsforecast": {
+      "scenarios": [
+        "data-science-general",
+        "forecasting"
+      ]
+    },
+    "statsmodels": {
+      "scenarios": [
+        "data-science-general",
+        "time-series-toolkits",
+        "probabilistic-and-causal-modeling-general"
+      ]
+    },
+    "stellargraph": {
+      "scenarios": [
+        "graph-learning-general",
+        "knowledge-graphs"
+      ]
+    },
+    "stitching": {
+      "scenarios": [
+        "computer-vision-general"
+      ]
+    },
+    "strands-agents": {
+      "scenarios": [
+        "multi-agent-orchestration",
+        "agent-sdks",
+        "agent-tools-and-skills"
+      ]
+    },
+    "streamlit-geospatial": {
+      "scenarios": [
+        "data-visualization",
+        "geospatial-computing"
+      ]
+    },
+    "stt": {
+      "scenarios": [
+        "speech-recognition"
+      ]
+    },
+    "stumpy": {
+      "scenarios": [
+        "time-series-analysis-general",
+        "time-series-toolkits"
+      ]
+    },
+    "style-tts2": {
+      "scenarios": [
+        "speech-synthesis"
+      ]
+    },
+    "stylegan2-pytorch": {
+      "scenarios": [
+        "image-synthesis"
+      ]
+    },
+    "sunpy": {
+      "scenarios": [
+        "scientific-computing-general"
+      ]
+    },
+    "super-agi": {
+      "scenarios": [
+        "agent-sdks",
+        "agent-platforms",
+        "autonomous-agent-applications"
+      ]
+    },
+    "super-glue-pretrained-network": {
+      "scenarios": [
+        "computer-vision-general"
+      ]
+    },
+    "superduper": {
+      "scenarios": [
+        "llm-workflow-frameworks",
+        "rag-frameworks",
+        "vector-search"
+      ]
+    },
+    "supervision": {
+      "scenarios": [
+        "object-tracking",
+        "computer-vision-general"
+      ]
+    },
+    "supir": {
+      "scenarios": [
+        "image-restoration"
+      ]
+    },
+    "surprise": {
+      "scenarios": [
+        "data-science-general"
+      ]
+    },
+    "swanlab": {
+      "scenarios": [
+        "mlops-general",
+        "data-visualization"
+      ]
+    },
+    "swarms": {
+      "scenarios": [
+        "multi-agent-orchestration",
+        "agent-sdks"
+      ]
+    },
+    "sweetviz": {
+      "scenarios": [
+        "data-science-general",
+        "data-visualization"
+      ]
+    },
+    "swin-transformer": {
+      "scenarios": [
+        "image-classification",
+        "computer-vision-general",
+        "training-data-pipelines"
+      ]
+    },
+    "synonyms": {
+      "scenarios": [
+        "natural-language-processing-general",
+        "nlp-toolkit-suites"
+      ]
+    },
+    "synthetic-data-generator": {
+      "scenarios": [
+        "mlops-general"
+      ]
+    },
+    "t-rex": {
+      "scenarios": [
+        "computer-vision-general"
+      ]
+    },
+    "tabpfn": {
+      "scenarios": [
+        "tabular-modeling"
+      ]
+    },
+    "tacotron": {
+      "scenarios": [
+        "speech-synthesis"
+      ]
+    },
+    "taskingai": {
+      "scenarios": [
+        "agent-platforms",
+        "rag-frameworks",
+        "agent-tools-and-skills"
+      ]
+    },
+    "tencent-ml-images": {
+      "scenarios": [
+        "image-classification"
+      ]
+    },
+    "tensorboard-x": {
+      "scenarios": [
+        "mlops-general"
+      ]
+    },
+    "tensorflow-datasets": {
+      "scenarios": [
+        "mlops-general",
+        "training-data-pipelines",
+        "data-science-general"
+      ]
+    },
+    "tensorflow-hub": {
+      "scenarios": [
+        "mlops-general"
+      ]
+    },
+    "tensorflow-on-spark": {
+      "scenarios": [
+        "distributed-training-systems"
+      ]
+    },
+    "tensorflow-privacy": {
+      "scenarios": [
+        "responsible-ai-general"
+      ]
+    },
+    "tensorflow-project-template": {
+      "scenarios": [
+        "mlops-general",
+        "training-loop-toolkits"
+      ]
+    },
+    "tensorflow-quantum": {
+      "scenarios": [
+        "training-infrastructure-general",
+        "scientific-computing-general"
+      ]
+    },
+    "tensorflow-template-application": {
+      "scenarios": [
+        "mlops-general",
+        "inference-serving",
+        "training-infrastructure-general"
+      ]
+    },
+    "tensorflow-yolov3": {
+      "scenarios": [
+        "object-detection-models"
+      ]
+    },
+    "tensorflow-yolov4-tflite": {
+      "scenarios": [
+        "object-detection-models",
+        "model-compression",
+        "edge-deployment"
+      ]
+    },
+    "tensorforce": {
+      "scenarios": [
+        "rl-training-frameworks",
+        "rl-algorithm-implementations",
+        "rl-environments"
+      ]
+    },
+    "tensorlayer": {
+      "scenarios": [
+        "training-infrastructure-general"
+      ]
+    },
+    "tensorpack": {
+      "scenarios": [
+        "training-loop-toolkits",
+        "training-data-pipelines",
+        "distributed-training-systems"
+      ]
+    },
+    "tensorrt-demos": {
+      "scenarios": [
+        "image-classification",
+        "object-detection-models",
+        "image-segmentation"
+      ]
+    },
+    "text-classification": {
+      "scenarios": [
+        "text-classification",
+        "natural-language-processing-general"
+      ]
+    },
+    "text2vec": {
+      "scenarios": [
+        "natural-language-processing-general",
+        "first-stage-retrieval"
+      ]
+    },
+    "textblob": {
+      "scenarios": [
+        "text-classification",
+        "nlp-toolkit-suites"
+      ]
+    },
+    "textgenrnn": {
+      "scenarios": [
+        "natural-language-processing-general"
+      ]
+    },
+    "tf-faster-rcnn": {
+      "scenarios": [
+        "object-detection-models"
+      ]
+    },
+    "tf-unet": {
+      "scenarios": [
+        "image-segmentation"
+      ]
+    },
+    "tflearn": {
+      "scenarios": [
+        "training-loop-toolkits",
+        "training-infrastructure-general"
+      ]
+    },
+    "time-series-library": {
+      "scenarios": [
+        "forecasting",
+        "time-series-analysis-general",
+        "time-series-toolkits"
+      ]
+    },
+    "timemixer": {
+      "scenarios": [
+        "forecasting",
+        "time-series-analysis-general",
+        "time-series-toolkits"
+      ]
+    },
+    "torch-points3d": {
+      "scenarios": [
+        "3d-scene-understanding"
+      ]
+    },
+    "torch-tensorrt": {
+      "scenarios": [
+        {
+          "id": "model-compilation",
+          "role": "Use the `torch-tensorrt` skill for Torch-TensorRT tasks: compiling PyTorch models with TensorRT, dynamic-shape/export workflows, runtime optimization, Triton/C++/distributed deployment, debugging unsupported ops, and maintaining source builds."
+        },
+        {
+          "id": "model-compression",
+          "role": "Use the `torch-tensorrt` skill for Torch-TensorRT tasks: compiling PyTorch models with TensorRT, dynamic-shape/export workflows, runtime optimization, Triton/C++/distributed deployment, debugging unsupported ops, and maintaining source builds."
+        },
+        {
+          "id": "edge-deployment",
+          "role": "Use the `torch-tensorrt` skill for Torch-TensorRT tasks: compiling PyTorch models with TensorRT, dynamic-shape/export workflows, runtime optimization, Triton/C++/distributed deployment, debugging unsupported ops, and maintaining source builds."
+        }
+      ]
+    },
+    "torchgeo": {
+      "scenarios": [
+        "scientific-computing-general"
+      ]
+    },
+    "torchmetrics": {
+      "scenarios": [
+        "computer-vision-general",
+        "generative-media-general",
+        "information-retrieval-general"
+      ]
+    },
+    "torchrl": {
+      "scenarios": [
+        "rl-training-frameworks",
+        "rl-algorithm-implementations",
+        "rl-environments"
+      ]
+    },
+    "towhee": {
+      "scenarios": [
+        "pipeline-orchestration",
+        "inference-serving",
+        "training-infrastructure-general"
+      ]
+    },
+    "trafilatura": {
+      "scenarios": [
+        "document-intelligence",
+        "data-integration"
+      ]
+    },
+    "train-llm-from-scratch": {
+      "scenarios": [
+        "preference-and-reinforcement-alignment",
+        "llm-models-training-and-alignment-general",
+        "pretraining"
+      ]
+    },
+    "transfer-learning-library": {
+      "scenarios": [
+        "training-infrastructure-general"
+      ]
+    },
+    "transformer-engine": {
+      "scenarios": [
+        "model-compression",
+        "neural-network-components"
+      ]
+    },
+    "transformerlab-app": {
+      "scenarios": [
+        "media-generation-applications",
+        "mlops-general"
+      ]
+    },
+    "transfuser": {
+      "scenarios": [
+        "driving-perception",
+        "autonomous-driving-general",
+        "driving-simulation-and-evaluation"
+      ]
+    },
+    "tree-of-thoughts": {
+      "scenarios": [
+        "llm-applications-general"
+      ]
+    },
+    "tree-of-thoughts-llm": {
+      "scenarios": [
+        "llm-applications-general"
+      ]
+    },
+    "triton-inference-server": {
+      "scenarios": [
+        "inference-serving"
+      ]
+    },
+    "trlx": {
+      "scenarios": [
+        "llm-fine-tuning",
+        "preference-and-reinforcement-alignment",
+        "distributed-training-systems"
+      ]
+    },
+    "tslearn": {
+      "scenarios": [
+        "time-series-analysis-general",
+        "time-series-toolkits"
+      ]
+    },
+    "tts": {
+      "scenarios": [
+        "speech-synthesis",
+        "speech-and-audio-toolkits"
+      ]
+    },
+    "turbo-diffusion": {
+      "scenarios": [
+        "media-generation-applications",
+        "video-synthesis",
+        "generative-model-adaptation"
+      ]
+    },
+    "tvm": {
+      "scenarios": [
+        "model-compilation",
+        "edge-deployment"
+      ]
+    },
+    "u-2-net": {
+      "scenarios": [
+        "image-segmentation"
+      ]
+    },
+    "ultra-fast-lane-detection": {
+      "scenarios": [
+        "driving-perception"
+      ]
+    },
+    "ultra-rag": {
+      "scenarios": [
+        "llm-workflow-frameworks",
+        "rag-frameworks",
+        "first-stage-retrieval"
+      ]
+    },
+    "ultralyticspro": {
+      "scenarios": [
+        "object-detection-models",
+        "image-segmentation",
+        "pose-estimation"
+      ]
+    },
+    "umap-learn": {
+      "scenarios": [
+        "data-science-general"
+      ]
+    },
+    "unet-plus-plus": {
+      "scenarios": [
+        "image-segmentation",
+        "biomedical-ai-general"
+      ]
+    },
+    "uniad": {
+      "scenarios": [
+        "driving-perception",
+        "autonomous-driving-general",
+        "driving-simulation-and-evaluation"
+      ]
+    },
+    "unit8co-darts": {
+      "scenarios": [
+        "forecasting",
+        "time-series-analysis-general",
+        "time-series-toolkits"
+      ]
+    },
+    "unrealcv": {
+      "scenarios": [
+        "computer-vision-general"
+      ]
+    },
+    "unstract": {
+      "scenarios": [
+        "agent-tools-and-skills",
+        "document-intelligence",
+        "data-integration"
+      ]
+    },
+    "upsonic": {
+      "scenarios": [
+        "multi-agent-orchestration",
+        "agent-sdks",
+        "rag-frameworks"
+      ]
+    },
+    "vad": {
+      "scenarios": [
+        "driving-perception",
+        "autonomous-driving-general",
+        "driving-simulation-and-evaluation"
+      ]
+    },
+    "vaex": {
+      "scenarios": [
+        "data-visualization",
+        "data-science-general"
+      ]
+    },
+    "vector-quantize-pytorch": {
+      "scenarios": [
+        "generative-media-general"
+      ]
+    },
+    "vgen": {
+      "scenarios": [
+        "video-synthesis",
+        "generative-model-adaptation",
+        "generative-media-general"
+      ]
+    },
+    "video-subtitle-extractor": {
+      "scenarios": [
+        "document-vision"
+      ]
+    },
+    "viseron": {
+      "scenarios": [
+        "computer-vision-general"
+      ]
+    },
+    "visual-pushing-grasping": {
+      "scenarios": [
+        "rl-algorithm-implementations",
+        "robot-simulation",
+        "manipulation"
+      ]
+    },
+    "vit-pytorch": {
+      "scenarios": [
+        "image-classification",
+        "computer-vision-general"
+      ]
+    },
+    "vits": {
+      "scenarios": [
+        "speech-synthesis"
+      ]
+    },
+    "vizro": {
+      "scenarios": [
+        "agent-tools-and-skills",
+        "data-visualization"
+      ]
+    },
+    "vla-adapter": {
+      "scenarios": [
+        "llm-fine-tuning",
+        "manipulation",
+        "robot-learning-frameworks"
+      ]
+    },
+    "vllm-omni": {
+      "scenarios": [
+        "video-synthesis",
+        "speech-synthesis",
+        "inference-serving"
+      ]
+    },
+    "vlm-eval-kit": {
+      "scenarios": [
+        "model-evaluation-benchmarks"
+      ]
+    },
+    "vlm-r1": {
+      "scenarios": [
+        "computer-vision-general",
+        "vision-language-understanding",
+        "preference-and-reinforcement-alignment"
+      ]
+    },
+    "voxelmorph": {
+      "scenarios": [
+        "biomedical-ai-general"
+      ]
+    },
+    "voxformer": {
+      "scenarios": [
+        "3d-scene-understanding"
+      ]
+    },
+    "walk-these-ways": {
+      "scenarios": [
+        "rl-algorithm-implementations",
+        "robot-simulation",
+        "robotics-and-embodied-ai-general"
+      ]
+    },
+    "waymo-open-dataset": {
+      "scenarios": [
+        "driving-perception",
+        "autonomous-driving-general",
+        "driving-simulation-and-evaluation"
+      ]
+    },
+    "webdataset": {
+      "scenarios": [
+        "training-data-pipelines"
+      ]
+    },
+    "weighted-boxes-fusion": {
+      "scenarios": [
+        "computer-vision-general"
+      ]
+    },
+    "wenet": {
+      "scenarios": [
+        "speech-recognition",
+        "speech-and-audio-toolkits",
+        "model-compilation"
+      ]
+    },
+    "whisperx": {
+      "scenarios": [
+        "speech-recognition",
+        "speech-and-audio-toolkits"
+      ]
+    },
+    "wiseodd-generative-models": {
+      "scenarios": [
+        "image-synthesis"
+      ]
+    },
+    "worldgen": {
+      "scenarios": [
+        "generative-media-general"
+      ]
+    },
+    "wren-ai": {
+      "scenarios": [
+        "agent-sdks",
+        "agent-tools-and-skills",
+        "data-integration"
+      ]
+    },
+    "x-anylabeling": {
+      "scenarios": [
+        "object-detection-toolkits",
+        "image-segmentation",
+        "document-vision"
+      ]
+    },
+    "x-transformers": {
+      "scenarios": [
+        "image-classification",
+        "natural-language-processing-general",
+        "neural-network-components"
+      ]
+    },
+    "x-turing": {
+      "scenarios": [
+        "llm-fine-tuning",
+        "preference-and-reinforcement-alignment",
+        "inference-serving"
+      ]
+    },
+    "xinference": {
+      "scenarios": [
+        "mlops-general",
+        "inference-serving"
+      ]
+    },
+    "xingangpan-draggan": {
+      "scenarios": [
+        "image-synthesis",
+        "image-editing"
+      ]
+    },
+    "xlnet": {
+      "scenarios": [
+        "text-classification",
+        "pretraining",
+        "open-weight-model-releases"
+      ]
+    },
+    "xrayglm": {
+      "scenarios": [
+        "vision-language-understanding",
+        "llm-fine-tuning",
+        "open-weight-model-releases"
+      ]
+    },
+    "xtuner": {
+      "scenarios": [
+        "preference-and-reinforcement-alignment",
+        "llm-models-training-and-alignment-general",
+        "distributed-training-systems"
+      ]
+    },
+    "yellowbrick": {
+      "scenarios": [
+        "data-visualization",
+        "data-science-general",
+        "responsible-ai-general"
+      ]
+    },
+    "yi-val": {
+      "scenarios": [
+        "llm-applications-general",
+        "llm-fine-tuning"
+      ]
+    },
+    "yolop": {
+      "scenarios": [
+        "object-detection-models",
+        "image-segmentation",
+        "driving-perception"
+      ]
+    },
+    "yolov3": {
+      "scenarios": [
+        "object-detection-models",
+        "model-compilation"
+      ]
+    },
+    "yolov5": {
+      "scenarios": [
+        {
+          "id": "image-classification",
+          "role": "Use the `yolov5` skill for clone-run Ultralytics YOLOv5 workflows: detection, segmentation, classification, export, benchmarks, datasets, weights, and Flask REST serving."
+        },
+        {
+          "id": "object-detection-models",
+          "role": "Use the `yolov5` skill for clone-run Ultralytics YOLOv5 workflows: detection, segmentation, classification, export, benchmarks, datasets, weights, and Flask REST serving."
+        },
+        {
+          "id": "image-segmentation",
+          "role": "Use the `yolov5` skill for clone-run Ultralytics YOLOv5 workflows: detection, segmentation, classification, export, benchmarks, datasets, weights, and Flask REST serving."
+        }
+      ]
+    },
+    "yolov7-d2": {
+      "scenarios": [
+        "object-detection-toolkits",
+        "image-segmentation",
+        "model-compilation"
+      ]
+    },
+    "yolox": {
+      "scenarios": [
+        "object-detection-models"
+      ]
+    },
+    "yuxi": {
+      "scenarios": [
+        "multi-agent-orchestration",
+        "agent-platforms",
+        "chat-and-knowledge-applications"
+      ]
+    },
+    "zero123plus": {
+      "scenarios": [
+        "image-synthesis",
+        "media-generation-applications"
+      ]
+    },
+    "zhusuan": {
+      "scenarios": [
+        "probabilistic-and-causal-modeling-general"
+      ]
+    },
+    "zi2zi": {
+      "scenarios": [
+        "image-synthesis"
+      ]
+    }
+  },
+  "scenarios": {
+    "3d-scene-understanding": {
+      "allow_new": true,
+      "title": "3D Scene Understanding",
+      "when_to_read": "Requests in the 3D Scene Understanding family of the Computer Vision area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on 3d scene understanding.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "why_not_existing": "The 3D Scene Understanding taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity.",
+      "expected_future_reuse": "Future imports classified under the 3D Scene Understanding family will route to this scenario."
+    },
+    "agent-platforms": {
+      "allow_new": true,
+      "title": "Agent Platforms",
+      "when_to_read": "Requests in the Agent Platforms family of the LLM Applications area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on agent platforms.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "why_not_existing": "The Agent Platforms taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity.",
+      "expected_future_reuse": "Future imports classified under the Agent Platforms family will route to this scenario."
+    },
+    "agent-sdks": {
+      "allow_new": true,
+      "title": "Agent SDKs",
+      "when_to_read": "Requests in the Agent SDKs family of the LLM Applications area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on agent sdks.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "why_not_existing": "The Agent SDKs taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity.",
+      "expected_future_reuse": "Future imports classified under the Agent SDKs family will route to this scenario."
+    },
+    "agent-tools-and-skills": {
+      "allow_new": true,
+      "title": "Agent Tools and Skills",
+      "when_to_read": "Requests in the Agent Tools and Skills family of the LLM Applications area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on agent tools and skills.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "why_not_existing": "The Agent Tools and Skills taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity.",
+      "expected_future_reuse": "Future imports classified under the Agent Tools and Skills family will route to this scenario."
+    },
+    "automl": {
+      "allow_new": true,
+      "title": "AutoML",
+      "when_to_read": "Requests in the AutoML family of the MLOps area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on automl.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "why_not_existing": "The AutoML taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity.",
+      "expected_future_reuse": "Future imports classified under the AutoML family will route to this scenario."
+    },
+    "autonomous-agent-applications": {
+      "allow_new": true,
+      "title": "Autonomous Agent Applications",
+      "when_to_read": "Requests in the Autonomous Agent Applications family of the LLM Applications area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on autonomous agent applications.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "why_not_existing": "The Autonomous Agent Applications taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity.",
+      "expected_future_reuse": "Future imports classified under the Autonomous Agent Applications family will route to this scenario."
+    },
+    "chat-and-knowledge-applications": {
+      "allow_new": true,
+      "title": "Chat and Knowledge Applications",
+      "when_to_read": "Requests in the Chat and Knowledge Applications family of the LLM Applications area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on chat and knowledge applications.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "why_not_existing": "The Chat and Knowledge Applications taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity.",
+      "expected_future_reuse": "Future imports classified under the Chat and Knowledge Applications family will route to this scenario."
+    },
+    "data-integration": {
+      "allow_new": true,
+      "title": "Data Integration",
+      "when_to_read": "Requests in the Data Integration family of the Data Science area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on data integration.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "why_not_existing": "The Data Integration taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity.",
+      "expected_future_reuse": "Future imports classified under the Data Integration family will route to this scenario."
+    },
+    "data-visualization": {
+      "allow_new": true,
+      "title": "Data Visualization",
+      "when_to_read": "Requests in the Data Visualization family of the Data Science area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on data visualization.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "why_not_existing": "The Data Visualization taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity.",
+      "expected_future_reuse": "Future imports classified under the Data Visualization family will route to this scenario."
+    },
+    "distributed-training-systems": {
+      "allow_new": true,
+      "title": "Distributed Training Systems",
+      "when_to_read": "Requests in the Distributed Training Systems family of the Training Infrastructure area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on distributed training systems.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "why_not_existing": "The Distributed Training Systems taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity.",
+      "expected_future_reuse": "Future imports classified under the Distributed Training Systems family will route to this scenario."
+    },
+    "document-intelligence": {
+      "allow_new": true,
+      "title": "Document Intelligence",
+      "when_to_read": "Requests in the Document Intelligence family of the LLM Applications area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on document intelligence.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "why_not_existing": "The Document Intelligence taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity.",
+      "expected_future_reuse": "Future imports classified under the Document Intelligence family will route to this scenario."
+    },
+    "document-vision": {
+      "allow_new": true,
+      "title": "Document Vision",
+      "when_to_read": "Requests in the Document Vision family of the Computer Vision area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on document vision.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "why_not_existing": "The Document Vision taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity.",
+      "expected_future_reuse": "Future imports classified under the Document Vision family will route to this scenario."
+    },
+    "driving-perception": {
+      "allow_new": true,
+      "title": "Driving Perception",
+      "when_to_read": "Requests in the Driving Perception family of the Autonomous Driving area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on driving perception.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "why_not_existing": "The Driving Perception taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity.",
+      "expected_future_reuse": "Future imports classified under the Driving Perception family will route to this scenario."
+    },
+    "driving-simulation-and-evaluation": {
+      "allow_new": true,
+      "title": "Driving Simulation and Evaluation",
+      "when_to_read": "Requests in the Driving Simulation and Evaluation family of the Autonomous Driving area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on driving simulation and evaluation.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "why_not_existing": "The Driving Simulation and Evaluation taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity.",
+      "expected_future_reuse": "Future imports classified under the Driving Simulation and Evaluation family will route to this scenario."
+    },
+    "edge-deployment": {
+      "allow_new": true,
+      "title": "Edge Deployment",
+      "when_to_read": "Requests in the Edge Deployment family of the Model Deployment and Optimization area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on edge deployment.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "why_not_existing": "The Edge Deployment taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity.",
+      "expected_future_reuse": "Future imports classified under the Edge Deployment family will route to this scenario."
+    },
+    "first-stage-retrieval": {
+      "allow_new": true,
+      "title": "First-Stage Retrieval",
+      "when_to_read": "Requests in the First-Stage Retrieval family of the Information Retrieval area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on first-stage retrieval.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "why_not_existing": "The First-Stage Retrieval taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity.",
+      "expected_future_reuse": "Future imports classified under the First-Stage Retrieval family will route to this scenario."
+    },
+    "forecasting": {
+      "allow_new": true,
+      "title": "Forecasting",
+      "when_to_read": "Requests in the Forecasting family of the Time Series Analysis area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on forecasting.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "why_not_existing": "The Forecasting taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity.",
+      "expected_future_reuse": "Future imports classified under the Forecasting family will route to this scenario."
+    },
+    "generative-model-adaptation": {
+      "allow_new": true,
+      "title": "Generative Model Adaptation",
+      "when_to_read": "Requests in the Generative Model Adaptation family of the Generative Media area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on generative model adaptation.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "why_not_existing": "The Generative Model Adaptation taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity.",
+      "expected_future_reuse": "Future imports classified under the Generative Model Adaptation family will route to this scenario."
+    },
+    "geospatial-computing": {
+      "allow_new": true,
+      "title": "Geospatial Computing",
+      "when_to_read": "Requests in the Geospatial Computing family of the Data Science area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on geospatial computing.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "why_not_existing": "The Geospatial Computing taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity.",
+      "expected_future_reuse": "Future imports classified under the Geospatial Computing family will route to this scenario."
+    },
+    "image-classification": {
+      "allow_new": true,
+      "title": "Image Classification",
+      "when_to_read": "Requests in the Image Classification family of the Computer Vision area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on image classification.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "why_not_existing": "The Image Classification taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity.",
+      "expected_future_reuse": "Future imports classified under the Image Classification family will route to this scenario."
+    },
+    "image-editing": {
+      "allow_new": true,
+      "title": "Image Editing",
+      "when_to_read": "Requests in the Image Editing family of the Generative Media area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on image editing.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "why_not_existing": "The Image Editing taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity.",
+      "expected_future_reuse": "Future imports classified under the Image Editing family will route to this scenario."
+    },
+    "image-restoration": {
+      "allow_new": true,
+      "title": "Image Restoration",
+      "when_to_read": "Requests in the Image Restoration family of the Computer Vision area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on image restoration.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "why_not_existing": "The Image Restoration taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity.",
+      "expected_future_reuse": "Future imports classified under the Image Restoration family will route to this scenario."
+    },
+    "image-segmentation": {
+      "allow_new": true,
+      "title": "Image Segmentation",
+      "when_to_read": "Requests in the Image Segmentation family of the Computer Vision area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on image segmentation.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "why_not_existing": "The Image Segmentation taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity.",
+      "expected_future_reuse": "Future imports classified under the Image Segmentation family will route to this scenario."
+    },
+    "image-synthesis": {
+      "allow_new": true,
+      "title": "Image Synthesis",
+      "when_to_read": "Requests in the Image Synthesis family of the Generative Media area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on image synthesis.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "why_not_existing": "The Image Synthesis taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity.",
+      "expected_future_reuse": "Future imports classified under the Image Synthesis family will route to this scenario."
+    },
+    "image-synthesis-toolkits": {
+      "allow_new": true,
+      "title": "Image Synthesis Toolkits",
+      "when_to_read": "Requests in the Image Synthesis Toolkits family of the Generative Media area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on image synthesis toolkits.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "why_not_existing": "The Image Synthesis Toolkits taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity.",
+      "expected_future_reuse": "Future imports classified under the Image Synthesis Toolkits family will route to this scenario."
+    },
+    "inference-serving": {
+      "allow_new": true,
+      "title": "Inference Serving",
+      "when_to_read": "Requests in the Inference Serving family of the Model Deployment and Optimization area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on inference serving.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "why_not_existing": "The Inference Serving taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity.",
+      "expected_future_reuse": "Future imports classified under the Inference Serving family will route to this scenario."
+    },
+    "information-extraction": {
+      "allow_new": true,
+      "title": "Information Extraction",
+      "when_to_read": "Requests in the Information Extraction family of the Natural Language Processing area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on information extraction.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "why_not_existing": "The Information Extraction taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity.",
+      "expected_future_reuse": "Future imports classified under the Information Extraction family will route to this scenario."
+    },
+    "knowledge-graphs": {
+      "allow_new": true,
+      "title": "Knowledge Graphs",
+      "when_to_read": "Requests in the Knowledge Graphs family of the Graph Learning area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on knowledge graphs.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "why_not_existing": "The Knowledge Graphs taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity.",
+      "expected_future_reuse": "Future imports classified under the Knowledge Graphs family will route to this scenario."
+    },
+    "llm-fine-tuning": {
+      "allow_new": true,
+      "title": "LLM Fine-Tuning",
+      "when_to_read": "Requests in the LLM Fine-Tuning family of the LLM Models, Training, and Alignment area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on llm fine-tuning.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "why_not_existing": "The LLM Fine-Tuning taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity.",
+      "expected_future_reuse": "Future imports classified under the LLM Fine-Tuning family will route to this scenario."
+    },
+    "llm-workflow-frameworks": {
+      "allow_new": true,
+      "title": "LLM Workflow Frameworks",
+      "when_to_read": "Requests in the LLM Workflow Frameworks family of the LLM Applications area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on llm workflow frameworks.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "why_not_existing": "The LLM Workflow Frameworks taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity.",
+      "expected_future_reuse": "Future imports classified under the LLM Workflow Frameworks family will route to this scenario."
+    },
+    "manipulation": {
+      "allow_new": true,
+      "title": "Manipulation",
+      "when_to_read": "Requests in the Manipulation family of the Robotics and Embodied AI area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on manipulation.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "why_not_existing": "The Manipulation taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity.",
+      "expected_future_reuse": "Future imports classified under the Manipulation family will route to this scenario."
+    },
+    "mathematical-optimization": {
+      "allow_new": true,
+      "title": "Mathematical Optimization",
+      "when_to_read": "Requests in the Mathematical Optimization family of the Scientific Computing area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on mathematical optimization.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "why_not_existing": "The Mathematical Optimization taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity.",
+      "expected_future_reuse": "Future imports classified under the Mathematical Optimization family will route to this scenario."
+    },
+    "media-generation-applications": {
+      "allow_new": true,
+      "title": "Media Generation Applications",
+      "when_to_read": "Requests in the Media Generation Applications family of the Generative Media area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on media generation applications.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "why_not_existing": "The Media Generation Applications taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity.",
+      "expected_future_reuse": "Future imports classified under the Media Generation Applications family will route to this scenario."
+    },
+    "memory-and-context": {
+      "allow_new": true,
+      "title": "Memory and Context",
+      "when_to_read": "Requests in the Memory and Context family of the LLM Applications area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on memory and context.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "why_not_existing": "The Memory and Context taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity.",
+      "expected_future_reuse": "Future imports classified under the Memory and Context family will route to this scenario."
+    },
+    "model-compilation": {
+      "allow_new": true,
+      "title": "Model Compilation",
+      "when_to_read": "Requests in the Model Compilation family of the Model Deployment and Optimization area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on model compilation.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "why_not_existing": "The Model Compilation taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity.",
+      "expected_future_reuse": "Future imports classified under the Model Compilation family will route to this scenario."
+    },
+    "model-compression": {
+      "allow_new": true,
+      "title": "Model Compression",
+      "when_to_read": "Requests in the Model Compression family of the Model Deployment and Optimization area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on model compression.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "why_not_existing": "The Model Compression taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity.",
+      "expected_future_reuse": "Future imports classified under the Model Compression family will route to this scenario."
+    },
+    "model-evaluation-benchmarks": {
+      "allow_new": true,
+      "title": "Model Evaluation Benchmarks",
+      "when_to_read": "Requests in the Model Evaluation Benchmarks family of the LLM Models, Training, and Alignment area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on model evaluation benchmarks.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "why_not_existing": "The Model Evaluation Benchmarks taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity.",
+      "expected_future_reuse": "Future imports classified under the Model Evaluation Benchmarks family will route to this scenario."
+    },
+    "multi-agent-orchestration": {
+      "allow_new": true,
+      "title": "Multi-Agent Orchestration",
+      "when_to_read": "Requests in the Multi-Agent Orchestration family of the LLM Applications area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on multi-agent orchestration.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "why_not_existing": "The Multi-Agent Orchestration taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity.",
+      "expected_future_reuse": "Future imports classified under the Multi-Agent Orchestration family will route to this scenario."
+    },
+    "neural-network-components": {
+      "allow_new": true,
+      "title": "Neural Network Components",
+      "when_to_read": "Requests in the Neural Network Components family of the Training Infrastructure area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on neural network components.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "why_not_existing": "The Neural Network Components taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity.",
+      "expected_future_reuse": "Future imports classified under the Neural Network Components family will route to this scenario."
+    },
+    "nlp-toolkit-suites": {
+      "allow_new": true,
+      "title": "NLP Toolkit Suites",
+      "when_to_read": "Requests in the NLP Toolkit Suites family of the Natural Language Processing area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on nlp toolkit suites.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "why_not_existing": "The NLP Toolkit Suites taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity.",
+      "expected_future_reuse": "Future imports classified under the NLP Toolkit Suites family will route to this scenario."
+    },
+    "object-detection-models": {
+      "allow_new": true,
+      "title": "Object Detection Models",
+      "when_to_read": "Requests in the Object Detection Models family of the Computer Vision area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on object detection models.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "why_not_existing": "The Object Detection Models taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity.",
+      "expected_future_reuse": "Future imports classified under the Object Detection Models family will route to this scenario."
+    },
+    "object-detection-toolkits": {
+      "allow_new": true,
+      "title": "Object Detection Toolkits",
+      "when_to_read": "Requests in the Object Detection Toolkits family of the Computer Vision area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on object detection toolkits.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "why_not_existing": "The Object Detection Toolkits taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity.",
+      "expected_future_reuse": "Future imports classified under the Object Detection Toolkits family will route to this scenario."
+    },
+    "object-tracking": {
+      "allow_new": true,
+      "title": "Object Tracking",
+      "when_to_read": "Requests in the Object Tracking family of the Computer Vision area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on object tracking.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "why_not_existing": "The Object Tracking taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity.",
+      "expected_future_reuse": "Future imports classified under the Object Tracking family will route to this scenario."
+    },
+    "open-weight-model-releases": {
+      "allow_new": true,
+      "title": "Open-Weight Model Releases",
+      "when_to_read": "Requests in the Open-Weight Model Releases family of the LLM Models, Training, and Alignment area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on open-weight model releases.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "why_not_existing": "The Open-Weight Model Releases taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity.",
+      "expected_future_reuse": "Future imports classified under the Open-Weight Model Releases family will route to this scenario."
+    },
+    "pedagogical-ml-implementations": {
+      "allow_new": true,
+      "title": "Pedagogical ML Implementations",
+      "when_to_read": "Requests in the Pedagogical ML Implementations family of the Training Infrastructure area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on pedagogical ml implementations.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "why_not_existing": "The Pedagogical ML Implementations taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity.",
+      "expected_future_reuse": "Future imports classified under the Pedagogical ML Implementations family will route to this scenario."
+    },
+    "pipeline-orchestration": {
+      "allow_new": true,
+      "title": "Pipeline Orchestration",
+      "when_to_read": "Requests in the Pipeline Orchestration family of the MLOps area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on pipeline orchestration.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "why_not_existing": "The Pipeline Orchestration taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity.",
+      "expected_future_reuse": "Future imports classified under the Pipeline Orchestration family will route to this scenario."
+    },
+    "pose-estimation": {
+      "allow_new": true,
+      "title": "Pose Estimation",
+      "when_to_read": "Requests in the Pose Estimation family of the Computer Vision area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on pose estimation.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "why_not_existing": "The Pose Estimation taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity.",
+      "expected_future_reuse": "Future imports classified under the Pose Estimation family will route to this scenario."
+    },
+    "preference-and-reinforcement-alignment": {
+      "allow_new": true,
+      "title": "Preference and Reinforcement Alignment",
+      "when_to_read": "Requests in the Preference and Reinforcement Alignment family of the LLM Models, Training, and Alignment area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on preference and reinforcement alignment.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "why_not_existing": "The Preference and Reinforcement Alignment taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity.",
+      "expected_future_reuse": "Future imports classified under the Preference and Reinforcement Alignment family will route to this scenario."
+    },
+    "pretraining": {
+      "allow_new": true,
+      "title": "Pretraining",
+      "when_to_read": "Requests in the Pretraining family of the LLM Models, Training, and Alignment area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on pretraining.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "why_not_existing": "The Pretraining taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity.",
+      "expected_future_reuse": "Future imports classified under the Pretraining family will route to this scenario."
+    },
+    "rag-frameworks": {
+      "allow_new": true,
+      "title": "RAG Frameworks",
+      "when_to_read": "Requests in the RAG Frameworks family of the LLM Applications area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on rag frameworks.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "why_not_existing": "The RAG Frameworks taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity.",
+      "expected_future_reuse": "Future imports classified under the RAG Frameworks family will route to this scenario."
+    },
+    "rl-algorithm-implementations": {
+      "allow_new": true,
+      "title": "RL Algorithm Implementations",
+      "when_to_read": "Requests in the RL Algorithm Implementations family of the Reinforcement Learning area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on rl algorithm implementations.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "why_not_existing": "The RL Algorithm Implementations taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity.",
+      "expected_future_reuse": "Future imports classified under the RL Algorithm Implementations family will route to this scenario."
+    },
+    "rl-environments": {
+      "allow_new": true,
+      "title": "RL Environments",
+      "when_to_read": "Requests in the RL Environments family of the Reinforcement Learning area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on rl environments.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "why_not_existing": "The RL Environments taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity.",
+      "expected_future_reuse": "Future imports classified under the RL Environments family will route to this scenario."
+    },
+    "rl-training-frameworks": {
+      "allow_new": true,
+      "title": "RL Training Frameworks",
+      "when_to_read": "Requests in the RL Training Frameworks family of the Reinforcement Learning area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on rl training frameworks.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "why_not_existing": "The RL Training Frameworks taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity.",
+      "expected_future_reuse": "Future imports classified under the RL Training Frameworks family will route to this scenario."
+    },
+    "robot-learning-frameworks": {
+      "allow_new": true,
+      "title": "Robot Learning Frameworks",
+      "when_to_read": "Requests in the Robot Learning Frameworks family of the Robotics and Embodied AI area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on robot learning frameworks.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "why_not_existing": "The Robot Learning Frameworks taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity.",
+      "expected_future_reuse": "Future imports classified under the Robot Learning Frameworks family will route to this scenario."
+    },
+    "robot-simulation": {
+      "allow_new": true,
+      "title": "Robot Simulation",
+      "when_to_read": "Requests in the Robot Simulation family of the Robotics and Embodied AI area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on robot simulation.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "why_not_existing": "The Robot Simulation taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity.",
+      "expected_future_reuse": "Future imports classified under the Robot Simulation family will route to this scenario."
+    },
+    "speech-and-audio-toolkits": {
+      "allow_new": true,
+      "title": "Speech and Audio Toolkits",
+      "when_to_read": "Requests in the Speech and Audio Toolkits family of the Speech and Audio area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on speech and audio toolkits.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "why_not_existing": "The Speech and Audio Toolkits taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity.",
+      "expected_future_reuse": "Future imports classified under the Speech and Audio Toolkits family will route to this scenario."
+    },
+    "speech-recognition": {
+      "allow_new": true,
+      "title": "Speech Recognition",
+      "when_to_read": "Requests in the Speech Recognition family of the Speech and Audio area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on speech recognition.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "why_not_existing": "The Speech Recognition taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity.",
+      "expected_future_reuse": "Future imports classified under the Speech Recognition family will route to this scenario."
+    },
+    "speech-synthesis": {
+      "allow_new": true,
+      "title": "Speech Synthesis",
+      "when_to_read": "Requests in the Speech Synthesis family of the Speech and Audio area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on speech synthesis.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "why_not_existing": "The Speech Synthesis taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity.",
+      "expected_future_reuse": "Future imports classified under the Speech Synthesis family will route to this scenario."
+    },
+    "tabular-modeling": {
+      "allow_new": true,
+      "title": "Tabular Modeling",
+      "when_to_read": "Requests in the Tabular Modeling family of the Data Science area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on tabular modeling.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "why_not_existing": "The Tabular Modeling taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity.",
+      "expected_future_reuse": "Future imports classified under the Tabular Modeling family will route to this scenario."
+    },
+    "text-classification": {
+      "allow_new": true,
+      "title": "Text Classification",
+      "when_to_read": "Requests in the Text Classification family of the Natural Language Processing area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on text classification.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "why_not_existing": "The Text Classification taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity.",
+      "expected_future_reuse": "Future imports classified under the Text Classification family will route to this scenario."
+    },
+    "time-series-toolkits": {
+      "allow_new": true,
+      "title": "Time-Series Toolkits",
+      "when_to_read": "Requests in the Time-Series Toolkits family of the Time Series Analysis area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on time-series toolkits.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "why_not_existing": "The Time-Series Toolkits taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity.",
+      "expected_future_reuse": "Future imports classified under the Time-Series Toolkits family will route to this scenario."
+    },
+    "training-data-pipelines": {
+      "allow_new": true,
+      "title": "Training Data Pipelines",
+      "when_to_read": "Requests in the Training Data Pipelines family of the Training Infrastructure area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on training data pipelines.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "why_not_existing": "The Training Data Pipelines taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity.",
+      "expected_future_reuse": "Future imports classified under the Training Data Pipelines family will route to this scenario."
+    },
+    "training-loop-toolkits": {
+      "allow_new": true,
+      "title": "Training Loop Toolkits",
+      "when_to_read": "Requests in the Training Loop Toolkits family of the Training Infrastructure area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on training loop toolkits.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "why_not_existing": "The Training Loop Toolkits taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity.",
+      "expected_future_reuse": "Future imports classified under the Training Loop Toolkits family will route to this scenario."
+    },
+    "vector-search": {
+      "allow_new": true,
+      "title": "Vector Search",
+      "when_to_read": "Requests in the Vector Search family of the Information Retrieval area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on vector search.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "why_not_existing": "The Vector Search taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity.",
+      "expected_future_reuse": "Future imports classified under the Vector Search family will route to this scenario."
+    },
+    "video-synthesis": {
+      "allow_new": true,
+      "title": "Video Synthesis",
+      "when_to_read": "Requests in the Video Synthesis family of the Generative Media area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on video synthesis.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "why_not_existing": "The Video Synthesis taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity.",
+      "expected_future_reuse": "Future imports classified under the Video Synthesis family will route to this scenario."
+    },
+    "vision-language-understanding": {
+      "allow_new": true,
+      "title": "Vision-Language Understanding",
+      "when_to_read": "Requests in the Vision-Language Understanding family of the Computer Vision area: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for repositories focused on vision-language understanding.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "why_not_existing": "The Vision-Language Understanding taxonomy family groups repositories with a shared operational surface that no existing canonical scenario covers at this granularity.",
+      "expected_future_reuse": "Future imports classified under the Vision-Language Understanding family will route to this scenario."
+    },
+    "autonomous-driving-general": {
+      "allow_new": true,
+      "title": "Autonomous Driving — General",
+      "when_to_read": "Autonomous Driving requests whose task family has no dedicated scenario: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for the smaller repository families in this area.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "why_not_existing": "Smaller Autonomous Driving taxonomy families are grouped at the area level to keep the router index compact while remaining routable.",
+      "expected_future_reuse": "Future imports in smaller Autonomous Driving families will route to this scenario until a family grows enough to warrant its own."
+    },
+    "biomedical-ai-general": {
+      "allow_new": true,
+      "title": "Biomedical AI — General",
+      "when_to_read": "Biomedical AI requests whose task family has no dedicated scenario: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for the smaller repository families in this area.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "why_not_existing": "Smaller Biomedical AI taxonomy families are grouped at the area level to keep the router index compact while remaining routable.",
+      "expected_future_reuse": "Future imports in smaller Biomedical AI families will route to this scenario until a family grows enough to warrant its own."
+    },
+    "computer-vision-general": {
+      "allow_new": true,
+      "title": "Computer Vision — General",
+      "when_to_read": "Computer Vision requests whose task family has no dedicated scenario: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for the smaller repository families in this area.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "why_not_existing": "Smaller Computer Vision taxonomy families are grouped at the area level to keep the router index compact while remaining routable.",
+      "expected_future_reuse": "Future imports in smaller Computer Vision families will route to this scenario until a family grows enough to warrant its own."
+    },
+    "data-science-general": {
+      "allow_new": true,
+      "title": "Data Science — General",
+      "when_to_read": "Data Science requests whose task family has no dedicated scenario: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for the smaller repository families in this area.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "why_not_existing": "Smaller Data Science taxonomy families are grouped at the area level to keep the router index compact while remaining routable.",
+      "expected_future_reuse": "Future imports in smaller Data Science families will route to this scenario until a family grows enough to warrant its own."
+    },
+    "generative-media-general": {
+      "allow_new": true,
+      "title": "Generative Media — General",
+      "when_to_read": "Generative Media requests whose task family has no dedicated scenario: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for the smaller repository families in this area.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "why_not_existing": "Smaller Generative Media taxonomy families are grouped at the area level to keep the router index compact while remaining routable.",
+      "expected_future_reuse": "Future imports in smaller Generative Media families will route to this scenario until a family grows enough to warrant its own."
+    },
+    "graph-learning-general": {
+      "allow_new": true,
+      "title": "Graph Learning — General",
+      "when_to_read": "Graph Learning requests whose task family has no dedicated scenario: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for the smaller repository families in this area.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "why_not_existing": "Smaller Graph Learning taxonomy families are grouped at the area level to keep the router index compact while remaining routable.",
+      "expected_future_reuse": "Future imports in smaller Graph Learning families will route to this scenario until a family grows enough to warrant its own."
+    },
+    "information-retrieval-general": {
+      "allow_new": true,
+      "title": "Information Retrieval — General",
+      "when_to_read": "Information Retrieval requests whose task family has no dedicated scenario: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for the smaller repository families in this area.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "why_not_existing": "Smaller Information Retrieval taxonomy families are grouped at the area level to keep the router index compact while remaining routable.",
+      "expected_future_reuse": "Future imports in smaller Information Retrieval families will route to this scenario until a family grows enough to warrant its own."
+    },
+    "llm-applications-general": {
+      "allow_new": true,
+      "title": "LLM Applications — General",
+      "when_to_read": "LLM Applications requests whose task family has no dedicated scenario: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for the smaller repository families in this area.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "why_not_existing": "Smaller LLM Applications taxonomy families are grouped at the area level to keep the router index compact while remaining routable.",
+      "expected_future_reuse": "Future imports in smaller LLM Applications families will route to this scenario until a family grows enough to warrant its own."
+    },
+    "llm-models-training-and-alignment-general": {
+      "allow_new": true,
+      "title": "LLM Models, Training, and Alignment — General",
+      "when_to_read": "LLM Models, Training, and Alignment requests whose task family has no dedicated scenario: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for the smaller repository families in this area.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "why_not_existing": "Smaller LLM Models, Training, and Alignment taxonomy families are grouped at the area level to keep the router index compact while remaining routable.",
+      "expected_future_reuse": "Future imports in smaller LLM Models, Training, and Alignment families will route to this scenario until a family grows enough to warrant its own."
+    },
+    "mlops-general": {
+      "allow_new": true,
+      "title": "MLOps — General",
+      "when_to_read": "MLOps requests whose task family has no dedicated scenario: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for the smaller repository families in this area.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "why_not_existing": "Smaller MLOps taxonomy families are grouped at the area level to keep the router index compact while remaining routable.",
+      "expected_future_reuse": "Future imports in smaller MLOps families will route to this scenario until a family grows enough to warrant its own."
+    },
+    "natural-language-processing-general": {
+      "allow_new": true,
+      "title": "Natural Language Processing — General",
+      "when_to_read": "Natural Language Processing requests whose task family has no dedicated scenario: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for the smaller repository families in this area.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "why_not_existing": "Smaller Natural Language Processing taxonomy families are grouped at the area level to keep the router index compact while remaining routable.",
+      "expected_future_reuse": "Future imports in smaller Natural Language Processing families will route to this scenario until a family grows enough to warrant its own."
+    },
+    "probabilistic-and-causal-modeling-general": {
+      "allow_new": true,
+      "title": "Probabilistic and Causal Modeling — General",
+      "when_to_read": "Probabilistic and Causal Modeling requests whose task family has no dedicated scenario: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for the smaller repository families in this area.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "why_not_existing": "Smaller Probabilistic and Causal Modeling taxonomy families are grouped at the area level to keep the router index compact while remaining routable.",
+      "expected_future_reuse": "Future imports in smaller Probabilistic and Causal Modeling families will route to this scenario until a family grows enough to warrant its own."
+    },
+    "reinforcement-learning-general": {
+      "allow_new": true,
+      "title": "Reinforcement Learning — General",
+      "when_to_read": "Reinforcement Learning requests whose task family has no dedicated scenario: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for the smaller repository families in this area.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "why_not_existing": "Smaller Reinforcement Learning taxonomy families are grouped at the area level to keep the router index compact while remaining routable.",
+      "expected_future_reuse": "Future imports in smaller Reinforcement Learning families will route to this scenario until a family grows enough to warrant its own."
+    },
+    "responsible-ai-general": {
+      "allow_new": true,
+      "title": "Responsible AI — General",
+      "when_to_read": "Responsible AI requests whose task family has no dedicated scenario: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for the smaller repository families in this area.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "why_not_existing": "Smaller Responsible AI taxonomy families are grouped at the area level to keep the router index compact while remaining routable.",
+      "expected_future_reuse": "Future imports in smaller Responsible AI families will route to this scenario until a family grows enough to warrant its own."
+    },
+    "robotics-and-embodied-ai-general": {
+      "allow_new": true,
+      "title": "Robotics and Embodied AI — General",
+      "when_to_read": "Robotics and Embodied AI requests whose task family has no dedicated scenario: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for the smaller repository families in this area.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "why_not_existing": "Smaller Robotics and Embodied AI taxonomy families are grouped at the area level to keep the router index compact while remaining routable.",
+      "expected_future_reuse": "Future imports in smaller Robotics and Embodied AI families will route to this scenario until a family grows enough to warrant its own."
+    },
+    "scientific-computing-general": {
+      "allow_new": true,
+      "title": "Scientific Computing — General",
+      "when_to_read": "Scientific Computing requests whose task family has no dedicated scenario: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for the smaller repository families in this area.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "why_not_existing": "Smaller Scientific Computing taxonomy families are grouped at the area level to keep the router index compact while remaining routable.",
+      "expected_future_reuse": "Future imports in smaller Scientific Computing families will route to this scenario until a family grows enough to warrant its own."
+    },
+    "speech-and-audio-general": {
+      "allow_new": true,
+      "title": "Speech and Audio — General",
+      "when_to_read": "Speech and Audio requests whose task family has no dedicated scenario: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for the smaller repository families in this area.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "why_not_existing": "Smaller Speech and Audio taxonomy families are grouped at the area level to keep the router index compact while remaining routable.",
+      "expected_future_reuse": "Future imports in smaller Speech and Audio families will route to this scenario until a family grows enough to warrant its own."
+    },
+    "time-series-analysis-general": {
+      "allow_new": true,
+      "title": "Time Series Analysis — General",
+      "when_to_read": "Time Series Analysis requests whose task family has no dedicated scenario: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for the smaller repository families in this area.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "why_not_existing": "Smaller Time Series Analysis taxonomy families are grouped at the area level to keep the router index compact while remaining routable.",
+      "expected_future_reuse": "Future imports in smaller Time Series Analysis families will route to this scenario until a family grows enough to warrant its own."
+    },
+    "training-infrastructure-general": {
+      "allow_new": true,
+      "title": "Training Infrastructure — General",
+      "when_to_read": "Training Infrastructure requests whose task family has no dedicated scenario: setup, workflows, APIs, CLIs, configs, artifacts, and troubleshooting for the smaller repository families in this area.",
+      "how_to_choose": "Match the repo skill whose package, model family, data format, or workflow surface most directly fits the request; package names and API terms are the strongest signal.",
+      "why_not_existing": "Smaller Training Infrastructure taxonomy families are grouped at the area level to keep the router index compact while remaining routable.",
+      "expected_future_reuse": "Future imports in smaller Training Infrastructure families will route to this scenario until a family grows enough to warrant its own."
+    }
+  }
+}

@@ -1,9 +1,9 @@
 ---
 name: di-engine
 description: "Routes DI-engine users to the right workflow for CLI/config launches, serial and framework-based RL pipelines, and environment integration."
+disable-model-invocation: true
 metadata:
   disco-role: operating
-  disable-model-invocation: true
 license: Apache 2.0
 ---
 

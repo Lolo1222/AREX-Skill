@@ -27,4 +27,4 @@ Useful entry points: `torchtune/sub-skills/data-and-datasets/SKILL.md`, `torchtu
 
 ## How To Choose
 
-Use this scenario when the request is primarily about adapting data or model registries for a specific ML framework; choose dataset-processing scenarios for generic dataset loading or evaluation plumbing. Route to `ms-swift` first when ms-swift errors mention malformed rows, missing media, column mapping, model_type, template, or external plugin loading. Choose torchtune when the data/model customization must fit torchtune builders, message transforms, or recipe YAML component fields.
+Use this scenario when the request is primarily about adapting data or model registries for a specific ML framework; choose dataset-processing scenarios for generic dataset loading or evaluation plumbing.

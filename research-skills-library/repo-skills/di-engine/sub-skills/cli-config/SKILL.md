@@ -1,9 +1,9 @@
 ---
 name: cli-config
 description: "Routes DI-engine CLI, config, and launch-parameter workflows."
+disable-model-invocation: true
 metadata:
   disco-role: operating
-  disable-model-invocation: true
 license: Apache 2.0
 ---
 

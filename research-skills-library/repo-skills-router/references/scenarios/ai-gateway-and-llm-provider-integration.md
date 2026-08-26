@@ -19,4 +19,4 @@ Useful entry points: `litellm/SKILL.md`, `litellm/sub-skills/agent-tools/`, `lit
 
 ## How To Choose
 
-Use this scenario for provider routing and gateway/proxy concerns; use agent-framework scenarios when the user is primarily building an agent workflow. Choose `litellm` when the request names `litellm`, centers on Use for LiteLLM Python SDK, AI Gateway proxy, model routing, provider endpoint mapping, MCP/A2A agent tooling, pass-through routes, guardrails, virtual keys, spend tracking, and troubleshooting across OpenAI-compatible LLM providers, uses its APIs or CLIs, references its configs/artifacts/errors, or asks for repository workflows in ai gateway and llm provider integration.
+Use this scenario for provider routing and gateway/proxy concerns; use agent-framework scenarios when the user is primarily building an agent workflow.

@@ -1,7 +1,9 @@
 ---
 name: fastvideo
-summary: Operate in the FastVideo repository for inference/serving, model-porting, training, and Dreamverse tasks with backend-aware setup and tests.
-description: Use this repo-specific skill when the current task touches FastVideo source, examples, tests, docs, scripts, or the Dreamverse app. It routes work to the right FastVideo subsystem, preserves the repo's two training stacks and per-directory AGENTS rules, and chooses bounded CUDA/test verification instead of running heavyweight model jobs by default.
+description: "Use this repo-specific skill when the current task touches FastVideo source, examples, tests, docs, scripts, or the Dreamverse app. It routes work to the right FastVideo subsystem, preserves the repo's two training stacks and per-directory AGENTS rules, and chooses bounded CUDA/test verification instead of running heavyweight model jobs by default."
+disable-model-invocation: true
+metadata:
+  disco-role: operating
 license: Apache 2.0
 ---
 

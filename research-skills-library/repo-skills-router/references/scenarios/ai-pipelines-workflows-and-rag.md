@@ -43,4 +43,4 @@ Useful entry points: `txtai/SKILL.md`, `txtai/sub-skills/pipelines-and-workflows
 
 ## How To Choose
 
-Use this scenario when the package is primarily an end-to-end AI workflow system rather than only a retriever, vector database, or model-serving backend. Choose kotaemon when the request combines a document QA/RAG app, file indexing, LLM/embedding resources, citations, or Kotaemon/ktem APIs rather than only a generic provider SDK or vector store. Choose `langflow` when the user needs Langflow-specific flow JSON, components, visual workflow behavior, LFX execution, Langflow APIs/SDK, MCP integration, or Langflow deployment guidance rather than a generic LLM framework. Choose ragflow when the task combines RAG application operations, document ingestion, RAGFlow API/SDK calls, or RAGFlow-specific deployment and source-code changes. Choose pipelines-and-workflows for deterministic batch/stream processing; choose agents-and-llm-orchestration for RAG, model backends, tool choice, and multi-step reasoning.
+Use this scenario when the package is primarily an end-to-end AI workflow system rather than only a retriever, vector database, or model-serving backend.

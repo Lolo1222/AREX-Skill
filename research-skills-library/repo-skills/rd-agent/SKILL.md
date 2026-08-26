@@ -1,6 +1,7 @@
 ---
 name: rd-agent
 description: "Operate Microsoft's RD-Agent research-agent framework for data-science, quantitative-finance, LLM fine-tuning, reinforcement-learning, and paper/model-copilot workflows."
+disable-model-invocation: true
 metadata:
   disco-role: operating
   source-repository: microsoft/RD-Agent

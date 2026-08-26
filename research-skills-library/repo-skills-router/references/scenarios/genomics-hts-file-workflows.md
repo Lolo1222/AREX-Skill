@@ -19,4 +19,4 @@ Useful entry points: `pysam/SKILL.md`, `pysam/sub-skills/alignment-io/SKILL.md`,
 
 ## How To Choose
 
-Choose the repo skill whose package or API surface owns the requested genomics file workflow: pysam for Python htslib/samtools/bcftools bindings, alignment/variant/tabix/FASTA/FASTQ file APIs, and command-wrapper troubleshooting. Choose `pysam` when a task needs Python code or troubleshooting around HTS file formats, genomic interval coordinates and indexes, pysam AlignmentFile/VariantFile/TabixFile/FastaFile/FastxFile APIs, or pysam.samtools/pysam.bcftools command dispatchers. Do not choose `pysam` for high-level biological analysis unless the immediate blocker is file I/O, indexing, command-wrapper translation, or package build/import behavior.
+Choose the repo skill whose package or API surface owns the requested genomics file workflow: pysam for Python htslib/samtools/bcftools bindings, alignment/variant/tabix/FASTA/FASTQ file APIs, and command-wrapper troubleshooting.

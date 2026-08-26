@@ -19,4 +19,4 @@ Useful entry points: `open-clip/SKILL.md`, `open-clip/sub-skills/training/SKILL.
 
 ## How To Choose
 
-Use this scenario for OpenCLIP-specific training or multimodal audio/vision-language workflows that are not just model inference. Choose `open-clip` when OpenCLIP-specific parser flags, dict batches, audio transforms, NaFlex patch dictionaries, or GenLIP/GenLAP semantics matter more than generic PyTorch mechanics.
+Use this scenario for OpenCLIP-specific training or multimodal audio/vision-language workflows that are not just model inference.

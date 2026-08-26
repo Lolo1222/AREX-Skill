@@ -1,9 +1,9 @@
 ---
 name: serial-pipelines
 description: "Routes legacy DI-engine serial, offline, evaluation, and data-collection pipelines."
+disable-model-invocation: true
 metadata:
   disco-role: operating
-  disable-model-invocation: true
 license: Apache 2.0
 ---
 

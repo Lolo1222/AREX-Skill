@@ -19,4 +19,4 @@ Useful entry points: `habitat-lab/SKILL.md`, `habitat-lab/sub-skills/setup-and-c
 
 ## How To Choose
 
-Use this scenario for embodied AI simulation and training stacks rather than generic reinforcement learning algorithms or vision models. Choose `habitat-lab` when Habitat-Lab repository APIs/configs are central; within it, route setup/import/config questions first to setup-and-configuration, runtime Env/dataset questions to tasks-datasets-and-envs, train/eval questions to baselines-training-and-evaluation, realtime interaction to HITL, and custom components to extension-patterns.
+Use this scenario for embodied AI simulation and training stacks rather than generic reinforcement learning algorithms or vision models.
