@@ -9,12 +9,12 @@ about how the skill was produced.
 You can contribute:
 
 - new generated repo skills under
-  `research-skills-library/repo-skills/<skill-id>/`;
+  `skills/repositories/repo-skills/<skill-id>/`;
 - improvements to existing repo skills;
 - router, catalog, provenance, and documentation updates;
 - bundled workflow skills under
-  `src/packages/coding-agent/src/disco/skills/`;
-- DisCo CLI source changes under `src/`.
+  `cli/packages/coding-agent/src/disco/skills/`;
+- DisCo CLI source changes under `cli/`.
 
 ## New Repo Skills
 
@@ -22,9 +22,9 @@ The most important contribution type is a new runtime repo skill.
 
 Required files:
 
-- `research-skills-library/repo-skills/<skill-id>/SKILL.md`
-- `research-skills-library/repo-skills/<skill-id>/references/repo-provenance.md`
-- `research-skills-library/repo-skills/<skill-id>/references/repo-routing-metadata.json`
+- `skills/repositories/repo-skills/<skill-id>/SKILL.md`
+- `skills/repositories/repo-skills/<skill-id>/references/repo-provenance.md`
+- `skills/repositories/repo-skills/<skill-id>/references/repo-routing-metadata.json`
 - sub-skills and references when the upstream repository has multiple major
   workflow areas
 - small validation or preflight scripts when they make the skill safer to use
@@ -33,7 +33,7 @@ Keep runtime skill content separate from review artifacts. Publication-ready
 content belongs in:
 
 ```text
-research-skills-library/repo-skills/<skill-id>/
+skills/repositories/repo-skills/<skill-id>/
 ```
 
 Test cases, review notes, and generation reports should stay outside the
@@ -43,16 +43,18 @@ guidance.
 ## Router And Catalog Consistency
 
 When adding, deleting, renaming, importing, or materially changing a repo skill,
-update the router:
+update the router through the verified importer/updater:
 
 ```text
-research-skills-library/repo-skills-router/SKILL.md
-research-skills-library/repo-skills-router/references/usage-scenarios.md
-research-skills-library/repo-skills-router/references/scenarios/*.md
+skills/repositories/repo-skills-router/SKILL.md
+skills/repositories/repo-skills-router/references/areas/*.md
+skills/repositories/repo-skills-router/references/families/<area>/*.md
+skills/repositories/repo-skills-router/references/index/
 ```
 
-Router entries should help an agent choose among skills. They should not copy
-the full skill instructions.
+Router entries should help an agent choose among skills using exact area and
+family scopes. They should not copy the full skill instructions or routing
+evidence.
 
 Update the public catalog when the imported skill library changes:
 
@@ -82,8 +84,8 @@ Rules:
 Focused checks:
 
 ```bash
-find research-skills-library/repo-skills/<skill-id> -type f -name '*.py' -print0 | xargs -0 -r python -m py_compile
-find research-skills-library/repo-skills/<skill-id> -type f | sort
+find skills/repositories/repo-skills/<skill-id> -type f -name '*.py' -print0 | xargs -0 -r python -m py_compile
+find skills/repositories/repo-skills/<skill-id> -type f | sort
 ```
 
 ## Pull Request Requirements
@@ -99,7 +101,7 @@ For every PR that adds or modifies generated repo skills, include:
 - the verification commands or review steps that were run;
 - any known gaps, skipped checks, unavailable credentials, or environment
   limits;
-- confirmation that the sibling `research-skills-library/repo-skills-router/`
+- confirmation that the sibling `skills/repositories/repo-skills-router/`
   was updated when routing changed.
 
 If multiple models or passes were used, list each model and its role, for
@@ -109,9 +111,9 @@ example generation, review, refinement, or verification.
 
 The root README, architecture guide, portable-meta-skill guide, contribution
 guide, and Research Skills Library guide are bilingual. When changing one side
-of a paired page, update the other side in the same change. The 170-entry
-repository catalog remains one shared data page; keep its localized summaries
-and links in the Chinese README aligned with it.
+of a paired page, update the other side in the same change. The repository
+catalog is one shared data page covering 1,000 roots and 2,186 memberships;
+keep its localized summaries and links in the Chinese README aligned with it.
 
 Rules:
 
@@ -137,7 +139,7 @@ PY
 
 ## Workflow Skill Changes
 
-`src/packages/coding-agent/src/disco/skills/` is the single source of truth for
+`cli/packages/coding-agent/src/disco/skills/` is the single source of truth for
 workflow skills bundled with DisCo and optionally copied into external agents.
 The separate [meta-skill guide](docs/meta-skills-for-other-agents.md) defines
 which Creator-only directories may be copied; do not copy the operating router
@@ -156,9 +158,9 @@ When updating workflow skills:
   project's `.agents/skills/`; managed scope requires evidence of cross-project
   reuse, and one graph must stay in one scope.
 - Keep repository graphs on their specialized
-  `~/.disco/agent/skills/repo-skills/` import path with the sibling router
+  `~/.disco/agent/skills/repositories/repo-skills/` import path with the sibling router
   rebuild; do not pass repo routing metadata through the generic graph importer.
-- Update the [workflow README](src/packages/coding-agent/src/disco/skills/README.md)
+- Update the [workflow README](cli/packages/coding-agent/src/disco/skills/README.md)
   when names, paths, defaults, or workflow boundaries change.
 - Update generated templates and their generators together. In particular,
   router behavior rendered by `update_repo_skills_router.mjs` must not be
@@ -166,7 +168,7 @@ When updating workflow skills:
 
 ## DisCo Source Changes
 
-The DisCo CLI source lives under `src/`.
+The DisCo CLI source lives under `cli/`.
 
 Common checks:
 
@@ -189,14 +191,14 @@ Repository-library router rebuilds use the canonical collection and sibling
 router explicitly:
 
 ```bash
-node src/packages/coding-agent/src/disco/skills/verify-repo-skill/scripts/update_repo_skills_router.mjs \
-  --library-root research-skills-library
+node cli/packages/coding-agent/src/disco/skills/verify-repo-skill/scripts/update_repo_skills_router.mjs \
+  --library-root skills/repositories
 ```
 
 For publish preparation, dry-run package contents before publishing:
 
 ```bash
-cd src
+cd cli
 npm publish --dry-run --ignore-scripts
 ```
 

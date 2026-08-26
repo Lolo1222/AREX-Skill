@@ -28,12 +28,12 @@ wheelhouse/
 /src/.artifacts/
 /src/.npm/
 /src/compaction-results/
-/src/packages/*/dist-chrome/
-/src/packages/*/dist-firefox/
-/src/packages/ai/src/providers/data/
-/src/packages/ai/src/providers/.model-generation-*/
-/src/packages/coding-agent/binaries/
-/src/packages/coding-agent/*.bun-build
+/cli/packages/*/dist-chrome/
+/cli/packages/*/dist-firefox/
+/cli/packages/ai/src/providers/data/
+/cli/packages/ai/src/providers/.model-generation-*/
+/cli/packages/coding-agent/binaries/
+/cli/packages/coding-agent/*.bun-build
 /src/**/*.cpuprofile
 *.tsbuildinfo
 

@@ -7,12 +7,12 @@ Auto-ML Skills 把 skills 视为未来 agent 可能加载并执行的操作指�
 
 可以贡献：
 
-- `research-skills-library/repo-skills/<skill-id>/` 下新的 generated repo skills；
+- `skills/repositories/repo-skills/<skill-id>/` 下新的 generated repo skills；
 - 对已有 repo skills 的优化；
 - router、catalog、provenance 和文档更新；
-- `src/packages/coding-agent/src/disco/skills/` 下的 bundled workflow
+- `cli/packages/coding-agent/src/disco/skills/` 下的 bundled workflow
   skills；
-- `src/` 下的 DisCo CLI 源码。
+- `cli/` 下的 DisCo CLI 源码。
 
 ## 新增 Repo Skills
 
@@ -20,16 +20,16 @@ Auto-ML Skills 把 skills 视为未来 agent 可能加载并执行的操作指�
 
 必需文件：
 
-- `research-skills-library/repo-skills/<skill-id>/SKILL.md`
-- `research-skills-library/repo-skills/<skill-id>/references/repo-provenance.md`
-- `research-skills-library/repo-skills/<skill-id>/references/repo-routing-metadata.json`
+- `skills/repositories/repo-skills/<skill-id>/SKILL.md`
+- `skills/repositories/repo-skills/<skill-id>/references/repo-provenance.md`
+- `skills/repositories/repo-skills/<skill-id>/references/repo-routing-metadata.json`
 - 当上游仓库有多个主要工作流时，包含 sub-skills 和 references
 - 当能提升使用安全性时，包含小型 validation 或 preflight scripts
 
 保持 runtime skill 内容与 review artifacts 分离。可发布内容应位于：
 
 ```text
-research-skills-library/repo-skills/<skill-id>/
+skills/repositories/repo-skills/<skill-id>/
 ```
 
 test cases、review notes 和 generation reports 不应混入 runtime skill 目录，
@@ -38,15 +38,17 @@ test cases、review notes 和 generation reports 不应混入 runtime skill 目�
 ## Router 与 Catalog 一致性
 
 当添加、删除、重命名、导入 repo skill，或 repo skill 覆盖范围发生实质变化
-时，更新 router：
+时，通过 verified importer/updater 更新 router：
 
 ```text
-research-skills-library/repo-skills-router/SKILL.md
-research-skills-library/repo-skills-router/references/usage-scenarios.md
-research-skills-library/repo-skills-router/references/scenarios/*.md
+skills/repositories/repo-skills-router/SKILL.md
+skills/repositories/repo-skills-router/references/areas/*.md
+skills/repositories/repo-skills-router/references/families/<area>/*.md
+skills/repositories/repo-skills-router/references/index/
 ```
 
-router entry 应帮助 agent 在 skills 之间做选择，而不是复制完整 skill 指令。
+router entry 应帮助 agent 根据精确的 area 和 family scope 在 skills 之间做选择，
+而不是复制完整 skill 指令或 routing evidence。
 
 当 imported skill library 变化时，更新公开 catalog：
 
@@ -72,8 +74,8 @@ catalog 应与 `repo-routing-metadata.json` 和 `repo-provenance.md` 保持一�
 聚焦检查：
 
 ```bash
-find research-skills-library/repo-skills/<skill-id> -type f -name '*.py' -print0 | xargs -0 -r python -m py_compile
-find research-skills-library/repo-skills/<skill-id> -type f | sort
+find skills/repositories/repo-skills/<skill-id> -type f -name '*.py' -print0 | xargs -0 -r python -m py_compile
+find skills/repositories/repo-skills/<skill-id> -type f | sort
 ```
 
 ## Pull Request 要求
@@ -88,7 +90,7 @@ find research-skills-library/repo-skills/<skill-id> -type f | sort
 - 已运行的 verification commands 或 review steps；
 - 已知缺口、跳过的检查、不可用 credentials 或环境限制；
 - 当 routing 变化时，确认已经更新同级的
-  `research-skills-library/repo-skills-router/`。
+  `skills/repositories/repo-skills-router/`。
 
 如果使用了多个 model 或多轮 pass，请列出每个 model 的角色，例如 generation、
 review、refinement 或 verification。
@@ -97,8 +99,8 @@ review、refinement 或 verification。
 
 根 README、架构说明、portable meta skills 安装说明、贡献指南和 Research
 Skills Library 说明都有中英文版本。修改其中一份时，应在同一个变更中同步另
-一种语言。包含 170 项记录的 repository catalog 作为共享数据页单独维护；中
-文 README 中的摘要和链接必须与它保持一致。
+一种语言。repository catalog 是一个共享数据页，覆盖 1,000 个 root 和
+2,186 个 memberships；中文 README 中的摘要和链接必须与它保持一致。
 
 规则：
 
@@ -123,7 +125,7 @@ PY
 
 ## Workflow Skill 变更
 
-`src/packages/coding-agent/src/disco/skills/` 是随 DisCo 打包、也可复制到
+`cli/packages/coding-agent/src/disco/skills/` 是随 DisCo 打包、也可复制到
 external agents 的 workflow skills 的唯一 source of truth。portable 指令应
 在没有 DisCo-only extensions 的情况下也能读懂。
 哪些 Creator-only 目录可以复制，以及为什么不能复制 operating router 或
@@ -139,17 +141,17 @@ repository collection，见 [Meta Skills 专题文档](docs/meta-skills-for-othe
   或复用价值不确定的 graph 默认进入受信任项目的 `.agents/skills/`；只有具备
   跨项目复用证据时才能选择 managed scope，并且一个 graph 不能跨 scope 拆分。
 - Repository graphs 必须继续走
-  `~/.disco/agent/skills/repo-skills/` 专用导入路径，并在同一个事务中重建同级
+  `~/.disco/agent/skills/repositories/repo-skills/` 专用导入路径，并在同一个事务中重建同级
   router；不能把 repo routing metadata 交给通用 graph importer。
 - 当名称、路径、默认值或 workflow 边界变化时，更新
-  [workflow README](src/packages/coding-agent/src/disco/skills/README.md)。
+  [workflow README](cli/packages/coding-agent/src/disco/skills/README.md)。
 - 同时更新 generated templates 和对应 generator。特别是
   `update_repo_skills_router.mjs` 生成的 router 行为，不能只修改一份已生成的
   Markdown 输出。
 
 ## DisCo Source 变更
 
-DisCo CLI 源码位于 `src/`。
+DisCo CLI 源码位于 `cli/`。
 
 常用检查：
 
@@ -170,14 +172,14 @@ repository library 的 router 重建应显式使用 canonical collection 和 sib
 router：
 
 ```bash
-node src/packages/coding-agent/src/disco/skills/verify-repo-skill/scripts/update_repo_skills_router.mjs \
-  --library-root research-skills-library
+node cli/packages/coding-agent/src/disco/skills/verify-repo-skill/scripts/update_repo_skills_router.mjs \
+  --library-root skills/repositories
 ```
 
 发布准备时，先 dry-run package contents：
 
 ```bash
-cd src
+cd cli
 npm publish --dry-run --ignore-scripts
 ```
 

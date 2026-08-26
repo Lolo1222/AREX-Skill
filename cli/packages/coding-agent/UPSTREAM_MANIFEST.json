@@ -421,7 +421,7 @@
           "upstreamSha256": "c3d342e08f2297a9bb4bb1dc18066ed9b60a254ffbefc72517cadb2288242235",
           "disposition": "retained_modified",
           "localPath": "packages/coding-agent/src/core/provider-attribution.ts",
-          "localSha256": "5fad9a78ce99bda94465a2e530a042720fb13991a982e99531f21f7b2b4d0702"
+          "localSha256": "1c761ce1b7fd701996e6d5a351395bbad588ec21d72543d7e2216514378e1394"
         },
         {
           "upstreamPath": "packages/coding-agent/src/core/provider-composer.ts",
@@ -715,7 +715,7 @@
           "upstreamSha256": "b2a1940f8bbcbac9a33b4b8ef18f707f21d01e19311cdc0df0d895de3de3da5e",
           "disposition": "retained_modified",
           "localPath": "packages/coding-agent/src/migrations.ts",
-          "localSha256": "cdbbe86e4a0c42323b7fc74dcdc3e43c4babf195b3ddea3ef170588ff44b6ec1"
+          "localSha256": "60fc36f54ed9b3e98bacf8c919fee58c3f69670489453aceada1d3cd4173f108"
         },
         {
           "upstreamPath": "packages/coding-agent/src/modes/index.ts",
@@ -1033,14 +1033,14 @@
           "upstreamSha256": "d3e86b44313cc77abb26b3245857290bdec12a2d1f91ec4b8a30ca1d90aea328",
           "disposition": "retained_modified",
           "localPath": "packages/coding-agent/src/modes/interactive/theme/dark.json",
-          "localSha256": "d8255c4d50c7691d97280f3d815748d4faa2e402223b6b06a72d5a41d6c1abf7"
+          "localSha256": "cf74200511d60f784879c2f2e3251585b31cb1fd7a5c6f4b495a78202610d9be"
         },
         {
           "upstreamPath": "packages/coding-agent/src/modes/interactive/theme/light.json",
           "upstreamSha256": "97321584a745e75113f08dd1b751bc2a70da28f132b242f1ae5c23816c5e10bc",
           "disposition": "retained_modified",
           "localPath": "packages/coding-agent/src/modes/interactive/theme/light.json",
-          "localSha256": "fab6f668c20175786ea2b810da1cb9a5532695351990b0a667ed7ea03fb9786d"
+          "localSha256": "0a45d4ec30095595282a6b98ce3137e279315bad48737c22f71584d82ee077c9"
         },
         {
           "upstreamPath": "packages/coding-agent/src/modes/interactive/theme/theme-controller.ts",
@@ -1124,7 +1124,7 @@
           "upstreamSha256": "d4dae0df7e79f53dfb600da439b9c0be2ae21a5c1ed86033e6232f9a8f147360",
           "disposition": "retained_modified",
           "localPath": "packages/coding-agent/src/utils/changelog.ts",
-          "localSha256": "2fd2a166943ddf9072aa6258421abbead41e26c415d39dc82932f7454e0189a6"
+          "localSha256": "67f71f9403d322dce875eae23c5db1fea6a294edc7a86054c798de2c57ecdafc"
         },
         {
           "upstreamPath": "packages/coding-agent/src/utils/child-process.ts",
@@ -1465,7 +1465,7 @@
           "upstreamSha256": "55db7ba3be898b7871448c98b4f737d444672031b41372ff6d2e437a6e25b40b",
           "disposition": "retained_modified",
           "localPath": "packages/coding-agent/test/changelog.test.ts",
-          "localSha256": "032682625fac9bb51ae5db86f5fc9e3bb50d139e7fd72bc18541848453711f5a"
+          "localSha256": "ac25b37e1a01a474270e377c468da186f2e9697f170eb0f5ef279f3ab59bf66c"
         },
         {
           "upstreamPath": "packages/coding-agent/test/clipboard-image-bmp-conversion.test.ts",
@@ -2186,7 +2186,7 @@
           "upstreamSha256": "a024e93b9dd65845d1fa327af57b27035ef8bc5492ee306ebb5b2ecadf8dad7f",
           "disposition": "retained_modified",
           "localPath": "packages/coding-agent/test/sdk-openrouter-attribution.test.ts",
-          "localSha256": "d20e71f8657ba0900440c260094aca2664ce11af667c92467eac1f3c46b052b9"
+          "localSha256": "06f7298d1bc35d60fd6b8ea45034364be782fbf35a64897bab3685374688317d"
         },
         {
           "upstreamPath": "packages/coding-agent/test/sdk-session-manager.test.ts",
@@ -3014,7 +3014,7 @@
           "upstreamSha256": "50ec5ce4c92db862ba56099a5262d30e7745cd4f7abcd36df1b3dc05fb12fa9d",
           "disposition": "retained_modified",
           "localPath": "docs/security.md",
-          "localSha256": "e35d5d993f47db2652ee8f3e1e2de80872acd4b0428d4e598a12afc86b1e676a"
+          "localSha256": "26f5a73fca5f3b7aa95271401d7d38c2c16e527cddfa92b30350996d8f2f038a"
         },
         {
           "upstreamPath": "packages/coding-agent/docs/session-format.md",
@@ -3070,7 +3070,7 @@
           "upstreamSha256": "683f45c90b8dfd920cab4d9ca44ece25c4c3680fa13247407a93673d251b5e3d",
           "disposition": "retained_modified",
           "localPath": "docs/themes.md",
-          "localSha256": "7e26d2d8168f8bddc169d4793efca7148a6cceb17416098a5b9f92fe3066e287"
+          "localSha256": "b8250c3493db79e45d2d68b4d186bdc1009c42e0ecfff5947781afa37479ad6c"
         },
         {
           "upstreamPath": "packages/coding-agent/docs/tmux.md",
@@ -3348,7 +3348,7 @@
           "upstreamSha256": "e91e957c1ea0da175a752368dcb139e52c672d04fb9099886066635c5c7b8a0d",
           "disposition": "retained_modified",
           "localPath": "examples/extensions/dynamic-resources/dynamic.json",
-          "localSha256": "9fcba157aea27f055189f608da4b1498340bb7cc399e94d9f4de424ed0057b5b"
+          "localSha256": "0d896da06d7466accc476c4a8ae716d0e46922f21fa59cd0feb4dfc7bb0be65b"
         },
         {
           "upstreamPath": "packages/coding-agent/examples/extensions/dynamic-resources/dynamic.md",
@@ -4194,12 +4194,12 @@
     },
     {
       "localPath": "packages/coding-agent/src/cli/repo-skills.test.ts",
-      "localSha256": "4c59dec4cd733fbfecac583833fe2fb5eb1a3ae67d10fb55c99754a7f4e71906",
+      "localSha256": "5f9dcd45c843e434d0f4e7e01244b3665406a6f025faeabd61c5f46c238a7012",
       "origin": "disco_owned"
     },
     {
       "localPath": "packages/coding-agent/src/cli/repo-skills.ts",
-      "localSha256": "73140e1f3ecee741a3e4d6eb5954e489345861504d1af7311850cecf8ed62803",
+      "localSha256": "39cd9295e3b955d3135687960e8f4928568a57a3480c7781067b81bf66e6914f",
       "origin": "disco_owned"
     },
     {
@@ -4214,12 +4214,17 @@
     },
     {
       "localPath": "packages/coding-agent/src/core/repo-skills-library-manager.test.ts",
-      "localSha256": "4c5405c5c917588a0f2fd62aee543a1b515c13453e8daa19dde1bb8fc86a2cdc",
+      "localSha256": "2d3c7c8dfd86e3dd9afa3caf70a60d67a7dd1323431bbf71e62bd4c73e14b1c2",
       "origin": "disco_owned"
     },
     {
       "localPath": "packages/coding-agent/src/core/repo-skills-library-manager.ts",
-      "localSha256": "1dd2232357c361be7c7444069592711583c87b20d968801a078d45a538f7df2e",
+      "localSha256": "bbef8f3573d6a6b4faf1251709ded7cb5b88307d073a4bb7c426f28a35d47b06",
+      "origin": "disco_owned"
+    },
+    {
+      "localPath": "packages/coding-agent/src/disco/build_repo_skills_collection.test.ts",
+      "localSha256": "dc83e404cb1cfd6304fe53184d6d361519570ac73491b2354b9b0592372e342b",
       "origin": "disco_owned"
     },
     {
@@ -4244,7 +4249,7 @@
     },
     {
       "localPath": "packages/coding-agent/src/disco/dynamic-workflows/agent.test.ts",
-      "localSha256": "e4c9404265852f2305e601e1a44cd4634d79dd04a548edc35f79d532bec70aa7",
+      "localSha256": "4902c3cd53b81ec03ad9ffebe439f3ddef13e025290ea92ee33a24b7e9e99641",
       "origin": "disco_owned"
     },
     {
@@ -4404,7 +4409,7 @@
     },
     {
       "localPath": "packages/coding-agent/src/disco/import_repo_skill.test.ts",
-      "localSha256": "85bba368515b25a717de8ae96b0e229ebafc52921cde9dce68d7ae2938319aeb",
+      "localSha256": "5e9f44afabfab5943cd586e8730d4e50fc28ff5b0b6735dd8f9bab52d3aaeced",
       "origin": "disco_owned"
     },
     {
@@ -4474,7 +4479,7 @@
     },
     {
       "localPath": "packages/coding-agent/src/disco/skills/create-paper-skills/assets/standard-distiller-run-prompt.md",
-      "localSha256": "5575bba3ce5206fe9879050f8470b12e63b5ab6ebc0d49f0bb5f5e78ad374019",
+      "localSha256": "0cf0b93a125d6eb326d69304a27503aee7f2a579011da604d97326063677f1d2",
       "origin": "disco_owned"
     },
     {
@@ -4484,7 +4489,7 @@
     },
     {
       "localPath": "packages/coding-agent/src/disco/skills/create-repo-skill/references/input-output-and-structure.md",
-      "localSha256": "628a3d70728f14614719bc2e70b185b4bef74e7f96b33a5b82951794fb562405",
+      "localSha256": "274752fc85a1429e9a7735d26e7888b63b8ffdb2859affbc7e0364eb0b0d2529",
       "origin": "disco_owned"
     },
     {
@@ -4504,7 +4509,7 @@
     },
     {
       "localPath": "packages/coding-agent/src/disco/skills/create-repo-skill/SKILL.md",
-      "localSha256": "eedd519677ff6757fa2086d719a7c553a3c6f801a1e196399caf904618d60af0",
+      "localSha256": "adcbe9c52f4e52b2edbb275b99219d1c8ee6e8c06450e4e77125e8fd762ceec9",
       "origin": "disco_owned"
     },
     {
@@ -4559,22 +4564,22 @@
     },
     {
       "localPath": "packages/coding-agent/src/disco/skills/extend-repo-skill/references/editing-and-versioning.md",
-      "localSha256": "aebe05a21efd5dad4550b636942312604c54187cc2761ac46f1e44a4f6338135",
+      "localSha256": "6d9033be38788c9a964dd2ee5b5f8f7ac5ef7451d366bff5e6ba43592fd2584a",
       "origin": "disco_owned"
     },
     {
       "localPath": "packages/coding-agent/src/disco/skills/extend-repo-skill/references/extension-planning.md",
-      "localSha256": "f73fb1c1ef448b4f7cdc32cdb8e3d6ef15a26fcf8808def2cc60445c054b5e8e",
+      "localSha256": "b1f5e1383e733972a57a8c45349a21a4e22d5a255c01bc784f4bae13635b9015",
       "origin": "disco_owned"
     },
     {
       "localPath": "packages/coding-agent/src/disco/skills/extend-repo-skill/references/verification-and-handoff.md",
-      "localSha256": "7ed6e853820f76fad9e9975c9ac7321e0594779487515d953d72d1af260c58aa",
+      "localSha256": "96fbd58d3acaac47c897834f73edd424d9f1747ad384e7495fa7191980ce8594",
       "origin": "disco_owned"
     },
     {
       "localPath": "packages/coding-agent/src/disco/skills/extend-repo-skill/SKILL.md",
-      "localSha256": "69c4a9c0177dcf7b927b974e01c426de0e4f7b3dea452b7b12855bfa60d738ef",
+      "localSha256": "149b0823a92f6e182e2e13c0b5fef21f940afbaef9388bd00e447d7c61315a4e",
       "origin": "disco_owned"
     },
     {
@@ -4584,7 +4589,7 @@
     },
     {
       "localPath": "packages/coding-agent/src/disco/skills/import-repo-skills-to-agent/SKILL.md",
-      "localSha256": "db4a18d502ca8428422becdb276f4776ff9c6a761f961b55f15708f285d1a7d3",
+      "localSha256": "fa83f0e22accfc13e182e0ba9c4493b47e9768782cde6f5547688426722a7c17",
       "origin": "disco_owned"
     },
     {
@@ -4694,7 +4699,7 @@
     },
     {
       "localPath": "packages/coding-agent/src/disco/skills/README.md",
-      "localSha256": "7e3de3080e79b004d289d369d8b6388b7d0bda77ba9f9bff021af62bfae1f722",
+      "localSha256": "d4abe19d65e5c1a03b25bd4a4a2b43c7887f51743dd7afd38379d204dadd5900",
       "origin": "disco_owned"
     },
     {
@@ -4729,7 +4734,7 @@
     },
     {
       "localPath": "packages/coding-agent/src/disco/skills/refresh-repo-skill/references/verification-and-handoff.md",
-      "localSha256": "6cea06e325ee76be8733d4fa61c0bfb4968c60afdc41301fab2668d3ab370bbf",
+      "localSha256": "83010cdf67d189e503986c9aa02f6a8e1e07dd374f3eb94cc3188cd7d5141c53",
       "origin": "disco_owned"
     },
     {
@@ -4739,37 +4744,42 @@
     },
     {
       "localPath": "packages/coding-agent/src/disco/skills/refresh-repo-skill/SKILL.md",
-      "localSha256": "c9837c867c19ef2386539949c16185dd69241b5a8a3be300ac0137bea6b4baf1",
+      "localSha256": "1448987dbb4f5f9a23f110c0a35b6c20d8c52edbd0437d6168ed9aea2c72f833",
+      "origin": "disco_owned"
+    },
+    {
+      "localPath": "packages/coding-agent/src/disco/skills/repo-skills-router/references/index/assignments.jsonl",
+      "localSha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "origin": "disco_owned"
+    },
+    {
+      "localPath": "packages/coding-agent/src/disco/skills/repo-skills-router/references/index/build-metadata.json",
+      "localSha256": "07d8b6a30043081c2dde5b825c1e1fd03c45ea3f9731e89a345fb662c85c6b68",
+      "origin": "disco_owned"
+    },
+    {
+      "localPath": "packages/coding-agent/src/disco/skills/repo-skills-router/references/index/repositories.jsonl",
+      "localSha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "origin": "disco_owned"
+    },
+    {
+      "localPath": "packages/coding-agent/src/disco/skills/repo-skills-router/references/index/taxonomy.json",
+      "localSha256": "b2c4f99cbae303c887f58de2d72096ef6719fcff74b1c0173705cc085eb249ab",
       "origin": "disco_owned"
     },
     {
       "localPath": "packages/coding-agent/src/disco/skills/repo-skills-router/references/maintenance.md",
-      "localSha256": "66ff5cc9ca5a759021f1ca5d82b23d99f79eded00b7f8c98551db244fb08c826",
-      "origin": "disco_owned"
-    },
-    {
-      "localPath": "packages/coding-agent/src/disco/skills/repo-skills-router/references/scenario-registry.json",
-      "localSha256": "2f6616c297989e99a48f7dec0a85fa2c5706ba4406baad0fe6e42ef7215840b4",
-      "origin": "disco_owned"
-    },
-    {
-      "localPath": "packages/coding-agent/src/disco/skills/repo-skills-router/references/scenarios/README.md",
-      "localSha256": "8c0b093e2d6ae82ed4e47a789fa5acdf49dd7ff0f7e0d5828c9da87c383b3cf8",
-      "origin": "disco_owned"
-    },
-    {
-      "localPath": "packages/coding-agent/src/disco/skills/repo-skills-router/references/usage-scenarios.md",
-      "localSha256": "dc57696da97b2ffa3e71603da40e490e4cdc4fca2a85a6ab7f76c312d0b231ff",
+      "localSha256": "bdfd6bfa3937bcf35fd95a0517e7ff871c0f2b1ca3c68a856a75fbde5113d168",
       "origin": "disco_owned"
     },
     {
       "localPath": "packages/coding-agent/src/disco/skills/repo-skills-router/SKILL.md",
-      "localSha256": "aea141622df4bf20fa1cd6f87a8bf518b2614005b750ea60ff84b19b6e7424aa",
+      "localSha256": "adfcb4b87577aec84cabecc2e9216307d11d3da65fadc3c24a4ea52b91437eaa",
       "origin": "disco_owned"
     },
     {
       "localPath": "packages/coding-agent/src/disco/skills/verify-repo-skill/references/evaluation-verification-and-handoff.md",
-      "localSha256": "e209aada400489c2040ab244d7151e46997e98a715672726508aa75505a30a78",
+      "localSha256": "701ca618b4ec53f8735b72b8d1c6d967ec90b43dd0ae249a47df21ff9b08e619",
       "origin": "disco_owned"
     },
     {
@@ -4778,8 +4788,13 @@
       "origin": "disco_owned"
     },
     {
+      "localPath": "packages/coding-agent/src/disco/skills/verify-repo-skill/scripts/build_repo_skills_collection.mjs",
+      "localSha256": "c0dfc4963cf3112f4dfdb7e6e39cdb75b9a0f4455a37eb83f360e4a75d0a28ee",
+      "origin": "disco_owned"
+    },
+    {
       "localPath": "packages/coding-agent/src/disco/skills/verify-repo-skill/scripts/import_repo_skill.mjs",
-      "localSha256": "b223d49e3f3ae43adbfdabe0e9afce075acf8b281ed9f4e57de0c794b8cc30fb",
+      "localSha256": "e2209c5ff9e5cd1e38fac46c64bebfa2c015c101966a33ae1ccf2cfcef274576",
       "origin": "disco_owned"
     },
     {
@@ -4789,7 +4804,7 @@
     },
     {
       "localPath": "packages/coding-agent/src/disco/skills/verify-repo-skill/scripts/update_repo_skills_router.mjs",
-      "localSha256": "c26bb824f4ea4739bd1d04d3c248e0c0c1b16f33dd3f2365366e7bbdc490ea6c",
+      "localSha256": "1e6c4da5e6d3af803e1976a402275ad24fea31079b35dbbfc678a658a7fe96cd",
       "origin": "disco_owned"
     },
     {
@@ -4799,12 +4814,12 @@
     },
     {
       "localPath": "packages/coding-agent/src/disco/skills/verify-repo-skill/SKILL.md",
-      "localSha256": "e5289a35313034c1e775772d6a5ff802b19d306c2fad3081a13f112c20ee768f",
+      "localSha256": "a79027ae8890c308b308a28061769137878bda1d3818a5b1f35bca72d061bcf9",
       "origin": "disco_owned"
     },
     {
       "localPath": "packages/coding-agent/src/disco/update_repo_skills_router.test.ts",
-      "localSha256": "4af345b1f4259081f5df6653d5a1fced3477ecfbe43d76a877a3e1c2c135a371",
+      "localSha256": "41b712b45a8b4932b89fadaf204f07dc6f1abafe50a9646e6dae4b82a076009b",
       "origin": "disco_owned"
     },
     {
@@ -4824,7 +4839,7 @@
     },
     {
       "localPath": "packages/coding-agent/test/disco-mode-skills.test.ts",
-      "localSha256": "bbcde026d8efb4f834c54734688e250dd5389dbfd7300d6963c29e16aaf7a77f",
+      "localSha256": "5442300e104e9c17c8afd52eb2a931ffc1fa1f76bf45dd7db473e005d910328d",
       "origin": "disco_owned"
     },
     {

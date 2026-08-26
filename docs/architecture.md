@@ -1,40 +1,40 @@
 # Architecture
 
-Auto-ML-Skills separates the published skill library from the DisCo runtime
+AREX-Skill separates the published skill library from the DisCo runtime
 that routes, uses, creates, and maintains it.
 
 ## Current Repository Snapshot
 
 ```text
-Auto-ML-Skills/
+AREX-Skill/
   README.md
   README.zh-CN.md
   CONTRIBUTING.md
   CONTRIBUTING_CN.md
   docs/
-  research-skills-library/
+  skills/
     README.md
-    README.zh-CN.md
-    repo-skills/
-    repo-skills-router/
+    repositories/
+      repo-skills/
+      repo-skills-router/
   scripts/
-  src/
+  cli/
 ```
 
 The current checkout contains both the published skill library and the DisCo
 TypeScript source tree. The broader library boundary is
-`research-skills-library/`; this checkout currently publishes its repository
-skill collection under `research-skills-library/repo-skills/` and a sibling
-`research-skills-library/repo-skills-router/`. The single source of truth for
+`skills/`; this checkout currently publishes its repository
+skill collection under `skills/repositories/repo-skills/` and a sibling
+`skills/repositories/repo-skills-router/`. The single source of truth for
 bundled and portable DisCo workflows lives under
-`src/packages/coding-agent/src/disco/skills/`.
+`cli/packages/coding-agent/src/disco/skills/`.
 
 ## Source Layout
 
-The DisCo source tree lives at `src/`:
+The DisCo source tree lives at `cli/`:
 
 ```text
-src/
+cli/
   package.json
   npm-shrinkwrap.json
   docs/
@@ -52,14 +52,14 @@ Source-tree roles:
 
 | Path | Role |
 | --- | --- |
-| `src/package.json` | The only publishable npm package, `@auto-ml-skills/disco`, exposing the `disco` CLI and SDK. |
-| `src/packages/coding-agent/src` | DisCo's copied and modified Pi coding-agent runtime, including interactive/print modes, project trust, sessions, tools, skill discovery, workflow skills, and dynamic orchestration. |
-| `src/packages/coding-agent/test` | Upstream-derived tests and DisCo regression contracts. |
-| `src/docs` and `src/examples` | Documentation and examples shipped in the npm package. |
-| `src/scripts` | Asset copying, upstream provenance verification, and package-content verification. |
+| `cli/package.json` | The only publishable npm package, `@auto-ml-skills/disco`, exposing the `disco` CLI and SDK. |
+| `cli/packages/coding-agent/src` | DisCo's copied and modified Pi coding-agent runtime, including interactive/print modes, project trust, sessions, tools, skill discovery, workflow skills, and dynamic orchestration. |
+| `cli/packages/coding-agent/test` | Upstream-derived tests and DisCo regression contracts. |
+| `cli/docs` and `cli/examples` | Documentation and examples shipped in the npm package. |
+| `cli/scripts` | Asset copying, upstream provenance verification, and package-content verification. |
 
-`src/package.json` is public and versioned as the standalone package. The
-`src/packages/coding-agent/` directory is a provenance-bearing source subtree,
+`cli/package.json` is public and versioned as the standalone package. The
+`cli/packages/coding-agent/` directory is a provenance-bearing source subtree,
 not a nested npm workspace. DisCo does not depend on
 `@earendil-works/pi-coding-agent`; it owns the copied coding-agent runtime and
 uses pinned `@earendil-works/pi-agent-core`, `@earendil-works/pi-ai`, and
@@ -90,19 +90,19 @@ initial model context. Repo-skill roots use
 `/skill:<name>` invocation but are omitted from the model-visible skill list.
 The startup `Skills` section reports this model-visible set rather than every
 registered skill; explicit skill command completion still uses the full set.
-The `repo-skills-router` is model-visible by default and provides two-layer
+The `repo-skills-router` is model-visible by default and provides area-family
 progressive disclosure:
 
-1. Read the router and choose one practical usage scenario.
-2. Read only that scenario page and compare candidate repo skills.
+1. Read the router and choose one or two likely taxonomy areas.
+2. Read only the relevant area pages, then compare the matching family pages.
 3. Resolve the selected repository skill at
    `../repo-skills/<skill-id>/SKILL.md`.
 4. Read only the necessary sub-skills, references, or scripts.
 5. Execute and verify the task against the current checkout and environment.
 
-The live router in `~/.disco/agent/skills/repo-skills-router/` takes precedence
+The live router in `~/.disco/agent/skills/repositories/repo-skills-router/` takes precedence
 over the bundled fallback template. Its repository collection is the sibling
-`~/.disco/agent/skills/repo-skills/`; the updater never scans Creator meta skills
+`~/.disco/agent/skills/repositories/repo-skills/`; the updater never scans Creator meta skills
 or unrelated user skills. Selected guidance is checked against its provenance,
 current source, installed version, and actual command results.
 
@@ -183,7 +183,7 @@ normalizes a task, assesses single-workflow and composed coverage, and selects
 `direct`, `reuse-existing`, or `design-reusable`. `design-meta-skill` consumes
 the verified recurring-gap handoff and designs the reusable bundle; it does not
 reclassify the request. Their source is under
-`src/packages/coding-agent/src/disco/skills/`.
+`cli/packages/coding-agent/src/disco/skills/`.
 
 ### Package/Repo Flow
 
@@ -200,8 +200,10 @@ At a high level, DisCo's repo-skill pipeline is:
 7. Generate and integrate self-contained runtime guidance.
 8. Run the built-in verification workflow.
 9. Import an approved repo graph under
-   `~/.disco/agent/skills/repo-skills/<skill-id>/`.
-10. Rebuild routing metadata and router scenario pages under a lock.
+   `~/.disco/agent/skills/repositories/repo-skills/<skill-id>/`.
+10. Classify the verified repository against the fixed area-family taxonomy,
+    write the external routing decision plus minimal v2 metadata, and rebuild
+    the affected area/family router views under the import lock.
 
 The create flow does not treat verification as optional cleanup.
 `create-repo-skill` hands the integrated draft to `verify-repo-skill` before a
@@ -243,7 +245,7 @@ replication. It is a Creator workflow selected from the visible task
 description. The current source tree includes:
 
 ```text
-src/packages/coding-agent/src/disco/skills/
+cli/packages/coding-agent/src/disco/skills/
   create-paper-skills/
   paper-skills-distiller/
   plan-paper-skill-modules/
@@ -379,22 +381,26 @@ Generated repo skills are expected to include:
 
 ## Router
 
-The repo-skills router is a generated or maintained index for a skill library:
+The repo-skills router is a generated area-family index for the published
+repository skill library:
 
 ```text
-research-skills-library/
-  repo-skills/
-    <repo-skill-id>/
-  repo-skills-router/
-    SKILL.md
-    references/
-      usage-scenarios.md
-      maintenance.md
-      scenarios/
+skills/
+  repositories/
+    repo-skills/
+      <repo-skill-id>/
+    repo-skills-router/
+      SKILL.md
+      references/
+        areas/
+        families/
+        index/
+        maintenance.md
 ```
 
 It is not a replacement for individual skills. It gives the first-pass
-selection map and points agents to the right scenario page and candidate skill.
+selection map, then points agents from an exact family page to candidate
+repository skill roots.
 
 ## Deployment Scopes And Managed Library
 
@@ -427,9 +433,10 @@ generic importer and retain this canonical layout:
 ~/.disco/agent/skills/
   <meta-skill>/               # Creator only
   <reusable-operating-skill>/ # Researcher only
-  repo-skills/
-    <repo-skill-id>/
-  repo-skills-router/
+  repositories/
+    repo-skills/
+      <repo-skill-id>/
+    repo-skills-router/
 ```
 
 The repository import transaction copies the runtime graph, validates
@@ -452,11 +459,11 @@ non-router repo skills, because Codex does not use the
 
 Use these source-of-truth rules:
 
-- The broader library lives under `research-skills-library/`; repository skills
-  are the `research-skills-library/repo-skills/` collection and the router is
-  its sibling `research-skills-library/repo-skills-router/`.
+- The broader library lives under `skills/`; repository skills
+  are the `skills/repositories/repo-skills/` collection and the router is
+  its sibling `skills/repositories/repo-skills-router/`.
 - Bundled and portable external-agent workflow skills have one source of truth:
-  `src/packages/coding-agent/src/disco/skills/`.
+  `cli/packages/coding-agent/src/disco/skills/`.
 - Edit workflow skills in that source directory, then rebuild DisCo. Do not
   maintain a second hand-synchronized mirror.
 - Verification and review artifacts live outside runtime skill directories,

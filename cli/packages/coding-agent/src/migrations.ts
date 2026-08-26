@@ -9,9 +9,9 @@ import { CONFIG_DIR_NAME, getAgentDir, getBinDir } from "./config.ts";
 import { migrateKeybindingsConfig } from "./core/keybindings.ts";
 
 const MIGRATION_GUIDE_URL =
-	"https://github.com/VectorSpaceLab/Auto-ML-Skills/blob/main/src/docs/extensions.md";
+	"https://github.com/VectorSpaceLab/AREX-Skill/blob/main/cli/docs/extensions.md";
 const EXTENSIONS_DOC_URL =
-	"https://github.com/VectorSpaceLab/Auto-ML-Skills/blob/main/src/docs/extensions.md";
+	"https://github.com/VectorSpaceLab/AREX-Skill/blob/main/cli/docs/extensions.md";
 
 /**
  * Migrate legacy oauth.json and settings.json apiKeys to auth.json.

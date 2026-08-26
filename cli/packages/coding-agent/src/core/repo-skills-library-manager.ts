@@ -18,17 +18,51 @@ import { parse, parseDocument } from "yaml";
 import { getAgentDir, getBundledSkillsDir } from "../config.ts";
 import { spawnProcess, waitForChildProcess } from "../utils/child-process.ts";
 
-const STATE_SCHEMA_VERSION = 1;
-const OFFICIAL_REPOSITORY = "https://github.com/VectorSpaceLab/Auto-ML-Skills.git";
-const LIBRARY_PATH = "research-skills-library";
+const STATE_SCHEMA_VERSION = 2;
+const OFFICIAL_REPOSITORY = "https://github.com/VectorSpaceLab/AREX-Skill.git";
+const LIBRARY_PATH = "skills/repositories";
 const ROUTER_ID = "repo-skills-router";
-const ROUTING_REGISTRY_PATH = join("references", "scenario-registry.json");
+const ROUTER_INDEX_PATH = join("references", "index");
+const REPOSITORY_INDEX_ROOT_FILE = "repository-index.jsonl";
 const LOCK_TIMEOUT_MS = 900_000;
 const LOCK_STALE_MS = 3_600_000;
 const LOCK_POLL_MS = 250;
 const CANONICAL_SKILL_ID = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+const CANONICAL_TAXONOMY_SHA256 = "f8c306386015711634ddbb43a5eb95d1f58909c3513ce2063ba42efdd583a431";
+const ROUTING_METADATA_FIELDS = new Set([
+	"schema_version",
+	"repo_id",
+	"skill_id",
+	"taxonomy_sha256",
+	"routing_status",
+	"assignments",
+	"unclassified_reason",
+]);
+const ROUTING_ASSIGNMENT_FIELDS = new Set(["area", "family"]);
+const REPOSITORY_INDEX_FIELDS = new Set([
+	"schema_version",
+	"repo_id",
+	"legacy_repo_id",
+	"repo_name",
+	"skill_id",
+	"source_url",
+	"source_commit",
+	"source_skill_root",
+	"target_skill_root",
+	"aliases",
+	"content_sha256",
+	"description",
+]);
+const ASSIGNMENT_INDEX_FIELDS = new Set([
+	"repo_id",
+	"legacy_repo_id",
+	"skill_id",
+	"area",
+	"family",
+	"confidence",
+]);
 const MANUAL_INSTALL_URL =
-	"https://github.com/VectorSpaceLab/Auto-ML-Skills#install-the-published-repository-collection";
+	"https://github.com/VectorSpaceLab/AREX-Skill#install-the-published-repository-collection";
 
 export class RepoSkillsLibraryError extends Error {
 	readonly exitCode: number;
@@ -63,7 +97,7 @@ interface ManagedTreeState {
 }
 
 interface RepoSkillsLibraryState {
-	schemaVersion: 1;
+	schemaVersion: 2;
 	source: {
 		repository: string;
 		ref: "HEAD";
@@ -125,6 +159,10 @@ export interface RepoSkillsInstallResult {
 	managedSkills: number;
 	localSkills: number;
 	totalSkills: number;
+	repositoryCount?: number;
+	assignmentCount?: number;
+	areaCount?: number;
+	familyCount?: number;
 	routerEnabled?: boolean;
 	noop: boolean;
 	backupPath?: string;
@@ -146,6 +184,10 @@ export interface RepoSkillsLibraryStatus {
 	managedSkills: number;
 	localSkills: number;
 	totalSkills: number;
+	repositoryCount?: number;
+	assignmentCount?: number;
+	areaCount?: number;
+	familyCount?: number;
 	totalFiles: number;
 	routerPresent: boolean;
 	routerEnabled?: boolean;
@@ -185,6 +227,26 @@ function toPosix(path: string): string {
 
 function stableJson(value: unknown): string {
 	return `${JSON.stringify(value, null, 2)}\n`;
+}
+
+function readJsonLines(file: string): Array<Record<string, unknown>> {
+	if (!pathExists(file)) return [];
+	return readFileSync(file, "utf8").split(/\r?\n/).filter(Boolean).map((line, index) => {
+		try {
+			const value = JSON.parse(line) as unknown;
+			if (!value || typeof value !== "object" || Array.isArray(value)) throw new Error("record must be an object");
+			return value as Record<string, unknown>;
+		} catch (error) {
+			throw new RepoSkillsLibraryError(
+				`Invalid JSONL record ${file}:${index + 1}: ${error instanceof Error ? error.message : String(error)}`,
+			);
+		}
+	});
+}
+
+function writeJsonLines(file: string, records: Array<Record<string, unknown>>): void {
+	mkdirSync(dirname(file), { recursive: true });
+	writeFileSync(file, records.map((record) => JSON.stringify(record)).join("\n") + (records.length ? "\n" : ""), "utf8");
 }
 
 function timestampForPath(date: Date): string {
@@ -348,6 +410,22 @@ function digestFile(file: string): string {
 	return `sha256:${createHash("sha256").update(readFileSync(file)).digest("hex")}`;
 }
 
+// The collection builder/updater stores content_sha256 using file bytes and
+// portable relative paths, without executable-mode bits. Keep this separate
+// from the manager's live-tree digest, whose mode-sensitive value detects local
+// mutations during managed collection updates.
+function digestRepositorySkillContent(root: string): string {
+	const hash = createHash("sha256");
+	for (const file of collectPortableFiles(root).sort((left, right) => left.localeCompare(right))) {
+		const relativePath = toPosix(relative(root, file));
+		const content = readFileSync(file);
+		hash.update(`file\0${relativePath}\0${content.byteLength}\0`);
+		hash.update(content);
+		hash.update("\0");
+	}
+	return `sha256:${hash.digest("hex")}`;
+}
+
 function sortJsonValue(value: unknown): unknown {
 	if (Array.isArray(value)) return value.map(sortJsonValue);
 	if (!value || typeof value !== "object") return value;
@@ -394,6 +472,62 @@ function validateSkillDirectory(skillDir: string): string {
 	return skillId;
 }
 
+function loadRepositoryIndex(repoSkillsRoot: string): Set<string> {
+	const indexPath = join(repoSkillsRoot, "repository-index.jsonl");
+	if (!pathExists(indexPath) || !lstatSync(indexPath).isFile()) {
+		throw new RepoSkillsLibraryError(`Source repo-skills is missing ${indexPath}`);
+	}
+	const skillIds = new Set<string>();
+	const repoIds = new Set<string>();
+	const caseFoldedRepoIds = new Map<string, string>();
+	for (const [lineIndex, line] of readFileSync(indexPath, "utf8").split(/\r?\n/).filter(Boolean).entries()) {
+		let value: unknown;
+		try {
+			value = JSON.parse(line);
+		} catch (error) {
+			throw new RepoSkillsLibraryError(`Invalid repository-index.jsonl line ${lineIndex + 1}: ${error instanceof Error ? error.message : String(error)}`);
+		}
+		if (!value || typeof value !== "object" || Array.isArray(value)) {
+			throw new RepoSkillsLibraryError(`Invalid repository-index.jsonl record ${lineIndex + 1}`);
+		}
+		const record = value as Record<string, unknown>;
+		const unknownField = Object.keys(record).find((key) => !REPOSITORY_INDEX_FIELDS.has(key));
+		const legacyRepoId = record.legacy_repo_id;
+		const normalizedSourceUrl = typeof record.source_url === "string"
+			? record.source_url.replace(/\/+$/, "").replace(/\.git$/i, "")
+			: "";
+		const sourceMatch = normalizedSourceUrl.match(/^https:\/\/github\.com\/([^/]+)\/([^/]+)$/i);
+		if (
+			unknownField ||
+			record.schema_version !== 1 ||
+			typeof record.repo_id !== "string" ||
+			!/^[^/\s]+\/[^/\s]+$/.test(record.repo_id) ||
+			record.repo_name !== record.repo_id.split("/").at(-1) ||
+			typeof record.skill_id !== "string" ||
+			!CANONICAL_SKILL_ID.test(record.skill_id) ||
+			!sourceMatch ||
+			`${sourceMatch[1]}/${sourceMatch[2]}`.toLowerCase() !== record.repo_id.toLowerCase() ||
+			!(legacyRepoId === null || (typeof legacyRepoId === "string" && legacyRepoId.trim().length > 0)) ||
+			!(record.source_commit === null || (typeof record.source_commit === "string" && /^[0-9a-f]{40}$/i.test(record.source_commit))) ||
+			!(record.source_skill_root === null || (typeof record.source_skill_root === "string" && record.source_skill_root.trim() && !isAbsolute(record.source_skill_root))) ||
+			record.target_skill_root !== `repo-skills/${record.skill_id}`
+			|| !Array.isArray(record.aliases) || record.aliases.some((alias) => typeof alias !== "string")
+			|| typeof record.content_sha256 !== "string" || !/^sha256:[0-9a-f]{64}$/i.test(record.content_sha256)
+			|| typeof record.description !== "string" || !record.description.trim()
+		) {
+			throw new RepoSkillsLibraryError(`Invalid repository-index.jsonl identity at line ${lineIndex + 1}${unknownField ? ` (unknown field ${unknownField})` : ""}`);
+		}
+		if (skillIds.has(record.skill_id)) throw new RepoSkillsLibraryError(`Duplicate skill_id in repository-index.jsonl: ${record.skill_id}`);
+		const foldedRepoId = record.repo_id.toLowerCase();
+		if (repoIds.has(record.repo_id) || caseFoldedRepoIds.has(foldedRepoId)) throw new RepoSkillsLibraryError(`Duplicate repo_id in repository-index.jsonl: ${record.repo_id}`);
+		skillIds.add(record.skill_id);
+		repoIds.add(record.repo_id);
+		caseFoldedRepoIds.set(foldedRepoId, record.repo_id);
+	}
+	if (skillIds.size === 0) throw new RepoSkillsLibraryError("repository-index.jsonl must contain at least one repository skill");
+	return skillIds;
+}
+
 function inventorySource(libraryRoot: string): SourceInventory {
 	const repoSkillsRoot = join(libraryRoot, "repo-skills");
 	const routerDir = join(libraryRoot, ROUTER_ID);
@@ -406,6 +540,7 @@ function inventorySource(libraryRoot: string): SourceInventory {
 	if (parseSkillName(join(routerDir, "SKILL.md")) !== ROUTER_ID) {
 		throw new RepoSkillsLibraryError("Source router SKILL.md has the wrong name");
 	}
+	const indexedSkillIds = loadRepositoryIndex(repoSkillsRoot);
 	const managedSkills = new Map<string, ManagedTreeState>();
 	const lowerCaseIds = new Map<string, string>();
 	const managedRootFiles = new Map<string, string>();
@@ -421,6 +556,11 @@ function inventorySource(libraryRoot: string): SourceInventory {
 		if (!entry.isDirectory()) {
 			throw new RepoSkillsLibraryError(`Source repo-skills contains a non-portable entry: ${entryPath}`);
 		}
+		if (!indexedSkillIds.has(entry.name)) {
+			throw new RepoSkillsLibraryError(
+				`repository-index.jsonl does not cover direct repository skill directory: ${entryPath}`,
+			);
+		}
 		const skillId = validateSkillDirectory(entryPath);
 		const lower = skillId.toLowerCase();
 		const previous = lowerCaseIds.get(lower);
@@ -430,6 +570,9 @@ function inventorySource(libraryRoot: string): SourceInventory {
 		lowerCaseIds.set(lower, skillId);
 		const digest = digestTree(entryPath);
 		managedSkills.set(skillId, { digest: digest.digest, fileCount: digest.fileCount });
+	}
+	for (const skillId of indexedSkillIds) {
+		if (!managedSkills.has(skillId)) throw new RepoSkillsLibraryError(`repository-index.jsonl references missing skill directory: ${skillId}`);
 	}
 	if (managedSkills.size === 0) {
 		throw new RepoSkillsLibraryError("Source snapshot does not contain any repository skills");
@@ -519,13 +662,15 @@ function stateFromInventory(
 	liveRouterDigest: string,
 ): RepoSkillsLibraryState {
 	return {
-		schemaVersion: 1,
+		schemaVersion: STATE_SCHEMA_VERSION,
 		source: { repository, ref: "HEAD", commit },
 		installedAt: previous?.installedAt ?? now.toISOString(),
 		updatedAt: now.toISOString(),
 		managedSkills: Object.fromEntries([...inventory.managedSkills].sort(([left], [right]) => left.localeCompare(right))),
 		managedRootFiles: Object.fromEntries(
-			[...inventory.managedRootFiles].sort(([left], [right]) => left.localeCompare(right)),
+			[...inventory.managedRootFiles]
+				.filter(([relativePath]) => relativePath !== REPOSITORY_INDEX_ROOT_FILE)
+				.sort(([left], [right]) => left.localeCompare(right)),
 		),
 		sourceRouterDigest: inventory.routerDigest,
 		liveTreeDigest,
@@ -600,31 +745,208 @@ function digestRouterTree(routerDir: string): string {
 	return `sha256:${hash.digest("hex")}`;
 }
 
-function routerCoverageIssues(routerDir: string, liveSkills: Map<string, ManagedTreeState>): string[] {
-	const scenariosDir = join(routerDir, "references", "scenarios");
-	if (!pathExists(scenariosDir)) return ["repo-skills-router is missing its generated scenario directory"];
-	const scenariosStat = lstatSync(scenariosDir);
-	if (!scenariosStat.isDirectory() || scenariosStat.isSymbolicLink()) {
-		return ["repo-skills-router scenario path must be a real directory"];
-	}
-	const covered = new Set<string>();
-	for (const entry of readdirSync(scenariosDir, { withFileTypes: true })) {
-		if (entry.name === "README.md" || !entry.name.endsWith(".md")) continue;
-		const scenarioFile = join(scenariosDir, entry.name);
-		if (!entry.isFile() || entry.isSymbolicLink()) {
-			return [`repo-skills-router contains a non-regular scenario page: ${entry.name}`];
-		}
-		for (const match of readFileSync(scenarioFile, "utf8").matchAll(/^### `([a-z0-9]+(?:-[a-z0-9]+)*)`\s*$/gm)) {
-			if (match[1]) covered.add(match[1]);
-		}
-	}
-	const liveIds = new Set(liveSkills.keys());
-	const missing = [...liveIds].filter((skillId) => !covered.has(skillId)).sort();
-	const stale = [...covered].filter((skillId) => !liveIds.has(skillId)).sort();
+function routerCoverageIssues(routerDir: string, expectedSkillIds: Set<string>, liveSkills: Map<string, ManagedTreeState>): string[] {
+	const indexDir = join(routerDir, ROUTER_INDEX_PATH);
+	const repositoriesFile = join(indexDir, "repositories.jsonl");
+	const assignmentsFile = join(indexDir, "assignments.jsonl");
+	const buildMetadataFile = join(indexDir, "build-metadata.json");
+	const taxonomyFile = join(indexDir, "taxonomy.json");
 	const issues: string[] = [];
+	if (!pathExists(indexDir) || !lstatSync(indexDir).isDirectory()) return ["repo-skills-router is missing references/index"];
+	if (!pathExists(repositoriesFile)) issues.push("repo-skills-router is missing references/index/repositories.jsonl");
+	if (!pathExists(assignmentsFile)) issues.push("repo-skills-router is missing references/index/assignments.jsonl");
+	if (!pathExists(buildMetadataFile)) issues.push("repo-skills-router is missing references/index/build-metadata.json");
+	if (!pathExists(taxonomyFile)) issues.push("repo-skills-router is missing references/index/taxonomy.json");
+	if (issues.length > 0) return issues;
+	const covered = new Set<string>();
+	const repoIds = new Set<string>();
+	const caseFoldedRepoIds = new Map<string, string>();
+	const repositoryBySkill = new Map<string, string>();
+	const legacyRepositoryBySkill = new Map<string, string | null>();
+	let assignmentCount = 0;
+	for (const [lineIndex, line] of readFileSync(repositoriesFile, "utf8").split(/\r?\n/).filter(Boolean).entries()) {
+		try {
+			const record = JSON.parse(line) as Record<string, unknown>;
+			const unknownField = Object.keys(record).find((key) => !REPOSITORY_INDEX_FIELDS.has(key));
+			const normalizedSourceUrl = typeof record.source_url === "string"
+				? record.source_url.replace(/\/+$/, "").replace(/\.git$/i, "")
+				: "";
+			const sourceMatch = normalizedSourceUrl.match(/^https:\/\/github\.com\/([^/]+)\/([^/]+)$/i);
+			const sourceSkillRoot = typeof record.source_skill_root === "string" ? record.source_skill_root : undefined;
+			const legacyRepoId = record.legacy_repo_id;
+			const contentSha256 = typeof record.content_sha256 === "string" ? record.content_sha256 : "";
+			if (
+				unknownField ||
+				record.schema_version !== 1 ||
+				typeof record.skill_id !== "string" ||
+				!CANONICAL_SKILL_ID.test(record.skill_id) ||
+				typeof record.repo_id !== "string" ||
+				!/^[^/\s]+\/[^/\s]+$/.test(record.repo_id) ||
+				record.repo_name !== record.repo_id.split("/").at(-1) ||
+				!sourceMatch ||
+				`${sourceMatch[1]}/${sourceMatch[2]}`.toLowerCase() !== record.repo_id.toLowerCase() ||
+				!(legacyRepoId === null || (typeof legacyRepoId === "string" && legacyRepoId.trim().length > 0)) ||
+				!(record.source_commit === null || (typeof record.source_commit === "string" && /^[0-9a-f]{40}$/i.test(record.source_commit))) ||
+				!(record.source_skill_root === null || (typeof record.source_skill_root === "string" && record.source_skill_root.trim() && !isAbsolute(record.source_skill_root))) ||
+				record.target_skill_root !== `repo-skills/${record.skill_id}` ||
+				(sourceSkillRoot !== undefined && (!sourceSkillRoot || isAbsolute(sourceSkillRoot))) ||
+				!Array.isArray(record.aliases) || record.aliases.some((alias) => typeof alias !== "string") ||
+				!/^sha256:[0-9a-f]{64}$/i.test(contentSha256) ||
+				typeof record.description !== "string" || !record.description.trim()
+			) throw new Error("missing or invalid repository identity fields");
+			if (covered.has(record.skill_id)) throw new Error(`duplicate skill_id ${record.skill_id}`);
+			const foldedRepoId = record.repo_id.toLowerCase();
+			if (repoIds.has(record.repo_id) || caseFoldedRepoIds.has(foldedRepoId)) throw new Error(`duplicate repo_id ${record.repo_id}`);
+			covered.add(record.skill_id);
+			repoIds.add(record.repo_id);
+			caseFoldedRepoIds.set(foldedRepoId, record.repo_id);
+			repositoryBySkill.set(record.skill_id, record.repo_id);
+			legacyRepositoryBySkill.set(record.skill_id, legacyRepoId);
+			const liveSkillRoot = join(dirname(routerDir), "repo-skills", record.skill_id);
+			if (contentSha256.toLowerCase() !== digestRepositorySkillContent(liveSkillRoot).toLowerCase()) {
+				throw new Error(`content_sha256 does not match live skill ${record.skill_id}`);
+			}
+		} catch (error) {
+			issues.push(`invalid repository index line ${lineIndex + 1}: ${error instanceof Error ? error.message : String(error)}`);
+		}
+	}
+	const missing = [...expectedSkillIds].filter((skillId) => !covered.has(skillId)).sort();
+	const stale = [...covered].filter((skillId) => !liveSkills.has(skillId)).sort();
 	if (missing.length > 0) issues.push(`repo-skills-router is missing skill coverage: ${missing.join(", ")}`);
 	if (stale.length > 0) issues.push(`repo-skills-router references missing skills: ${stale.join(", ")}`);
+	let taxonomyPaths = new Set<string>();
+	try {
+		if (digestFile(taxonomyFile).toLowerCase() !== `sha256:${CANONICAL_TAXONOMY_SHA256}`) {
+			issues.push("repo-skills-router taxonomy content digest is stale");
+		}
+		const taxonomy = JSON.parse(readFileSync(taxonomyFile, "utf8")) as { areas?: Array<{ name?: unknown; families?: Array<{ name?: unknown }> }> };
+		if (!Array.isArray(taxonomy.areas)) throw new Error("taxonomy areas must be an array");
+		for (const area of taxonomy.areas) {
+			if (typeof area.name !== "string" || !Array.isArray(area.families)) throw new Error("invalid taxonomy area");
+			for (const family of area.families) {
+				if (typeof family.name !== "string") throw new Error("invalid taxonomy family");
+				taxonomyPaths.add(`${area.name}\0${family.name}`);
+			}
+		}
+	} catch (error) {
+		issues.push(`invalid repo-skills-router taxonomy: ${error instanceof Error ? error.message : String(error)}`);
+	}
+	const assignmentKeys = new Set<string>();
+	const assignedFamilyPaths = new Set<string>();
+	for (const [lineIndex, line] of readFileSync(assignmentsFile, "utf8").split(/\r?\n/).filter(Boolean).entries()) {
+		try {
+			const record = JSON.parse(line) as Record<string, unknown>;
+			const unknownField = Object.keys(record).find((key) => !ASSIGNMENT_INDEX_FIELDS.has(key));
+			if (
+				unknownField ||
+				typeof record.skill_id !== "string" ||
+				!covered.has(record.skill_id) ||
+				typeof record.repo_id !== "string" ||
+				repositoryBySkill.get(record.skill_id) !== record.repo_id ||
+				record.legacy_repo_id !== legacyRepositoryBySkill.get(record.skill_id) ||
+				typeof record.area !== "string" ||
+				typeof record.family !== "string" ||
+				!new Set(["high", "medium", "low"]).has(record.confidence as string) ||
+				!taxonomyPaths.has(`${record.area}\0${record.family}`)
+			) throw new Error("invalid assignment identity or taxonomy path");
+			const key = `${record.repo_id}\0${record.area}\0${record.family}`;
+			if (assignmentKeys.has(key)) throw new Error(`duplicate assignment ${record.repo_id} -> ${record.area} -> ${record.family}`);
+			assignmentKeys.add(key);
+			assignedFamilyPaths.add(`${record.area}\0${record.family}`);
+			assignmentCount += 1;
+		} catch (error) {
+			issues.push(`invalid assignment index line ${lineIndex + 1}: ${error instanceof Error ? error.message : String(error)}`);
+		}
+	}
+	const repoSkillsRoot = join(dirname(routerDir), "repo-skills");
+	for (const skillId of covered) {
+		const metadataFile = join(repoSkillsRoot, skillId, "references", "repo-routing-metadata.json");
+		try {
+			const metadata = JSON.parse(readFileSync(metadataFile, "utf8")) as Record<string, unknown>;
+			const unknownMetadataField = Object.keys(metadata).find((key) => !ROUTING_METADATA_FIELDS.has(key));
+			if (unknownMetadataField) throw new Error(`metadata contains unknown field ${unknownMetadataField}`);
+			if (metadata.schema_version !== "2.0" || metadata.skill_id !== skillId || metadata.repo_id !== repositoryBySkill.get(skillId)) {
+				throw new Error("metadata identity does not match repository index");
+			}
+			if (metadata.taxonomy_sha256 !== CANONICAL_TAXONOMY_SHA256) {
+				throw new Error("metadata taxonomy hash is stale");
+			}
+			const metadataAssignments = metadata.assignments;
+			if (!Array.isArray(metadataAssignments)) throw new Error("metadata assignments must be an array");
+			if (metadata.routing_status !== "classified" && metadata.routing_status !== "unclassified") {
+				throw new Error("metadata routing_status must be classified or unclassified");
+			}
+			const metadataKeys = new Set<string>();
+			for (const [index, assignment] of metadataAssignments.entries()) {
+				if (!assignment || typeof assignment !== "object" || Array.isArray(assignment)) {
+					throw new Error(`metadata assignment ${index} is invalid`);
+				}
+				const item = assignment as Record<string, unknown>;
+				const unknownAssignmentField = Object.keys(item).find((key) => !ROUTING_ASSIGNMENT_FIELDS.has(key));
+				if (unknownAssignmentField) {
+					throw new Error(`metadata assignment ${index} contains unknown field ${unknownAssignmentField}`);
+				}
+				if (typeof item.area !== "string" || typeof item.family !== "string") {
+					throw new Error(`metadata assignment ${index} requires area and family strings`);
+				}
+				const key = `${repositoryBySkill.get(skillId)}\0${item.area}\0${item.family}`;
+				if (metadataKeys.has(key)) throw new Error(`metadata contains duplicate assignment ${item.area} -> ${item.family}`);
+				metadataKeys.add(key);
+			}
+			const indexKeys = new Set([...assignmentKeys].filter((key) => key.startsWith(`${repositoryBySkill.get(skillId)}\0`)));
+			if (metadata.routing_status === "classified" && metadataKeys.size === 0) throw new Error("classified metadata has no assignments");
+			if (metadata.routing_status === "unclassified" && (metadataKeys.size !== 0 || typeof metadata.unclassified_reason !== "string" || !metadata.unclassified_reason.trim())) {
+				throw new Error("unclassified metadata requires a reason and no assignments");
+			}
+			if (metadata.routing_status === "classified" && metadata.unclassified_reason !== undefined) throw new Error("classified metadata must not contain unclassified_reason");
+			if (metadataKeys.size !== indexKeys.size || [...metadataKeys].some((key) => !indexKeys.has(key))) throw new Error("metadata assignments do not match assignment index");
+		} catch (error) {
+			issues.push(`invalid routing metadata for ${skillId}: ${error instanceof Error ? error.message : String(error)}`);
+		}
+	}
+	try {
+		const metadata = JSON.parse(readFileSync(buildMetadataFile, "utf8")) as Record<string, unknown>;
+		const taxonomy = JSON.parse(readFileSync(taxonomyFile, "utf8")) as { areas?: Array<{ families?: unknown[] }> };
+		const taxonomyAreaCount = Array.isArray(taxonomy.areas) ? taxonomy.areas.length : 0;
+		const taxonomyFamilyCount = Array.isArray(taxonomy.areas)
+			? taxonomy.areas.reduce((count, area) => count + (Array.isArray(area.families) ? area.families.length : 0), 0)
+			: 0;
+		if (metadata.schema_version !== 1) issues.push("repo-skills-router build metadata schema_version is invalid");
+		if (metadata.repository_count !== covered.size) issues.push("repo-skills-router build metadata repository_count is stale");
+		if (metadata.assignment_count !== assignmentCount) issues.push("repo-skills-router build metadata assignment_count is stale");
+		if (metadata.area_count !== taxonomyAreaCount) issues.push("repo-skills-router build metadata area_count is stale");
+		if (metadata.family_count !== taxonomyFamilyCount) issues.push("repo-skills-router build metadata family_count is stale");
+		if (metadata.non_empty_family_count !== assignedFamilyPaths.size) issues.push("repo-skills-router build metadata non_empty_family_count is stale");
+		if (metadata.taxonomy_sha256 !== CANONICAL_TAXONOMY_SHA256) issues.push("repo-skills-router build metadata taxonomy hash is stale");
+		if (metadata.repository_index_sha256 !== digestFile(repositoriesFile)) issues.push("repo-skills-router repository index digest is stale");
+		if (metadata.assignment_index_sha256 !== digestFile(assignmentsFile)) issues.push("repo-skills-router assignment index digest is stale");
+		const repositoryRootIndex = join(dirname(routerDir), "repo-skills", "repository-index.jsonl");
+		if (!pathExists(repositoryRootIndex)) {
+			issues.push("repo-skills is missing repository-index.jsonl");
+		} else if (digestFile(repositoryRootIndex) !== digestFile(repositoriesFile)) {
+			issues.push("repo-skills repository-index.jsonl differs from router repository index");
+		}
+	} catch (error) {
+		issues.push(`invalid repo-skills-router build metadata: ${error instanceof Error ? error.message : String(error)}`);
+	}
 	return issues;
+}
+
+function routerBuildCounts(routerDir: string): { repositoryCount: number; assignmentCount: number; areaCount: number; familyCount: number } | undefined {
+	const buildFile = join(routerDir, ROUTER_INDEX_PATH, "build-metadata.json");
+	if (!pathExists(buildFile)) return undefined;
+	try {
+		const value = JSON.parse(readFileSync(buildFile, "utf8")) as Record<string, unknown>;
+		if (!["repository_count", "assignment_count", "area_count", "family_count"].every((key) => Number.isInteger(value[key]))) return undefined;
+		return {
+			repositoryCount: value.repository_count as number,
+			assignmentCount: value.assignment_count as number,
+			areaCount: value.area_count as number,
+			familyCount: value.family_count as number,
+		};
+	} catch {
+		return undefined;
+	}
 }
 
 function routerEnabled(routerDir: string): boolean | undefined {
@@ -710,54 +1032,6 @@ function listLiveSkillTrees(repoSkillsRoot: string): Map<string, ManagedTreeStat
 	return result;
 }
 
-function mergeRouterRegistry(sourceRouter: string, liveRouter: string, stagedRouter: string): void {
-	const sourceRegistry = join(sourceRouter, ROUTING_REGISTRY_PATH);
-	const liveRegistry = join(liveRouter, ROUTING_REGISTRY_PATH);
-	const stagedRegistry = join(stagedRouter, ROUTING_REGISTRY_PATH);
-	if (!pathExists(liveRegistry)) return;
-	let liveValue: unknown;
-	try {
-		liveValue = JSON.parse(readFileSync(liveRegistry, "utf8"));
-	} catch (error) {
-		throw new RepoSkillsLibraryError(
-			`Live router scenario registry is invalid JSON: ${error instanceof Error ? error.message : String(error)}`,
-		);
-	}
-	if (!pathExists(sourceRegistry)) {
-		mkdirSync(dirname(stagedRegistry), { recursive: true });
-		writeFileSync(stagedRegistry, stableJson(liveValue), "utf8");
-		return;
-	}
-	const sourceValue = JSON.parse(readFileSync(sourceRegistry, "utf8")) as Record<string, unknown>;
-	if (
-		!liveValue ||
-		typeof liveValue !== "object" ||
-		Array.isArray(liveValue) ||
-		!sourceValue ||
-		typeof sourceValue !== "object" ||
-		Array.isArray(sourceValue)
-	) {
-		throw new RepoSkillsLibraryError("Router scenario registries must be JSON objects");
-	}
-	const liveScenarios = (liveValue as Record<string, unknown>).scenarios;
-	const sourceScenarios = sourceValue.scenarios;
-	if (
-		!liveScenarios ||
-		typeof liveScenarios !== "object" ||
-		Array.isArray(liveScenarios) ||
-		!sourceScenarios ||
-		typeof sourceScenarios !== "object" ||
-		Array.isArray(sourceScenarios)
-	) {
-		throw new RepoSkillsLibraryError("Router scenario registries must contain scenario maps");
-	}
-	const merged = {
-		...sourceValue,
-		scenarios: { ...(liveScenarios as Record<string, unknown>), ...(sourceScenarios as Record<string, unknown>) },
-	};
-	writeFileSync(stagedRegistry, stableJson(merged), "utf8");
-}
-
 function rootFileDigest(repoSkillsRoot: string, relativePath: string): string | undefined {
 	const target = resolve(repoSkillsRoot, relativePath);
 	if (!isWithin(repoSkillsRoot, target) || !pathExists(target)) return undefined;
@@ -786,7 +1060,7 @@ export class RepoSkillsLibraryManager {
 	}
 
 	private get skillsRoot(): string {
-		return join(this.agentDir, "skills");
+		return join(this.agentDir, "skills", "repositories");
 	}
 
 	private get repoSkillsRoot(): string {
@@ -999,6 +1273,7 @@ export class RepoSkillsLibraryManager {
 			}
 		}
 		for (const [relativePath, desiredDigest] of inventory.managedRootFiles) {
+			if (relativePath === REPOSITORY_INDEX_ROOT_FILE) continue;
 			let currentDigest: string | undefined;
 			try {
 				currentDigest = rootFileDigest(this.repoSkillsRoot, relativePath);
@@ -1019,6 +1294,7 @@ export class RepoSkillsLibraryManager {
 		}
 		if (state) {
 			for (const [relativePath, previousDigest] of Object.entries(state.managedRootFiles)) {
+				if (relativePath === REPOSITORY_INDEX_ROOT_FILE) continue;
 				if (inventory.managedRootFiles.has(relativePath)) continue;
 				let currentDigest: string | undefined;
 				try {
@@ -1062,6 +1338,34 @@ export class RepoSkillsLibraryManager {
 			rmSync(target, { recursive: true, force: true });
 			cpSync(join(inventory.repoSkillsRoot, relativePath), target, { force: true });
 		}
+	}
+
+	private readLocalRoutingRows(
+		stagedSkillsRoot: string,
+		inventory: SourceInventory,
+	): { repositories: Array<Record<string, unknown>>; assignments: Array<Record<string, unknown>> } {
+		const stagedRepoSkills = join(stagedSkillsRoot, "repo-skills");
+		const stagedRouter = join(stagedSkillsRoot, ROUTER_ID);
+		const officialSkillIds = new Set(inventory.managedSkills.keys());
+		const repositories = readJsonLines(join(stagedRepoSkills, "repository-index.jsonl"))
+			.filter((record) => typeof record.skill_id === "string" && !officialSkillIds.has(record.skill_id));
+		const localSkillIds = new Set(repositories.map((record) => record.skill_id as string));
+		const assignments = readJsonLines(join(stagedRouter, ROUTER_INDEX_PATH, "assignments.jsonl"))
+			.filter((record) => typeof record.skill_id === "string" && localSkillIds.has(record.skill_id));
+		return { repositories, assignments };
+	}
+
+	private mergeLocalRoutingRows(
+		stagedSkillsRoot: string,
+		inventory: SourceInventory,
+		localRoutingRows: { repositories: Array<Record<string, unknown>>; assignments: Array<Record<string, unknown>> },
+	): void {
+		const stagedRepoSkills = join(stagedSkillsRoot, "repo-skills");
+		const stagedRouter = join(stagedSkillsRoot, ROUTER_ID);
+		const officialRepositories = readJsonLines(join(inventory.repoSkillsRoot, "repository-index.jsonl"));
+		writeJsonLines(join(stagedRepoSkills, "repository-index.jsonl"), [...officialRepositories, ...localRoutingRows.repositories]);
+		const officialAssignments = readJsonLines(join(inventory.routerDir, ROUTER_INDEX_PATH, "assignments.jsonl"));
+		writeJsonLines(join(stagedRouter, ROUTER_INDEX_PATH, "assignments.jsonl"), [...officialAssignments, ...localRoutingRows.assignments]);
 	}
 
 	private swapLiveTree(
@@ -1161,6 +1465,10 @@ export class RepoSkillsLibraryManager {
 					managedSkills: status.managedSkills,
 					localSkills: status.localSkills,
 					totalSkills: status.totalSkills,
+					repositoryCount: status.repositoryCount,
+					assignmentCount: status.assignmentCount,
+					areaCount: status.areaCount,
+					familyCount: status.familyCount,
 					routerEnabled: status.routerEnabled,
 					noop: true,
 					issues: status.issues,
@@ -1197,6 +1505,10 @@ export class RepoSkillsLibraryManager {
 					managedSkills: inventory.managedSkills.size,
 					localSkills,
 					totalSkills: liveSkills.size,
+					repositoryCount: routerBuildCounts(this.routerDir)?.repositoryCount,
+					assignmentCount: routerBuildCounts(this.routerDir)?.assignmentCount,
+					areaCount: routerBuildCounts(this.routerDir)?.areaCount,
+					familyCount: routerBuildCounts(this.routerDir)?.familyCount,
 					routerEnabled: currentRouterEnabled,
 					noop: true,
 					issues: [],
@@ -1219,10 +1531,11 @@ export class RepoSkillsLibraryManager {
 					copyDirectory(this.routerDir, stagedRouter);
 					await this.runRouterUpdater(stagedSkillsRoot, "preserve");
 				}
+				const localRoutingRows = this.readLocalRoutingRows(stagedSkillsRoot, inventory);
 				this.applyInventoryToStage(stagedRepoSkills, previousState, inventory);
 				rmSync(stagedRouter, { recursive: true, force: true });
 				copyDirectory(inventory.routerDir, stagedRouter);
-				if (pathExists(this.routerDir)) mergeRouterRegistry(inventory.routerDir, this.routerDir, stagedRouter);
+				this.mergeLocalRoutingRows(stagedSkillsRoot, inventory, localRoutingRows);
 				await this.runRouterUpdater(stagedSkillsRoot, visibility, inventory.routerDir);
 
 				for (const [skillId, expected] of inventory.managedSkills) {
@@ -1246,6 +1559,7 @@ export class RepoSkillsLibraryManager {
 				writeFileSync(stagedState, stableJson(nextState), "utf8");
 				const finalSkills = listLiveSkillTrees(stagedRepoSkills);
 				const localSkills = [...finalSkills.keys()].filter((skillId) => !inventory.managedSkills.has(skillId)).length;
+				const stagedRouterCounts = routerBuildCounts(stagedRouter);
 				const backupPath = this.swapLiveTree(
 					transactionRoot,
 					stagedRepoSkills,
@@ -1260,6 +1574,10 @@ export class RepoSkillsLibraryManager {
 					managedSkills: inventory.managedSkills.size,
 					localSkills,
 					totalSkills: finalSkills.size,
+					repositoryCount: stagedRouterCounts?.repositoryCount,
+					assignmentCount: stagedRouterCounts?.assignmentCount,
+					areaCount: stagedRouterCounts?.areaCount,
+					familyCount: stagedRouterCounts?.familyCount,
 					routerEnabled: visibility === "enabled",
 					noop: false,
 					backupPath,
@@ -1344,6 +1662,7 @@ export class RepoSkillsLibraryManager {
 				else if (current.digest !== expected.digest) issues.push(`${skillId}: managed skill is modified`);
 			}
 			for (const [relativePath, expected] of Object.entries(state.managedRootFiles)) {
+				if (relativePath === REPOSITORY_INDEX_ROOT_FILE) continue;
 				try {
 					const current = rootFileDigest(this.repoSkillsRoot, relativePath);
 					if (!current) issues.push(`${relativePath}: managed root file is missing`);
@@ -1358,7 +1677,8 @@ export class RepoSkillsLibraryManager {
 			enabled = routerEnabled(this.routerDir);
 			if (enabled === undefined && (state || liveSkills.size > 0)) issues.push("repo-skills-router is missing");
 			else if (enabled !== undefined) {
-				issues.push(...routerCoverageIssues(this.routerDir, liveSkills));
+				const expectedSkillIds = state ? new Set(Object.keys(state.managedSkills)) : new Set(liveSkills.keys());
+				issues.push(...routerCoverageIssues(this.routerDir, expectedSkillIds, liveSkills));
 				if (
 					state &&
 					currentLiveTreeDigest === state.liveTreeDigest &&
@@ -1382,6 +1702,10 @@ export class RepoSkillsLibraryManager {
 			managedSkills: state ? Object.keys(state.managedSkills).length : 0,
 			localSkills,
 			totalSkills: liveSkills.size,
+			repositoryCount: routerBuildCounts(this.routerDir)?.repositoryCount,
+			assignmentCount: routerBuildCounts(this.routerDir)?.assignmentCount,
+			areaCount: routerBuildCounts(this.routerDir)?.areaCount,
+			familyCount: routerBuildCounts(this.routerDir)?.familyCount,
 			totalFiles,
 			routerPresent: enabled !== undefined,
 			routerEnabled: enabled,

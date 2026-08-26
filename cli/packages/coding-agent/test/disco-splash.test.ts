@@ -40,7 +40,7 @@ describe("DisCo startup splash", () => {
 	});
 
 	it("reflows when the terminal width changes without exceeding the viewport", () => {
-		const splash = new DisCoSplash("0.1.1");
+		const splash = new DisCoSplash("0.2.0");
 		const narrow = splash.render(24);
 		const wide = splash.render(120);
 
@@ -57,7 +57,7 @@ describe("DisCo startup splash", () => {
 	it("clears animation timers after normal completion", async () => {
 		vi.useFakeTimers();
 		const requestRender = vi.fn();
-		const animation = animateDisCoSplash(new DisCoSplash("0.1.1"), requestRender, {
+		const animation = animateDisCoSplash(new DisCoSplash("0.2.0"), requestRender, {
 			frameMs: 10,
 			durationMs: 50,
 		});
@@ -71,7 +71,7 @@ describe("DisCo startup splash", () => {
 	it("cancels immediately and clears timers during a quick exit", async () => {
 		vi.useFakeTimers();
 		const abortController = new AbortController();
-		const animation = animateDisCoSplash(new DisCoSplash("0.1.1"), vi.fn(), {
+		const animation = animateDisCoSplash(new DisCoSplash("0.2.0"), vi.fn(), {
 			signal: abortController.signal,
 			frameMs: 10,
 			durationMs: 10_000,

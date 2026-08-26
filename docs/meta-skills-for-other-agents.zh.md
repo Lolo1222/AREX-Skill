@@ -3,7 +3,7 @@
 DisCo 为 **Creator 模式**内置了一组 skill construction workflows。这些内容
 也是 portable Agent Skills，因此不运行 DisCo CLI 的其他 agent 仍然可以遵循同
 一套证据、审阅和交接流程。这条安装路径与
-[Research Skills Library](../research-skills-library/README.zh-CN.md) 不同：library
+[Research Skills Library](../skills/README.md) 不同：library
 面向 Researcher，提供执行研究任务的 operating skills；本文的 skills 用来创
 建和维护这些 operating skills。
 
@@ -20,7 +20,7 @@ tools，应直接安装 DisCo。
 ## 当前内置 Meta Skills
 
 唯一 source of truth 是
-`src/packages/coding-agent/src/disco/skills/`。当前 Creator corpus 包含以下
+`cli/packages/coding-agent/src/disco/skills/`。当前 Creator corpus 包含以下
 15 个 skills：
 
 | Skill | 用途 |
@@ -47,12 +47,12 @@ tools，应直接安装 DisCo。
 ## 安装到 Codex
 
 当前 Codex 用户级 Skills 的推荐目录是 `~/.agents/skills`。下面的命令只复制
-15 个 meta-skill 目录，不复制 router、170 个仓库技能图（合计 1,000+
-operating skills）或任何 README：
+15 个 meta-skill 目录，不复制 router、1,000 个仓库技能图及其生成的 sub-skills
+或任何 README：
 
 ```bash
-git clone https://github.com/VectorSpaceLab/Auto-ML-Skills.git
-cd Auto-ML-Skills
+git clone https://github.com/VectorSpaceLab/AREX-Skill.git
+cd AREX-Skill
 mkdir -p ~/.agents/skills
 for skill in \
   analyze-paper-recovery \
@@ -70,7 +70,7 @@ for skill in \
   recover-paper-result \
   refresh-repo-skill \
   verify-repo-skill; do
-  cp -R "src/packages/coding-agent/src/disco/skills/$skill" ~/.agents/skills/
+  cp -R "cli/packages/coding-agent/src/disco/skills/$skill" ~/.agents/skills/
 done
 ```
 
@@ -100,7 +100,7 @@ for skill in \
   recover-paper-result \
   refresh-repo-skill \
   verify-repo-skill; do
-  cp -R "src/packages/coding-agent/src/disco/skills/$skill" ~/.claude/skills/
+  cp -R "cli/packages/coding-agent/src/disco/skills/$skill" ~/.claude/skills/
 done
 ```
 
@@ -136,5 +136,5 @@ session manager。它们也不会让其他 agent 在运行 construction workflow
 要求请求用户批准。
 
 如需完整的 Creator/Researcher 隔离，请安装
-[`disco` CLI](../src/README.md)，再单独安装
-[Research Skills Library](../research-skills-library/README.zh-CN.md)。
+[`disco` CLI](../cli/README.md)，再单独安装
+[Research Skills Library](../skills/README.md)。

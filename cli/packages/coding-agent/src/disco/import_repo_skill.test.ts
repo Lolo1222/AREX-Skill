@@ -1,6 +1,7 @@
-import { spawn, spawnSync } from "node:child_process";
+import { spawnSync } from "node:child_process";
+import { createHash } from "node:crypto";
 import { existsSync } from "node:fs";
-import { mkdir, mkdtemp, readdir, readFile, rm, writeFile } from "node:fs/promises";
+import { mkdir, mkdtemp, readFile, readdir, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { afterEach, describe, expect, it } from "vitest";
@@ -9,365 +10,197 @@ const scriptPath = path.join(
 	process.cwd(),
 	"packages/coding-agent/src/disco/skills/verify-repo-skill/scripts/import_repo_skill.mjs",
 );
-const cleanupPaths: string[] = [];
+const cleanup: string[] = [];
 
-type CandidateOptions = {
-	scenarioId?: string;
-	allowNewScenario?: boolean;
-	nestedRole?: string;
-};
-
-function importerArgs(agentDir: string, candidate: string, extraArgs: string[] = []): string[] {
-	return [scriptPath, "--agent-dir", agentDir, ...extraArgs, candidate];
+async function digestTree(root: string): Promise<string> {
+	const files: string[] = [];
+	async function visit(directory: string): Promise<void> {
+		for (const entry of (await readdir(directory, { withFileTypes: true })).sort((left, right) => left.name.localeCompare(right.name))) {
+			const entryPath = path.join(directory, entry.name);
+			if (entry.isDirectory()) await visit(entryPath);
+			else files.push(entryPath);
+		}
+	}
+	await visit(root);
+	const hash = createHash("sha256");
+	for (const filePath of files.sort((left, right) => left.localeCompare(right))) {
+		const relativePath = path.relative(root, filePath).split(path.sep).join("/");
+		const content = await readFile(filePath);
+		hash.update(`file\0${relativePath}\0${content.byteLength}\0`);
+		hash.update(content);
+		hash.update("\0");
+	}
+	return `sha256:${hash.digest("hex")}`;
 }
+const taxonomyHash = "f8c306386015711634ddbb43a5eb95d1f58909c3513ce2063ba42efdd583a431";
 
-function importerEnv(extraEnv: Record<string, string> = {}): NodeJS.ProcessEnv {
-	return {
-		...process.env,
-		NODE_ENV: "test",
-		DISCO_IMPORT_LOCK_PATH: "",
-		...extraEnv,
-	};
-}
-
-function runImporter(
-	agentDir: string,
-	candidate: string,
-	extraArgs: string[] = [],
-	extraEnv: Record<string, string> = {},
-) {
-	return spawnSync(process.execPath, importerArgs(agentDir, candidate, extraArgs), {
-		encoding: "utf8",
-		env: importerEnv(extraEnv),
-	});
-}
-
-function runImporterAsync(agentDir: string, candidate: string): Promise<{ stdout: string; stderr: string; code: number }> {
-	return new Promise((resolve, reject) => {
-		const child = spawn(process.execPath, importerArgs(agentDir, candidate), {
-			env: importerEnv(),
-			stdio: ["ignore", "pipe", "pipe"],
-		});
-		let stdout = "";
-		let stderr = "";
-		child.stdout.on("data", (chunk) => {
-			stdout += String(chunk);
-		});
-		child.stderr.on("data", (chunk) => {
-			stderr += String(chunk);
-		});
-		child.on("error", reject);
-		child.on("close", (code) => resolve({ stdout, stderr, code: code ?? -1 }));
-	});
-}
-
-function routingMetadata(skillId: string, scenarioId: string, allowNewScenario: boolean) {
-	return {
-		...(allowNewScenario
-			? {
-				scenarios: {
-					[scenarioId]: {
-						title: "Repo Import Test Workflows",
-						when_to_read: "Repository import test workflows and transaction verification.",
-						how_to_choose: "Choose the repo skill that matches the named test package.",
-						allow_new: true,
-						why_not_existing: "This isolated test library has no suitable existing scenario.",
-						expected_future_reuse: "Multiple importer test skills share this scenario.",
-					},
-				},
-			}
-			: {}),
-		skills: {
-			[skillId]: {
-				scenarios: [
-					{
-						id: scenarioId,
-						title: "Repo Import Test Workflows",
-						when_to_read: "Repository import test workflows and transaction verification.",
-						role: `Guides ${skillId} repository import tests.`,
-						read_when: `The request names ${skillId} or asks about its importer test workflow.`,
-						best_for: `${skillId} setup and transaction verification.`,
-						avoid_when: "A different repository skill matches the requested package.",
-						useful_entry_points: [`${skillId}/SKILL.md`],
-						selection_guidance: `Choose \`${skillId}\` for ${skillId} importer test tasks.`,
-					},
-				],
-			},
-		},
-	};
-}
-
-async function writeCandidate(
-	draftRoot: string,
-	skillId: string,
-	revision: string,
-	options: CandidateOptions = {},
-): Promise<string> {
-	const candidate = path.join(draftRoot, skillId);
-	const nestedDir = path.join(candidate, "sub-skills", "setup");
-	await mkdir(path.join(candidate, "references"), { recursive: true });
-	await mkdir(nestedDir, { recursive: true });
+async function writeCandidate(root: string, id = "alpha-repo", extraReference?: string): Promise<{ skill: string; handoff: string }> {
+	const skill = path.join(root, id);
+	await mkdir(root, { recursive: true });
+	await writeFile(path.join(root, "README.md"), "# Source repository checkout\n\nThis fixture provides repository evidence for the import handoff.\n", "utf8");
+	await mkdir(path.join(skill, "references"), { recursive: true });
+	await mkdir(path.join(skill, "sub-skills", "setup"), { recursive: true });
 	await writeFile(
-		path.join(candidate, "SKILL.md"),
+		path.join(skill, "SKILL.md"),
 		[
 			"---",
-			`name: ${skillId}`,
-			`description: "Use ${skillId} for verified repository import workflows (${revision})."`,
+			`name: ${id}`,
+			`description: "Use ${id} for repository import tests."`,
 			"disable-model-invocation: true",
 			"metadata:",
 			"  disco-role: operating",
 			"---",
 			"",
-			`# ${skillId} ${revision}`,
+			`# ${id}`,
 		].join("\n"),
 		"utf8",
 	);
 	await writeFile(
-		path.join(nestedDir, "SKILL.md"),
+		path.join(skill, "sub-skills", "setup", "SKILL.md"),
 		[
 			"---",
 			"name: setup",
 			'description: "Set up the repository import test workflow."',
 			"disable-model-invocation: true",
 			"metadata:",
-			`  disco-role: ${options.nestedRole ?? "operating"}`,
+			"  disco-role: operating",
 			"---",
 			"",
 			"# Setup",
 		].join("\n"),
 		"utf8",
 	);
-	const scenarioId = options.scenarioId ?? "repo-import-test-workflows";
 	await writeFile(
-		path.join(candidate, "references", "repo-routing-metadata.json"),
-		`${JSON.stringify(routingMetadata(skillId, scenarioId, options.allowNewScenario ?? true), null, 2)}\n`,
+		path.join(skill, "references", "repo-routing-metadata.json"),
+		`${JSON.stringify({ schema_version: "2.0", repo_id: "owner/alpha-repo", skill_id: id, taxonomy_sha256: taxonomyHash, routing_status: "classified", assignments: [{ area: "Computer Vision", family: "Image Classification" }] }, null, 2)}\n`,
 		"utf8",
 	);
-	return candidate;
-}
-
-async function readTextTree(root: string, relativeDir = ""): Promise<Record<string, string>> {
-	const result: Record<string, string> = {};
-	for (const entry of await readdir(path.join(root, relativeDir), { withFileTypes: true })) {
-		const relativePath = path.join(relativeDir, entry.name);
-		if (entry.isDirectory()) {
-			Object.assign(result, await readTextTree(root, relativePath));
-		} else if (entry.isFile()) {
-			result[relativePath.split(path.sep).join("/")] = await readFile(path.join(root, relativePath), "utf8");
-		}
+	if (extraReference !== undefined) {
+		await writeFile(path.join(skill, "references", "markdown-code-syntax.md"), extraReference, "utf8");
 	}
-	return result;
+	const handoff = path.join(root, `${id}-classification.json`);
+	const skillContentSha256 = await digestTree(skill);
+	await writeFile(
+		handoff,
+		`${JSON.stringify({ schema_version: 1, repo_id: "owner/alpha-repo", legacy_repo_id: "batch_0/alpha-repo", repo_name: "alpha-repo", source_url: "https://github.com/owner/alpha-repo", source_commit: "a".repeat(40), source_checkout: root, source_skill_root: id, skill_id: id, skill_root: `repo-skills/${id}`, skill_content_sha256: skillContentSha256, taxonomy_sha256: taxonomyHash, status: "classified", assignments: [{ area: "Computer Vision", family: "Image Classification", confidence: "high", rationale: "The repository provides image classification workflows.", evidence: [{ path: "README.md", line_start: 1, line_end: 3, description: "Repository documentation identifies the capability." }] }] }, null, 2)}\n`,
+		"utf8",
+	);
+	return { skill, handoff };
 }
 
-async function transactionArtifacts(skillsRoot: string): Promise<string[]> {
-	if (!existsSync(skillsRoot)) return [];
-	return (await readdir(skillsRoot)).filter(
-		(entry) => entry.startsWith(".repo-skill-import.") || entry.startsWith(".repo-skills-router."),
-	);
+function runImporter(agentDir: string, candidate: { skill: string; handoff: string }, extra: string[] = [], env: Record<string, string> = {}) {
+	return spawnSync(process.execPath, [scriptPath, "--agent-dir", agentDir, "--routing-entry", candidate.handoff, ...extra, candidate.skill], {
+		encoding: "utf8",
+		env: { ...process.env, NODE_ENV: "test", ...env },
+	});
 }
 
 describe("import_repo_skill.mjs", () => {
 	afterEach(async () => {
-		for (const cleanupPath of cleanupPaths.splice(0)) {
-			await rm(cleanupPath, { recursive: true, force: true });
-		}
+		for (const root of cleanup.splice(0)) await rm(root, { recursive: true, force: true });
 	});
 
-	it("imports a verified repo skill and rebuilds the sibling router", async () => {
+	it("imports a v2 repo skill into skills/repositories and rebuilds the area/family router", async () => {
 		const root = await mkdtemp(path.join(tmpdir(), "disco-repo-import-"));
-		cleanupPaths.push(root);
+		cleanup.push(root);
+		const candidate = await writeCandidate(path.join(root, "draft"));
 		const agentDir = path.join(root, "agent");
-		const candidate = await writeCandidate(path.join(root, "draft"), "alpha-repo", "v1");
-
 		const result = runImporter(agentDir, candidate);
-
 		expect(result.status, result.stderr).toBe(0);
 		expect(result.stdout).toContain("imported and routed repo skill alpha-repo");
-		expect(result.stdout).toContain("no cross-agent export is required");
-		expect(await readFile(path.join(agentDir, "skills", "repo-skills", "alpha-repo", "SKILL.md"), "utf8")).toContain(
-			"# alpha-repo v1",
-		);
-		const routerPage = await readFile(
-			path.join(
-				agentDir,
-				"skills",
-				"repo-skills-router",
-				"references",
-				"scenarios",
-				"repo-import-test-workflows.md",
-			),
-			"utf8",
-		);
-		expect(routerPage).toContain("`alpha-repo`");
-		expect(await transactionArtifacts(path.join(agentDir, "skills"))).toEqual([]);
-		expect(existsSync(path.join(agentDir, "locks", "repo-skills-import.lockdir"))).toBe(false);
+		const liveRoot = path.join(agentDir, "skills", "repositories");
+		expect(existsSync(path.join(liveRoot, "repo-skills", "alpha-repo", "SKILL.md"))).toBe(true);
+		expect(await readFile(path.join(liveRoot, "repo-skills-router", "references", "families", "computer-vision", "image-classification.md"), "utf8")).toContain("../../../../repo-skills/alpha-repo/SKILL.md");
+		expect(await readFile(path.join(liveRoot, "repo-skills", "repository-index.jsonl"), "utf8")).toContain("owner/alpha-repo");
+		expect(await readFile(path.join(liveRoot, "repo-skills", "repository-index.jsonl"), "utf8")).toContain('"legacy_repo_id":"batch_0/alpha-repo"');
+		expect(await readFile(path.join(liveRoot, "repo-skills-router", "references", "index", "assignments.jsonl"), "utf8")).toContain('"confidence":"high"');
 	});
 
-	it("preserves a disabled live router while importing another repo skill", async () => {
+	it("rejects the old scenario-shaped routing metadata before mutating the live tree", async () => {
 		const root = await mkdtemp(path.join(tmpdir(), "disco-repo-import-"));
-		cleanupPaths.push(root);
-		const agentDir = path.join(root, "agent");
-		const draftRoot = path.join(root, "draft");
-		const alpha = await writeCandidate(draftRoot, "alpha-repo", "v1");
-		expect(runImporter(agentDir, alpha).status).toBe(0);
-		const routerFile = path.join(agentDir, "skills", "repo-skills-router", "SKILL.md");
-		const enabledRouter = await readFile(routerFile, "utf8");
-		await writeFile(
-			routerFile,
-			enabledRouter.replace("metadata:\n", "disable-model-invocation: true\nmetadata:\n"),
-			"utf8",
-		);
-
-		const beta = await writeCandidate(draftRoot, "beta-repo", "v1");
-		const result = runImporter(agentDir, beta);
-
-		expect(result.status).toBe(0);
-		expect(await readFile(routerFile, "utf8")).toContain("disable-model-invocation: true");
+		cleanup.push(root);
+		const candidate = await writeCandidate(path.join(root, "draft"), "legacy-repo");
+		await writeFile(path.join(candidate.skill, "references", "repo-routing-metadata.json"), JSON.stringify({ skills: { "legacy-repo": { scenarios: [] } } }), "utf8");
+		const result = runImporter(path.join(root, "agent"), candidate);
+		expect(result.status).toBe(2);
+		expect(result.stderr).toContain("unknown field skills");
+		expect(existsSync(path.join(root, "agent", "skills"))).toBe(false);
 	});
 
-	it("requires explicit overwrite approval for an existing repo skill", async () => {
+	it("requires an external routing handoff for a normal managed import", async () => {
 		const root = await mkdtemp(path.join(tmpdir(), "disco-repo-import-"));
-		cleanupPaths.push(root);
-		const agentDir = path.join(root, "agent");
-		const draftRoot = path.join(root, "draft");
-		const candidate = await writeCandidate(draftRoot, "alpha-repo", "v1");
-		expect(runImporter(agentDir, candidate).status).toBe(0);
-		await writeCandidate(draftRoot, "alpha-repo", "v2");
-
-		const conflict = runImporter(agentDir, candidate);
-		expect(conflict.status).toBe(2);
-		expect(conflict.stderr).toContain("Obtain separate overwrite approval");
-		const targetFile = path.join(agentDir, "skills", "repo-skills", "alpha-repo", "SKILL.md");
-		expect(await readFile(targetFile, "utf8")).toContain("# alpha-repo v1");
-
-		const overwrite = runImporter(agentDir, candidate, ["--overwrite"]);
-		expect(overwrite.status, overwrite.stderr).toBe(0);
-		expect(await readFile(targetFile, "utf8")).toContain("# alpha-repo v2");
-	});
-
-	it("recursively rejects a wrong-role descendant before changing the live library", async () => {
-		const root = await mkdtemp(path.join(tmpdir(), "disco-repo-import-"));
-		cleanupPaths.push(root);
-		const agentDir = path.join(root, "agent");
-		const candidate = await writeCandidate(path.join(root, "draft"), "wrong-role-repo", "v1", {
-			nestedRole: "meta",
+		cleanup.push(root);
+		const candidate = await writeCandidate(path.join(root, "draft"));
+		const result = spawnSync(process.execPath, [scriptPath, "--agent-dir", path.join(root, "agent"), candidate.skill], {
+			encoding: "utf8",
+			env: { ...process.env, NODE_ENV: "test" },
 		});
-
-		const result = runImporter(agentDir, candidate);
-
 		expect(result.status).toBe(2);
-		expect(result.stderr).toContain("metadata.disco-role must be operating");
-		expect(existsSync(path.join(agentDir, "skills", "repo-skills", "wrong-role-repo"))).toBe(false);
-		expect(await transactionArtifacts(path.join(agentDir, "skills"))).toEqual([]);
+		expect(result.stderr).toContain("normal managed imports require --routing-entry");
+		expect(existsSync(path.join(root, "agent", "skills"))).toBe(false);
 	});
 
-	it("rejects a runtime source staged inside the live DisCo skills root", async () => {
+	it("rejects a classified routing handoff without an inspectable source checkout", async () => {
 		const root = await mkdtemp(path.join(tmpdir(), "disco-repo-import-"));
-		cleanupPaths.push(root);
+		cleanup.push(root);
+		const candidate = await writeCandidate(path.join(root, "draft"));
+		const handoff = JSON.parse(await readFile(candidate.handoff, "utf8"));
+		delete handoff.source_checkout;
+		await writeFile(candidate.handoff, `${JSON.stringify(handoff, null, 2)}\n`, "utf8");
+
+		const result = runImporter(path.join(root, "agent"), candidate);
+		expect(result.status).toBe(2);
+		expect(result.stderr).toContain("routing handoff source_checkout must be an existing absolute directory");
+		expect(existsSync(path.join(root, "agent", "skills"))).toBe(false);
+	});
+
+	it("rejects evidence line ranges outside the source file", async () => {
+		const root = await mkdtemp(path.join(tmpdir(), "disco-repo-import-"));
+		cleanup.push(root);
+		const candidate = await writeCandidate(path.join(root, "draft"));
+		const handoff = JSON.parse(await readFile(candidate.handoff, "utf8"));
+		handoff.assignments[0].evidence[0].line_end = 999;
+		await writeFile(candidate.handoff, `${JSON.stringify(handoff, null, 2)}\n`, "utf8");
+
+		const result = runImporter(path.join(root, "agent"), candidate);
+		expect(result.status).toBe(2);
+		expect(result.stderr).toContain("line range exceeds README.md");
+		expect(existsSync(path.join(root, "agent", "skills"))).toBe(false);
+	});
+
+	it("restores the skill, repository index, and router after a post-update failure", async () => {
+		const root = await mkdtemp(path.join(tmpdir(), "disco-repo-import-"));
+		cleanup.push(root);
+		const candidate = await writeCandidate(path.join(root, "draft"));
 		const agentDir = path.join(root, "agent");
-		const liveCandidate = await writeCandidate(
-			path.join(agentDir, "skills", "repo-skills"),
-			"alpha-repo",
-			"edited-live",
+		const result = runImporter(agentDir, candidate, [], { DISCO_TEST_FAIL_REPO_IMPORT_AT: "after-router-update" });
+		expect(result.status).toBe(2);
+		expect(existsSync(path.join(agentDir, "skills", "repositories", "repo-skills", "alpha-repo"))).toBe(false);
+		expect(existsSync(path.join(agentDir, "skills", "repositories", "repo-skills", "repository-index.jsonl"))).toBe(false);
+		expect(existsSync(path.join(agentDir, "skills", "repositories", "repo-skills-router"))).toBe(false);
+	});
+
+	it("does not treat links-shaped syntax inside fenced code as Markdown links", async () => {
+		const root = await mkdtemp(path.join(tmpdir(), "disco-repo-import-"));
+		cleanup.push(root);
+		const candidate = await writeCandidate(
+			path.join(root, "draft"),
+			"fenced-code-repo",
+			"```python\nvalue = mapping[\"key\"](argument[0])\n```\n",
 		);
-
-		const result = runImporter(agentDir, liveCandidate, ["--overwrite"]);
-
-		expect(result.status).toBe(2);
-		expect(result.stderr).toContain("must be staged outside the live DisCo skills root before import");
-		expect(existsSync(path.join(agentDir, "skills", "repo-skills-router"))).toBe(false);
-		expect(await transactionArtifacts(path.join(agentDir, "skills"))).toEqual([]);
+		const result = runImporter(path.join(root, "agent"), candidate);
+		expect(result.status, result.stderr).toBe(0);
 	});
 
-	it("rolls back a new skill when router validation fails", async () => {
+	it("does not treat links-shaped syntax inside multiline inline code as Markdown links", async () => {
 		const root = await mkdtemp(path.join(tmpdir(), "disco-repo-import-"));
-		cleanupPaths.push(root);
-		const agentDir = path.join(root, "agent");
-		const draftRoot = path.join(root, "draft");
-		const baseline = await writeCandidate(draftRoot, "baseline-repo", "v1");
-		expect(runImporter(agentDir, baseline).status).toBe(0);
-		const routerDir = path.join(agentDir, "skills", "repo-skills-router");
-		const routerBefore = await readTextTree(routerDir);
-		const invalid = await writeCandidate(draftRoot, "invalid-repo", "v1", {
-			scenarioId: "unknown-import-scenario",
-			allowNewScenario: false,
-		});
-
-		const result = runImporter(agentDir, invalid);
-
-		expect(result.status).toBe(2);
-		expect(result.stderr).toContain("uses unknown scenario unknown-import-scenario");
-		expect(result.stderr).toContain("repo-skills-router updater failed");
-		expect(existsSync(path.join(agentDir, "skills", "repo-skills", "invalid-repo"))).toBe(false);
-		expect(await readTextTree(routerDir)).toEqual(routerBefore);
-		expect(await transactionArtifacts(path.join(agentDir, "skills"))).toEqual([]);
-	});
-
-	it("restores both the old skill and old router after a post-update failure", async () => {
-		const root = await mkdtemp(path.join(tmpdir(), "disco-repo-import-"));
-		cleanupPaths.push(root);
-		const agentDir = path.join(root, "agent");
-		const draftRoot = path.join(root, "draft");
-		const candidate = await writeCandidate(draftRoot, "alpha-repo", "v1");
-		expect(runImporter(agentDir, candidate).status).toBe(0);
-		const routerDir = path.join(agentDir, "skills", "repo-skills-router");
-		const routerBefore = await readTextTree(routerDir);
-		await writeCandidate(draftRoot, "alpha-repo", "v2", { scenarioId: "repo-import-v2-workflows" });
-
-		const result = runImporter(agentDir, candidate, ["--overwrite"], {
-			DISCO_TEST_FAIL_REPO_IMPORT_AT: "after-router-update",
-		});
-
-		expect(result.status).toBe(2);
-		expect(result.stderr).toContain("injected repo-skill import failure at after-router-update");
-		expect(
-			await readFile(path.join(agentDir, "skills", "repo-skills", "alpha-repo", "SKILL.md"), "utf8"),
-		).toContain("# alpha-repo v1");
-		expect(await readTextTree(routerDir)).toEqual(routerBefore);
-		expect(await transactionArtifacts(path.join(agentDir, "skills"))).toEqual([]);
-	});
-
-	it("serializes concurrent imports without losing either router entry", async () => {
-		const root = await mkdtemp(path.join(tmpdir(), "disco-repo-import-"));
-		cleanupPaths.push(root);
-		const agentDir = path.join(root, "agent");
-		const draftRoot = path.join(root, "draft");
-		const alpha = await writeCandidate(draftRoot, "alpha-repo", "v1");
-		const beta = await writeCandidate(draftRoot, "beta-repo", "v1");
-
-		const [alphaResult, betaResult] = await Promise.all([
-			runImporterAsync(agentDir, alpha),
-			runImporterAsync(agentDir, beta),
-		]);
-
-		expect(alphaResult.code, alphaResult.stderr).toBe(0);
-		expect(betaResult.code, betaResult.stderr).toBe(0);
-		const scenarioPage = await readFile(
-			path.join(
-				agentDir,
-				"skills",
-				"repo-skills-router",
-				"references",
-				"scenarios",
-				"repo-import-test-workflows.md",
-			),
-			"utf8",
+		cleanup.push(root);
+		const candidate = await writeCandidate(
+			path.join(root, "draft"),
+			"multiline-code-repo",
+			"The tensor stores `[J*4 quaternion values, root xyz,\nroot-facing pivot, 4 contact flags]` as `(T, channels)`.\n",
 		);
-		expect(scenarioPage).toContain("`alpha-repo`");
-		expect(scenarioPage).toContain("`beta-repo`");
-		expect(await transactionArtifacts(path.join(agentDir, "skills"))).toEqual([]);
-	});
-
-	it("requires proof of the global lock for --already-locked", async () => {
-		const root = await mkdtemp(path.join(tmpdir(), "disco-repo-import-"));
-		cleanupPaths.push(root);
-		const agentDir = path.join(root, "agent");
-		const candidate = await writeCandidate(path.join(root, "draft"), "alpha-repo", "v1");
-
-		const result = runImporter(agentDir, candidate, ["--already-locked"]);
-
-		expect(result.status).toBe(2);
-		expect(result.stderr).toContain("--already-locked requires DISCO_IMPORT_LOCK_PATH");
-		expect(existsSync(path.join(agentDir, "skills", "repo-skills", "alpha-repo"))).toBe(false);
+		const result = runImporter(path.join(root, "agent"), candidate);
+		expect(result.status, result.stderr).toBe(0);
 	});
 });

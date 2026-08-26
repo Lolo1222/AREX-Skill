@@ -46,7 +46,7 @@ const changelog = await readFile(join(packageRoot, "CHANGELOG.md"), "utf8");
 
 check(packageJson.private === undefined, "package.json must not contain a private field");
 check(packageJson.name === "@auto-ml-skills/disco", "package name must be @auto-ml-skills/disco");
-check(packageJson.version === "0.1.1", "package version must be 0.1.1");
+check(packageJson.version === "0.2.0", "package version must be 0.2.0");
 const escapedPackageVersion = packageJson.version.replaceAll(".", "\\.");
 check(
 	new RegExp(`^## \\[?${escapedPackageVersion}\\]? - \\d{4}-\\d{2}-\\d{2}$`, "mu").test(changelog),
@@ -55,7 +55,7 @@ check(
 check(packageJson.publishConfig?.access === "public", "publishConfig.access must be public");
 check(packageJson.bin?.disco === "dist/cli.js", "the only supported CLI must be disco -> dist/cli.js");
 check(Object.keys(packageJson.bin ?? {}).length === 1, "package must publish exactly one CLI executable");
-check(packageJson.repository?.directory === "src", "repository.directory must identify the standalone package root");
+check(packageJson.repository?.directory === "cli", "repository.directory must identify the cli package root");
 check(packageJson.exports?.["."]?.import === "./dist/index.js", "root ESM export is missing");
 check(packageJson.exports?.["."]?.types === "./dist/index.d.ts", "root type export is missing");
 check(packageJson.exports?.["./rpc-entry"]?.import === "./dist/rpc-entry.js", "RPC ESM export is missing");

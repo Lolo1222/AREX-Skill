@@ -30,7 +30,7 @@ main-agent integration pass over parallel subagent outputs.
 Resolve these before writing verification artifacts:
 
 - Runtime repo skill directory containing `SKILL.md`.
-  Keep this verified runtime directory outside `<agent-dir>/skills/`; if the only
+  Keep this verified runtime directory outside `<agent-dir>/skills/repositories/`; if the only
   starting copy is live, make an external working copy before refining it.
 - Review/test artifact directory. If omitted, use the artifact root selected by
   the calling workflow, normally `<repository-path>/skills/tests/<skill-id>/`.
@@ -49,6 +49,9 @@ Resolve these before writing verification artifacts:
   request explicitly delegated the final import decision.
 - Any user-provided verification focus, such as required scenarios, specific
   workflows, known failures, or publication gates.
+- The original repository checkout and the current fixed taxonomy when router
+  placement is required. The repository checkout is the primary routing
+  evidence source; generated skill prose is only a summary/navigation aid.
 
 Do not write check-only artifacts into the runtime skill directory. Keep
 usability cases under `test-cases/` in the review/test artifact directory, and
@@ -76,7 +79,7 @@ Read these references as the workflow reaches each stage:
 - [scripts/import_repo_skill.mjs](scripts/import_repo_skill.mjs): required entry
   point for an approved or auto-authorized DisCo repo-skill import. It acquires
   the global lock, stages and validates the runtime tree, installs it under
-  `~/.disco/agent/skills/repo-skills/`, rebuilds the sibling live
+  `~/.disco/agent/skills/repositories/repo-skills/`, rebuilds the sibling live
   `repo-skills-router`, and rolls back both on failure.
 - [scripts/with_import_lock.mjs](scripts/with_import_lock.mjs): lower-level lock
   helper used by the dedicated importer and router updater. Do not manually
@@ -84,6 +87,13 @@ Read these references as the workflow reaches each stage:
 - [scripts/update_repo_skills_router.mjs](scripts/update_repo_skills_router.mjs):
   lower-level managed updater called by the dedicated importer. Use it directly
   only for an intentional router-only maintenance or staging operation.
+- [scripts/build_repo_skills_collection.mjs](scripts/build_repo_skills_collection.mjs):
+  one-pass builder for an initial or collection-wide rebuild. It accepts an
+  explicit source import manifest, terminal repository manifest, assignment
+  ledger, taxonomy, and fresh staging directory; validates all inputs before
+  copying, writes the v2 routing projection, runs the updater once, and leaves
+  the staged collection for the managed-library transaction. Do not call the
+  single-repository importer once per repository to perform a full build.
 
 ## Required Workflow
 
@@ -140,7 +150,30 @@ progress.
    reports, final skill coverage report, human-review notes, publication
    checklist, prompt samples, native verification reports, and any
    eval/self-refine notes under `<artifact-root>/reports/`.
-6. Handoff and import readiness:
+6. Router placement:
+   When the skill is intended for the managed repository collection, classify
+   the repository against the exact fixed taxonomy after verification. Inspect
+   README and substantive documentation first, then the generated root and
+   relevant sub-skills, package manifests/entry points, and only a small number
+   of source/config/test artifacts needed to resolve ambiguity. Assign zero or
+   more exact area -> family paths. Every assignment needs its own rationale
+   and at least one non-generated repository evidence item; reject keyword-only,
+   dependency-only, optional-integration, example-only, and context-collision
+   matches. If no exact family is supported, record `unclassified` and ask the
+   user whether to import it. If the user wants it imported, propose a taxonomy
+   extension and wait for user approval or correction before changing the
+   taxonomy. Interrupted or inaccessible classification is `blocked` or
+   `failed`, not a guessed assignment.
+
+   Write the full decision outside the runtime skill, preferably under
+   `<repo-path>/skills/disco/routing_decision/`, with a machine-readable
+   `classification.json` and human-readable `evidence.md`. The runtime
+   `references/repo-routing-metadata.json` is only the minimal v2 projection:
+   `schema_version`, canonical `owner/repository` `repo_id`, `skill_id`, the
+   current taxonomy hash, `routing_status`, exact assignments, and an
+   `unclassified_reason` only when applicable. Do not store evidence or
+   rationale in that runtime JSON.
+7. Handoff and import readiness:
    Report the runtime skill path, artifact path, usability coverage, native
    verification results, failures fixed, remaining long-tail gaps, and whether
    the skill is ready to import. Record that a self-contained, versioned
@@ -150,7 +183,7 @@ progress.
    importer or the current project's `.agents/skills`. If
    `importAfterVerification` is `ask`, use
    `ask_user_question` when available to ask whether to import the verified
-   runtime skill into `~/.disco/agent/skills/repo-skills/<skill-id>/`; do not only ask in a normal
+   runtime skill into `~/.disco/agent/skills/repositories/repo-skills/<skill-id>/`; do not only ask in a normal
    assistant message and stop. If `importAfterVerification` is `auto-import`
    and the skill is verified/import-ready with no unresolved high or critical
    failures or `BLOCKED_REQUIRED_BACKEND` results, import without asking again
@@ -159,16 +192,24 @@ progress.
    the original request delegated it. Present the exact limitation and require
    a new informed manual import decision after final verification. If import is
    approved or auto-authorized,
-   run the dedicated importer once with the verified runtime skill directory:
+   run the dedicated importer once with the verified runtime skill directory
+   and its verified external routing handoff:
 
    ```bash
-   node scripts/import_repo_skill.mjs --agent-dir <agent-dir> [--overwrite] <runtime-skill-dir>
+   node scripts/import_repo_skill.mjs --agent-dir <agent-dir> --routing-entry <classification.json> [--overwrite] <runtime-skill-dir>
    ```
+
+   The handoff is not only an assignment list: it must include the canonical
+   source URL, source commit, final `skill_root`, and the SHA-256 digest of the
+   portable runtime skill tree. Every classified assignment must carry its own
+   rationale and at least one non-generated repository evidence item. The
+   importer validates these fields and passes the handoff to the router updater
+   so the central repository index preserves provenance.
 
    Omit `--overwrite` for a new skill. Use it only after approval to replace
    that exact existing repo skill. The importer copies only the runtime tree,
-   recursively validates its role and visibility contract, requires
-   `references/repo-routing-metadata.json`, acquires the global lock, rebuilds
+   recursively validates its role and visibility contract, requires the v2
+   `references/repo-routing-metadata.json` and matching routing handoff, acquires the global lock, rebuilds
    and validates the live DisCo `repo-skills-router`, and restores both the previous skill and router on failure. Do not hand-edit router Markdown as the import mechanism or manually combine a copy command with the lower-level updater. After success,
    DisCo Researcher can use the managed skill in a new session without exporting
    it to another agent. Use `import-repo-skills-to-agent` only when the user

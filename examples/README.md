@@ -11,7 +11,7 @@ required to read an export.
 
 - [FlagOpen/FlagEmbedding repository](https://github.com/FlagOpen/FlagEmbedding)
 - [Open the sanitized session](creator/disco-creator-FlagEmbedding.html)
-- [Browse the resulting skill](../research-skills-library/repo-skills/flag-embedding/SKILL.md)
+- [Browse the resulting skill](../skills/repositories/repo-skills/flag-embedding/SKILL.md)
 
 This session follows Creator as it inspects FlagOpen/FlagEmbedding, prepares
 the working environment, scopes and writes the operating skill graph, verifies
@@ -26,8 +26,8 @@ the following entries resume the same creation workflow.
 - [Farama-Foundation/Gymnasium repository](https://github.com/Farama-Foundation/Gymnasium)
 - [DLR-RM/stable-baselines3 repository](https://github.com/DLR-RM/stable-baselines3)
 - [Open the sanitized session](researcher/disco-researcher-Gymnasium-Stable-Baselines3.html)
-- [Browse the Gymnasium skill](../research-skills-library/repo-skills/gymnasium/SKILL.md)
-- [Browse the Stable-Baselines3 skill](../research-skills-library/repo-skills/stable-baselines3/SKILL.md)
+- [Browse the Gymnasium skill](../skills/repositories/repo-skills/gymnasium/SKILL.md)
+- [Browse the Stable-Baselines3 skill](../skills/repositories/repo-skills/stable-baselines3/SKILL.md)
 
 This session follows Researcher as it routes a battery-dispatch task through
 `repo-skills-router`, progressively loads the relevant Gymnasium and

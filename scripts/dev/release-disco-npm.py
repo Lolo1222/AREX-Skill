@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Build, verify, and release the standalone DisCo npm package.
 
-The publishable package is rooted at src/ and is named
+The publishable package is rooted at cli/ and is named
 @auto-ml-skills/disco. Its Pi agent, AI, and TUI dependencies are normal npm
 dependencies rather than sibling packages published by this repository.
 
@@ -83,10 +83,10 @@ def read_json(path: Path) -> dict:
         fail(f"failed to read {path}: {exc}")
 
 
-def package_info(src_dir: Path) -> dict[str, str | Path]:
-    package_json = src_dir / "package.json"
+def package_info(package_dir: Path) -> dict[str, str | Path]:
+    package_json = package_dir / "package.json"
     if not package_json.exists():
-        fail(f"expected standalone DisCo package at {src_dir}")
+        fail(f"expected standalone DisCo package at {package_dir}")
 
     data = read_json(package_json)
     name = str(data.get("name") or "")
@@ -97,7 +97,7 @@ def package_info(src_dir: Path) -> dict[str, str | Path]:
         fail(f"{package_json} must contain a version")
     if data.get("private") is True:
         fail(f"{package_json} is marked private")
-    return {"name": name, "version": version, "dir": src_dir}
+    return {"name": name, "version": version, "dir": package_dir}
 
 
 def format_cmd(args: list[str]) -> str:
@@ -113,11 +113,11 @@ def run_capture(args: list[str], *, cwd: Path, env: dict[str, str]) -> subproces
     return subprocess.run(args, cwd=cwd, env=env, text=True, capture_output=True)
 
 
-def validate_publish_artifacts(src_dir: Path) -> None:
+def validate_publish_artifacts(package_dir: Path) -> None:
     required = [
-        src_dir / "dist" / "cli.js",
-        src_dir / "dist" / "index.js",
-        src_dir / "npm-shrinkwrap.json",
+        package_dir / "dist" / "cli.js",
+        package_dir / "dist" / "index.js",
+        package_dir / "npm-shrinkwrap.json",
     ]
     missing = [str(path) for path in required if not path.is_file()]
     if missing:
@@ -186,7 +186,7 @@ def confirm_publish(package: dict[str, str | Path], tag: str, registry: str) -> 
 
 def main(argv: list[str] | None = None) -> int:
     root = repo_root()
-    src_dir = root / "src"
+    package_dir = root / "cli"
 
     parser = argparse.ArgumentParser(description="Build, verify, and publish the standalone DisCo npm package.")
     parser.add_argument(
@@ -204,8 +204,8 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--tag", default="", help="npm dist-tag. Defaults to DISCO_NPM_TAG, NPM_TAG, or latest.")
     parser.add_argument("--access", default="", help="npm package access. Defaults to NPM_ACCESS or public.")
     parser.add_argument("--otp", default="", help="npm two-factor OTP. Defaults to NPM_CONFIG_OTP or NPM_OTP.")
-    parser.add_argument("--skip-install", action="store_true", help="Skip npm ci --ignore-scripts in src/.")
-    parser.add_argument("--skip-verify", action="store_true", help="Skip npm run prepublishOnly in src/ and use existing dist artifacts.")
+    parser.add_argument("--skip-install", action="store_true", help="Skip npm ci --ignore-scripts in cli/.")
+    parser.add_argument("--skip-verify", action="store_true", help="Skip npm run prepublishOnly in cli/ and use existing dist artifacts.")
     parser.add_argument(
         "--fail-if-exists",
         action="store_true",
@@ -213,7 +213,7 @@ def main(argv: list[str] | None = None) -> int:
     )
     args = parser.parse_args(argv)
 
-    package = package_info(src_dir)
+    package = package_info(package_dir)
     env = merged_env(Path(args.env_file).expanduser().resolve())
     registry = args.registry or env.get("NPM_CONFIG_REGISTRY") or env.get("NPM_REGISTRY") or "https://registry.npmjs.org/"
     tag = args.tag or env.get("DISCO_NPM_TAG") or env.get("NPM_TAG") or "latest"
@@ -225,7 +225,7 @@ def main(argv: list[str] | None = None) -> int:
     print("Release mode:", "publish" if args.publish else "dry-run")
     print("Release package:", f"{package['name']}@{package['version']}")
     print("Env file:", args.env_file)
-    print("Package root:", src_dir)
+    print("Package root:", package_dir)
     print("Registry:", registry)
     print("Tag:", tag)
     print("Access:", access)
@@ -238,16 +238,16 @@ def main(argv: list[str] | None = None) -> int:
 
     try:
         if not args.skip_install:
-            run(["npm", "ci", "--ignore-scripts"], cwd=src_dir, env=env)
+            run(["npm", "ci", "--ignore-scripts"], cwd=package_dir, env=env)
         if not args.skip_verify:
-            run(["npm", "run", "prepublishOnly"], cwd=src_dir, env=env)
+            run(["npm", "run", "prepublishOnly"], cwd=package_dir, env=env)
 
-        validate_publish_artifacts(src_dir)
+        validate_publish_artifacts(package_dir)
 
         if args.publish:
             name = str(package["name"])
             version = str(package["version"])
-            exists = package_exists(name, version, cwd=src_dir, env=env, registry=registry)
+            exists = package_exists(name, version, cwd=package_dir, env=env, registry=registry)
             if exists and args.fail_if_exists:
                 fail(f"{name}@{version} already exists on npm")
             if exists:
@@ -269,7 +269,7 @@ def main(argv: list[str] | None = None) -> int:
         ]
         if not args.publish:
             command.append("--dry-run")
-        run(command, cwd=src_dir, env=env)
+        run(command, cwd=package_dir, env=env)
 
         print("==> Release script completed")
         return 0

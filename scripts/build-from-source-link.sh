@@ -2,7 +2,7 @@
 set -euo pipefail
 
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-PACKAGE_DIR="$REPO_ROOT/src"
+PACKAGE_DIR="$REPO_ROOT/cli"
 
 if [[ ! -f "$PACKAGE_DIR/package.json" ]]; then
 	echo "error: expected DisCo package at $PACKAGE_DIR" >&2
@@ -20,7 +20,7 @@ export NODE_USE_ENV_PROXY="${NODE_USE_ENV_PROXY:-1}"
 echo "==> Installing DisCo source dependencies"
 npm --prefix "$PACKAGE_DIR" ci --include=dev --ignore-scripts
 
-echo "==> Building DisCo from packages/coding-agent/src"
+echo "==> Building DisCo from cli"
 npm --prefix "$PACKAGE_DIR" run build
 
 if [[ ! -x "$PACKAGE_DIR/dist/cli.js" ]]; then

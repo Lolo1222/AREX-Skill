@@ -18,8 +18,8 @@ config_path: /path/to/distiller_run_config.toml
 
 In shell commands below, replace `<skills_root>` with the directory that
 contains the installed Distiller skill folders, for example
-`src/packages/coding-agent/src/disco/skills` in a DisCo source checkout,
-`src/packages/coding-agent/dist/disco-resources/skills` in a built npm checkout,
+`cli/packages/coding-agent/src/disco/skills` in an AREX-Skill source checkout,
+`cli/packages/coding-agent/dist/disco-resources/skills` in a built npm checkout,
 or `~/.agents/skills` for the current Codex user-level install. Treat
 `~/.codex/skills` as an explicit legacy compatibility path only.
 

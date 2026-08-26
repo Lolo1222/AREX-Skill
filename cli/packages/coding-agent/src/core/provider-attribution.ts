@@ -43,7 +43,7 @@ function getDefaultAttributionHeaders(
 
 	if (isOpenRouterModel(model)) {
 		return {
-			"HTTP-Referer": "https://github.com/VectorSpaceLab/Auto-ML-Skills",
+			"HTTP-Referer": "https://github.com/VectorSpaceLab/AREX-Skill",
 			"X-OpenRouter-Title": "DisCo",
 			"X-OpenRouter-Categories": "cli-agent",
 		};
